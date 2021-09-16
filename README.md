@@ -1,70 +1,81 @@
-# Getting Started with Create React App
+# COLLUSIC
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#### 온라인 프로듀싱 협업 프로젝트!
 
-## Available Scripts
+프로듀싱하는데 협업을 하고 싶다?
 
-In the project directory, you can run:
+당장 무명 작곡가라 수익구조가 필요하다!
 
-### `yarn start`
+즉각적으로 내 작품에 대한 리뷰를 받고 싶다!!
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+"작곡가"들을 위한 온라인 프로듀싱 협업 서비스🎤🎶🎸🎹
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+#### 프로젝트 규칙
 
-### `yarn test`
+Collusic 프로젝트를 처음 접하시는 같이 개발하는 개발자에게 전합니다. 이 규칙은 서로의 코드를 더 잘 이해할 수 있게 정해진 규칙입니다. 때문에 언제든지 모든 개발자가 동의한다면 변경이 가능합니다. 규칙을 준수하여 서로의 발전을 도와줍시다.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+##### 네이밍컨벤션
 
-### `yarn build`
+1. 파일이름의 형식은 **"camelCase"** 를 사용하도록 합시다.
+2. 컴포넌트 (react)는 **"CamelCase"** 구조를 따릅니다.
+3. 컴포넌트는 파일명 혹은 index.jsx의 경우 상위 폴더이름을 따라야합니다. ex) root/index.js =>
+4. 파일 이름은 소문자로 시작하지만 컴포넌트 이름은 대문자로 시작합니다.
+5. 변수, 함수명은 **"camelCase"** 를 사용합니다.
+6. class 나 함수형 컴포넌트의 이름은 **"CamelCase"** 을 따릅니다.
+7. enum에 선언되는 값들은 **"CAPITAL_UNDER_SCORE"** 를 따릅니다.
+8. 컴포넌트를 제외한 함수의 이름은 동작의 의미가 담겨 있어야 합니다.
+9. 컴포넌트 코드가 들어간 파일의 확장자는 jsx를 사용합니다.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+##### 코딩컨벤션
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+else 사용을 최대한 자제합니다.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+컴포넌트 렌더링의 경우 삼항연산자 사용을 권장합니다.
 
-### `yarn eject`
+하나의 함수는 하나의 역할만을 합니다.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+한 메서드에 오직 한단계의 들여쓰기만 합니다.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+작은 변수들을 목적을 나타내는 객체 안에 할당하여 목적을 분명히 합니다.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+메서드, 클래스, 변수 이름을 축약하지 않고 목적을 가지고 있는 클래스 안에 집어넣어 목적을 나타냅니다.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+클래스는 50줄 이하, 패키지 10개 이하로 제한합니다.
 
-## Learn More
+게터/세터 속성 사용을 금지합니다.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+규칙1, 2, 3, 5, 6, 9
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+https://developerfarm.wordpress.com/2012/02/03/object_calisthenics_summary/
 
-### Code Splitting
+##### Issue 컨벤션
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+수정이 필요한 Issue는 Icebox에 보관합니다.
 
-### Analyzing the Bundle Size
+수정이 끝난 Issue는 client, server 분야에 따라 Frontend Backlog, Backend Backlog에 각각 보관합니다.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+##### 브랜치 전략 : Github Flow
 
-### Making a Progressive Web App
+1. main 브랜치 => product에 배포되는 브랜치
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- main 브랜치는 언제든지 배포 가능해야 한다.
+- 무조건 PR을 날려 검토받는다. (PR은 최대한 자세히)
 
-### Advanced Configuration
+2. 브랜치 생성
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- main 브랜치에서 생성해와야 한다.
+- 브랜치 이름은 한 눈에 어떤 작업을 위한 브랜치인지 알 수 있는 이름을 가져간다.
+- feature/Issue-(Issue번호) 형식의 해당 Issue에 맞는 단위 개발 브랜치를 생성해 작업한다.
 
-### Deployment
+3. 커밋
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- 파일을 추가, 수정, 삭제할 때 마다 커밋하여 작업 히스토리를 남긴다.
+- 작업을 진행한 이유를 다른 사람이 알 수 있도록 커밋 메세지를 남긴다.
 
-### `yarn build` fails to minify
+4. Pull Request
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- 피드백이나 도움이 필요할 때, merge 준비가 완료된 경우 PR을 생성한다.
+- 요청을 수락하면 변경 내용을 브랜치에 merge한다.
+
+5. main으로 merge, push 되었을 때는 즉시 배포되어야 한다.
+6. main으로 merge가 일어나면 자동으로 배포가 되도록 설정
