@@ -28,7 +28,7 @@ public class RequestProject {
     private String content;
 
     @Embedded
-    private UploadFile uploadFile;
+    private UploadFile musicFile;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "REQUEST_PROJECT_ID")
@@ -41,9 +41,6 @@ public class RequestProject {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "REQUEST_PROJECT_ID")
     private List<MoodEntity> mood;
-
-    @OneToMany(mappedBy = "requestProjectId", cascade = CascadeType.ALL)
-    private List<ContributeProject> contributeProject;
 
     @Column(columnDefinition = "TEXT", length = 1500)
     private String lyrics;

@@ -30,6 +30,6 @@ public class ContributeProject {
     private Boolean adoptFlag;
 
     @Embedded
-    private UploadFile uploadFile;
+    private UploadFile musicFile;
 
 }
