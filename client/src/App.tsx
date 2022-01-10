@@ -1,8 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { RecoilRoot } from "recoil";
+import { RequestProjectsViewModel } from "./viewmodel/RequestProjectsViewModel";
 
 const App: React.FC = () => {
-  return <React.Fragment></React.Fragment>;
+  return (
+    <RecoilRoot>
+      <RequestProjectsViewModel></RequestProjectsViewModel>
+    </RecoilRoot>
+  );
 };
 
 export default App;
