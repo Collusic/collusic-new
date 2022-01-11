@@ -1,7 +1,9 @@
 package com.collusic.collusicbe.domain.contributeproject;
 
+import com.collusic.collusicbe.domain.BaseTimeEntity;
 import com.collusic.collusicbe.domain.requestproject.RequestProject;
 import com.collusic.collusicbe.domain.upload.UploadFile;
+import com.fasterxml.jackson.databind.ser.Serializers;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,7 +12,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-public class ContributeProject {
+public class ContributeProject extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
