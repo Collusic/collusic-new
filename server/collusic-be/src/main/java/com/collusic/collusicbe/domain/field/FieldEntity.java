@@ -1,6 +1,9 @@
 package com.collusic.collusicbe.domain.field;
 
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
+import java.util.Arrays;
 
 @Entity
 @Table(name = "FIELD")
@@ -10,6 +13,5 @@ public class FieldEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Field field;
-
+    private String field;
 }

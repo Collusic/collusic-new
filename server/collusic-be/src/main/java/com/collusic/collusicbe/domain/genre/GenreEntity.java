@@ -9,7 +9,7 @@ public class GenreEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Genre genre;
+    private String genre;
 }
 
 

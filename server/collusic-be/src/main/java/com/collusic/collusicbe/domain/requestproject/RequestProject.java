@@ -1,7 +1,6 @@
 package com.collusic.collusicbe.domain.requestproject;
 
 import com.collusic.collusicbe.domain.BaseTimeEntity;
-import com.collusic.collusicbe.domain.contributeproject.ContributeProject;
 import com.collusic.collusicbe.domain.field.FieldEntity;
 import com.collusic.collusicbe.domain.genre.GenreEntity;
 import com.collusic.collusicbe.domain.mood.MoodEntity;

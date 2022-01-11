@@ -10,5 +10,5 @@ public class MoodEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Mood mood;
+    private String mood;
 }
