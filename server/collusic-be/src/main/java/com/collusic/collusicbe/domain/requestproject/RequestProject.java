@@ -1,5 +1,6 @@
 package com.collusic.collusicbe.domain.requestproject;
 
+import com.collusic.collusicbe.domain.BaseTimeEntity;
 import com.collusic.collusicbe.domain.field.FieldEntity;
 import com.collusic.collusicbe.domain.genre.GenreEntity;
 import com.collusic.collusicbe.domain.mood.MoodEntity;
@@ -13,7 +14,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Entity
-public class RequestProject {
+public class RequestProject extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
