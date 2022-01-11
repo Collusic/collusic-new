@@ -3,6 +3,8 @@ package com.collusic.collusicbe.domain.field;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Arrays;
+
 @Getter
 @RequiredArgsConstructor
 public enum Field {
