@@ -13,6 +13,5 @@ public class FieldEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Field field;
-
+    private String field;
 }
