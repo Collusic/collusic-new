@@ -5,7 +5,7 @@ type Genre = "hiphop" | "balad" | "funk";
 type Mood = "happy" | "cry" | "powerful";
 
 type RequestProjectType = {
-  requestProjectId?: number;
+  requestProjectId: number;
   requestTitle: string;
   requestContent?: string;
   requestField: Array<Field>;

@@ -4,20 +4,22 @@ import { User } from "../types/userType";
 import { RequestProjectType } from "../types/requestProjectType";
 import { RequestProjectView } from "./RequestProjectView";
 
-type RequestProjectsProps = {
-  requestProjects: Array<User & RequestProjectType>;
+type RequestListProps = {
+  requestList: Array<User & RequestProjectType>;
 };
 
-export const RequestProjectsView: React.FC<RequestProjectsProps> = ({
-  requestProjects,
+export const RequestListView: React.FC<RequestListProps> = ({
+  requestList,
 }) => {
   return (
     <React.Fragment>
-      {requestProjects.map((requestProject) => {
+      {requestList.map((requestProject) => {
         return (
           <RequestProjectView
+            key={requestProject.requestProjectId}
             userProfile={requestProject.userProfile}
             userEmail={requestProject.userEmail}
+            requestProjectId={requestProject.requestProjectId}
             requestTitle={requestProject.requestTitle}
             requestField={requestProject.requestField}
             requestGenre={requestProject.requestGenre}
