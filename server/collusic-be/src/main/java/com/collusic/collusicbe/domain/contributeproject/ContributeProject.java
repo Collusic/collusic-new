@@ -2,8 +2,6 @@ package com.collusic.collusicbe.domain.contributeproject;
 
 import com.collusic.collusicbe.domain.BaseTimeEntity;
 import com.collusic.collusicbe.domain.requestproject.RequestProject;
-import com.collusic.collusicbe.domain.upload.UploadFile;
-import com.fasterxml.jackson.databind.ser.Serializers;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -31,7 +29,6 @@ public class ContributeProject extends BaseTimeEntity {
 
     private Boolean adoptFlag;
 
-    @Embedded
-    private UploadFile musicFile;
-
+    @Column(columnDefinition = "TEXT")
+    private String uploadFilePath;
 }
