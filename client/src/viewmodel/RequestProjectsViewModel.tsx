@@ -8,7 +8,8 @@ import { RequestProjectsView } from "./../view/RequestProjectsView";
 
 export const RequestProjectsViewModel: React.FC = () => {
   const requestProjects = useRecoilValue(getRequestProjects);
-  const defaultRequestProjects: User & RequestProjectType = [
+  // upload의 타입에 따라 img태그안에 src를 넣을지, 가사를 텍스트로 집어넣을지 결정해야
+  const defaultRequestProjects: Array<User & RequestProjectType> = [
     {
       userProfile: "test1",
       userEmail: "test1",
@@ -16,7 +17,7 @@ export const RequestProjectsViewModel: React.FC = () => {
       requestField: ["melody"],
       requestGenre: ["hiphop"],
       requestMood: ["happy"],
-      upload: "test1",
+      requestLyric: "이 멜로디 너무 좋아",
     },
     {
       userProfile: "test2",
@@ -25,7 +26,7 @@ export const RequestProjectsViewModel: React.FC = () => {
       requestField: ["melody"],
       requestGenre: ["hiphop"],
       requestMood: ["happy"],
-      upload: "test2",
+      requestInstrument: "s3.com/fesaieja",
     },
   ];
   return (

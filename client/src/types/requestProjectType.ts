@@ -1,16 +1,8 @@
-type Field = "Melody" | "Instrument" | "Lyric";
+type Field = "melody" | "instrument" | "lyric";
 
 type Genre = "hiphop" | "balad" | "funk";
 
 type Mood = "happy" | "cry" | "powerful";
-
-type requestMelody = {
-  src: string;
-};
-
-type requestLyric = {
-  lyric: string;
-};
 
 type RequestProjectType = {
   requestProjectId?: number;
@@ -19,7 +11,9 @@ type RequestProjectType = {
   requestField: Array<Field>;
   requestGenre: Array<Genre>;
   requestMood: Array<Mood>;
-  upload: requestMelody | requestLyric;
+  requestLyric?: string;
+  requestInstrument?: string;
+  requestMelody?: string;
 };
 
-export { Field, Genre, Mood, requestLyric, requestMelody, RequestProjectType };
+export { Field, Genre, Mood, RequestProjectType };

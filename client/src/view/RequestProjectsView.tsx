@@ -22,7 +22,9 @@ export const RequestProjectsView: React.FC<RequestProjectsProps> = ({
             requestField={requestProject.requestField}
             requestGenre={requestProject.requestGenre}
             requestMood={requestProject.requestMood}
-            upload={requestProject.upload}
+            requestLyric={requestProject.requestLyric}
+            requestInstrument={requestProject.requestInstrument}
+            requestMelody={requestProject.requestMelody}
           ></RequestProjectView>
         );
       })}

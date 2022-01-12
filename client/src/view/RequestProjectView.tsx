@@ -1,8 +1,29 @@
 import React from "react";
+import IrequestStates from "../interfaces/IrequestStates";
 import { RequestProjectType } from "../types/requestProjectType";
 import { User } from "../types/userType";
 
 type RequestProjectProps = User & RequestProjectType;
+
+const requestStates = (
+  melodySrc: string,
+  instrumentSrc: string,
+  lyric: string
+) => {
+  return {
+    melody: (): JSX.Element => {
+      return <audio src={melodySrc}></audio>;
+    },
+
+    instrument: (): JSX.Element => {
+      return <audio src={instrumentSrc}></audio>;
+    },
+
+    lyric: (): JSX.Element => {
+      return <div>{lyric}</div>;
+    },
+  };
+};
 
 export const RequestProjectView: React.FC<RequestProjectProps> = ({
   userProfile,
@@ -11,7 +32,9 @@ export const RequestProjectView: React.FC<RequestProjectProps> = ({
   requestField,
   requestGenre,
   requestMood,
-  upload,
+  requestMelody,
+  requestInstrument,
+  requestLyric,
 }) => {
   return (
     <section className="reqeustBox">
@@ -37,7 +60,14 @@ export const RequestProjectView: React.FC<RequestProjectProps> = ({
           ))}
         </section>
       </section>
-      <section className="upload">{upload}</section>
+      <section className="upload">
+        {requestField.map(
+          (key) =>
+            requestStates(requestMelody!, requestInstrument!, requestLyric!)[
+              key
+            ]
+        )}
+      </section>
     </section>
   );
 };

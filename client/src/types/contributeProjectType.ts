@@ -1,8 +1,10 @@
-import { Field, requestLyric, requestMelody } from "./requestProjectType";
+import { Field } from "./requestProjectType";
 
 export type ContributeProject = {
   contributeProjectId: number;
   contributeField: Array<Field>;
   contributeContent: string;
-  upload: requestMelody | requestLyric;
+  contributeLyric?: string;
+  contributeInstrument?: string;
+  contributeMelody?: string;
 };
