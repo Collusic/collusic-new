@@ -4,7 +4,7 @@ import com.collusic.collusicbe.domain.BaseTimeEntity;
 import com.collusic.collusicbe.domain.field.FieldEntity;
 import com.collusic.collusicbe.domain.genre.GenreEntity;
 import com.collusic.collusicbe.domain.mood.MoodEntity;
-정import lombok.Getter;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
