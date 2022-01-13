@@ -4,6 +4,7 @@ import com.collusic.collusicbe.domain.BaseTimeEntity;
 import com.collusic.collusicbe.domain.field.FieldEntity;
 import com.collusic.collusicbe.domain.genre.GenreEntity;
 import com.collusic.collusicbe.domain.mood.MoodEntity;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -43,4 +44,15 @@ public class RequestProject extends BaseTimeEntity {
 
     @Column(columnDefinition = "TEXT", length = 1500)
     private String lyrics;
+
+    @Builder
+    public RequestProject(String title, String content, String uploadFilePath, List<FieldEntity> field, List<GenreEntity> genre, List<MoodEntity> mood, String lyrics) {
+        this.title = title;
+        this.content = content;
+        this.uploadFilePath = uploadFilePath;
+        this.field = field;
+        this.genre = genre;
+        this.mood = mood;
+        this.lyrics = lyrics;
+    }
 }

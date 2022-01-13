@@ -31,5 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
-
+.DS_Store
 src/main/resources/application-aws.properties

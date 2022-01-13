@@ -1,12 +1,14 @@
 package com.collusic.collusicbe.domain.field;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Arrays;
 
 @Entity
+@NoArgsConstructor
 @Table(name = "FIELD")
+@Getter
 public class FieldEntity {
 
     @Id
@@ -14,4 +16,8 @@ public class FieldEntity {
     private Long id;
 
     private String field;
+
+    public FieldEntity(String field) {
+        this.field = field;
+    }
 }
