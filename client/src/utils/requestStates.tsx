@@ -4,18 +4,20 @@ export const requestStates = (
   melodySrc: string,
   instrumentSrc: string,
   lyric: string
-) => {
-  return {
-    melody: (): JSX.Element => {
-      return <audio src={melodySrc}></audio>;
-    },
+) => ({
+  melody: ((): JSX.Element => (
+    <audio controls>
+      <source src={instrumentSrc}></source>이 문장은 audio 요소가 제대로 인식이
+      안됐을 때 나타납니다.
+    </audio>
+  ))(),
 
-    instrument: (): JSX.Element => {
-      return <audio src={instrumentSrc}></audio>;
-    },
+  instrument: ((): JSX.Element => (
+    <audio controls>
+      <source src={instrumentSrc}></source>이 문장은 audio 요소가 제대로 인식이
+      안됐을 때 나타납니다.
+    </audio>
+  ))(),
 
-    lyric: (): JSX.Element => {
-      return <div>{lyric}</div>;
-    },
-  };
-};
+  lyric: ((): JSX.Element => <div>{lyric}</div>)(),
+});
