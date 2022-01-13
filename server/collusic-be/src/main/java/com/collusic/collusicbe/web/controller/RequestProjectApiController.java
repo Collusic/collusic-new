@@ -19,7 +19,18 @@ public class RequestProjectApiController {
 
     @PostMapping("/api/requestprojects")
     public ResponseEntity<Long> save(@ModelAttribute RequestProjectSaveRequestDto requestProjectSaveRequestDto) throws IOException {
+        System.out.println("!!!!!!!!!!");
+        System.out.println(requestProjectSaveRequestDto.getTitle());
+        System.out.println(requestProjectSaveRequestDto.getContent());
+        System.out.println(requestProjectSaveRequestDto.getFields());
+        System.out.println(requestProjectSaveRequestDto.getGenres());
+        System.out.println(requestProjectSaveRequestDto.getMultipartFile().getOriginalFilename());
+        System.out.println(requestProjectSaveRequestDto.getLyrics());
+        System.out.println(requestProjectSaveRequestDto.getMoods());
+
+
         Long savedId = requestProjectService.save(requestProjectSaveRequestDto);
+        System.out.println("here!!!!!!!!!!");
         return ResponseEntity.status(HttpStatus.OK)
                 .body(savedId);
     }
