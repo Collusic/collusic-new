@@ -3,6 +3,7 @@ import React from "react";
 import { User } from "../types/userType";
 import { RequestProjectType } from "../types/requestProjectType";
 import { RequestProjectView } from "./RequestProjectView";
+import "./RequestList.scss";
 
 type RequestListProps = {
   requestList: Array<User & RequestProjectType>;
@@ -12,7 +13,7 @@ export const RequestListView: React.FC<RequestListProps> = ({
   requestList,
 }) => {
   return (
-    <React.Fragment>
+    <article className="project-list">
       {requestList.map((requestProject) => {
         return (
           <RequestProjectView
@@ -30,6 +31,6 @@ export const RequestListView: React.FC<RequestListProps> = ({
           ></RequestProjectView>
         );
       })}
-    </React.Fragment>
+    </article>
   );
 };

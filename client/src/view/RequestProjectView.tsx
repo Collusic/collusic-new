@@ -1,31 +1,13 @@
 import React from "react";
-import IrequestStates from "../interfaces/IrequestStates";
+import "./RequestProject.scss";
 import { RequestProjectType } from "../types/requestProjectType";
 import { User } from "../types/userType";
+import { requestStates } from "../utils/requestStates";
 
 type RequestProjectProps = User & RequestProjectType;
 
-const requestStates = (
-  melodySrc: string,
-  instrumentSrc: string,
-  lyric: string
-) => {
-  return {
-    melody: (): JSX.Element => {
-      return <audio src={melodySrc}></audio>;
-    },
-
-    instrument: (): JSX.Element => {
-      return <audio src={instrumentSrc}></audio>;
-    },
-
-    lyric: (): JSX.Element => {
-      return <div>{lyric}</div>;
-    },
-  };
-};
-
 export const RequestProjectView: React.FC<RequestProjectProps> = ({
+  requestProjectId,
   userProfile,
   userEmail,
   requestTitle,
@@ -37,7 +19,7 @@ export const RequestProjectView: React.FC<RequestProjectProps> = ({
   requestLyric,
 }) => {
   return (
-    <section className="reqeustBox">
+    <section className="requestBox" key={requestProjectId}>
       <section className="user">
         <img src={userProfile} alt={userEmail} className="profile" />
         <div className="email">{userEmail}</div>
