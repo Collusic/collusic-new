@@ -1,12 +1,18 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import { RecoilRoot } from "recoil";
-import { RequestListViewModel } from "./viewmodel/RequestListViewModel";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+
+import { MainPage } from "./page/MainPage";
 
 const App: React.FC = () => {
   return (
     <RecoilRoot>
-      <RequestListViewModel></RequestListViewModel>
+      {/* <RequestList></RequestList> */}
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+        </Routes>
+      </BrowserRouter>
     </RecoilRoot>
   );
 };
