@@ -1,0 +1,33 @@
+@import "../utils/style/color";
+@import "../utils/style/size";
+
+.requestBox {
+  display: flex;
+  flex-direction: column;
+  width: 18rem;
+  height: 15rem;
+  background-color: $Color_Main;
+
+  .user {
+    display: flex;
+    align-items: center;
+    width: 5rem;
+    height: 10px;
+
+    .profile {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 2rem;
+      height: $HEIGHT_LARGE;
+    }
+
+    .email {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 10rem;
+      height: $HEIGHT_LARGE;
+    }
+  }
+}
