@@ -1,5 +1,7 @@
 import { atom, selector } from "recoil";
 
+import { API } from "../utils/axios";
+
 export const requestProjectListState = atom({
   key: "requestProjectListState",
   default: [],
@@ -8,10 +10,9 @@ export const requestProjectListState = atom({
 export const getRequestProjects = selector({
   key: "getRequestProjects",
   get: async ({ get }) => {
-    const url = "http://collusic.com/get/";
     try {
-      const response = await fetch(url);
-      const data = await response.json();
+      const response = await API.get("/requestList");
+      const data = await response.data;
       return { data };
     } catch (err) {
       new Error("get api가 호출되지 않았습니다.");
