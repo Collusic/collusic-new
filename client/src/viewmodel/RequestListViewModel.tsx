@@ -1,18 +1,22 @@
 import React from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 
-// import { getRequestList } from "../model/requestProjectsModel";
+import {
+  currentPageState,
+  getRequestList,
+} from "../model/requestProjectsModel";
 import { RequestProjectType } from "../types/requestProjectType";
 import { User } from "../types/userType";
 import { RequestListView } from "../view/RequestListView";
 
 export const RequestListViewModel: React.FC = () => {
+  // const currentPage = useRecoilState(currentPageState);
   // const requestList = useRecoilValue(getRequestList);
   // upload의 타입에 따라 img태그안에 src를 넣을지, 가사를 텍스트로 집어넣을지 결정해야
   const defaultRequestList: Array<User & RequestProjectType> = [
     {
       requestProjectId: 1,
-      userProfile: "test1",
+      userProfile: "",
       userEmail: "test1",
       requestTitle: "test1",
       requestField: ["lyric"],
@@ -22,7 +26,7 @@ export const RequestListViewModel: React.FC = () => {
     },
     {
       requestProjectId: 2,
-      userProfile: "test2",
+      userProfile: "",
       userEmail: "test2",
       requestTitle: "test2",
       requestField: ["melody"],
@@ -32,7 +36,7 @@ export const RequestListViewModel: React.FC = () => {
     },
     {
       requestProjectId: 3,
-      userProfile: "test2",
+      userProfile: "",
       userEmail: "test2",
       requestTitle: "test2",
       requestField: ["melody"],
@@ -42,7 +46,7 @@ export const RequestListViewModel: React.FC = () => {
     },
     {
       requestProjectId: 4,
-      userProfile: "test2",
+      userProfile: "",
       userEmail: "test2",
       requestTitle: "test2",
       requestField: ["melody"],
@@ -52,7 +56,7 @@ export const RequestListViewModel: React.FC = () => {
     },
     {
       requestProjectId: 5,
-      userProfile: "test2",
+      userProfile: "",
       userEmail: "test2",
       requestTitle: "test2",
       requestField: ["melody"],
@@ -62,7 +66,7 @@ export const RequestListViewModel: React.FC = () => {
     },
     {
       requestProjectId: 6,
-      userProfile: "test2",
+      userProfile: "",
       userEmail: "test2",
       requestTitle: "test2",
       requestField: ["melody"],
@@ -72,7 +76,7 @@ export const RequestListViewModel: React.FC = () => {
     },
     {
       requestProjectId: 7,
-      userProfile: "test2",
+      userProfile: "",
       userEmail: "test2",
       requestTitle: "test2",
       requestField: ["melody"],
@@ -82,7 +86,7 @@ export const RequestListViewModel: React.FC = () => {
     },
     {
       requestProjectId: 8,
-      userProfile: "test2",
+      userProfile: "",
       userEmail: "test2",
       requestTitle: "test2",
       requestField: ["melody"],
@@ -91,5 +95,9 @@ export const RequestListViewModel: React.FC = () => {
       requestInstrument: "s3.com/fesaieja",
     },
   ];
-  return <RequestListView requestList={defaultRequestList}></RequestListView>;
+  return (
+    <React.Fragment>
+      <RequestListView requestList={defaultRequestList} />
+    </React.Fragment>
+  );
 };
