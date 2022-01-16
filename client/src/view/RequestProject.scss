@@ -1,0 +1,97 @@
+@import "../utils/style/color";
+@import "../utils/style/size";
+
+.requestBox {
+  display: flex;
+  flex-direction: column;
+  width: 25rem;
+  height: 20rem;
+  border-radius: 10px;
+  box-shadow: 1px 2px 5px 1px rgb(167, 165, 165);
+
+  .user {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 16rem;
+    height: $HEIGHT_SMALL;
+    padding: 5px 10px;
+    margin: 20px 10px 10px 10px;
+
+    .profile {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: $HEIGHT_EXTRA_SMALL;
+    }
+
+    .email {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 10rem;
+      height: $HEIGHT_EXTRA_SMALL;
+      font-size: $FONT_SMALL;
+      color: $Font_Sub;
+    }
+  }
+  .title {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 16rem;
+    height: $HEIGHT_SMALL;
+    padding: 5px 10px;
+    margin: 10px 10px;
+    font-size: $FONT_LARGE;
+    font-weight: 700;
+  }
+  .field {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 16rem;
+    height: $HEIGHT_EXTRA_SMALL;
+    padding: 5px 10px;
+    margin: 5px 5px 10px 5px;
+  }
+  .genre_mood {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: $FONT_MEDIUM;
+    font-weight: 600;
+    .genre {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 0px 10px;
+      #genreTag {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 0px 10px;
+        color: $Color_Main;
+      }
+    }
+    .mood {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 5px 10px;
+      #moodTag {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 5px 10px;
+        color: $Color_Main;
+      }
+    }
+  }
+  .upload {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 10px;
+  }
+}

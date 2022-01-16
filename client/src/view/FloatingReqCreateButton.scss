@@ -1,0 +1,56 @@
+@import "../utils/style/color";
+@import "../utils/style/size";
+
+.text-box {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  width: 8rem;
+  height: $HEIGHT_MEDIUM;
+  background-color: #ffffff;
+  border-radius: 40px;
+  box-shadow: 2px 2px 6px 0 rgba(0, 0, 0, 0.16);
+  z-index: -1;
+  visibility: hidden;
+  .create-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 15rem;
+  }
+}
+
+.mouse-on-size {
+  animation-duration: 0.5s;
+  animation-name: slidein;
+  animation-fill-mode: forwards;
+}
+
+.mouse-on-font {
+  animation-duration: 0.5s;
+  animation-name: fontsize;
+  animation-fill-mode: forwards;
+}
+
+@keyframes slidein {
+  0% {
+    width: 8rem;
+    visibility: hidden;
+  }
+  100% {
+    width: 20rem;
+    visibility: visible;
+  }
+}
+
+@keyframes fontsize {
+  from {
+    font-size: large;
+  }
+  to {
+    font-size: xx-large;
+  }
+}
