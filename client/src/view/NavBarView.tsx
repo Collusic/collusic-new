@@ -13,12 +13,15 @@ export const NavBarView: React.FC = () => {
         <ul>
           <li>
             <a href="#">
-              <img src="../../assets/notification.png" alt="Notify" />
+              <img src="../../assets/alarm/alarm.png" alt="alarm" />
             </a>
           </li>
           <li>
             <a href="#">
-              <img src="" alt="MyPage" />
+              <img
+                src="../../assets/defaultProfile/defaultProfile.png"
+                alt="defaultProfile"
+              />
             </a>
           </li>
         </ul>
