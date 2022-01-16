@@ -1,29 +1,29 @@
 header {
+    height: 100px;
     display: flex;
+    padding: 20px 160px;
 
     .logo {
         display: inline-block;
-        cursor: pointer;
-        padding: 15px;
+        color: #ff8900;
     }
 
     a {
         text-decoration: none;
         color: black;
+        cursor: pointer;
     }
 
     nav {
         margin-left: auto;
 
         ul {
-            list-style: none;
-            margin: 0;
             display: flex;
+            list-style: none;
         }
 
         li {
-            padding: 15px;
-            cursor: pointer;
+            padding: 0 15px;
         }
     }
 }
