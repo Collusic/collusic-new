@@ -21,13 +21,21 @@ export const RequestProjectView: React.FC<RequestProjectProps> = ({
   return (
     <section className="requestBox" key={requestProjectId}>
       <section className="user">
-        <img src={userProfile} alt={userEmail} className="profile" />
+        <img
+          src={
+            userProfile !== ""
+              ? userProfile
+              : `../../assets/defaultProfile/defaultProfile.png`
+          }
+          alt={userEmail}
+          className="profile"
+        />
         <div className="email">{userEmail}</div>
       </section>
       <section className="title">{requestTitle}</section>
       <section className="field">
         {requestField.map((field) => (
-          <img src={field} alt={field} />
+          <img src={`../../assets/${field}/${field}.png`} alt={field} />
         ))}
       </section>
       <section className="genre_mood">
