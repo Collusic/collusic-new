@@ -36,4 +36,12 @@ public class RequestProjectService {
         int totalPages = all.getTotalPages();
         return new RequestProjectsWithPaginationDto(requestProjectResponseDtos, totalPages);
     }
+
+    @Transactional
+    public RequestProjectResponseDto findById(Long id) {
+        RequestProject requestProject = requestProjectRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 요청작이 없습니다. id=" + id));
+
+        return new RequestProjectResponseDto(requestProject);
+    }
 }

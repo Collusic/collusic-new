@@ -1,6 +1,5 @@
 package com.collusic.collusicbe.web.controller;
 
-import com.collusic.collusicbe.domain.requestproject.RequestProject;
 import com.collusic.collusicbe.service.RequestProjectService;
 import com.collusic.collusicbe.web.dto.RequestProjectResponseDto;
 import com.collusic.collusicbe.web.dto.RequestProjectSaveRequestDto;
@@ -26,7 +25,7 @@ public class RequestProjectApiController {
                 .body(savedId);
     }
 
-    @GetMapping("/api/requestprojects")
+    @GetMapping("/api/main/requestprojects")
     public ResponseEntity<RequestProjectsWithPaginationDto> getRequestProjectsWithPagination(Pageable pageable) {
         RequestProjectsWithPaginationDto requestProjectsWithPagination = requestProjectService.getRequestProjectsWithPagination(pageable);
         return ResponseEntity.status(HttpStatus.OK)
