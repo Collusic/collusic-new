@@ -1,13 +1,27 @@
 import React from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 
-// import { getRequestList } from "../model/requestProjectsModel";
+import {
+  getRequestList,
+  getPageList,
+  currentPageState,
+} from "../model/requestProjectsModel";
 import { RequestProjectType } from "../types/requestProjectType";
 import { User } from "../types/userType";
+import { RequestListPagenationView } from "../view/RequestListPagenationView";
 import { RequestListView } from "../view/RequestListView";
 
 export const RequestListViewModel: React.FC = () => {
-  // const requestList = useRecoilValue(getRequestList);
+  const requestList = useRecoilValue(getRequestList);
+  const [currentPage, setCurrentPage] = useRecoilState(currentPageState);
+  const pagenationList: number[] = useRecoilValue(getPageList)!;
+
+  const onClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setCurrentPage(Number(e.currentTarget.value));
+    document
+      .querySelector(`#${e.currentTarget.id}`)
+      ?.classList.add("page-clicked");
+  };
   // upload의 타입에 따라 img태그안에 src를 넣을지, 가사를 텍스트로 집어넣을지 결정해야
   const defaultRequestList: Array<User & RequestProjectType> = [
     {
@@ -91,5 +105,14 @@ export const RequestListViewModel: React.FC = () => {
       requestInstrument: "s3.com/fesaieja",
     },
   ];
-  return <RequestListView requestList={defaultRequestList}></RequestListView>;
+  return (
+    <React.Component>
+      <RequestListView requestList={defaultRequestList}></RequestListView>
+      <RequestListPagenationView
+        pagenationList={pagenationList}
+        currentPage={currentPage}
+        onClickHandler={onClickHandler}
+      ></RequestListPagenationView>
+    </React.Component>
+  );
 };
