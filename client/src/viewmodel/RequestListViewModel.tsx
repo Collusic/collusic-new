@@ -1,17 +1,14 @@
 import React from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 
-import {
-  currentPageState,
-  getRequestList,
-} from "../model/requestProjectsModel";
+import { getRequestList } from "../model/requestProjectsModel";
 import { RequestProjectType } from "../types/requestProjectType";
 import { User } from "../types/userType";
 import { RequestListView } from "../view/RequestListView";
 
 export const RequestListViewModel: React.FC = () => {
   // const currentPage = useRecoilState(currentPageState);
-  // const requestList = useRecoilValue(getRequestList);
+  const requestList = useRecoilValue(getRequestList);
   // upload의 타입에 따라 img태그안에 src를 넣을지, 가사를 텍스트로 집어넣을지 결정해야
   const defaultRequestList: Array<User & RequestProjectType> = [
     {

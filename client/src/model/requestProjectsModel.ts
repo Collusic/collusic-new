@@ -7,8 +7,8 @@ export const requestProjectListState = atom({
   default: [],
 });
 
-export const getRequestProjects = selector({
-  key: "getRequestProjects",
+export const getRequestList = selector({
+  key: "getRequestList",
   get: async ({ get }) => {
     try {
       const response = await API.get("/requestList");
