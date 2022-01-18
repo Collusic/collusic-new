@@ -13,7 +13,7 @@ import { RequestListView } from "../view/RequestListView";
 
 export const RequestListViewModel: React.FC = () => {
   const requestList = useRecoilValue(getRequestList);
-  const [currentPage, setCurrentPage] = useRecoilState(currentPageState);
+  const [, setCurrentPage] = useRecoilState(currentPageState);
   const pagenationList: number[] = useRecoilValue(getPageList)!;
 
   const onClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -110,7 +110,6 @@ export const RequestListViewModel: React.FC = () => {
       <RequestListView requestList={defaultRequestList}></RequestListView>
       <RequestListPagenationView
         pagenationList={pagenationList}
-        currentPage={currentPage}
         onClickHandler={onClickHandler}
       ></RequestListPagenationView>
     </React.Component>
