@@ -2,6 +2,7 @@ package com.collusic.collusicbe.service;
 
 import com.collusic.collusicbe.domain.requestproject.RequestProject;
 import com.collusic.collusicbe.domain.requestproject.RequestProjectRepository;
+import com.collusic.collusicbe.util.StringUtils;
 import com.collusic.collusicbe.web.dto.RequestProjectResponseDto;
 import com.collusic.collusicbe.web.dto.RequestProjectSaveRequestDto;
 import com.collusic.collusicbe.web.dto.RequestProjectUpdateRequestDto;
@@ -28,6 +29,17 @@ public class RequestProjectService {
         String uploadFilePath = s3Service.upload(requestProjectSaveRequestDto.getMultipartFile(), "static");
         requestProjectSaveRequestDto.setUploadFilePath(uploadFilePath);
         return requestProjectRepository.save(requestProjectSaveRequestDto.toEntity()).getId();
+    }
+
+    @Transactional
+    public Long update(Long id, RequestProjectUpdateRequestDto requestProjectUpdateRequestDto) throws IOException {
+        RequestProject requestProject = requestProjectRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 요청작이 없습니다. id=" + id));
+        String savedFileName = StringUtils.extractFileNameFromFilePath(requestProject.getUploadFilePath());
+        String uploadFilePath = s3Service.update(requestProjectUpdateRequestDto.getMultipartFile(), "static", savedFileName);
+        requestProjectUpdateRequestDto.setUploadFilePath(uploadFilePath);
+        requestProject.update(requestProjectUpdateRequestDto);
+        return id;
     }
 
     @Transactional
