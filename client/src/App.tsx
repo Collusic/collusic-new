@@ -7,7 +7,6 @@ import { MainPageView } from "./view/MainPageView";
 const App: React.FC = () => {
   return (
     <RecoilRoot>
-      {/* <RequestList></RequestList> */}
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MainPageView />} />
