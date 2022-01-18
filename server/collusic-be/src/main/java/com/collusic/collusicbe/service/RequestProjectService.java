@@ -4,6 +4,7 @@ import com.collusic.collusicbe.domain.requestproject.RequestProject;
 import com.collusic.collusicbe.domain.requestproject.RequestProjectRepository;
 import com.collusic.collusicbe.web.dto.RequestProjectResponseDto;
 import com.collusic.collusicbe.web.dto.RequestProjectSaveRequestDto;
+import com.collusic.collusicbe.web.dto.RequestProjectUpdateRequestDto;
 import com.collusic.collusicbe.web.dto.RequestProjectsWithPaginationDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
