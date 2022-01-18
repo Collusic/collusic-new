@@ -38,4 +38,11 @@ public class RequestProjectApiController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(requestProjectResponseDto);
     }
+
+    @PutMapping("/api/requestprojects/{id}")
+    public ResponseEntity<Long> update(@PathVariable Long id, @ModelAttribute RequestProjectUpdateRequestDto requestProjectUpdateRequestDto) throws IOException {
+        Long updatedId = requestProjectService.update(id, requestProjectUpdateRequestDto);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(updatedId);
+    }
 }
