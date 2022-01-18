@@ -39,6 +39,23 @@ public class S3Service {
         return uploadImageUrl;
     }
 
+    public String update(@ModelAttribute MultipartFile multiparFile, String dirName, String savedFileName) throws IOException {
+        File uploadFile = convert(multiparFile)
+                .orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File로 전환이 실패했습니다."));
+
+        return update(uploadFile, dirName, savedFileName);
+    }
+
+    private String update(File uploadFile, String dirName, String savedFileName) {
+        String fileName = dirName + "/" + uploadFile.getName();
+        if(isExist(savedFileName)) {
+            s3Client.deleteObject(bucket, savedFileName);
+        }
+        String uploadImageUrl = putS3(uploadFile, fileName);
+        removeNewFile(uploadFile);
+        return uploadImageUrl;
+    }
+
     private String putS3(File uploadFile, String fileName) {
         s3Client.putObject(new PutObjectRequest(bucket, fileName, uploadFile).withCannedAcl(CannedAccessControlList.PublicRead));
         return s3Client.getUrl(bucket, fileName).toString();
@@ -61,5 +78,9 @@ public class S3Service {
             return Optional.of(convertFile);
         }
         return Optional.empty();
+    }
+
+    private boolean isExist(String fileName) {
+        return s3Client.doesObjectExist(bucket, fileName);
     }
 }
