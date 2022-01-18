@@ -3,6 +3,7 @@ package com.collusic.collusicbe.web.controller;
 import com.collusic.collusicbe.service.RequestProjectService;
 import com.collusic.collusicbe.web.dto.RequestProjectResponseDto;
 import com.collusic.collusicbe.web.dto.RequestProjectSaveRequestDto;
+import com.collusic.collusicbe.web.dto.RequestProjectUpdateRequestDto;
 import com.collusic.collusicbe.web.dto.RequestProjectsWithPaginationDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -37,5 +38,12 @@ public class RequestProjectApiController {
         RequestProjectResponseDto requestProjectResponseDto = requestProjectService.findById(id);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(requestProjectResponseDto);
+    }
+
+    @PutMapping("/api/requestprojects/{id}")
+    public ResponseEntity<Long> update(@PathVariable Long id, @ModelAttribute RequestProjectUpdateRequestDto requestProjectUpdateRequestDto) throws IOException {
+        Long updatedId = requestProjectService.update(id, requestProjectUpdateRequestDto);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(updatedId);
     }
 }
