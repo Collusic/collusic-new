@@ -27,6 +27,7 @@ public class ContributeProjectSaveRequestDto {
                 .field(fields.stream().map(field -> new ContributeProjectFieldEntity(field)).collect(Collectors.toList()))
                 .content(content)
                 .lyrics(lyrics)
+                .adoptFlag(false)
                 .uploadFilePath(uploadFilePath)
                 .build();
     }
