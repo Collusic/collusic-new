@@ -7,9 +7,9 @@ import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
-@Table(name = "REQUEST_PROJECT_FIELD")
+@Table(name = "CONTRIBUTE_PROJECT_FIELD")
 @Getter
-public class RequestProjectFieldEntity {
+public class ContributeProjectFieldEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +17,7 @@ public class RequestProjectFieldEntity {
 
     private String field;
 
-    public RequestProjectFieldEntity(String field) {
+    public ContributeProjectFieldEntity(String field) {
         this.field = field;
     }
 }
