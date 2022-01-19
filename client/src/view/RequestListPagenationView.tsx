@@ -4,27 +4,42 @@ import "./RequestListPagenation.scss";
 
 type RequestListPagenationProps = {
   pagenationList: number[];
-  onClickHandler(e: React.MouseEvent<HTMLButtonElement>): void;
+  currentPage: number;
+  onClickNumberHandler(e: React.MouseEvent<HTMLButtonElement>): void;
+  onClickLeftHandler(e: React.MouseEvent<HTMLButtonElement>): void;
+  onClickRightHandler(e: React.MouseEvent<HTMLButtonElement>): void;
 };
 
 export const RequestListPagenationView: React.FC<
   RequestListPagenationProps
-> = ({ pagenationList, onClickHandler }) => {
+> = ({
+  pagenationList,
+  currentPage,
+  onClickNumberHandler,
+  onClickLeftHandler,
+  onClickRightHandler,
+}) => {
   return (
     <article className="pagenation">
-      <section className="left-arrow">{"<"}</section>
+      <section className="arrow" onClick={onClickLeftHandler}>
+        {"<<"}
+      </section>
       {pagenationList &&
-        pagenationList.map((pageNumber, index) => (
+        pagenationList.map((pageNumber) => (
           <section
-            key={index}
-            className="page-number"
-            id={`${index}`}
-            onClick={onClickHandler}
+            key={pageNumber}
+            className={`page-number ${
+              pageNumber === currentPage ? "clicked" : ""
+            }`}
+            id={`${pageNumber}`}
+            onClick={onClickNumberHandler}
           >
             {pageNumber}
           </section>
         ))}
-      <section className="right-arrow">{">"}</section>
+      <section className="arrow" onClick={onClickRightHandler}>
+        {">>"}
+      </section>
     </article>
   );
 };

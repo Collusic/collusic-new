@@ -13,14 +13,19 @@ import { RequestListView } from "../view/RequestListView";
 
 export const RequestListViewModel: React.FC = () => {
   const requestList = useRecoilValue(getRequestList);
-  const [, setCurrentPage] = useRecoilState(currentPageState);
+  const [currentPage, setCurrentPage] = useRecoilState(currentPageState);
   const pagenationList: number[] = useRecoilValue(getPageList)!;
 
-  const onClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onClickNumberHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     setCurrentPage(Number(e.currentTarget.value));
-    document
-      .querySelector(`#${e.currentTarget.id}`)
-      ?.classList.add("page-clicked");
+  };
+
+  const onClickLeftHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setCurrentPage(currentPage - 1);
+  };
+
+  const onClickRightHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setCurrentPage(currentPage + 1);
   };
   // upload의 타입에 따라 img태그안에 src를 넣을지, 가사를 텍스트로 집어넣을지 결정해야
   const defaultRequestList: Array<User & RequestProjectType> = [
@@ -107,12 +112,16 @@ export const RequestListViewModel: React.FC = () => {
   ];
 
   const defaultPagenationList = [1, 2, 3, 4, 5];
+  const defaultCurrentPage = 1;
   return (
     <React.Fragment>
       <RequestListView requestList={defaultRequestList}></RequestListView>
       <RequestListPagenationView
+        currentPage={defaultCurrentPage}
         pagenationList={defaultPagenationList}
-        onClickHandler={onClickHandler}
+        onClickNumberHandler={onClickNumberHandler}
+        onClickLeftHandler={onClickLeftHandler}
+        onClickRightHandler={onClickRightHandler}
       ></RequestListPagenationView>
     </React.Fragment>
   );
