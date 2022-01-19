@@ -9,7 +9,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Table(name = "FIELD")
 @Getter
-public class FieldEntity {
+public class RequestProjectFieldEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +17,7 @@ public class FieldEntity {
 
     private String field;
 
-    public FieldEntity(String field) {
+    public RequestProjectFieldEntity(String field) {
         this.field = field;
     }
 }

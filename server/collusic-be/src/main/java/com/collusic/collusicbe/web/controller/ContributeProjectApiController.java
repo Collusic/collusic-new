@@ -1,6 +1,5 @@
 package com.collusic.collusicbe.web.controller;
 
-import com.collusic.collusicbe.domain.contributeproject.ContributeProject;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

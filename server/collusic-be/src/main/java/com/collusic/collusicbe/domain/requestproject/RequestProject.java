@@ -1,7 +1,7 @@
 package com.collusic.collusicbe.domain.requestproject;
 
 import com.collusic.collusicbe.domain.BaseTimeEntity;
-import com.collusic.collusicbe.domain.field.FieldEntity;
+import com.collusic.collusicbe.domain.field.RequestProjectFieldEntity;
 import com.collusic.collusicbe.domain.genre.GenreEntity;
 import com.collusic.collusicbe.domain.mood.MoodEntity;
 import com.collusic.collusicbe.web.dto.RequestProjectUpdateRequestDto;
@@ -34,7 +34,7 @@ public class RequestProject extends BaseTimeEntity {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "REQUEST_PROJECT_ID")
-    private List<FieldEntity> field;
+    private List<RequestProjectFieldEntity> field;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "REQUEST_PROJECT_ID")
@@ -48,7 +48,7 @@ public class RequestProject extends BaseTimeEntity {
     private String lyrics;
 
     @Builder
-    public RequestProject(String title, String content, String uploadFilePath, List<FieldEntity> field, List<GenreEntity> genre, List<MoodEntity> mood, String lyrics) {
+    public RequestProject(String title, String content, String uploadFilePath, List<RequestProjectFieldEntity> field, List<GenreEntity> genre, List<MoodEntity> mood, String lyrics) {
         this.title = title;
         this.content = content;
         this.uploadFilePath = uploadFilePath;
@@ -63,7 +63,7 @@ public class RequestProject extends BaseTimeEntity {
         this.content = requestProjectUpdateRequestDto.getContent();
         this.uploadFilePath = requestProjectUpdateRequestDto.getUploadFilePath();
         this.field.clear();
-        this.field.addAll(requestProjectUpdateRequestDto.getFields().stream().map(field -> new FieldEntity(field)).collect(Collectors.toList()));
+        this.field.addAll(requestProjectUpdateRequestDto.getFields().stream().map(field -> new RequestProjectFieldEntity(field)).collect(Collectors.toList()));
         this.genre.clear();
         this.genre.addAll(requestProjectUpdateRequestDto.getGenres().stream().map(genre -> new GenreEntity(genre)).collect(Collectors.toList()));
         this.mood.clear();
