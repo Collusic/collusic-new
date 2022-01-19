@@ -43,18 +43,26 @@ public class RequestProjectService {
     }
 
     @Transactional
-    public RequestProjectsWithPaginationDto getRequestProjectsWithPagination(Pageable pageable) {
-        Page<RequestProject> all = requestProjectRepository.findAll(pageable);
-        List<RequestProjectResponseDto> requestProjectResponseDtos = all.getContent().stream().map(requestProject -> new RequestProjectResponseDto(requestProject)).collect(Collectors.toList());
-        int totalPages = all.getTotalPages();
-        return new RequestProjectsWithPaginationDto(requestProjectResponseDtos, totalPages);
-    }
-
-    @Transactional
     public RequestProjectResponseDto findById(Long id) {
         RequestProject requestProject = requestProjectRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 요청작이 없습니다. id=" + id));
 
         return new RequestProjectResponseDto(requestProject);
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        RequestProject requestProject = requestProjectRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 요청작이 없습니다. id=" + id));
+
+        requestProjectRepository.delete(requestProject);
+    }
+
+    @Transactional
+    public RequestProjectsWithPaginationDto getRequestProjectsWithPagination(Pageable pageable) {
+        Page<RequestProject> all = requestProjectRepository.findAll(pageable);
+        List<RequestProjectResponseDto> requestProjectResponseDtos = all.getContent().stream().map(requestProject -> new RequestProjectResponseDto(requestProject)).collect(Collectors.toList());
+        int totalPages = all.getTotalPages();
+        return new RequestProjectsWithPaginationDto(requestProjectResponseDtos, totalPages);
     }
 }
