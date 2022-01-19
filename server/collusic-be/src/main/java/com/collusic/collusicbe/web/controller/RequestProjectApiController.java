@@ -26,11 +26,11 @@ public class RequestProjectApiController {
                 .body(savedId);
     }
 
-    @GetMapping("/api/main/requestprojects")
-    public ResponseEntity<RequestProjectsWithPaginationDto> getRequestProjectsWithPagination(Pageable pageable) {
-        RequestProjectsWithPaginationDto requestProjectsWithPagination = requestProjectService.getRequestProjectsWithPagination(pageable);
+    @PutMapping("/api/requestprojects/{id}")
+    public ResponseEntity<Long> update(@PathVariable Long id, @ModelAttribute RequestProjectUpdateRequestDto requestProjectUpdateRequestDto) throws IOException {
+        Long updatedId = requestProjectService.update(id, requestProjectUpdateRequestDto);
         return ResponseEntity.status(HttpStatus.OK)
-                .body(requestProjectsWithPagination);
+                .body(updatedId);
     }
 
     @GetMapping("/api/requestprojects/{id}")
@@ -40,10 +40,17 @@ public class RequestProjectApiController {
                 .body(requestProjectResponseDto);
     }
 
-    @PutMapping("/api/requestprojects/{id}")
-    public ResponseEntity<Long> update(@PathVariable Long id, @ModelAttribute RequestProjectUpdateRequestDto requestProjectUpdateRequestDto) throws IOException {
-        Long updatedId = requestProjectService.update(id, requestProjectUpdateRequestDto);
+    @DeleteMapping("/api/requestprojects/{id}")
+    public ResponseEntity<Long> delete(@PathVariable Long id) {
+        requestProjectService.delete(id);
         return ResponseEntity.status(HttpStatus.OK)
-                .body(updatedId);
+                .body(id);
+    }
+
+    @GetMapping("/api/main/requestprojects")
+    public ResponseEntity<RequestProjectsWithPaginationDto> getRequestProjectsWithPagination(Pageable pageable) {
+        RequestProjectsWithPaginationDto requestProjectsWithPagination = requestProjectService.getRequestProjectsWithPagination(pageable);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(requestProjectsWithPagination);
     }
 }
