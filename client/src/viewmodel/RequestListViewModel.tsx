@@ -108,10 +108,9 @@ export const RequestListViewModel: React.FC = () => {
   return (
     <React.Fragment>
       <RequestListView requestList={defaultRequestList}></RequestListView>
-      {/* <RequestListPagenationView
+      <RequestListPagenationView
         pagenationList={pagenationList}
-        onClickHandler={onClickHandler}
-      ></RequestListPagenationView> */}
+      ></RequestListPagenationView>
     </React.Fragment>
   );
 };
