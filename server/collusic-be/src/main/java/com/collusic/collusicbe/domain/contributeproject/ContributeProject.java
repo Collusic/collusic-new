@@ -21,7 +21,7 @@ public class ContributeProject extends BaseTimeEntity {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "REQUEST_PROJECT_ID")
-    private RequestProject requestProjectId;
+    private RequestProject requestProject;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "CONTRIBUTE_PROJECT_ID")
