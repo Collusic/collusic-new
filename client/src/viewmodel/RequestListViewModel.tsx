@@ -105,11 +105,14 @@ export const RequestListViewModel: React.FC = () => {
       requestInstrument: "s3.com/fesaieja",
     },
   ];
+
+  const defaultPagenationList = [1, 2, 3, 4, 5];
   return (
     <React.Fragment>
       <RequestListView requestList={defaultRequestList}></RequestListView>
       <RequestListPagenationView
-        pagenationList={pagenationList}
+        pagenationList={defaultPagenationList}
+        onClickHandler={onClickHandler}
       ></RequestListPagenationView>
     </React.Fragment>
   );
