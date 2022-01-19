@@ -1,5 +1,12 @@
 import React from "react";
+import { CreateRequestViewModel } from "../viewmodel/CreateRequestViewModel";
+
+import "./CreateRequestPage.scss";
 
 export const CreateRequestPageView: React.FC = () => {
-  return <React.Fragment></React.Fragment>;
+  return (
+    <main className="main">
+      <CreateRequestViewModel />
+    </main>
+  );
 };
