@@ -34,8 +34,12 @@ export const RequestProjectView: React.FC<RequestProjectProps> = ({
       </section>
       <section className="title">{requestTitle}</section>
       <section className="field">
-        {requestField.map((field) => (
-          <img src={`../../assets/${field}/${field}.png`} alt={field} />
+        {requestField.map((field, idx) => (
+          <img
+            src={`../../assets/${field}/${field}.png`}
+            alt={field}
+            key={idx}
+          />
         ))}
       </section>
       <section className="genre_mood">

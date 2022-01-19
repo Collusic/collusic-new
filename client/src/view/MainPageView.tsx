@@ -10,9 +10,7 @@ export const MainPageView: React.FC = () => {
       <Suspense fallback={<div>요청작 리스트 페이지 로딩 중...</div>}>
         <RequestListViewModel />
       </Suspense>
-      <article className="float">
-        <FloatingReqCreateButtonView />
-      </article>
+      <FloatingReqCreateButtonView />
     </main>
   );
 };

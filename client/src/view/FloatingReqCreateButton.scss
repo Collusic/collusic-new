@@ -5,9 +5,9 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  position: absolute;
-  right: 1rem;
-  bottom: 1rem;
+  position: fixed;
+  right: 13rem;
+  bottom: 4rem;
   width: 8rem;
   height: $HEIGHT_MEDIUM;
   background-color: #ffffff;
@@ -21,6 +21,12 @@
     align-items: center;
     width: 15rem;
   }
+}
+
+.plus-button {
+  position: fixed;
+  right: 12rem;
+  bottom: 3rem;
 }
 
 .mouse-on-size {
