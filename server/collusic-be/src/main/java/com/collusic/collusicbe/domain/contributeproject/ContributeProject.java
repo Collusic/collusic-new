@@ -1,11 +1,14 @@
 package com.collusic.collusicbe.domain.contributeproject;
 
 import com.collusic.collusicbe.domain.BaseTimeEntity;
+import com.collusic.collusicbe.domain.field.ContributeProjectFieldEntity;
 import com.collusic.collusicbe.domain.requestproject.RequestProject;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -19,7 +22,11 @@ public class ContributeProject extends BaseTimeEntity {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "REQUEST_PROJECT_ID")
-    private RequestProject requestProjectId;
+    private RequestProject requestProject;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "CONTRIBUTE_PROJECT_ID")
+    private List<ContributeProjectFieldEntity> field;
 
     @Column(columnDefinition = "TEXT", length = 300, nullable = false)
     private String content;
@@ -31,4 +38,14 @@ public class ContributeProject extends BaseTimeEntity {
 
     @Column(columnDefinition = "TEXT")
     private String uploadFilePath;
+
+    @Builder
+    public ContributeProject(RequestProject requestProject, List<ContributeProjectFieldEntity> field, String content, String lyrics, Boolean adoptFlag, String uploadFilePath) {
+        this.requestProject = requestProject;
+        this.field = field;
+        this.content = content;
+        this.lyrics = lyrics;
+        this.adoptFlag = adoptFlag;
+        this.uploadFilePath = uploadFilePath;
+    }
 }
