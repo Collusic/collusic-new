@@ -41,20 +41,21 @@ export const RequestProjectView: React.FC<RequestProjectProps> = ({
       <section className="genre_mood">
         <section className="genre">
           <div id="genreTag">장르</div>
-          {requestGenre.map((genre) => (
-            <div>{genre}</div>
+          {requestGenre.map((genre, idx) => (
+            <div key={idx}>{genre}</div>
           ))}
         </section>
         <section className="mood">
           <div id="moodTag">분위기</div>
-          {requestMood.map((mood) => (
-            <div>{mood}</div>
+          {requestMood.map((mood, idx) => (
+            <div key={idx}>{mood}</div>
           ))}
         </section>
       </section>
       <section className="upload">
-        {requestField.map((key) => {
+        {requestField.map((key, idx) => {
           return requestStates(
+            idx,
             requestMelody!,
             requestInstrument!,
             requestLyric!
