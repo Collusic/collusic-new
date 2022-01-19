@@ -3,6 +3,7 @@ package com.collusic.collusicbe.domain.contributeproject;
 import com.collusic.collusicbe.domain.BaseTimeEntity;
 import com.collusic.collusicbe.domain.field.ContributeProjectFieldEntity;
 import com.collusic.collusicbe.domain.requestproject.RequestProject;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -37,4 +38,14 @@ public class ContributeProject extends BaseTimeEntity {
 
     @Column(columnDefinition = "TEXT")
     private String uploadFilePath;
+
+    @Builder
+    public ContributeProject(RequestProject requestProject, List<ContributeProjectFieldEntity> field, String content, String lyrics, Boolean adoptFlag, String uploadFilePath) {
+        this.requestProject = requestProject;
+        this.field = field;
+        this.content = content;
+        this.lyrics = lyrics;
+        this.adoptFlag = adoptFlag;
+        this.uploadFilePath = uploadFilePath;
+    }
 }
