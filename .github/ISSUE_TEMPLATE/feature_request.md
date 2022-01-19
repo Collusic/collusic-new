@@ -2,8 +2,8 @@
 name: Feature request
 about: Suggest an idea for this project
 title: '[Feature]'
-labels: '💻Frontend'
-assignees: ''
+labels: '💻프론트엔드'
+assignees: 'spiderq2697'
 
 ---
 

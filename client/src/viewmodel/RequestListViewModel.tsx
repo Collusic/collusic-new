@@ -31,7 +31,7 @@ export const RequestListViewModel: React.FC = () => {
   const defaultRequestList: Array<User & RequestProjectType> = [
     {
       requestProjectId: 1,
-      userProfile: "test1",
+      userProfile: "",
       userEmail: "test1",
       requestTitle: "test1",
       requestField: ["lyric"],
@@ -41,7 +41,7 @@ export const RequestListViewModel: React.FC = () => {
     },
     {
       requestProjectId: 2,
-      userProfile: "test2",
+      userProfile: "",
       userEmail: "test2",
       requestTitle: "test2",
       requestField: ["melody"],
@@ -51,7 +51,7 @@ export const RequestListViewModel: React.FC = () => {
     },
     {
       requestProjectId: 3,
-      userProfile: "test2",
+      userProfile: "",
       userEmail: "test2",
       requestTitle: "test2",
       requestField: ["melody"],
@@ -61,7 +61,7 @@ export const RequestListViewModel: React.FC = () => {
     },
     {
       requestProjectId: 4,
-      userProfile: "test2",
+      userProfile: "",
       userEmail: "test2",
       requestTitle: "test2",
       requestField: ["melody"],
@@ -71,7 +71,7 @@ export const RequestListViewModel: React.FC = () => {
     },
     {
       requestProjectId: 5,
-      userProfile: "test2",
+      userProfile: "",
       userEmail: "test2",
       requestTitle: "test2",
       requestField: ["melody"],
@@ -81,7 +81,7 @@ export const RequestListViewModel: React.FC = () => {
     },
     {
       requestProjectId: 6,
-      userProfile: "test2",
+      userProfile: "",
       userEmail: "test2",
       requestTitle: "test2",
       requestField: ["melody"],
@@ -91,7 +91,7 @@ export const RequestListViewModel: React.FC = () => {
     },
     {
       requestProjectId: 7,
-      userProfile: "test2",
+      userProfile: "",
       userEmail: "test2",
       requestTitle: "test2",
       requestField: ["melody"],
@@ -101,7 +101,7 @@ export const RequestListViewModel: React.FC = () => {
     },
     {
       requestProjectId: 8,
-      userProfile: "test2",
+      userProfile: "",
       userEmail: "test2",
       requestTitle: "test2",
       requestField: ["melody"],
