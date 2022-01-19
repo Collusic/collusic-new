@@ -1,7 +1,7 @@
 package com.collusic.collusicbe.domain.contributeproject;
 
 import com.collusic.collusicbe.domain.BaseTimeEntity;
-import com.collusic.collusicbe.domain.field.RequestProjectFieldEntity;
+import com.collusic.collusicbe.domain.field.ContributeProjectFieldEntity;
 import com.collusic.collusicbe.domain.requestproject.RequestProject;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,7 +25,7 @@ public class ContributeProject extends BaseTimeEntity {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "CONTRIBUTE_PROJECT_ID")
-    private List<RequestProjectFieldEntity> field;
+    private List<ContributeProjectFieldEntity> field;
 
     @Column(columnDefinition = "TEXT", length = 300, nullable = false)
     private String content;
