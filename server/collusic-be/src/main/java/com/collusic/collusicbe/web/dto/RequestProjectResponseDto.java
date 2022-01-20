@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 @Getter
 @NoArgsConstructor
 public class RequestProjectResponseDto {
+    private Long id;
     private String title;
     private String content;
     private String uploadFilePath;
@@ -19,6 +20,7 @@ public class RequestProjectResponseDto {
     private String lyrics;
 
     public RequestProjectResponseDto(RequestProject requestProject) {
+        this.id = requestProject.getId();
         this.title = requestProject.getTitle();
         this.content = requestProject.getContent();
         this.uploadFilePath = requestProject.getUploadFilePath();
