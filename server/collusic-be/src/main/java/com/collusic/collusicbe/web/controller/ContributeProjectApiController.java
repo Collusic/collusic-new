@@ -25,6 +25,13 @@ public class ContributeProjectApiController {
                 .body(contributeProjectResponseDto);
     }
 
+    @GetMapping("/api/requestprojects/{requestProjectId}/contributeprojects/{contributeProjectId}")
+    public ResponseEntity<ContributeProjectResponseDto> findById(@PathVariable Long contributeProjectId) {
+        ContributeProjectResponseDto contributeProjectResponseDto = contributeProjectService.findById(contributeProjectId);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(contributeProjectResponseDto);
+    }
+
     @PutMapping("/api/requestprojects/{requestProjectId}/contributeprojects/{contributeProjectId}")
     public ResponseEntity<ContributeProjectResponseDto> update(@ModelAttribute ContributeProjectUpdateRequestDto contributeProjectUpdateRequestDto, @PathVariable Long requestProjectId, @PathVariable Long contributeProjectId) throws IOException{
         ContributeProjectResponseDto contributeProjectResponseDto = contributeProjectService.update(contributeProjectUpdateRequestDto, contributeProjectId);
