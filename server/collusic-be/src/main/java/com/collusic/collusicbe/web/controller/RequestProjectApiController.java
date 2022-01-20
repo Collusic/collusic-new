@@ -7,6 +7,8 @@ import com.collusic.collusicbe.web.dto.RequestProjectUpdateRequestDto;
 import com.collusic.collusicbe.web.dto.RequestProjectsWithPaginationDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,7 +50,7 @@ public class RequestProjectApiController {
     }
 
     @GetMapping("/api/main/requestprojects")
-    public ResponseEntity<RequestProjectsWithPaginationDto> getRequestProjectsWithPagination(Pageable pageable) {
+    public ResponseEntity<RequestProjectsWithPaginationDto> getRequestProjectsWithPagination(@PageableDefault(sort = "createdDate", direction = Sort.Direction.DESC)Pageable pageable) {
         RequestProjectsWithPaginationDto requestProjectsWithPagination = requestProjectService.getRequestProjectsWithPagination(pageable);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(requestProjectsWithPagination);
