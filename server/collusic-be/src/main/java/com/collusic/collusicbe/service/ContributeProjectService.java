@@ -24,7 +24,7 @@ public class ContributeProjectService {
 
     @Transactional
     public ContributeProjectResponseDto save(ContributeProjectSaveRequestDto contributeProjectSaveRequestDto, Long id) throws IOException {
-        String uploadFilePath = s3Service.upload(contributeProjectSaveRequestDto.getMultipartFile(), "contributeProjects");
+        String uploadFilePath = s3Service.upload(contributeProjectSaveRequestDto.getMultipartFile(), "static");
         contributeProjectSaveRequestDto.setUploadFilePath(uploadFilePath);
         RequestProject savedRequestProject = requestProjectRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 요청작이 없습니다. id=" + id));
@@ -36,7 +36,7 @@ public class ContributeProjectService {
     public ContributeProjectResponseDto update(ContributeProjectUpdateRequestDto contributeProjectUpdateRequestDto, Long id) throws IOException {
         ContributeProject contributeProject = contributeProjectRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 기여작이 없습니다. id=" + id));
         String savedFileName = StringUtils.extractFileNameFromFilePath(contributeProject.getUploadFilePath());
-        String uploadFilePath = s3Service.update(contributeProjectUpdateRequestDto.getMultipartFile(), "contributeProjects", savedFileName);
+        String uploadFilePath = s3Service.update(contributeProjectUpdateRequestDto.getMultipartFile(), "static", savedFileName);
         contributeProjectUpdateRequestDto.setUploadFilePath(uploadFilePath);
         contributeProject.update(contributeProjectUpdateRequestDto);
         return new ContributeProjectResponseDto(contributeProject);
