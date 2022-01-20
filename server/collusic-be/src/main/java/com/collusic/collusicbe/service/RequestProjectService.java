@@ -36,9 +36,9 @@ public class RequestProjectService {
     }
 
     @Transactional
-    public RequestProjectResponseDto update(Long id, RequestProjectUpdateRequestDto requestProjectUpdateRequestDto) throws IOException {
-        RequestProject requestProject = requestProjectRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 요청작이 없습니다. id=" + id));
+    public RequestProjectResponseDto update(Long requestProjectId, RequestProjectUpdateRequestDto requestProjectUpdateRequestDto) throws IOException {
+        RequestProject requestProject = requestProjectRepository.findById(requestProjectId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 요청작이 없습니다. id=" + requestProjectId));
         String savedFileName = StringUtils.extractFileNameFromFilePath(requestProject.getUploadFilePath());
         String uploadFilePath = s3Service.update(requestProjectUpdateRequestDto.getMultipartFile(), "static", savedFileName);
         requestProjectUpdateRequestDto.setUploadFilePath(uploadFilePath);
@@ -47,17 +47,17 @@ public class RequestProjectService {
     }
 
     @Transactional
-    public RequestProjectResponseDto findById(Long id) {
-        RequestProject requestProject = requestProjectRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 요청작이 없습니다. id=" + id));
+    public RequestProjectResponseDto findById(Long requestProjectId) {
+        RequestProject requestProject = requestProjectRepository.findById(requestProjectId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 요청작이 없습니다. id=" + requestProjectId));
 
         return new RequestProjectResponseDto(requestProject);
     }
 
     @Transactional
-    public void delete(Long id) throws RuntimeException {
-        RequestProject requestProject = requestProjectRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 요청작이 없습니다. id=" + id));
+    public void delete(Long requestProjectId) throws RuntimeException {
+        RequestProject requestProject = requestProjectRepository.findById(requestProjectId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 요청작이 없습니다. id=" + requestProjectId));
         List<ContributeProject> savedContributeProjects = contributeProjectRepository.findByRequestProjectId(requestProject.getId());
         if(!savedContributeProjects.isEmpty()) {
             throw new RuntimeException("요청작 삭제 불가");

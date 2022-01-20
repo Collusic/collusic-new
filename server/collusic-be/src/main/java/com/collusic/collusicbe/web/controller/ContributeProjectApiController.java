@@ -17,17 +17,24 @@ public class ContributeProjectApiController {
 
     private final ContributeProjectService contributeProjectService;
 
-    @PostMapping("/api/requestprojects/{id}/contributeprojects")
-    public ResponseEntity<ContributeProjectResponseDto> save(@ModelAttribute ContributeProjectSaveRequestDto contributeProjectSaveRequestDto, @PathVariable Long id) throws IOException {
-        ContributeProjectResponseDto contributeProjectResponseDto = contributeProjectService.save(contributeProjectSaveRequestDto, id);
+    @PostMapping("/api/requestprojects/{requestProjectId}/contributeprojects")
+    public ResponseEntity<ContributeProjectResponseDto> save(@ModelAttribute ContributeProjectSaveRequestDto contributeProjectSaveRequestDto, @PathVariable Long requestProjectId) throws IOException {
+        ContributeProjectResponseDto contributeProjectResponseDto = contributeProjectService.save(contributeProjectSaveRequestDto, requestProjectId);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(contributeProjectResponseDto);
     }
 
-    @PutMapping("/api/requestprojects/{requestId}/contributeprojects/{contributeId}")
-    public ResponseEntity<ContributeProjectResponseDto> update(@ModelAttribute ContributeProjectUpdateRequestDto contributeProjectUpdateRequestDto, @PathVariable Long requestId, @PathVariable Long contributeId) throws IOException{
-        ContributeProjectResponseDto contributeProjectResponseDto = contributeProjectService.update(contributeProjectUpdateRequestDto, contributeId);
+    @PutMapping("/api/requestprojects/{requestProjectId}/contributeprojects/{contributeProjectId}")
+    public ResponseEntity<ContributeProjectResponseDto> update(@ModelAttribute ContributeProjectUpdateRequestDto contributeProjectUpdateRequestDto, @PathVariable Long requestProjectId, @PathVariable Long contributeProjectId) throws IOException{
+        ContributeProjectResponseDto contributeProjectResponseDto = contributeProjectService.update(contributeProjectUpdateRequestDto, contributeProjectId);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(contributeProjectResponseDto);
+    }
+
+    @DeleteMapping("/api/requestprojects/{requestProjectId}/contributeprojects/{contributeProjectId}")
+    public ResponseEntity<Long> delete(@PathVariable Long contributeProjectId) throws RuntimeException {
+        contributeProjectService.delete(contributeProjectId);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(contributeProjectId);
     }
 }

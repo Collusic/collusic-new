@@ -24,9 +24,9 @@ public class RequestProjectResponseDto {
         this.title = requestProject.getTitle();
         this.content = requestProject.getContent();
         this.uploadFilePath = requestProject.getUploadFilePath();
-        this.fields = requestProject.getField().stream().map(fieldEntity -> new String(fieldEntity.getField())).collect(Collectors.toList());
-        this.genres = requestProject.getGenre().stream().map(genreEntity -> new String(genreEntity.getGenre())).collect(Collectors.toList());
-        this.moods = requestProject.getMood().stream().map(moodEntity -> new String(moodEntity.getMood())).collect(Collectors.toList());
+        this.fields = requestProject.getField().stream().map(fieldEntity -> fieldEntity.getField()).collect(Collectors.toList());
+        this.genres = requestProject.getGenre().stream().map(genreEntity -> genreEntity.getGenre()).collect(Collectors.toList());
+        this.moods = requestProject.getMood().stream().map(moodEntity -> moodEntity.getMood()).collect(Collectors.toList());
         this.lyrics = requestProject.getLyrics();
     }
 }

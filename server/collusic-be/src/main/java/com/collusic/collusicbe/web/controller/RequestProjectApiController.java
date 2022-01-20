@@ -26,25 +26,25 @@ public class RequestProjectApiController {
                 .body(requestProjectResponseDto);
     }
 
-    @PutMapping("/api/requestprojects/{id}")
-    public ResponseEntity<RequestProjectResponseDto> update(@PathVariable Long id, @ModelAttribute RequestProjectUpdateRequestDto requestProjectUpdateRequestDto) throws IOException {
-        RequestProjectResponseDto requestProjectResponseDto = requestProjectService.update(id, requestProjectUpdateRequestDto);
+    @PutMapping("/api/requestprojects/{requestProjectId}")
+    public ResponseEntity<RequestProjectResponseDto> update(@PathVariable Long requestProjectId, @ModelAttribute RequestProjectUpdateRequestDto requestProjectUpdateRequestDto) throws IOException {
+        RequestProjectResponseDto requestProjectResponseDto = requestProjectService.update(requestProjectId, requestProjectUpdateRequestDto);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(requestProjectResponseDto);
     }
 
-    @GetMapping("/api/requestprojects/{id}")
-    public ResponseEntity<RequestProjectResponseDto> findById(@PathVariable Long id) {
-        RequestProjectResponseDto requestProjectResponseDto = requestProjectService.findById(id);
+    @GetMapping("/api/requestprojects/{requestProjectId}")
+    public ResponseEntity<RequestProjectResponseDto> findById(@PathVariable Long requestProjectId) {
+        RequestProjectResponseDto requestProjectResponseDto = requestProjectService.findById(requestProjectId);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(requestProjectResponseDto);
     }
 
-    @DeleteMapping("/api/requestprojects/{id}")
-    public ResponseEntity<Long> delete(@PathVariable Long id) throws RuntimeException {
-        requestProjectService.delete(id);
+    @DeleteMapping("/api/requestprojects/{requestProjectId}")
+    public ResponseEntity<Long> delete(@PathVariable Long requestProjectId) throws RuntimeException {
+        requestProjectService.delete(requestProjectId);
         return ResponseEntity.status(HttpStatus.OK)
-                .body(id);
+                .body(requestProjectId);
     }
 
     @GetMapping("/api/main/requestprojects")
