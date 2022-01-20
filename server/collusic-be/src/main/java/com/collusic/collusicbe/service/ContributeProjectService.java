@@ -64,4 +64,11 @@ public class ContributeProjectService {
         List<ContributeProjectResponseDto> contributeProjectResponseDtos = savedContributeProjects.stream().map(contributeProject -> new ContributeProjectResponseDto(contributeProject)).collect(Collectors.toList());
         return contributeProjectResponseDtos;
     }
+
+    @Transactional
+    public ContributeProjectResponseDto findById(Long contributeProjectId) {
+        ContributeProject savedContributeProject = contributeProjectRepository.findById(contributeProjectId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 기여작이 없습니다. id=" + contributeProjectId));
+        return new ContributeProjectResponseDto(savedContributeProject);
+    }
 }
