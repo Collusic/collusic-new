@@ -9,10 +9,15 @@ import com.collusic.collusicbe.web.dto.ContributeProjectResponseDto;
 import com.collusic.collusicbe.web.dto.ContributeProjectSaveRequestDto;
 import com.collusic.collusicbe.web.dto.ContributeProjectUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.springframework.data.domain.Sort.Order.desc;
 
 @RequiredArgsConstructor
 @Service
@@ -51,5 +56,12 @@ public class ContributeProjectService {
             throw new RuntimeException("채택된 기여작은 삭제할 수 없습니다.");
         }
         contributeProjectRepository.delete(savedContributeProject);
+    }
+
+    @Transactional
+    public List<ContributeProjectResponseDto> findByRequestProjectIdOrderBycreatedDateDesc(Long requestProjectId) {
+        List<ContributeProject> savedContributeProjects = contributeProjectRepository.findAllByRequestProjectId(requestProjectId, Sort.by(desc("createdDate")));
+        List<ContributeProjectResponseDto> contributeProjectResponseDtos = savedContributeProjects.stream().map(contributeProject -> new ContributeProjectResponseDto(contributeProject)).collect(Collectors.toList());
+        return contributeProjectResponseDtos;
     }
 }
