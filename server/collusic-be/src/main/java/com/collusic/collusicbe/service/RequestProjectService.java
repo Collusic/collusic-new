@@ -25,10 +25,11 @@ public class RequestProjectService {
     private final S3Service s3Service;
 
     @Transactional
-    public Long save(RequestProjectSaveRequestDto requestProjectSaveRequestDto) throws IOException {
+    public RequestProjectResponseDto save(RequestProjectSaveRequestDto requestProjectSaveRequestDto) throws IOException {
         String uploadFilePath = s3Service.upload(requestProjectSaveRequestDto.getMultipartFile(), "static");
         requestProjectSaveRequestDto.setUploadFilePath(uploadFilePath);
-        return requestProjectRepository.save(requestProjectSaveRequestDto.toEntity()).getId();
+        RequestProject savedRequestProejct = requestProjectRepository.save(requestProjectSaveRequestDto.toEntity());
+        return new RequestProjectResponseDto(savedRequestProejct);
     }
 
     @Transactional
