@@ -8,15 +8,18 @@ import {
   requestMoodState,
 } from "../model/createRequestProjectModel";
 import { genres, fields, moods } from "../utils/data/state";
+import { CreateFieldView } from "../view/CreateFieldView";
+import { CreateGenreView } from "../view/CreateGenreView";
+import { CreateMoodView } from "../view/CreateMoodView";
 
 export const CreateRequestViewModel: React.FC = () => {
   const [requestFields, setRequestFields] = useRecoilState(requestFieldState);
   const [requestGenres, setRequestGenres] = useRecoilState(requestGenreState);
   const [requestMoods, setRequestMoods] = useRecoilState(requestMoodState);
 
-  const onClickFieldHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    let value = e.currentTarget.value;
-    value = value.toLowerCase();
+  const onClickFieldHandler = (e: React.MouseEvent<HTMLDivElement>) => {
+    let value = e.currentTarget.firstChild?.nodeValue;
+    value = value!.toLowerCase();
 
     if (e.currentTarget.classList.contains("clicked")) {
       setRequestFields(requestFields.filter((field) => value !== field));
@@ -26,9 +29,9 @@ export const CreateRequestViewModel: React.FC = () => {
     e.currentTarget.classList.toggle("clicked");
   };
 
-  const onClickGenreHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    let value = e.currentTarget.value;
-    value = value.toLowerCase();
+  const onClickGenreHandler = (e: React.MouseEvent<HTMLDivElement>) => {
+    let value = e.currentTarget.firstChild?.nodeValue;
+    value = value!.toLowerCase();
 
     if (e.currentTarget.classList.contains("clicked")) {
       setRequestGenres(requestGenres.filter((field) => value !== field));
@@ -38,9 +41,9 @@ export const CreateRequestViewModel: React.FC = () => {
     e.currentTarget.classList.toggle("clicked");
   };
 
-  const onClickMoodHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    let value = e.currentTarget.value;
-    value = value.toLowerCase();
+  const onClickMoodHandler = (e: React.MouseEvent<HTMLDivElement>) => {
+    let value = e.currentTarget.firstChild?.nodeValue;
+    value = value!.toLowerCase();
 
     if (e.currentTarget.classList.contains("clicked")) {
       setRequestMoods(requestMoods.filter((field) => value !== field));
@@ -52,19 +55,19 @@ export const CreateRequestViewModel: React.FC = () => {
 
   return (
     <React.Fragment>
-      <CreateTitleView />
+      {/* <CreateTitleView />
       <CreateContextView />
       <CreateLyricView />
-      <CreateMelodyView />
+      <CreateMelodyView /> */}
       <CreateFieldView
         fields={fields}
         onClickFieldHandler={onClickFieldHandler}
       />
       <CreateGenreView
         genres={genres}
-        onClickFieldHandler={onClickGenreHandler}
+        onClickGenreHandler={onClickGenreHandler}
       />
-      <CreateMoodView moods={moods} onClickFieldHandler={onClickMoodHandler} />
+      <CreateMoodView moods={moods} onClickMoodHandler={onClickMoodHandler} />
     </React.Fragment>
   );
 };
