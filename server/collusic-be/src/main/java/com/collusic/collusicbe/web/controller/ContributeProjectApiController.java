@@ -24,9 +24,9 @@ public class ContributeProjectApiController {
                 .body(contributeProjectResponseDto);
     }
 
-    @PutMapping("/api/requestprojects/{requestId}/contributeprojects/{contributeId}")
-    public ResponseEntity<ContributeProjectResponseDto> update(@ModelAttribute ContributeProjectUpdateRequestDto contributeProjectUpdateRequestDto, @PathVariable Long requestId, @PathVariable Long contributeId) throws IOException{
-        ContributeProjectResponseDto contributeProjectResponseDto = contributeProjectService.update(contributeProjectUpdateRequestDto, contributeId);
+    @PutMapping("/api/requestprojects/{requestprojectId}/contributeprojects/{contributeprojectId}")
+    public ResponseEntity<ContributeProjectResponseDto> update(@ModelAttribute ContributeProjectUpdateRequestDto contributeProjectUpdateRequestDto, @PathVariable Long requestprojectId, @PathVariable Long contributeprojectId) throws IOException{
+        ContributeProjectResponseDto contributeProjectResponseDto = contributeProjectService.update(contributeProjectUpdateRequestDto, contributeprojectId);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(contributeProjectResponseDto);
     }
