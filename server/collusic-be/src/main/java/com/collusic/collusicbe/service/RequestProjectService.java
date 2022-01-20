@@ -25,21 +25,22 @@ public class RequestProjectService {
     private final S3Service s3Service;
 
     @Transactional
-    public Long save(RequestProjectSaveRequestDto requestProjectSaveRequestDto) throws IOException {
+    public RequestProjectResponseDto save(RequestProjectSaveRequestDto requestProjectSaveRequestDto) throws IOException {
         String uploadFilePath = s3Service.upload(requestProjectSaveRequestDto.getMultipartFile(), "static");
         requestProjectSaveRequestDto.setUploadFilePath(uploadFilePath);
-        return requestProjectRepository.save(requestProjectSaveRequestDto.toEntity()).getId();
+        RequestProject savedRequestProejct = requestProjectRepository.save(requestProjectSaveRequestDto.toEntity());
+        return new RequestProjectResponseDto(savedRequestProejct);
     }
 
     @Transactional
-    public Long update(Long id, RequestProjectUpdateRequestDto requestProjectUpdateRequestDto) throws IOException {
+    public RequestProjectResponseDto update(Long id, RequestProjectUpdateRequestDto requestProjectUpdateRequestDto) throws IOException {
         RequestProject requestProject = requestProjectRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 요청작이 없습니다. id=" + id));
         String savedFileName = StringUtils.extractFileNameFromFilePath(requestProject.getUploadFilePath());
         String uploadFilePath = s3Service.update(requestProjectUpdateRequestDto.getMultipartFile(), "static", savedFileName);
         requestProjectUpdateRequestDto.setUploadFilePath(uploadFilePath);
         requestProject.update(requestProjectUpdateRequestDto);
-        return id;
+        return new RequestProjectResponseDto(requestProject);
     }
 
     @Transactional

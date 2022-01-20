@@ -20,17 +20,17 @@ public class RequestProjectApiController {
     private final RequestProjectService requestProjectService;
 
     @PostMapping("/api/requestprojects")
-    public ResponseEntity<Long> save(@ModelAttribute RequestProjectSaveRequestDto requestProjectSaveRequestDto) throws IOException {
-        Long savedId = requestProjectService.save(requestProjectSaveRequestDto);
+    public ResponseEntity<RequestProjectResponseDto> save(@ModelAttribute RequestProjectSaveRequestDto requestProjectSaveRequestDto) throws IOException {
+        RequestProjectResponseDto requestProjectResponseDto = requestProjectService.save(requestProjectSaveRequestDto);
         return ResponseEntity.status(HttpStatus.OK)
-                .body(savedId);
+                .body(requestProjectResponseDto);
     }
 
     @PutMapping("/api/requestprojects/{id}")
-    public ResponseEntity<Long> update(@PathVariable Long id, @ModelAttribute RequestProjectUpdateRequestDto requestProjectUpdateRequestDto) throws IOException {
-        Long updatedId = requestProjectService.update(id, requestProjectUpdateRequestDto);
+    public ResponseEntity<RequestProjectResponseDto> update(@PathVariable Long id, @ModelAttribute RequestProjectUpdateRequestDto requestProjectUpdateRequestDto) throws IOException {
+        RequestProjectResponseDto requestProjectResponseDto = requestProjectService.update(id, requestProjectUpdateRequestDto);
         return ResponseEntity.status(HttpStatus.OK)
-                .body(updatedId);
+                .body(requestProjectResponseDto);
     }
 
     @GetMapping("/api/requestprojects/{id}")
