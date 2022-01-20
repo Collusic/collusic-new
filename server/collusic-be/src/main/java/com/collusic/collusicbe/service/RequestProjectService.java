@@ -1,5 +1,7 @@
 package com.collusic.collusicbe.service;
 
+import com.collusic.collusicbe.domain.contributeproject.ContributeProject;
+import com.collusic.collusicbe.domain.contributeproject.ContributeProjectRepository;
 import com.collusic.collusicbe.domain.requestproject.RequestProject;
 import com.collusic.collusicbe.domain.requestproject.RequestProjectRepository;
 import com.collusic.collusicbe.util.StringUtils;
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
 public class RequestProjectService {
 
     private final RequestProjectRepository requestProjectRepository;
+    private final ContributeProjectRepository contributeProjectRepository;
     private final S3Service s3Service;
 
     @Transactional
@@ -52,10 +55,13 @@ public class RequestProjectService {
     }
 
     @Transactional
-    public void delete(Long id) {
+    public void delete(Long id) throws RuntimeException {
         RequestProject requestProject = requestProjectRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 요청작이 없습니다. id=" + id));
-
+        List<ContributeProject> savedContributeProjects = contributeProjectRepository.findByRequestProjectId(requestProject.getId());
+        if(!savedContributeProjects.isEmpty()) {
+            throw new RuntimeException("요청작 삭제 불가");
+        }
         requestProjectRepository.delete(requestProject);
     }
 
