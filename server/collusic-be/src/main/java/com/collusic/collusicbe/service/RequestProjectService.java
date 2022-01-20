@@ -33,14 +33,14 @@ public class RequestProjectService {
     }
 
     @Transactional
-    public Long update(Long id, RequestProjectUpdateRequestDto requestProjectUpdateRequestDto) throws IOException {
+    public RequestProjectResponseDto update(Long id, RequestProjectUpdateRequestDto requestProjectUpdateRequestDto) throws IOException {
         RequestProject requestProject = requestProjectRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 요청작이 없습니다. id=" + id));
         String savedFileName = StringUtils.extractFileNameFromFilePath(requestProject.getUploadFilePath());
         String uploadFilePath = s3Service.update(requestProjectUpdateRequestDto.getMultipartFile(), "static", savedFileName);
         requestProjectUpdateRequestDto.setUploadFilePath(uploadFilePath);
         requestProject.update(requestProjectUpdateRequestDto);
-        return id;
+        return new RequestProjectResponseDto(requestProject);
     }
 
     @Transactional
