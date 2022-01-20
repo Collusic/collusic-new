@@ -1,7 +1,5 @@
 package com.collusic.collusicbe.web.controller;
 
-import com.collusic.collusicbe.domain.contributeproject.ContributeProject;
-import com.collusic.collusicbe.domain.contributeproject.ContributeProjectRepository;
 import com.collusic.collusicbe.service.ContributeProjectService;
 import com.collusic.collusicbe.web.dto.ContributeProjectResponseDto;
 import com.collusic.collusicbe.web.dto.ContributeProjectSaveRequestDto;
@@ -34,7 +32,7 @@ public class ContributeProjectApiController {
     }
 
     @DeleteMapping("/api/requestprojects/{requestProjectId}/contributeprojects/{contributeProjectId}")
-    public ResponseEntity<Long> delete(@PathVariable Long contributeProjectId) {
+    public ResponseEntity<Long> delete(@PathVariable Long contributeProjectId) throws RuntimeException {
         contributeProjectService.delete(contributeProjectId);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(contributeProjectId);

@@ -34,11 +34,22 @@ public class ContributeProjectService {
 
     @Transactional
     public ContributeProjectResponseDto update(ContributeProjectUpdateRequestDto contributeProjectUpdateRequestDto, Long contributeProjectId) throws IOException {
-        ContributeProject contributeProject = contributeProjectRepository.findById(contributeProjectId).orElseThrow(() -> new IllegalArgumentException("해당 기여작이 없습니다. id=" + contributeProjectId));
+        ContributeProject contributeProject = contributeProjectRepository.findById(contributeProjectId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 기여작이 없습니다. id=" + contributeProjectId));
         String savedFileName = StringUtils.extractFileNameFromFilePath(contributeProject.getUploadFilePath());
         String uploadFilePath = s3Service.update(contributeProjectUpdateRequestDto.getMultipartFile(), "static", savedFileName);
         contributeProjectUpdateRequestDto.setUploadFilePath(uploadFilePath);
         contributeProject.update(contributeProjectUpdateRequestDto);
         return new ContributeProjectResponseDto(contributeProject);
+    }
+
+    @Transactional
+    public void delete(Long contributeProjectId) throws RuntimeException {
+        ContributeProject savedContributeProject = contributeProjectRepository.findById(contributeProjectId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 기여작이 없습니다. id=" + contributeProjectId));
+        if(savedContributeProject.isAdopted()) {
+            throw new RuntimeException("채택된 기여작은 삭제할 수 없습니다.");
+        }
+        contributeProjectRepository.delete(savedContributeProject);
     }
 }

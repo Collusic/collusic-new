@@ -2,9 +2,6 @@ package com.collusic.collusicbe.domain.contributeproject;
 
 import com.collusic.collusicbe.domain.BaseTimeEntity;
 import com.collusic.collusicbe.domain.field.ContributeProjectFieldEntity;
-import com.collusic.collusicbe.domain.field.RequestProjectFieldEntity;
-import com.collusic.collusicbe.domain.genre.GenreEntity;
-import com.collusic.collusicbe.domain.mood.MoodEntity;
 import com.collusic.collusicbe.domain.requestproject.RequestProject;
 import com.collusic.collusicbe.web.dto.ContributeProjectUpdateRequestDto;
 import lombok.Builder;
@@ -25,7 +22,7 @@ public class ContributeProject extends BaseTimeEntity {
     @Column(name = "CONTRIBUTE_PROJECT_ID")
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "REQUEST_PROJECT_ID")
     private RequestProject requestProject;
 
@@ -60,5 +57,12 @@ public class ContributeProject extends BaseTimeEntity {
         this.field.clear();
         this.field.addAll(contributeProjectUpdateRequestDto.getFields().stream().map(field -> new ContributeProjectFieldEntity(field)).collect(Collectors.toList()));
         this.lyrics = contributeProjectUpdateRequestDto.getLyrics();
+    }
+
+    public boolean isAdopted() {
+        if(this.adoptFlag == true) {
+            return true;
+        }
+        return false;
     }
 }
