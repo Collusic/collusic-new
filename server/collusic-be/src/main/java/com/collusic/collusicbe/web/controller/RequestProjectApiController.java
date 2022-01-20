@@ -20,10 +20,10 @@ public class RequestProjectApiController {
     private final RequestProjectService requestProjectService;
 
     @PostMapping("/api/requestprojects")
-    public ResponseEntity<Long> save(@ModelAttribute RequestProjectSaveRequestDto requestProjectSaveRequestDto) throws IOException {
-        Long savedId = requestProjectService.save(requestProjectSaveRequestDto);
+    public ResponseEntity<RequestProjectResponseDto> save(@ModelAttribute RequestProjectSaveRequestDto requestProjectSaveRequestDto) throws IOException {
+        RequestProjectResponseDto requestProjectResponseDto = requestProjectService.save(requestProjectSaveRequestDto);
         return ResponseEntity.status(HttpStatus.OK)
-                .body(savedId);
+                .body(requestProjectResponseDto);
     }
 
     @PutMapping("/api/requestprojects/{id}")
