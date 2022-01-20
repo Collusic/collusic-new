@@ -41,7 +41,7 @@ public class RequestProjectApiController {
     }
 
     @DeleteMapping("/api/requestprojects/{id}")
-    public ResponseEntity<Long> delete(@PathVariable Long id) {
+    public ResponseEntity<Long> delete(@PathVariable Long id) throws RuntimeException {
         requestProjectService.delete(id);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(id);
