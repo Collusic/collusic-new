@@ -17,16 +17,16 @@ public class ContributeProjectApiController {
 
     private final ContributeProjectService contributeProjectService;
 
-    @PostMapping("/api/requestprojects/{id}/contributeprojects")
-    public ResponseEntity<ContributeProjectResponseDto> save(@ModelAttribute ContributeProjectSaveRequestDto contributeProjectSaveRequestDto, @PathVariable Long id) throws IOException {
-        ContributeProjectResponseDto contributeProjectResponseDto = contributeProjectService.save(contributeProjectSaveRequestDto, id);
+    @PostMapping("/api/requestprojects/{requestProjectId}/contributeprojects")
+    public ResponseEntity<ContributeProjectResponseDto> save(@ModelAttribute ContributeProjectSaveRequestDto contributeProjectSaveRequestDto, @PathVariable Long requestProjectId) throws IOException {
+        ContributeProjectResponseDto contributeProjectResponseDto = contributeProjectService.save(contributeProjectSaveRequestDto, requestProjectId);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(contributeProjectResponseDto);
     }
 
-    @PutMapping("/api/requestprojects/{requestprojectId}/contributeprojects/{contributeprojectId}")
-    public ResponseEntity<ContributeProjectResponseDto> update(@ModelAttribute ContributeProjectUpdateRequestDto contributeProjectUpdateRequestDto, @PathVariable Long requestprojectId, @PathVariable Long contributeprojectId) throws IOException{
-        ContributeProjectResponseDto contributeProjectResponseDto = contributeProjectService.update(contributeProjectUpdateRequestDto, contributeprojectId);
+    @PutMapping("/api/requestprojects/{requestProjectId}/contributeprojects/{contributeProjectId}")
+    public ResponseEntity<ContributeProjectResponseDto> update(@ModelAttribute ContributeProjectUpdateRequestDto contributeProjectUpdateRequestDto, @PathVariable Long requestProjectId, @PathVariable Long contributeProjectId) throws IOException{
+        ContributeProjectResponseDto contributeProjectResponseDto = contributeProjectService.update(contributeProjectUpdateRequestDto, contributeProjectId);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(contributeProjectResponseDto);
     }

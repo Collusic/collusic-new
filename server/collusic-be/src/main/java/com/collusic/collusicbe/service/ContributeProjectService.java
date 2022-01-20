@@ -23,18 +23,18 @@ public class ContributeProjectService {
     private final S3Service s3Service;
 
     @Transactional
-    public ContributeProjectResponseDto save(ContributeProjectSaveRequestDto contributeProjectSaveRequestDto, Long id) throws IOException {
+    public ContributeProjectResponseDto save(ContributeProjectSaveRequestDto contributeProjectSaveRequestDto, Long requestProjectId) throws IOException {
         String uploadFilePath = s3Service.upload(contributeProjectSaveRequestDto.getMultipartFile(), "static");
         contributeProjectSaveRequestDto.setUploadFilePath(uploadFilePath);
-        RequestProject savedRequestProject = requestProjectRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 요청작이 없습니다. id=" + id));
+        RequestProject savedRequestProject = requestProjectRepository.findById(requestProjectId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 요청작이 없습니다. id=" + requestProjectId));
         ContributeProject savedContributeProject = contributeProjectRepository.save(contributeProjectSaveRequestDto.toEntity(savedRequestProject));
         return new ContributeProjectResponseDto(savedContributeProject);
     }
 
     @Transactional
-    public ContributeProjectResponseDto update(ContributeProjectUpdateRequestDto contributeProjectUpdateRequestDto, Long id) throws IOException {
-        ContributeProject contributeProject = contributeProjectRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 기여작이 없습니다. id=" + id));
+    public ContributeProjectResponseDto update(ContributeProjectUpdateRequestDto contributeProjectUpdateRequestDto, Long contributeProjectId) throws IOException {
+        ContributeProject contributeProject = contributeProjectRepository.findById(contributeProjectId).orElseThrow(() -> new IllegalArgumentException("해당 기여작이 없습니다. id=" + contributeProjectId));
         String savedFileName = StringUtils.extractFileNameFromFilePath(contributeProject.getUploadFilePath());
         String uploadFilePath = s3Service.update(contributeProjectUpdateRequestDto.getMultipartFile(), "static", savedFileName);
         contributeProjectUpdateRequestDto.setUploadFilePath(uploadFilePath);
