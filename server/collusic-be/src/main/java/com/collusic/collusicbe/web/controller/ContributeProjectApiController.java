@@ -3,6 +3,7 @@ package com.collusic.collusicbe.web.controller;
 import com.collusic.collusicbe.service.ContributeProjectService;
 import com.collusic.collusicbe.web.dto.ContributeProjectResponseDto;
 import com.collusic.collusicbe.web.dto.ContributeProjectSaveRequestDto;
+import com.collusic.collusicbe.web.dto.ContributeProjectUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
