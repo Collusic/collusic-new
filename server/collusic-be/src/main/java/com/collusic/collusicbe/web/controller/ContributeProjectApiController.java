@@ -26,7 +26,7 @@ public class ContributeProjectApiController {
 
     @PutMapping("/api/requestprojects/{requestId}/contributeprojects/{contributeId}")
     public ResponseEntity<ContributeProjectResponseDto> update(@ModelAttribute ContributeProjectUpdateRequestDto contributeProjectUpdateRequestDto, @PathVariable Long requestId, @PathVariable Long contributeId){
-        ContributeProjectResponseDto contributeProjectResponseDto = contributeProjectService.update(contributeProjectUpdateRequestDto, requestId, contributeId);
+        ContributeProjectResponseDto contributeProjectResponseDto = contributeProjectService.update(contributeProjectUpdateRequestDto, contributeId);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(contributeProjectResponseDto);
     }
