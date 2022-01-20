@@ -2,13 +2,18 @@ package com.collusic.collusicbe.domain.contributeproject;
 
 import com.collusic.collusicbe.domain.BaseTimeEntity;
 import com.collusic.collusicbe.domain.field.ContributeProjectFieldEntity;
+import com.collusic.collusicbe.domain.field.RequestProjectFieldEntity;
+import com.collusic.collusicbe.domain.genre.GenreEntity;
+import com.collusic.collusicbe.domain.mood.MoodEntity;
 import com.collusic.collusicbe.domain.requestproject.RequestProject;
+import com.collusic.collusicbe.web.dto.ContributeProjectUpdateRequestDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor
@@ -47,5 +52,13 @@ public class ContributeProject extends BaseTimeEntity {
         this.lyrics = lyrics;
         this.adoptFlag = adoptFlag;
         this.uploadFilePath = uploadFilePath;
+    }
+
+    public void update(ContributeProjectUpdateRequestDto contributeProjectUpdateRequestDto) {
+        this.content = contributeProjectUpdateRequestDto.getContent();
+        this.uploadFilePath = contributeProjectUpdateRequestDto.getUploadFilePath();
+        this.field.clear();
+        this.field.addAll(contributeProjectUpdateRequestDto.getFields().stream().map(field -> new ContributeProjectFieldEntity(field)).collect(Collectors.toList()));
+        this.lyrics = contributeProjectUpdateRequestDto.getLyrics();
     }
 }
