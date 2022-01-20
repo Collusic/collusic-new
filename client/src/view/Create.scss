@@ -1,0 +1,46 @@
+@import "../utils/style/color";
+@import "../utils/style/size";
+
+.box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 65rem;
+  height: 10rem;
+  margin-top: 10px;
+  .text {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 60rem;
+    height: $HEIGHT_EXTRA_SMALL;
+    font-weight: 900;
+  }
+  .button-box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 65rem;
+    height: $HEIGHT_MEDIUM_SMALL;
+
+    .button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 8rem;
+      height: $HEIGHT_EXTRA_SMALL;
+      margin: 3px;
+      color: $Font_Sub;
+      font-weight: 700;
+      border-radius: 20px;
+      border: solid 2px #909090;
+    }
+  }
+}
+
+.clicked {
+  color: $Color_Main !important;
+  border-color: $Color_Main !important;
+}

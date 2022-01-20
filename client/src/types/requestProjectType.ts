@@ -1,8 +1,39 @@
 type Field = "melody" | "instrument" | "lyric";
 
-type Genre = "hiphop" | "balad" | "funk";
+type Genre =
+  | "Acoustic"
+  | "Blues"
+  | "Classic"
+  | "Country"
+  | "Electronic"
+  | "Fork"
+  | "Funk"
+  | "Hiphop"
+  | "Indie"
+  | "Jazz"
+  | "Latin"
+  | "Pop"
+  | "Reggae"
+  | "Retro"
+  | "Rock"
+  | "Soul"
+  | "R&B"
+  | "Balad"
+  | "Funk";
 
-type Mood = "happy" | "cry" | "powerful";
+type Mood =
+  | "Uplifting"
+  | "Epic"
+  | "Powerful"
+  | "Happy"
+  | "Hopeful"
+  | "Love"
+  | "Playful"
+  | "Groovy"
+  | "Sad"
+  | "Serious"
+  | "Dramatic"
+  | "Dark";
 
 type RequestProjectType = {
   requestProjectId: number;
