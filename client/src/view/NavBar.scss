@@ -1,4 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Krona+One&display=swap');
+
 header {
+    font-family: 'Krona One', sans-serif;
     height: 100px;
     display: flex;
     padding: 20px 160px;
@@ -6,6 +9,8 @@ header {
     .logo {
         display: inline-block;
         color: #ff8900;
+        font-size: 1.8rem;
+        font-weight: lighter;
     }
 
     a {
