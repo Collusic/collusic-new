@@ -27,6 +27,11 @@ export const RequestListViewModel: React.FC = () => {
   const onClickRightHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     setCurrentPage(currentPage + 1);
   };
+
+  const redirectHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const id = e.currentTarget.id;
+    window.location.href = `/requestprojects/${id}`;
+  };
   // upload의 타입에 따라 img태그안에 src를 넣을지, 가사를 텍스트로 집어넣을지 결정해야
   const defaultRequestList: Array<User & RequestProjectType> = [
     {
@@ -115,7 +120,10 @@ export const RequestListViewModel: React.FC = () => {
   const defaultCurrentPage = 1;
   return (
     <React.Fragment>
-      <RequestListView requestList={defaultRequestList}></RequestListView>
+      <RequestListView
+        requestList={defaultRequestList}
+        onClickRedirectHandler={redirectHandler}
+      ></RequestListView>
       <RequestListPagenationView
         currentPage={defaultCurrentPage}
         pagenationList={defaultPagenationList}

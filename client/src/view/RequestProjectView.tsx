@@ -5,8 +5,13 @@ import { User } from "../types/userType";
 import { requestStates } from "../utils/requestStates";
 
 type RequestProjectProps = User & RequestProjectType;
+type redirectHandler = {
+  onClickRedirectHandler(e: React.MouseEvent<HTMLButtonElement>): void;
+};
 
-export const RequestProjectView: React.FC<RequestProjectProps> = ({
+export const RequestProjectView: React.FC<
+  RequestProjectProps & redirectHandler
+> = ({
   requestProjectId,
   userProfile,
   userEmail,
@@ -17,9 +22,15 @@ export const RequestProjectView: React.FC<RequestProjectProps> = ({
   requestMelody,
   requestInstrument,
   requestLyric,
+  onClickRedirectHandler,
 }) => {
   return (
-    <section className="requestBox" key={requestProjectId}>
+    <section
+      className="requestBox"
+      key={requestProjectId}
+      id={String(requestProjectId)}
+      onClick={onClickRedirectHandler}
+    >
       <section className="user">
         <img
           src={

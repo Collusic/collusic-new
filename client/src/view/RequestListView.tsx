@@ -7,10 +7,12 @@ import "./RequestList.scss";
 
 type RequestListProps = {
   requestList: Array<User & RequestProjectType>;
+  onClickRedirectHandler(e: React.MouseEvent<HTMLButtonElement>): void;
 };
 
 export const RequestListView: React.FC<RequestListProps> = ({
   requestList,
+  onClickRedirectHandler,
 }) => {
   return (
     <article className="project-list">
@@ -28,6 +30,7 @@ export const RequestListView: React.FC<RequestListProps> = ({
             requestLyric={requestProject.requestLyric}
             requestInstrument={requestProject.requestInstrument}
             requestMelody={requestProject.requestMelody}
+            onClickRedirectHandler={onClickRedirectHandler}
           ></RequestProjectView>
         );
       })}
