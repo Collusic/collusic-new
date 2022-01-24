@@ -1,6 +1,7 @@
 import React from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 
+import { detailRequestProjectId } from "../model/detailRequestProjectModel";
 import {
   getRequestList,
   getPageList,
@@ -15,6 +16,7 @@ export const RequestListViewModel: React.FC = () => {
   const requestList = useRecoilValue(getRequestList);
   const [currentPage, setCurrentPage] = useRecoilState(currentPageState);
   const pagenationList: number[] = useRecoilValue(getPageList)!;
+  const [projectId, setProjectId] = useRecoilState(detailRequestProjectId);
 
   const onClickNumberHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     setCurrentPage(Number(e.currentTarget.value));
@@ -30,7 +32,8 @@ export const RequestListViewModel: React.FC = () => {
 
   const redirectHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     const id = e.currentTarget.id;
-    window.location.href = `/requestprojects/${id}`;
+    setProjectId(id);
+    window.location.href = `/requestprojects/${projectId}`;
   };
   // upload의 타입에 따라 img태그안에 src를 넣을지, 가사를 텍스트로 집어넣을지 결정해야
   const defaultRequestList: Array<User & RequestProjectType> = [
