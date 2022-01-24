@@ -3,7 +3,7 @@ import "./CreateContent.scss";
 
 export const CreateContentView: React.FC = () => {
   return (
-    <div className="content-container">
+    <section className="content-container">
       <h4>요청 내용</h4>
       <div className="textarea-container">
         <textarea
@@ -11,6 +11,6 @@ export const CreateContentView: React.FC = () => {
           placeholder="내용을 입력해 주세요 (최대300자)"
         />
       </div>
-    </div>
+    </section>
   );
 };
