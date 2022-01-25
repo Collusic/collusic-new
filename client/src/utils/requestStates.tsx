@@ -8,7 +8,7 @@ export const requestStates = (
 ) => ({
   melody: ((): JSX.Element => (
     <audio controls key={key}>
-      <source src={instrumentSrc}></source>이 문장은 audio 요소가 제대로 인식이
+      <source src={melodySrc}></source>이 문장은 audio 요소가 제대로 인식이
       안됐을 때 나타납니다.
     </audio>
   ))(),
