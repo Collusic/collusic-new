@@ -1,15 +1,20 @@
 import { atom, selector } from "recoil";
 
-import { API } from "../utils/axios";
-import { getDetailRequest } from "./detailRequestProjectModel";
+import { Field } from "../types/requestProjectType";
+import { getDetailRequestState } from "./detailRequestProjectModel";
+
+const contributeFields = atom<Field[]>({
+  key: "contributeFields",
+  default: [],
+});
 
 const getRequestProjectField = selector({
   key: "getRequestProjectField",
   get: ({ get }) => {
-    const requestProject = get(getDetailRequest);
+    const requestProject = get(getDetailRequestState);
     const requestProjectFieldList = requestProject.requestField;
     return requestProjectFieldList;
   },
 });
 
-export { getRequestProjectField };
+export { contributeFields, getRequestProjectField };

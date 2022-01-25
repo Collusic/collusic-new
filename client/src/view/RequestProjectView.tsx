@@ -1,5 +1,5 @@
 import React from "react";
-import "./RequestProject.scss";
+import "../utils/style/RequestProject.scss";
 import { RequestProjectType } from "../types/requestProjectType";
 import { User } from "../types/userType";
 import { requestStates } from "../utils/requestStates";

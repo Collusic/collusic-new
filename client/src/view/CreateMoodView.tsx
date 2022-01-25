@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./Create.scss";
+import "../utils/style/create.scss";
 
 type CreateMoodProps = {
   moods: string[];
