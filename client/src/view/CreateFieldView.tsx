@@ -1,9 +1,10 @@
 import React from "react";
+import { Field } from "../types/requestProjectType";
 
-import "./Create.scss";
+import "../utils/style/create.scss";
 
 type CreateFieldProps = {
-  fields: string[];
+  fields: Field[];
   onClickFieldHandler(e: React.MouseEvent<HTMLDivElement>): void;
 };
 

@@ -1,5 +1,7 @@
-const fields = ["melody", "instrument", "lyric"];
-const genres = [
+import { Field, Genre, Mood } from "../../types/requestProjectType";
+
+const fields: Field[] = ["melody", "instrument", "lyric"];
+const genres: Genre[] = [
   "Acoustic",
   "Blues",
   "Classic",
@@ -21,7 +23,7 @@ const genres = [
   "Funk",
 ];
 
-const moods = [
+const moods: Mood[] = [
   "Uplifting",
   "Epic",
   "Powerful",

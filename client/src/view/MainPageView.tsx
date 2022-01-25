@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 
 import { RequestListViewModel } from "../viewmodel/RequestListViewModel";
 import { FloatingReqCreateButtonView } from "./FloatingReqCreateButtonView";
-import "./MainPage.scss";
+import "../utils/style/MainPage.scss";
 
 export const MainPageView: React.FC = () => {
   return (

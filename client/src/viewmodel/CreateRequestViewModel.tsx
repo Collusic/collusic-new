@@ -14,6 +14,7 @@ import { CreateFieldView } from "../view/CreateFieldView";
 import { CreateGenreView } from "../view/CreateGenreView";
 import { CreateMoodView } from "../view/CreateMoodView";
 import { CreateMelodyView } from "../view/CreateMelodyView";
+import { CreateLyricView } from "../view/CreateLyricView";
 
 export const CreateRequestViewModel: React.FC = () => {
   const [requestFields, setRequestFields] = useRecoilState(requestFieldState);
@@ -73,6 +74,7 @@ export const CreateRequestViewModel: React.FC = () => {
         <CreateTitleView />
         <CreateContentView />
         <CreateMelodyView onChangeFiles={onChangeFiles} />
+        <CreateLyricView />
         <CreateFieldView
           fields={fields}
           onClickFieldHandler={onClickFieldHandler}
