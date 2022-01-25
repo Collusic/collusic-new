@@ -1,0 +1,188 @@
+@import "../utils/style/color";
+@import "../utils/style/size";
+
+.requestBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  width: 35vw;
+  height: 48rem;
+  border-radius: 10px;
+  box-shadow: 1px 2px 5px 1px rgb(167, 165, 165);
+
+  .request {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 35vw;
+    height: 40rem;
+  }
+
+  .title {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 16rem;
+    height: $HEIGHT_SMALL;
+    padding: 5px 10px;
+    margin: 10px 10px;
+    font-size: $FONT_LARGE;
+    font-weight: 700;
+  }
+
+  .upload {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 30vw;
+    padding: 2rem 0 0 1rem;
+    audio {
+      width: 30vw;
+    }
+  }
+
+  .field_genre_mood {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 33vw;
+    height: $HEIGHT_EXTRA_LARGE;
+    padding: 2rem 1rem;
+    font-weight: 600;
+    .field {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      width: 8vw;
+      height: $HEIGHT_MEDIUM_LARGE;
+      padding: 1rem 1rem;
+      background-color: #fffcf2;
+      margin: 0;
+      #fieldTag {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        color: $Color_Main;
+        font-size: $FONT_SMALL;
+        div {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          font-size: $FONT_SMALL;
+        }
+      }
+    }
+
+    .genre {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      width: 8vw;
+      height: $HEIGHT_MEDIUM_LARGE;
+      padding: 1rem 1rem;
+      background-color: #fffcf2;
+      #genreTag {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        color: $Color_Main;
+        font-size: $FONT_SMALL;
+        div {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          padding-top: 1rem;
+          font-size: $FONT_SMALL;
+        }
+      }
+    }
+
+    .mood {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      width: 8vw;
+      height: $HEIGHT_MEDIUM_LARGE;
+      padding: 1rem 1rem;
+      background-color: #fffcf2;
+      #moodTag {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        color: $Color_Main;
+        font-size: $FONT_SMALL;
+        div {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          font-size: $FONT_SMALL;
+        }
+      }
+    }
+  }
+
+  .content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 30vw;
+    padding: 3rem 3rem;
+  }
+
+  .user {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 16rem;
+    height: $HEIGHT_SMALL;
+    padding: 5px 10px;
+    margin: 20px 10px 10px 10px;
+    img {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .profile {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 4rem;
+      height: $HEIGHT_MEDIUM_LARGE;
+    }
+
+    .user-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      min-width: 8rem;
+      padding-left: 1rem;
+      .email {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        width: 10rem;
+        height: $HEIGHT_EXTRA_SMALL;
+        font-size: $FONT_MEDIUM_SMALL;
+        font-weight: 600;
+        color: $Font_Main;
+      }
+
+      .detail {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        min-width: 8rem;
+        font-size: $FONT_SMALL;
+        font-weight: 600;
+        color: $Font_Sub;
+      }
+    }
+  }
+}
