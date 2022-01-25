@@ -1,0 +1,13 @@
+@import "../utils/style/color";
+@import "../utils/style/size";
+
+.contributeList-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  width: 55vw;
+  height: 48rem;
+  border-radius: 10px;
+  box-shadow: 1px 2px 5px 1px rgb(167, 165, 165);
+}
