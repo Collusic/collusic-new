@@ -9,6 +9,7 @@ import {
 } from "../model/createRequestProjectModel";
 import { genres, fields, moods } from "../utils/data/state";
 import { CreateTitleView } from "../view/CreateTitleView";
+import { CreateContentView } from "../view/CreateContentView";
 import { CreateFieldView } from "../view/CreateFieldView";
 import { CreateGenreView } from "../view/CreateGenreView";
 import { CreateMoodView } from "../view/CreateMoodView";
@@ -61,6 +62,7 @@ export const CreateRequestViewModel: React.FC = () => {
       <CreateLyricView />
       <CreateMelodyView /> */}
       <CreateTitleView />
+      <CreateContentView />
       <CreateFieldView
         fields={fields}
         onClickFieldHandler={onClickFieldHandler}
