@@ -14,6 +14,10 @@ export const ContributeListView: React.FC<ContributeListProps> = ({
 }) => {
   return (
     <article className="contributeList-box">
+      <div className="menu">
+        <div className="track-list">Track list</div>
+        <div className="contribute-button">기여하기</div>
+      </div>
       {contributeList.map((project, idx) => (
         <section className="contribute-project" key={idx}>
           <img
@@ -25,7 +29,7 @@ export const ContributeListView: React.FC<ContributeListProps> = ({
             alt={project.userEmail}
             className="profile"
           />
-          <section className="email">{project.userDetail}</section>
+          <section className="email">{project.userEmail}</section>
           <section className="field">{project.contributeField}</section>
           <section className="upload">
             {project.contributeField.map((key, idx) => {
