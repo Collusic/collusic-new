@@ -27,7 +27,28 @@ const getDetailRequestState = selector<User & RequestProjectType>({
       requestInstrument: "",
       requestLyric: "",
       requestMelody: "",
-      contributeList: [],
+      contributeList: [
+        {
+          userProfile: "",
+          userEmail: "spiderq10@gmail.com",
+          contributeProjectId: 1,
+          contributeField: ["melody"],
+          contributeContent: "hi",
+          contributeLyric: "",
+          contributeInstrument: "",
+          contributeMelody: "src",
+        },
+        {
+          userProfile: "",
+          userEmail: "spiderq10@gmail.com",
+          contributeProjectId: 2,
+          contributeField: ["instrument"],
+          contributeContent: "hi",
+          contributeLyric: "가사 들어왔다!",
+          contributeInstrument: "",
+          contributeMelody: "src",
+        },
+      ],
     };
 
     // return {
