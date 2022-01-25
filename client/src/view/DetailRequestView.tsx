@@ -64,6 +64,7 @@ export const DetailRequestView: React.FC<DetailRequestProps> = ({
           alt={userEmail}
           className="profile"
         />
+
         <section className="user-info">
           <div className="email">{userEmail}</div>
           <div className="detail">{userDetail}</div>
