@@ -13,6 +13,7 @@ import { CreateContentView } from "../view/CreateContentView";
 import { CreateFieldView } from "../view/CreateFieldView";
 import { CreateGenreView } from "../view/CreateGenreView";
 import { CreateMoodView } from "../view/CreateMoodView";
+import { CreateLyricView } from "../view/CreateLyricView";
 
 export const CreateRequestViewModel: React.FC = () => {
   const [requestFields, setRequestFields] = useRecoilState(requestFieldState);
@@ -63,6 +64,7 @@ export const CreateRequestViewModel: React.FC = () => {
       <CreateMelodyView /> */}
       <CreateTitleView />
       <CreateContentView />
+      <CreateLyricView />
       <CreateFieldView
         fields={fields}
         onClickFieldHandler={onClickFieldHandler}
