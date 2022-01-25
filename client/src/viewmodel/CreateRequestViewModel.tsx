@@ -13,12 +13,24 @@ import { CreateContentView } from "../view/CreateContentView";
 import { CreateFieldView } from "../view/CreateFieldView";
 import { CreateGenreView } from "../view/CreateGenreView";
 import { CreateMoodView } from "../view/CreateMoodView";
+import { CreateMelodyView } from "../view/CreateMelodyView";
 import { CreateLyricView } from "../view/CreateLyricView";
 
 export const CreateRequestViewModel: React.FC = () => {
   const [requestFields, setRequestFields] = useRecoilState(requestFieldState);
   const [requestGenres, setRequestGenres] = useRecoilState(requestGenreState);
   const [requestMoods, setRequestMoods] = useRecoilState(requestMoodState);
+
+  const onChangeFiles = (e: React.ChangeEvent<HTMLInputElement> | any) => {
+    e.preventDefault();
+    let fileName = "+ mp3 파일을 드래그하여 업로드 해주세요.";
+    let file = e.currentTarget.files[0];
+
+    if (e.type === "change" && file !== undefined) {
+      fileName = file.name;
+    }
+    e.currentTarget.parentNode.lastChild.innerText = fileName;
+  };
 
   const onClickFieldHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     let value = e.currentTarget.firstChild?.nodeValue;
@@ -58,22 +70,21 @@ export const CreateRequestViewModel: React.FC = () => {
 
   return (
     <React.Fragment>
-      {/* <CreateTitleView />
-      <CreateContextView />
-      <CreateLyricView />
-      <CreateMelodyView /> */}
-      <CreateTitleView />
-      <CreateContentView />
-      <CreateLyricView />
-      <CreateFieldView
-        fields={fields}
-        onClickFieldHandler={onClickFieldHandler}
-      />
-      <CreateGenreView
-        genres={genres}
-        onClickGenreHandler={onClickGenreHandler}
-      />
-      <CreateMoodView moods={moods} onClickMoodHandler={onClickMoodHandler} />
+      <form>
+        <CreateTitleView />
+        <CreateContentView />
+        <CreateMelodyView onChangeFiles={onChangeFiles} />
+        <CreateLyricView />
+        <CreateFieldView
+          fields={fields}
+          onClickFieldHandler={onClickFieldHandler}
+        />
+        <CreateGenreView
+          genres={genres}
+          onClickGenreHandler={onClickGenreHandler}
+        />
+        <CreateMoodView moods={moods} onClickMoodHandler={onClickMoodHandler} />
+      </form>
     </React.Fragment>
   );
 };
