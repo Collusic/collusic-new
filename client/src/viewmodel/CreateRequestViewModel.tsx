@@ -3,6 +3,7 @@ import { SetterOrUpdater, useRecoilState } from "recoil";
 import { ClassElement } from "typescript";
 
 import {
+  requestFileState,
   requestFieldState,
   requestGenreState,
   requestMoodState,
@@ -13,11 +14,33 @@ import { CreateContentView } from "../view/CreateContentView";
 import { CreateFieldView } from "../view/CreateFieldView";
 import { CreateGenreView } from "../view/CreateGenreView";
 import { CreateMoodView } from "../view/CreateMoodView";
+import { CreateMelodyView } from "../view/CreateMelodyView";
 
 export const CreateRequestViewModel: React.FC = () => {
+  const [requestFile, setrequestFile] = useRecoilState(requestFileState);
   const [requestFields, setRequestFields] = useRecoilState(requestFieldState);
   const [requestGenres, setRequestGenres] = useRecoilState(requestGenreState);
   const [requestMoods, setRequestMoods] = useRecoilState(requestMoodState);
+
+  // const onDropMelody = (e: React.MouseEvent<HTMLInputElement> | any) => {
+  //   e.preventDefault();
+  //   if (e.type === "drop") {
+  //     console.dir(e.currentTarget);
+  //     let file = e.dataTransfer.files[0];
+  //     e.currentTarget.children[1].innerText = file.name;
+  //   }
+  // };
+
+  const onChangeFiles = (e: React.ChangeEvent<HTMLInputElement> | any) => {
+    e.preventDefault();
+    let fileName = "+ mp3 파일을 드래그하여 업로드 해주세요.";
+    let file = e.currentTarget.files[0];
+
+    if (e.type === "change" && file !== undefined) {
+      fileName = file.name;
+    }
+    e.currentTarget.parentNode.lastChild.innerText = fileName;
+  };
 
   const onClickFieldHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     let value = e.currentTarget.firstChild?.nodeValue;
@@ -57,21 +80,20 @@ export const CreateRequestViewModel: React.FC = () => {
 
   return (
     <React.Fragment>
-      {/* <CreateTitleView />
-      <CreateContextView />
-      <CreateLyricView />
-      <CreateMelodyView /> */}
-      <CreateTitleView />
-      <CreateContentView />
-      <CreateFieldView
-        fields={fields}
-        onClickFieldHandler={onClickFieldHandler}
-      />
-      <CreateGenreView
-        genres={genres}
-        onClickGenreHandler={onClickGenreHandler}
-      />
-      <CreateMoodView moods={moods} onClickMoodHandler={onClickMoodHandler} />
+      <form>
+        <CreateTitleView />
+        <CreateContentView />
+        <CreateMelodyView onChangeFiles={onChangeFiles} />
+        <CreateFieldView
+          fields={fields}
+          onClickFieldHandler={onClickFieldHandler}
+        />
+        <CreateGenreView
+          genres={genres}
+          onClickGenreHandler={onClickGenreHandler}
+        />
+        <CreateMoodView moods={moods} onClickMoodHandler={onClickMoodHandler} />
+      </form>
     </React.Fragment>
   );
 };
