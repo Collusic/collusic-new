@@ -1,5 +1,5 @@
 import React from "react";
-import "./NavBar.scss";
+import "../utils/style/NavBar.scss";
 
 export const NavBarView: React.FC = () => {
   return (

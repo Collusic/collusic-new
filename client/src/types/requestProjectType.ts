@@ -1,3 +1,6 @@
+import { ContributeProject } from "./contributeProjectType";
+import { User } from "./userType";
+
 type Field = "melody" | "instrument" | "lyric";
 
 type Genre =
@@ -45,6 +48,7 @@ type RequestProjectType = {
   requestLyric?: string;
   requestInstrument?: string;
   requestMelody?: string;
+  contributeList?: Array<User & ContributeProject>;
 };
 
 export { Field, Genre, Mood, RequestProjectType };
