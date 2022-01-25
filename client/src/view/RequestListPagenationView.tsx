@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./RequestListPagenation.scss";
+import "../utils/style/RequestListPagenation.scss";
 
 type RequestListPagenationProps = {
   pagenationList: number[];

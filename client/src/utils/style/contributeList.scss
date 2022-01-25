@@ -1,0 +1,75 @@
+@import "./color";
+@import "./size";
+
+.contributeList-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+  width: 55vw;
+  min-width: 50rem;
+  height: 80vh;
+  padding: 0 1rem;
+  background-color: #fafafa;
+  .menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 50vw;
+    height: $HEIGHT_LARGE;
+    .track-list {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      width: 10rem;
+      height: $HEIGHT_LARGE;
+      color: $Color_Main;
+      font-size: $FONT_MEDIUM_LARGE;
+      font-weight: 600;
+    }
+    .contribute-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 8rem;
+      height: $HEIGHT_SMALL;
+      color: white;
+      background-color: $Color_Main;
+      border-radius: 40px;
+    }
+  }
+  .contribute-project {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 50vw;
+    height: $HEIGHT_LARGE;
+    .profile {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+    .email {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      min-width: 12rem;
+    }
+    .field {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      min-width: 10rem;
+    }
+    .upload {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      width: 20vw;
+      min-width: 25rem;
+      audio {
+        width: 25vw;
+      }
+    }
+  }
+}
