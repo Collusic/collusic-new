@@ -68,9 +68,13 @@ export const CreateRequestViewModel: React.FC = () => {
     e.currentTarget.classList.toggle("clicked");
   };
 
+  const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+
   return (
     <React.Fragment>
-      <form>
+      <form onSubmit={onSubmitHandler}>
         <CreateTitleView />
         <CreateContentView />
         <CreateMelodyView onChangeFiles={onChangeFiles} />
@@ -84,6 +88,7 @@ export const CreateRequestViewModel: React.FC = () => {
           onClickGenreHandler={onClickGenreHandler}
         />
         <CreateMoodView moods={moods} onClickMoodHandler={onClickMoodHandler} />
+        <button type="submit">요청하기</button>
       </form>
     </React.Fragment>
   );
