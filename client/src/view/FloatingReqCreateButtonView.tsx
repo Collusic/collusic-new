@@ -1,6 +1,6 @@
 import React, { MouseEventHandler } from "react";
 
-import "./FloatingReqCreateButton.scss";
+import "../utils/style/FloatingReqCreateButton.scss";
 
 export const FloatingReqCreateButtonView: React.FC = () => {
   const mouseOverHandler = () => {

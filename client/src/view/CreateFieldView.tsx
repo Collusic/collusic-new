@@ -1,7 +1,7 @@
 import React from "react";
 import { Field } from "../types/requestProjectType";
 
-import "./Create.scss";
+import "../utils/style/create.scss";
 
 type CreateFieldProps = {
   fields: Field[];

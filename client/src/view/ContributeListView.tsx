@@ -3,7 +3,7 @@ import React from "react";
 import { ContributeProject } from "../types/contributeProjectType";
 import { User } from "../types/userType";
 import { requestStates } from "../utils/requestStates";
-import "./contributeList.scss";
+import "../utils/style/contributeList.scss";
 
 type ContributeListProps = {
   contributeList: Array<User & ContributeProject>;

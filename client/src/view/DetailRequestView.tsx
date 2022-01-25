@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./detailRequest.scss";
+import "../utils/style/detailRequest.scss";
 import { RequestProjectType } from "../types/requestProjectType";
 import { User } from "../types/userType";
 import { requestStates } from "../utils/requestStates";

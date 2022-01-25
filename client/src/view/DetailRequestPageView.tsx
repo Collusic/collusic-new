@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 
-import "./detailRequestPage.scss";
+import "../utils/style/detailRequestPage.scss";
 import { ContributeListViewModel } from "../viewmodel/ContributeListViewModel";
 import { DetailRequestViewModel } from "../viewmodel/DetailRequestViewModel";
 
