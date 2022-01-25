@@ -1,10 +1,5 @@
 import { atom, selector } from "recoil";
 
-const requestFileState = atom<File | undefined>({
-  key: "requestFile",
-  default: undefined,
-});
-
 const requestFieldState = atom<string[]>({
   key: "requestFieldState",
   default: [],
@@ -26,7 +21,6 @@ const postRequestApi = selector({
 });
 
 export {
-  requestFileState,
   requestFieldState,
   requestGenreState,
   requestMoodState,

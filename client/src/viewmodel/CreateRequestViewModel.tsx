@@ -3,7 +3,6 @@ import { SetterOrUpdater, useRecoilState } from "recoil";
 import { ClassElement } from "typescript";
 
 import {
-  requestFileState,
   requestFieldState,
   requestGenreState,
   requestMoodState,
@@ -17,19 +16,9 @@ import { CreateMoodView } from "../view/CreateMoodView";
 import { CreateMelodyView } from "../view/CreateMelodyView";
 
 export const CreateRequestViewModel: React.FC = () => {
-  const [requestFile, setrequestFile] = useRecoilState(requestFileState);
   const [requestFields, setRequestFields] = useRecoilState(requestFieldState);
   const [requestGenres, setRequestGenres] = useRecoilState(requestGenreState);
   const [requestMoods, setRequestMoods] = useRecoilState(requestMoodState);
-
-  // const onDropMelody = (e: React.MouseEvent<HTMLInputElement> | any) => {
-  //   e.preventDefault();
-  //   if (e.type === "drop") {
-  //     console.dir(e.currentTarget);
-  //     let file = e.dataTransfer.files[0];
-  //     e.currentTarget.children[1].innerText = file.name;
-  //   }
-  // };
 
   const onChangeFiles = (e: React.ChangeEvent<HTMLInputElement> | any) => {
     e.preventDefault();
