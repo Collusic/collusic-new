@@ -15,6 +15,7 @@ import { CreateGenreView } from "../view/CreateGenreView";
 import { CreateMoodView } from "../view/CreateMoodView";
 import { CreateMelodyView } from "../view/CreateMelodyView";
 import { CreateLyricView } from "../view/CreateLyricView";
+import { TEST_API } from "../utils/axios";
 
 export const CreateRequestViewModel: React.FC = () => {
   const [requestFields, setRequestFields] = useRecoilState(requestFieldState);
@@ -23,6 +24,7 @@ export const CreateRequestViewModel: React.FC = () => {
 
   const onChangeFiles = (e: React.ChangeEvent<HTMLInputElement> | any) => {
     e.preventDefault();
+
     let fileName = "+ mp3 파일을 드래그하여 업로드 해주세요.";
     let file = e.currentTarget.files[0];
 
@@ -68,13 +70,33 @@ export const CreateRequestViewModel: React.FC = () => {
     e.currentTarget.classList.toggle("clicked");
   };
 
-  const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmitHandler = (e: React.FormEvent<HTMLFormElement> | any) => {
     e.preventDefault();
+
+    let [title, melody] = e.target.querySelectorAll("input");
+    let [content, lyric] = e.target.querySelectorAll("textarea");
+    let formData = new FormData();
+
+    formData.append("title", title.value);
+    formData.append("content", content.value);
+    formData.append("fields", requestFields.join(","));
+    formData.append("genres", requestGenres.join(","));
+    formData.append("moods", requestMoods.join(","));
+    formData.append("lyrics", lyric.value);
+    formData.append("multipartFile", melody.files[0]);
+
+    TEST_API.post("/api/requestprojects", formData).then((res) =>
+      console.log(res)
+    );
   };
 
   return (
     <React.Fragment>
-      <form onSubmit={onSubmitHandler}>
+      <form
+        method="post"
+        onSubmit={onSubmitHandler}
+        encType="multipart/form-data"
+      >
         <CreateTitleView />
         <CreateContentView />
         <CreateMelodyView onChangeFiles={onChangeFiles} />
