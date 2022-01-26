@@ -21,6 +21,7 @@ public class RequestProjectApiController {
 
     private final RequestProjectService requestProjectService;
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/api/requestprojects")
     public ResponseEntity<RequestProjectResponseDto> save(@ModelAttribute RequestProjectSaveRequestDto requestProjectSaveRequestDto) throws IOException {
         RequestProjectResponseDto requestProjectResponseDto = requestProjectService.save(requestProjectSaveRequestDto);
@@ -35,6 +36,7 @@ public class RequestProjectApiController {
                 .body(requestProjectResponseDto);
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/api/requestprojects/{requestProjectId}")
     public ResponseEntity<RequestProjectResponseDto> findById(@PathVariable Long requestProjectId) {
         RequestProjectResponseDto requestProjectResponseDto = requestProjectService.findById(requestProjectId);
@@ -49,6 +51,7 @@ public class RequestProjectApiController {
                 .body(requestProjectId);
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/api/main/requestprojects")
     public ResponseEntity<RequestProjectsWithPaginationDto> getRequestProjectsWithPagination(@PageableDefault(sort = "createdDate", direction = Sort.Direction.DESC)Pageable pageable) {
         RequestProjectsWithPaginationDto requestProjectsWithPagination = requestProjectService.getRequestProjectsWithPagination(pageable);
