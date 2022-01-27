@@ -55,7 +55,8 @@ export const RequestListViewModel: React.FC = () => {
       requestField: ["melody"],
       requestGenre: ["Hiphop"],
       requestMood: ["Happy"],
-      requestInstrument: "s3.com/fesaieja",
+      requestInstrument:
+        "https://collusic-new-bucket.s3.ap-northeast-2.amazonaws.com/static/LetterToDolphins.mp3",
     },
     {
       requestProjectId: 3,
@@ -65,7 +66,8 @@ export const RequestListViewModel: React.FC = () => {
       requestField: ["melody"],
       requestGenre: ["Hiphop"],
       requestMood: ["Happy"],
-      requestInstrument: "s3.com/fesaieja",
+      requestInstrument:
+        "https://collusic-new-bucket.s3.ap-northeast-2.amazonaws.com/static/horse.mp3",
     },
     {
       requestProjectId: 4,
@@ -75,7 +77,8 @@ export const RequestListViewModel: React.FC = () => {
       requestField: ["melody"],
       requestGenre: ["Hiphop"],
       requestMood: ["Happy"],
-      requestInstrument: "s3.com/fesaieja",
+      requestInstrument:
+        "https://collusic-new-bucket.s3.ap-northeast-2.amazonaws.com/static/LetterToDolphins.mp3",
     },
     {
       requestProjectId: 5,
@@ -85,7 +88,8 @@ export const RequestListViewModel: React.FC = () => {
       requestField: ["melody"],
       requestGenre: ["Hiphop"],
       requestMood: ["Happy"],
-      requestInstrument: "s3.com/fesaieja",
+      requestInstrument:
+        "https://collusic-new-bucket.s3.ap-northeast-2.amazonaws.com/static/horse.mp3",
     },
     {
       requestProjectId: 6,
@@ -95,7 +99,8 @@ export const RequestListViewModel: React.FC = () => {
       requestField: ["melody"],
       requestGenre: ["Hiphop"],
       requestMood: ["Happy"],
-      requestInstrument: "s3.com/fesaieja",
+      requestInstrument:
+        "https://collusic-new-bucket.s3.ap-northeast-2.amazonaws.com/static/LetterToDolphins.mp3",
     },
     {
       requestProjectId: 7,
@@ -105,7 +110,8 @@ export const RequestListViewModel: React.FC = () => {
       requestField: ["melody"],
       requestGenre: ["Hiphop"],
       requestMood: ["Happy"],
-      requestInstrument: "s3.com/fesaieja",
+      requestInstrument:
+        "https://collusic-new-bucket.s3.ap-northeast-2.amazonaws.com/static/horse.mp3",
     },
     {
       requestProjectId: 8,
@@ -115,7 +121,8 @@ export const RequestListViewModel: React.FC = () => {
       requestField: ["melody"],
       requestGenre: ["Hiphop"],
       requestMood: ["Happy"],
-      requestInstrument: "s3.com/fesaieja",
+      requestInstrument:
+        "https://collusic-new-bucket.s3.ap-northeast-2.amazonaws.com/static/LetterToDolphins.mp3",
     },
   ];
 
