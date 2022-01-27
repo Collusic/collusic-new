@@ -19,17 +19,17 @@ export const RequestListView: React.FC<RequestListProps> = ({
       {requestList.map((requestProject) => {
         return (
           <RequestProjectView
-            key={requestProject.requestProjectId}
+            key={requestProject.id}
             userProfile={requestProject.userProfile}
             userEmail={requestProject.userEmail}
-            requestProjectId={requestProject.requestProjectId}
-            requestTitle={requestProject.requestTitle}
-            requestField={requestProject.requestField}
-            requestGenre={requestProject.requestGenre}
-            requestMood={requestProject.requestMood}
-            requestLyric={requestProject.requestLyric}
-            requestInstrument={requestProject.requestInstrument}
-            requestMelody={requestProject.requestMelody}
+            id={requestProject.id}
+            title={requestProject.title}
+            fields={requestProject.fields}
+            genres={requestProject.genres}
+            moods={requestProject.moods}
+            lyrics={requestProject.lyrics}
+            instrument={requestProject.instrument}
+            melody={requestProject.melody}
             onClickRedirectHandler={onClickRedirectHandler}
           ></RequestProjectView>
         );

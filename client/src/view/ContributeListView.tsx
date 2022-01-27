@@ -34,14 +34,14 @@ export const ContributeListView: React.FC<ContributeListProps> = ({
             className="profile"
           />
           <section className="email">{project.userEmail}</section>
-          <section className="field">{project.contributeField}</section>
+          <section className="field">{project.fields}</section>
           <section className="upload">
-            {project.contributeField.map((key, idx) => {
+            {project.fields.map((key, idx) => {
               return requestStates(
                 idx,
-                project.contributeMelody!,
-                project.contributeInstrument!,
-                project.contributeLyric!
+                project.melody!,
+                project.instrument!,
+                project.lyrics!
               )[key];
             })}
           </section>

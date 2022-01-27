@@ -12,29 +12,29 @@ type redirectHandler = {
 export const RequestProjectView: React.FC<
   RequestProjectProps & redirectHandler
 > = ({
-  requestProjectId,
+  id,
   userProfile,
   userEmail,
-  requestTitle,
-  requestField,
-  requestGenre,
-  requestMood,
-  requestMelody,
-  requestInstrument,
-  requestLyric,
+  title,
+  fields,
+  genres,
+  moods,
+  melody,
+  instrument,
+  lyrics,
   onClickRedirectHandler,
 }) => {
   return (
     <section
       className="requestBox"
-      key={requestProjectId}
-      id={String(requestProjectId)}
+      key={id}
+      id={String(id)}
       onClick={onClickRedirectHandler}
     >
       <section className="user">
         <img
           src={
-            userProfile !== ""
+            userProfile !== undefined
               ? userProfile
               : `../../assets/defaultProfile/defaultProfile.png`
           }
@@ -43,9 +43,9 @@ export const RequestProjectView: React.FC<
         />
         <div className="email">{userEmail}</div>
       </section>
-      <section className="title">{requestTitle}</section>
+      <section className="title">{title}</section>
       <section className="field">
-        {requestField.map((field, idx) => (
+        {fields.map((field, idx) => (
           <img
             src={`../../assets/${field}/${field}.png`}
             alt={field}
@@ -56,25 +56,20 @@ export const RequestProjectView: React.FC<
       <section className="genre_mood">
         <section className="genre">
           <div id="genreTag">장르</div>
-          {requestGenre.map((genre, idx) => (
+          {genres.map((genre, idx) => (
             <div key={idx}>{genre}</div>
           ))}
         </section>
         <section className="mood">
           <div id="moodTag">분위기</div>
-          {requestMood.map((mood, idx) => (
+          {moods.map((mood, idx) => (
             <div key={idx}>{mood}</div>
           ))}
         </section>
       </section>
       <section className="upload">
-        {requestField.map((key, idx) => {
-          return requestStates(
-            idx,
-            requestMelody!,
-            requestInstrument!,
-            requestLyric!
-          )[key];
+        {fields.map((key, idx) => {
+          return requestStates(idx, melody!, instrument!, lyrics!)[key];
         })}
       </section>
     </section>

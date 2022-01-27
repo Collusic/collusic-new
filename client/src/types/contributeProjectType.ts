@@ -1,10 +1,10 @@
 import { Field } from "./requestProjectType";
 
 export type ContributeProject = {
-  contributeProjectId: number;
-  contributeField: Array<Field>;
-  contributeContent: string;
-  contributeLyric?: string;
-  contributeInstrument?: string;
-  contributeMelody?: string;
+  id: number;
+  fields: Array<Field>;
+  content: string;
+  lyrics?: string;
+  instrument?: string;
+  melody?: string;
 };

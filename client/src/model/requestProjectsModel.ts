@@ -1,6 +1,6 @@
 import { atom, selector } from "recoil";
 
-import { API } from "../utils/axios";
+import { API, TEST_API } from "../utils/axios";
 
 export const requestProjectListState = atom({
   key: "requestProjectListState",
@@ -55,9 +55,11 @@ export const getRequestList = selector({
   get: async ({ get }) => {
     try {
       const currentPage = get(currentPageState);
-      const response = await API.get(`/requestList?page=${currentPage - 1}`);
-      const data = await response.data;
-      return data;
+      const response = await TEST_API.get(
+        `/api/main/requestprojects?page=${currentPage - 1}`
+      );
+      const { requestProjectResponseDtos } = await response.data;
+      return requestProjectResponseDtos;
     } catch (err) {
       new Error("get api가 호출되지 않았습니다.");
     }
