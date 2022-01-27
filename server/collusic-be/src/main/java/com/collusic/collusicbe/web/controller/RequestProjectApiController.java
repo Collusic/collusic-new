@@ -54,7 +54,7 @@ public class RequestProjectApiController {
     }
 
     @GetMapping("/api/requestprojects/{requestProjectId}/contributeprojects")
-    public ResponseEntity<RequestProjectDetailPageDto> getRequestProjectWithContributeProjects(Long requestProjectId) {
+    public ResponseEntity<RequestProjectDetailPageDto> getRequestProjectWithContributeProjects(@PathVariable Long requestProjectId) {
         RequestProjectDetailPageDto requestProjectDetailPageDto = requestProjectService.getRequestProjectWithContributeProjects(requestProjectId);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(requestProjectDetailPageDto);
