@@ -2,7 +2,7 @@ import React from "react";
 import "../utils/style/RequestProject.scss";
 import { RequestProjectType } from "../types/requestProjectType";
 import { User } from "../types/userType";
-import { requestStates } from "../utils/requestStates";
+import { Audio } from "../components/Audio";
 
 type RequestProjectProps = User & RequestProjectType;
 type redirectHandler = {
@@ -29,7 +29,7 @@ export const RequestProjectView: React.FC<
       className="requestBox"
       key={requestProjectId}
       id={String(requestProjectId)}
-      onClick={onClickRedirectHandler}
+      // onClick={onClickRedirectHandler}
     >
       <section className="user">
         <img
@@ -68,14 +68,12 @@ export const RequestProjectView: React.FC<
         </section>
       </section>
       <section className="upload">
-        {requestField.map((key, idx) => {
-          return requestStates(
-            idx,
-            requestMelody!,
-            requestInstrument!,
-            requestLyric!
-          )[key];
-        })}
+        {console.log(requestInstrument)}
+        {requestInstrument !== undefined ? (
+          <Audio src={requestInstrument!} key={requestProjectId} />
+        ) : (
+          <div>{requestLyric}</div>
+        )}
       </section>
     </section>
   );

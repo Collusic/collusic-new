@@ -1,4 +1,5 @@
 import React from "react";
+import Audio from "../components/Audio";
 
 export const requestStates = (
   key: number,
@@ -6,19 +7,12 @@ export const requestStates = (
   instrumentSrc: string,
   lyric: string
 ) => ({
-  melody: ((): JSX.Element => (
-    <audio controls key={key}>
-      <source src={melodySrc}></source>이 문장은 audio 요소가 제대로 인식이
-      안됐을 때 나타납니다.
-    </audio>
-  ))(),
+  melody: ((): JSX.Element => {
+    console.log(melodySrc);
+    return <Audio src={melodySrc}></Audio>;
+  })(),
 
-  instrument: ((): JSX.Element => (
-    <audio controls key={key}>
-      <source src={instrumentSrc}></source>이 문장은 audio 요소가 제대로 인식이
-      안됐을 때 나타납니다.
-    </audio>
-  ))(),
+  instrument: ((): JSX.Element => <Audio src={instrumentSrc}></Audio>)(),
 
-  lyric: ((): JSX.Element => <div key={key}>{lyric}</div>)(),
+  lyric: ((): JSX.Element => <div>{lyric}</div>)(),
 });

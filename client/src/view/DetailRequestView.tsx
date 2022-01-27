@@ -21,7 +21,7 @@ export const DetailRequestView: React.FC<DetailRequestProps> = ({
   requestMelody,
 }) => {
   return (
-    <article className="requestBox">
+    <article className="detailRequestBox">
       <article className="request">
         <section className="title">{requestTitle}</section>
         <section className="upload">
