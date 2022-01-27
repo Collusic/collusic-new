@@ -1,9 +1,13 @@
 import React from "react";
 import { useRecoilValue } from "recoil";
-import { getDetailRequestState } from "../model/detailRequestProjectModel";
+import {
+  detailRequestProjectIdState,
+  getDetailRequestState,
+} from "../model/detailRequestProjectModel";
 import { DetailRequestView } from "../view/DetailRequestView";
 
 export const DetailRequestViewModel: React.FC = () => {
+  const detailRequestProjectId = useRecoilValue(detailRequestProjectIdState);
   const {
     userEmail,
     userDetail,
@@ -14,9 +18,8 @@ export const DetailRequestViewModel: React.FC = () => {
     id,
     title,
     content,
-    instrument,
     lyrics,
-    melody,
+    uploadFilePath,
   } = useRecoilValue(getDetailRequestState);
 
   return (
@@ -30,9 +33,8 @@ export const DetailRequestViewModel: React.FC = () => {
       id={id}
       title={title}
       content={content}
-      instrument={instrument}
       lyrics={lyrics}
-      melody={melody}
+      uploadFilePath={uploadFilePath}
     ></DetailRequestView>
   );
 };

@@ -28,8 +28,7 @@ export const RequestListView: React.FC<RequestListProps> = ({
             genres={requestProject.genres}
             moods={requestProject.moods}
             lyrics={requestProject.lyrics}
-            instrument={requestProject.instrument}
-            melody={requestProject.melody}
+            uploadFilePath={requestProject.uploadFilePath}
             onClickRedirectHandler={onClickRedirectHandler}
           ></RequestProjectView>
         );

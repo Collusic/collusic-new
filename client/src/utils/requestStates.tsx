@@ -3,15 +3,13 @@ import Audio from "../components/Audio";
 
 export const requestStates = (
   key: number,
-  melodySrc: string,
-  instrumentSrc: string,
-  lyric: string
+  uploadFilePath: string,
+  lyrics: string
 ) => ({
-  melody: ((): JSX.Element => {
-    return <Audio src={melodySrc}></Audio>;
-  })(),
+  melody: ((): JSX.Element => <Audio key={key} src={uploadFilePath}></Audio>)(),
+  instrument: ((): JSX.Element => (
+    <Audio key={key} src={uploadFilePath}></Audio>
+  ))(),
 
-  instrument: ((): JSX.Element => <Audio src={instrumentSrc}></Audio>)(),
-
-  lyric: ((): JSX.Element => <div>{lyric}</div>)(),
+  lyric: ((): JSX.Element => <div key={key}>{lyrics}</div>)(),
 });

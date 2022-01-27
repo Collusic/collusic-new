@@ -39,8 +39,7 @@ export const ContributeListView: React.FC<ContributeListProps> = ({
             {project.fields.map((key, idx) => {
               return requestStates(
                 idx,
-                project.melody!,
-                project.instrument!,
+                project.uploadFilePath!,
                 project.lyrics!
               )[key];
             })}

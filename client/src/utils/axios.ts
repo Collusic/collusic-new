@@ -11,5 +11,4 @@ export const TEST_API = axios.create({
   headers: {
     "X-Custom-Header": "foobar",
   },
-  timeout: 5000,
 });
