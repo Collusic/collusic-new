@@ -8,7 +8,6 @@ export const requestStates = (
   lyric: string
 ) => ({
   melody: ((): JSX.Element => {
-    console.log(melodySrc);
     return <Audio src={melodySrc}></Audio>;
   })(),
 
