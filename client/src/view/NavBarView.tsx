@@ -5,19 +5,19 @@ export const NavBarView: React.FC = () => {
   return (
     <header>
       <h1>
-        <a className="logo" href="#">
+        <a className="logo" href="/main/requestProjects">
           Collusic
         </a>
       </h1>
       <nav>
         <ul>
           <li>
-            <a href="#">
+            <a href="">
               <img src="../../assets/alarm/alarm.png" alt="alarm" />
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="">
               <img
                 src="../../assets/defaultProfile/defaultProfile.png"
                 alt="defaultProfile"
