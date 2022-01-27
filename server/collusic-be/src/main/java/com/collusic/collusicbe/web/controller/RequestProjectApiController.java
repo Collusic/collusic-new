@@ -52,4 +52,11 @@ public class RequestProjectApiController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(requestProjectsWithPagination);
     }
+
+    @GetMapping("/api/requestprojects/{requestProjectId}/contributeprojects")
+    public ResponseEntity<RequestProjectDetailPageDto> getRequestProjectWithContributeProjects(Long requestProjectId) {
+        RequestProjectDetailPageDto requestProjectDetailPageDto = requestProjectService.getRequestProjectWithContributeProjects(requestProjectId);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(requestProjectDetailPageDto);
+    }
 }
