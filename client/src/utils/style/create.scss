@@ -9,6 +9,7 @@
   width: 65rem;
   height: 10rem;
   margin-top: 10px;
+
   .text {
     display: flex;
     justify-content: flex-start;
@@ -17,6 +18,7 @@
     height: $HEIGHT_EXTRA_SMALL;
     font-weight: 900;
   }
+
   .button-box {
     display: flex;
     flex-wrap: wrap;

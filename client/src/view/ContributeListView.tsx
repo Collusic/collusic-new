@@ -7,16 +7,20 @@ import "../utils/style/contributeList.scss";
 
 type ContributeListProps = {
   contributeList: Array<User & ContributeProject>;
+  onClickHandler(e: React.MouseEvent<HTMLButtonElement> | any): void;
 };
 
 export const ContributeListView: React.FC<ContributeListProps> = ({
   contributeList,
+  onClickHandler,
 }) => {
   return (
     <article className="contributeList-box">
       <div className="menu">
         <div className="track-list">Track list</div>
-        <div className="contribute-button">기여하기</div>
+        <div className="contribute-button" onClick={onClickHandler}>
+          기여하기
+        </div>
       </div>
       {contributeList.map((project, idx) => (
         <section className="contribute-project" key={idx}>

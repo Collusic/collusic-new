@@ -2,6 +2,8 @@ import React, { ClassType, useRef } from "react";
 import { SetterOrUpdater, useRecoilState } from "recoil";
 import { ClassElement } from "typescript";
 
+import { onChangeMeldoyFile } from "../utils/eventHandler";
+
 import {
   requestFieldState,
   requestGenreState,
@@ -21,18 +23,6 @@ export const CreateRequestViewModel: React.FC = () => {
   const [requestFields, setRequestFields] = useRecoilState(requestFieldState);
   const [requestGenres, setRequestGenres] = useRecoilState(requestGenreState);
   const [requestMoods, setRequestMoods] = useRecoilState(requestMoodState);
-
-  const onChangeFiles = (e: React.ChangeEvent<HTMLInputElement> | any) => {
-    e.preventDefault();
-
-    let fileName = "+ mp3 파일을 드래그하여 업로드 해주세요.";
-    let file = e.currentTarget.files[0];
-
-    if (e.type === "change" && file !== undefined) {
-      fileName = file.name;
-    }
-    e.currentTarget.parentNode.lastChild.innerText = fileName;
-  };
 
   const onClickFieldHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     let value = e.currentTarget.firstChild?.nodeValue;
@@ -99,7 +89,7 @@ export const CreateRequestViewModel: React.FC = () => {
       >
         <CreateTitleView />
         <CreateContentView />
-        <CreateMelodyView onChangeFiles={onChangeFiles} />
+        <CreateMelodyView onChangeFiles={onChangeMeldoyFile} />
         <CreateLyricView />
         <CreateFieldView
           fields={fields}
@@ -110,7 +100,9 @@ export const CreateRequestViewModel: React.FC = () => {
           onClickGenreHandler={onClickGenreHandler}
         />
         <CreateMoodView moods={moods} onClickMoodHandler={onClickMoodHandler} />
-        <button type="submit">요청하기</button>
+        <button className="submit-btn" type="submit">
+          요청하기
+        </button>
       </form>
     </React.Fragment>
   );
