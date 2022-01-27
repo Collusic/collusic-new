@@ -18,7 +18,7 @@ const App: React.FC = () => {
           <Route path="/requestprojects" element={<CreateRequestPageView />} />
           <Route
             path="/requestprojects/:id"
-            element={<DetailRequestPageView />}
+            element={<DetailRequestPageView></DetailRequestPageView>}
           ></Route>
           {/* <Route
             path="/requestprojects/:id/contributeprojects"

@@ -1,9 +1,13 @@
 import React from "react";
 import { useRecoilValue } from "recoil";
-import { getDetailRequestState } from "../model/detailRequestProjectModel";
+import {
+  detailRequestProjectIdState,
+  getDetailRequestState,
+} from "../model/detailRequestProjectModel";
 import { DetailRequestView } from "../view/DetailRequestView";
 
 export const DetailRequestViewModel: React.FC = () => {
+  const detailRequestProjectId = useRecoilValue(detailRequestProjectIdState);
   const {
     userEmail,
     userDetail,

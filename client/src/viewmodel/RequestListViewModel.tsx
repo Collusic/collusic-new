@@ -22,11 +22,6 @@ export const RequestListViewModel: React.FC = () => {
   const [projectId, setProjectId] = useRecoilState(detailRequestProjectIdState);
   const getDetailRequest = useRecoilValue(getDetailRequestState);
 
-  const asyncProjectId = async (id: string) => {
-    const projectId = await setProjectId(id);
-    return projectId;
-  };
-
   const onClickNumberHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     setCurrentPage(Number(e.currentTarget.value));
   };
@@ -41,14 +36,10 @@ export const RequestListViewModel: React.FC = () => {
 
   const redirectHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     const id = e.currentTarget.id;
-    asyncProjectId(id).then((projectId) => {
-      console.log(projectId);
-      window.location.href = `/requestprojects/${projectId}`;
-    });
+    window.location.href = `/requestprojects/${id}`;
   };
   // upload의 타입에 따라 img태그안에 src를 넣을지, 가사를 텍스트로 집어넣을지 결정해야
 
-  console.log(requestList, totalPage);
   return (
     <React.Fragment>
       <RequestListView

@@ -1,4 +1,4 @@
-import { atom, selector } from "recoil";
+import { atom, selector, selectorFamily } from "recoil";
 import { ContributeProject } from "../types/contributeProjectType";
 import { RequestProjectType } from "../types/requestProjectType";
 import { User } from "../types/userType";
@@ -13,12 +13,9 @@ const getDetailRequestState = selector({
   key: "getDetailRequestState",
   get: async ({ get }) => {
     const id = get(detailRequestProjectIdState);
-    // const response = await getData(id);
-    // return response;
     const { data } = await TEST_API.get(
       `api/requestprojects/${id}/contributeprojects`
     );
-    // console.log(data);
 
     return {
       userProfile: data.userProfile,
