@@ -6,7 +6,6 @@ import { NavBarView } from "./view/NavBarView";
 import { MainPageView } from "./view/MainPageView";
 import { CreateRequestPageView } from "./view/CreateRequestPageView";
 import { DetailRequestPageView } from "./view/DetailRequestPageView";
-import { Audio } from "./components/Audio";
 // import { CreateContributePageView } from "./view/CreateContributePageView";
 
 const App: React.FC = () => {
