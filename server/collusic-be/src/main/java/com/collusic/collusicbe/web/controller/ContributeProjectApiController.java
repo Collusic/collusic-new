@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -44,12 +43,5 @@ public class ContributeProjectApiController {
         contributeProjectService.delete(contributeProjectId);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(contributeProjectId);
-    }
-
-    @GetMapping("/api/requestprojects/{requestProjectId}/contributeprojects")
-    public ResponseEntity<List<ContributeProjectResponseDto>> findAll(@PathVariable Long requestProjectId) {
-        List<ContributeProjectResponseDto> contributeProjectResponseDtos = contributeProjectService.findByRequestProjectIdOrderBycreatedDateDesc(requestProjectId);
-        return ResponseEntity.status(HttpStatus.OK)
-                .body((contributeProjectResponseDtos));
     }
 }

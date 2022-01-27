@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 @Getter
 @NoArgsConstructor
 public class ContributeProjectResponseDto {
+    private Long id;
     private List<String> fields;
     private String content;
     private String lyrics;
@@ -17,6 +18,7 @@ public class ContributeProjectResponseDto {
     private Boolean adoptFlag;
 
     public ContributeProjectResponseDto(ContributeProject contributeProject) {
+        this.id = contributeProject.getId();
         this.fields = contributeProject.getField().stream().map(contributeProjectFieldEntity -> contributeProjectFieldEntity.getField()).collect(Collectors.toList());
         this.content = contributeProject.getContent();
         this.lyrics = contributeProject.getLyrics();

@@ -5,19 +5,19 @@ import com.collusic.collusicbe.domain.contributeproject.ContributeProjectReposit
 import com.collusic.collusicbe.domain.requestproject.RequestProject;
 import com.collusic.collusicbe.domain.requestproject.RequestProjectRepository;
 import com.collusic.collusicbe.util.StringUtils;
-import com.collusic.collusicbe.web.dto.RequestProjectResponseDto;
-import com.collusic.collusicbe.web.dto.RequestProjectSaveRequestDto;
-import com.collusic.collusicbe.web.dto.RequestProjectUpdateRequestDto;
-import com.collusic.collusicbe.web.dto.RequestProjectsWithPaginationDto;
+import com.collusic.collusicbe.web.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static org.springframework.data.domain.Sort.Order.desc;
 
 @RequiredArgsConstructor
 @Service
@@ -71,5 +71,14 @@ public class RequestProjectService {
         List<RequestProjectResponseDto> requestProjectResponseDtos = all.getContent().stream().map(requestProject -> new RequestProjectResponseDto(requestProject)).collect(Collectors.toList());
         int totalPages = all.getTotalPages();
         return new RequestProjectsWithPaginationDto(requestProjectResponseDtos, totalPages);
+    }
+
+    @Transactional
+    public RequestProjectDetailPageDto getRequestProjectWithContributeProjects(Long requestProjectId) {
+        RequestProject requestProject = requestProjectRepository.findById(requestProjectId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 요청작이 없습니다. id=" + requestProjectId));
+        List<ContributeProject> savedContributeProjects = contributeProjectRepository.findAllByRequestProjectId(requestProjectId, Sort.by(desc("createdDate")));
+        List<ContributeProjectResponseDto> contributeProjectResponseDtos = savedContributeProjects.stream().map(contributeProject -> new ContributeProjectResponseDto(contributeProject)).collect(Collectors.toList());
+        return new RequestProjectDetailPageDto(requestProject, contributeProjectResponseDtos);
     }
 }

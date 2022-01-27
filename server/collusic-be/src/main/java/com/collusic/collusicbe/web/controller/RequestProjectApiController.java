@@ -1,10 +1,7 @@
 package com.collusic.collusicbe.web.controller;
 
 import com.collusic.collusicbe.service.RequestProjectService;
-import com.collusic.collusicbe.web.dto.RequestProjectResponseDto;
-import com.collusic.collusicbe.web.dto.RequestProjectSaveRequestDto;
-import com.collusic.collusicbe.web.dto.RequestProjectUpdateRequestDto;
-import com.collusic.collusicbe.web.dto.RequestProjectsWithPaginationDto;
+import com.collusic.collusicbe.web.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -54,5 +51,12 @@ public class RequestProjectApiController {
         RequestProjectsWithPaginationDto requestProjectsWithPagination = requestProjectService.getRequestProjectsWithPagination(pageable);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(requestProjectsWithPagination);
+    }
+
+    @GetMapping("/api/requestprojects/{requestProjectId}/contributeprojects")
+    public ResponseEntity<RequestProjectDetailPageDto> getRequestProjectWithContributeProjects(Long requestProjectId) {
+        RequestProjectDetailPageDto requestProjectDetailPageDto = requestProjectService.getRequestProjectWithContributeProjects(requestProjectId);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(requestProjectDetailPageDto);
     }
 }
