@@ -36,6 +36,12 @@ public class RequestProjectService {
     }
 
     @Transactional
+    public RequestProjectResponseDto saveWithNoMultipartFile(RequestProjectSaveRequestDto requestProjectSaveRequestDto) throws IOException {
+        RequestProject savedRequestProejct = requestProjectRepository.save(requestProjectSaveRequestDto.toEntity());
+        return new RequestProjectResponseDto(savedRequestProejct);
+    }
+
+    @Transactional
     public RequestProjectResponseDto update(Long requestProjectId, RequestProjectUpdateRequestDto requestProjectUpdateRequestDto) throws IOException {
         RequestProject requestProject = requestProjectRepository.findById(requestProjectId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 요청작이 없습니다. id=" + requestProjectId));

@@ -3,6 +3,7 @@ package com.collusic.collusicbe.web.controller;
 import com.collusic.collusicbe.service.RequestProjectService;
 import com.collusic.collusicbe.web.dto.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 public class RequestProjectApiController {
@@ -20,7 +22,12 @@ public class RequestProjectApiController {
 
     @PostMapping("/api/requestprojects")
     public ResponseEntity<RequestProjectResponseDto> save(@ModelAttribute RequestProjectSaveRequestDto requestProjectSaveRequestDto) throws IOException {
-        RequestProjectResponseDto requestProjectResponseDto = requestProjectService.save(requestProjectSaveRequestDto);
+        RequestProjectResponseDto requestProjectResponseDto = new RequestProjectResponseDto();
+        if(requestProjectSaveRequestDto.getMultipartFile().isEmpty()) {
+            requestProjectResponseDto = requestProjectService.saveWithNoMultipartFile(requestProjectSaveRequestDto);
+        } else {
+            requestProjectResponseDto = requestProjectService.save(requestProjectSaveRequestDto);
+        }
         return ResponseEntity.status(HttpStatus.OK)
                 .body(requestProjectResponseDto);
     }
