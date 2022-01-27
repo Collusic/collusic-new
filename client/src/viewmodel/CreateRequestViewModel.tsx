@@ -1,6 +1,6 @@
 import React, { ClassType, useRef } from "react";
 import { SetterOrUpdater, useRecoilState } from "recoil";
-import { ClassElement } from "typescript";
+import { onChangeMeldoyFile } from "../utils/eventHandler";
 
 import {
   requestFieldState,
@@ -15,24 +15,15 @@ import { CreateGenreView } from "../view/CreateGenreView";
 import { CreateMoodView } from "../view/CreateMoodView";
 import { CreateMelodyView } from "../view/CreateMelodyView";
 import { CreateLyricView } from "../view/CreateLyricView";
+
 import { TEST_API } from "../utils/axios";
 
 export const CreateRequestViewModel: React.FC = () => {
+  const createType = { kind: "request", description: "요청" };
+
   const [requestFields, setRequestFields] = useRecoilState(requestFieldState);
   const [requestGenres, setRequestGenres] = useRecoilState(requestGenreState);
   const [requestMoods, setRequestMoods] = useRecoilState(requestMoodState);
-
-  const onChangeFiles = (e: React.ChangeEvent<HTMLInputElement> | any) => {
-    e.preventDefault();
-
-    let fileName = "+ mp3 파일을 드래그하여 업로드 해주세요.";
-    let file = e.currentTarget.files[0];
-
-    if (e.type === "change" && file !== undefined) {
-      fileName = file.name;
-    }
-    e.currentTarget.parentNode.lastChild.innerText = fileName;
-  };
 
   const onClickFieldHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     let value = e.currentTarget.firstChild?.nodeValue;
@@ -98,10 +89,11 @@ export const CreateRequestViewModel: React.FC = () => {
         encType="multipart/form-data"
       >
         <CreateTitleView />
-        <CreateContentView />
-        <CreateMelodyView onChangeFiles={onChangeFiles} />
+        <CreateContentView createType={createType}></CreateContentView>
+        <CreateMelodyView onChangeFiles={onChangeMeldoyFile} />
         <CreateLyricView />
         <CreateFieldView
+          createType={createType}
           fields={fields}
           onClickFieldHandler={onClickFieldHandler}
         />
@@ -110,7 +102,9 @@ export const CreateRequestViewModel: React.FC = () => {
           onClickGenreHandler={onClickGenreHandler}
         />
         <CreateMoodView moods={moods} onClickMoodHandler={onClickMoodHandler} />
-        <button type="submit">요청하기</button>
+        <button className="submit-btn" type="submit">
+          {createType.description}하기
+        </button>
       </form>
     </React.Fragment>
   );

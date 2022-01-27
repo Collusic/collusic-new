@@ -1,14 +1,14 @@
 import React, { Suspense } from "react";
 
 import "../utils/style/detailRequestPage.scss";
-import { ContributeListViewModel } from "../viewmodel/ContributeListViewModel";
 import { DetailRequestViewModel } from "../viewmodel/DetailRequestViewModel";
+import { DetailRequestViewPageModel } from "../viewmodel/DetailRequestViewPageModel";
 
 export const DetailRequestPageView: React.FC = () => {
   return (
     <main className="request">
       <Suspense fallback={<div>로딩중...</div>}>
-        <ContributeListViewModel />
+        <DetailRequestViewPageModel />
       </Suspense>
       <Suspense fallback={<div>로딩중...</div>}>
         <DetailRequestViewModel />

@@ -4,10 +4,19 @@ import { useRecoilValue } from "recoil";
 import { contributeListState } from "../model/detailRequestProjectModel";
 import { ContributeListView } from "../view/ContributeListView";
 
-export const ContributeListViewModel: React.FC = () => {
+type ContributeListViewProps = {
+  onClickHandler(e: React.MouseEvent<HTMLButtonElement> | any): void;
+};
+
+export const ContributeListViewModel: React.FC<ContributeListViewProps> = ({
+  onClickHandler,
+}) => {
   const contributeList = useRecoilValue(contributeListState);
 
   return (
-    <ContributeListView contributeList={contributeList}></ContributeListView>
+    <ContributeListView
+      onClickHandler={onClickHandler}
+      contributeList={contributeList}
+    ></ContributeListView>
   );
 };
