@@ -17,6 +17,7 @@ import { CreateMelodyView } from "../view/CreateMelodyView";
 import { CreateLyricView } from "../view/CreateLyricView";
 
 import { TEST_API } from "../utils/axios";
+import axios from "axios";
 
 export const CreateRequestViewModel: React.FC = () => {
   const createType = { kind: "request", description: "요청" };
@@ -67,6 +68,11 @@ export const CreateRequestViewModel: React.FC = () => {
     let [title, melody] = e.target.querySelectorAll("input");
     let [content, lyric] = e.target.querySelectorAll("textarea");
     let formData = new FormData();
+    let melodyFile = melody.files[0];
+
+    if (melodyFile === undefined) {
+      melodyFile = new Blob();
+    }
 
     formData.append("title", title.value);
     formData.append("content", content.value);
@@ -74,11 +80,20 @@ export const CreateRequestViewModel: React.FC = () => {
     formData.append("genres", requestGenres.join(","));
     formData.append("moods", requestMoods.join(","));
     formData.append("lyrics", lyric.value);
-    formData.append("multipartFile", melody.files[0]);
+    formData.append("multipartFile", melodyFile);
 
-    TEST_API.post("/api/requestprojects", formData).then((res) =>
-      console.log(res)
-    );
+    axios
+      .create({
+        baseURL:
+          "http://ec2-13-124-123-6.ap-northeast-2.compute.amazonaws.com:8080/",
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "X-Custom-Header": "foobar",
+        },
+        timeout: 5000,
+      })
+      .post("/api/requestprojects", formData)
+      .then((res) => console.log(res));
   };
 
   return (

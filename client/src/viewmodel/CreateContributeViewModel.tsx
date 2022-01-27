@@ -39,11 +39,15 @@ export const CreateContributeViewModel: React.FC = () => {
     let [melody] = e.target.querySelectorAll("input");
     let [content, lyric] = e.target.querySelectorAll("textarea");
     let formData = new FormData();
-    console.log(requestProjectId);
+    let melodyFile = melody.files[0];
+
+    if (melodyFile === undefined) {
+      melodyFile = new Blob();
+    }
     formData.append("content", content.value);
     formData.append("fields", requestFields.join(","));
     formData.append("lyrics", lyric.value);
-    formData.append("multipartFile", melody.files[0]);
+    formData.append("multipartFile", melodyFile);
 
     TEST_API.post(
       `/api/requestprojects/${requestProjectId}/contributeprojects`,

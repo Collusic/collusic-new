@@ -8,6 +8,9 @@
   height: 20rem;
   border-radius: 10px;
   box-shadow: 1px 2px 5px 1px rgb(167, 165, 165);
+  overflow: hidden;
+  white-space: normal;
+  text-overflow: ellipsis;
 
   .user {
     display: flex;
@@ -23,29 +26,31 @@
       justify-content: center;
       align-items: center;
       height: $HEIGHT_EXTRA_SMALL;
+      margin-right: 15px;
     }
 
     .email {
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 10rem;
       height: $HEIGHT_EXTRA_SMALL;
       font-size: $FONT_SMALL;
       color: $Font_Sub;
     }
   }
+
   .title {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    width: 16rem;
+    // width: 16rem;
     height: $HEIGHT_SMALL;
     padding: 5px 10px;
     margin: 10px 10px;
     font-size: $FONT_LARGE;
-    font-weight: 700;
+    font-weight: 600;
   }
+
   .field {
     display: flex;
     justify-content: flex-start;
@@ -55,17 +60,21 @@
     padding: 5px 10px;
     margin: 5px 5px 10px 5px;
   }
+
   .genre_mood {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     font-size: $FONT_MEDIUM;
-    font-weight: 600;
+    font-weight: 500;
+    margin-bottom: 7px;
+
     .genre {
       display: flex;
       justify-content: flex-start;
       align-items: center;
       padding: 0px 10px;
+
       #genreTag {
         display: flex;
         justify-content: flex-start;
@@ -73,12 +82,20 @@
         padding: 0px 10px;
         color: $Color_Main;
       }
+
+      .genreText {
+        margin-right: 5px;
+        color: #202020;
+
+      }
     }
+
     .mood {
       display: flex;
       justify-content: flex-start;
       align-items: center;
       padding: 5px 10px;
+
       #moodTag {
         display: flex;
         justify-content: flex-start;
@@ -86,12 +103,30 @@
         padding: 5px 10px;
         color: $Color_Main;
       }
+
+      .moodText {
+        margin-right: 5px;
+        color: #202020;
+      }
     }
   }
+
   .upload {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding-left: 10px;
+    height: 7rem;
+    margin-bottom: 10px;
+
+    overflow: hidden;
+    white-space: normal;
+    text-overflow: ellipsis;
+    line-height: 1.26rem;
+    font-size: $FONT_EXTRA_SMALL;
+
+    .lyrics {
+      position: relative;
+      margin: 5px 14px;
+    }
   }
 }
