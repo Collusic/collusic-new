@@ -19,7 +19,13 @@ public class ContributeProjectApiController {
 
     @PostMapping("/api/requestprojects/{requestProjectId}/contributeprojects")
     public ResponseEntity<ContributeProjectResponseDto> save(@ModelAttribute ContributeProjectSaveRequestDto contributeProjectSaveRequestDto, @PathVariable Long requestProjectId) throws IOException {
-        ContributeProjectResponseDto contributeProjectResponseDto = contributeProjectService.save(contributeProjectSaveRequestDto, requestProjectId);
+        ContributeProjectResponseDto contributeProjectResponseDto = new ContributeProjectResponseDto();
+        if(contributeProjectSaveRequestDto.getMultipartFile().isEmpty()) {
+            contributeProjectResponseDto = contributeProjectService.saveWithNoMultipartFile(contributeProjectSaveRequestDto, requestProjectId);
+        } else {
+            contributeProjectResponseDto = contributeProjectService.save(contributeProjectSaveRequestDto, requestProjectId);
+        }
+
         return ResponseEntity.status(HttpStatus.OK)
                 .body(contributeProjectResponseDto);
     }

@@ -33,6 +33,14 @@ public class ContributeProjectService {
     }
 
     @Transactional
+    public ContributeProjectResponseDto saveWithNoMultipartFile(ContributeProjectSaveRequestDto contributeProjectSaveRequestDto, Long requestProjectId) {
+        RequestProject savedRequestProject = requestProjectRepository.findById(requestProjectId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 요청작이 없습니다. id=" + requestProjectId));
+        ContributeProject savedContributeProject = contributeProjectRepository.save(contributeProjectSaveRequestDto.toEntity(savedRequestProject));
+        return new ContributeProjectResponseDto(savedContributeProject);
+    }
+
+    @Transactional
     public ContributeProjectResponseDto update(ContributeProjectUpdateRequestDto contributeProjectUpdateRequestDto, Long contributeProjectId) throws IOException {
         ContributeProject contributeProject = contributeProjectRepository.findById(contributeProjectId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 기여작이 없습니다. id=" + contributeProjectId));
