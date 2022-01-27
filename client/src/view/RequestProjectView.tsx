@@ -2,7 +2,7 @@ import React from "react";
 import "../utils/style/RequestProject.scss";
 import { RequestProjectType } from "../types/requestProjectType";
 import { User } from "../types/userType";
-import { requestStates } from "../utils/requestStates";
+import { Audio } from "../components/Audio";
 
 type RequestProjectProps = User & RequestProjectType;
 type redirectHandler = {
@@ -68,9 +68,11 @@ export const RequestProjectView: React.FC<
         </section>
       </section>
       <section className="upload">
-        {fields.map((key, idx) => {
-          return requestStates(idx, melody!, instrument!, lyrics!)[key];
-        })}
+        {instrument !== undefined ? (
+          <Audio src={instrument!} key={id} />
+        ) : (
+          <div>{lyrics}</div>
+        )}
       </section>
     </section>
   );

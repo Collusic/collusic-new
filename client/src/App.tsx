@@ -6,6 +6,7 @@ import { NavBarView } from "./view/NavBarView";
 import { MainPageView } from "./view/MainPageView";
 import { CreateRequestPageView } from "./view/CreateRequestPageView";
 import { DetailRequestPageView } from "./view/DetailRequestPageView";
+import { Audio } from "./components/Audio";
 // import { CreateContributePageView } from "./view/CreateContributePageView";
 
 const App: React.FC = () => {
@@ -20,10 +21,10 @@ const App: React.FC = () => {
             path="/requestprojects/:id"
             element={<DetailRequestPageView />}
           ></Route>
-          <Route
+          {/* <Route
             path="/requestprojects/:id/contributeprojects"
-            // element={<CreateContributePageView />}
-          ></Route>
+            element={<CreateContributePageView />}
+          ></Route> */}
         </Routes>
       </BrowserRouter>
     </RecoilRoot>
