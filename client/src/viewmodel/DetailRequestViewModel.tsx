@@ -8,15 +8,15 @@ export const DetailRequestViewModel: React.FC = () => {
     userEmail,
     userDetail,
     userProfile,
-    requestField,
-    requestGenre,
-    requestMood,
-    requestProjectId,
-    requestTitle,
-    requestContent,
-    requestInstrument,
-    requestLyric,
-    requestMelody,
+    fields,
+    genres,
+    moods,
+    id,
+    title,
+    content,
+    instrument,
+    lyrics,
+    melody,
   } = useRecoilValue(getDetailRequestState);
 
   return (
@@ -24,15 +24,15 @@ export const DetailRequestViewModel: React.FC = () => {
       userEmail={userEmail}
       userDetail={userDetail}
       userProfile={userProfile}
-      requestField={requestField}
-      requestGenre={requestGenre}
-      requestMood={requestMood}
-      requestProjectId={requestProjectId}
-      requestTitle={requestTitle}
-      requestContent={requestContent}
-      requestInstrument={requestInstrument}
-      requestLyric={requestLyric}
-      requestMelody={requestMelody}
+      fields={fields}
+      genres={genres}
+      moods={moods}
+      id={id}
+      title={title}
+      content={content}
+      instrument={instrument}
+      lyrics={lyrics}
+      melody={melody}
     ></DetailRequestView>
   );
 };

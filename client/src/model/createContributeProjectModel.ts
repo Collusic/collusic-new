@@ -12,7 +12,7 @@ const getRequestProjectField = selector({
   key: "getRequestProjectField",
   get: ({ get }) => {
     const requestProject = get(getDetailRequestState);
-    const requestProjectFieldList = requestProject.requestField;
+    const requestProjectFieldList = requestProject.fields;
     return requestProjectFieldList;
   },
 });

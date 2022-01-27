@@ -16,8 +16,7 @@ import { TEST_API } from "../utils/axios";
 export const CreateContributeViewModel: React.FC = () => {
   const createType = { kind: "contribute", description: "기여" };
 
-  const requestProjectId = useRecoilValue(getDetailRequestState)
-    .requestProjectId;
+  const requestProjectId = useRecoilValue(getDetailRequestState).id;
   const requestFields = useRecoilValue(getRequestProjectField);
   const [contriFields, setContriFields] = useRecoilState(contributeFields);
 

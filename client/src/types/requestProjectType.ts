@@ -39,15 +39,15 @@ type Mood =
   | "Dark";
 
 type RequestProjectType = {
-  requestProjectId: number;
-  requestTitle: string;
-  requestContent?: string;
-  requestField: Array<Field>;
-  requestGenre: Array<Genre>;
-  requestMood: Array<Mood>;
-  requestLyric?: string;
-  requestInstrument?: string;
-  requestMelody?: string;
+  id: number;
+  title: string;
+  content?: string;
+  fields: Array<Field>;
+  genres: Array<Genre>;
+  moods: Array<Mood>;
+  lyrics?: string;
+  instrument?: string;
+  melody?: string;
   contributeList?: Array<User & ContributeProject>;
 };
 
