@@ -6,6 +6,7 @@ import {
   getRequestProjectField,
   contributeFields,
 } from "../model/createContributeProjectModel";
+import { getDetailRequestState } from "../model/detailRequestProjectModel";
 import { Field } from "../types/requestProjectType";
 import { CreateContentView } from "../view/CreateContentView";
 import { CreateLyricView } from "../view/CreateLyricView";
@@ -15,6 +16,8 @@ import { TEST_API } from "../utils/axios";
 export const CreateContributeViewModel: React.FC = () => {
   const createType = { kind: "contribute", description: "기여" };
 
+  const requestProjectId = useRecoilValue(getDetailRequestState)
+    .requestProjectId;
   const requestFields = useRecoilValue(getRequestProjectField);
   const [contriFields, setContriFields] = useRecoilState(contributeFields);
 
@@ -34,19 +37,19 @@ export const CreateContributeViewModel: React.FC = () => {
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement> | any) => {
     e.preventDefault();
 
-    let [title, melody] = e.target.querySelectorAll("input");
+    let [melody] = e.target.querySelectorAll("input");
     let [content, lyric] = e.target.querySelectorAll("textarea");
     let formData = new FormData();
-
-    formData.append("title", title.value);
+    console.log(requestProjectId);
     formData.append("content", content.value);
     formData.append("fields", requestFields.join(","));
     formData.append("lyrics", lyric.value);
     formData.append("multipartFile", melody.files[0]);
 
-    TEST_API.post("/api/requestprojects", formData).then((res) =>
-      console.log(res)
-    );
+    TEST_API.post(
+      `/api/requestprojects/${requestProjectId}/contributeprojects`,
+      formData
+    ).then((res) => console.log(res));
   };
 
   return (
