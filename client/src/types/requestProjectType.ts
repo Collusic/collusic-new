@@ -46,9 +46,8 @@ type RequestProjectType = {
   genres: Array<Genre>;
   moods: Array<Mood>;
   lyrics?: string;
-  instrument?: string;
-  melody?: string;
-  contributeList?: Array<User & ContributeProject>;
+  uploadFilePath?: string;
+  contributeProjectResponseDtos?: Array<User & ContributeProject>;
 };
 
 export { Field, Genre, Mood, RequestProjectType };

@@ -13,7 +13,7 @@ import { RequestListPagenationView } from "../view/RequestListPagenationView";
 import { RequestListView } from "../view/RequestListView";
 
 export const RequestListViewModel: React.FC = () => {
-  const requestList = useRecoilValue(getRequestList);
+  const [requestList, totalPage] = useRecoilValue(getRequestList);
   const [currentPage, setCurrentPage] = useRecoilState(currentPageState);
   const pagenationList: number[] = useRecoilValue(getPageList)!;
   const [projectId, setProjectId] = useRecoilState(detailRequestProjectIdState);
@@ -37,8 +37,7 @@ export const RequestListViewModel: React.FC = () => {
   };
   // upload의 타입에 따라 img태그안에 src를 넣을지, 가사를 텍스트로 집어넣을지 결정해야
 
-  const defaultPagenationList = [1, 2, 3, 4, 5];
-  const defaultCurrentPage = 1;
+  // console.log(requestList, totalPage);
   return (
     <React.Fragment>
       <RequestListView
@@ -46,8 +45,8 @@ export const RequestListViewModel: React.FC = () => {
         onClickRedirectHandler={redirectHandler}
       ></RequestListView>
       <RequestListPagenationView
-        currentPage={defaultCurrentPage}
-        pagenationList={defaultPagenationList}
+        currentPage={currentPage}
+        pagenationList={pagenationList}
         onClickNumberHandler={onClickNumberHandler}
         onClickLeftHandler={onClickLeftHandler}
         onClickRightHandler={onClickRightHandler}

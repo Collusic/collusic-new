@@ -5,6 +5,5 @@ export type ContributeProject = {
   fields: Array<Field>;
   content: string;
   lyrics?: string;
-  instrument?: string;
-  melody?: string;
+  uploadFilePath?: string;
 };

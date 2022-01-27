@@ -16,9 +16,8 @@ export const DetailRequestView: React.FC<DetailRequestProps> = ({
   moods,
   title,
   content,
-  instrument,
   lyrics,
-  melody,
+  uploadFilePath,
 }) => {
   return (
     <article className="detailRequestBox">
@@ -26,7 +25,7 @@ export const DetailRequestView: React.FC<DetailRequestProps> = ({
         <section className="title">{title}</section>
         <section className="upload">
           {fields.map((key, idx) => {
-            return requestStates(idx, melody!, instrument!, lyrics!)[key];
+            return requestStates(idx, uploadFilePath!, lyrics!)[key];
           })}
         </section>
         <section className="field_genre_mood">
