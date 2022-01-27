@@ -9,13 +9,16 @@ const detailRequestProjectIdState = atom({
   default: "1",
 });
 
-const getDetailRequestState = selector<User & RequestProjectType>({
+const getDetailRequestState = selector({
   key: "getDetailRequestState",
   get: async ({ get }) => {
     const id = get(detailRequestProjectIdState);
+    // const response = await getData(id);
+    // return response;
     const { data } = await TEST_API.get(
-      `/api/requestprojects/${id}/contributeprojects`
+      `api/requestprojects/${id}/contributeprojects`
     );
+    // console.log(data);
 
     return {
       userProfile: data.userProfile,

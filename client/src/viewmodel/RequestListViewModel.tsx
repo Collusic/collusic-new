@@ -1,7 +1,10 @@
 import React from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 
-import { detailRequestProjectIdState } from "../model/detailRequestProjectModel";
+import {
+  detailRequestProjectIdState,
+  getDetailRequestState,
+} from "../model/detailRequestProjectModel";
 import {
   getRequestList,
   getPageList,
@@ -17,6 +20,12 @@ export const RequestListViewModel: React.FC = () => {
   const [currentPage, setCurrentPage] = useRecoilState(currentPageState);
   const pagenationList: number[] = useRecoilValue(getPageList)!;
   const [projectId, setProjectId] = useRecoilState(detailRequestProjectIdState);
+  const getDetailRequest = useRecoilValue(getDetailRequestState);
+
+  const asyncProjectId = async (id: string) => {
+    const projectId = await setProjectId(id);
+    return projectId;
+  };
 
   const onClickNumberHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     setCurrentPage(Number(e.currentTarget.value));
@@ -32,12 +41,14 @@ export const RequestListViewModel: React.FC = () => {
 
   const redirectHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     const id = e.currentTarget.id;
-    setProjectId(id);
-    window.location.href = `/requestprojects/${projectId}`;
+    asyncProjectId(id).then((projectId) => {
+      console.log(projectId);
+      window.location.href = `/requestprojects/${projectId}`;
+    });
   };
   // upload의 타입에 따라 img태그안에 src를 넣을지, 가사를 텍스트로 집어넣을지 결정해야
 
-  // console.log(requestList, totalPage);
+  console.log(requestList, totalPage);
   return (
     <React.Fragment>
       <RequestListView

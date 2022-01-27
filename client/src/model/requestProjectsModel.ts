@@ -16,7 +16,6 @@ export const getPageList = selector({
   key: "getPageList",
   get: ({ get }) => {
     const [getReqeustData, totalPages] = get(getRequestList);
-    console.log(getReqeustData, totalPages);
 
     const currentPage = get(currentPageState);
     let pageList = [];
@@ -47,19 +46,28 @@ export const getPageList = selector({
   },
 });
 
+export const forceReloadBoardListState = atom({
+  key: "forceReloadBoardListState",
+  default: 0,
+});
+
+// const getData = (page: number): Promise<any> =>
+//   TEST_API.get("/api/main/requestprojects", { params: { page } });
+
 export const getRequestList = selector<any>({
   key: "getRequestList",
   get: async ({ get }) => {
-    try {
-      const currentPage = get(currentPageState);
-      const response = await TEST_API.get(
-        `/api/main/requestprojects?page=${currentPage - 1}`
-      );
-      const { requestProjectResponseDtos, totalPages } = await response.data;
-      // console.log(requestProjectResponseDtos, totalPages);
-      return [requestProjectResponseDtos, totalPages];
-    } catch (err) {
-      new Error("get api가 호출되지 않았습니다.");
-    }
+    get(forceReloadBoardListState);
+    const currentPage = get(currentPageState);
+    const response = await TEST_API.get(
+      `/api/main/requestprojects?page=${currentPage - 1}`
+    );
+    // const response = await getData(currentPage - 1);
+
+    const { requestProjectResponseDtos, totalPages } = await response.data;
+    return [requestProjectResponseDtos, totalPages];
+  },
+  set: ({ set }) => {
+    set(forceReloadBoardListState, Math.random());
   },
 });

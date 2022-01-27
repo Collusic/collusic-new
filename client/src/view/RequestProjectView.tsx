@@ -67,7 +67,7 @@ export const RequestProjectView: React.FC<
         </section>
       </section>
       <section className="upload">
-        {uploadFilePath !== undefined ? (
+        {uploadFilePath != undefined ? (
           <Audio src={uploadFilePath!} key={id} />
         ) : (
           <div>{lyrics}</div>

@@ -6,8 +6,10 @@ export const requestStates = (
   uploadFilePath: string,
   lyrics: string
 ) => ({
-  melody: ((): JSX.Element => <Audio src={uploadFilePath}></Audio>)(),
-  instrument: ((): JSX.Element => <Audio src={uploadFilePath}></Audio>)(),
+  melody: ((): JSX.Element => <Audio key={key} src={uploadFilePath}></Audio>)(),
+  instrument: ((): JSX.Element => (
+    <Audio key={key} src={uploadFilePath}></Audio>
+  ))(),
 
-  lyric: ((): JSX.Element => <div>{lyrics}</div>)(),
+  lyric: ((): JSX.Element => <div key={key}>{lyrics}</div>)(),
 });

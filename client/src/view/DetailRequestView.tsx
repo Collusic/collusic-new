@@ -31,7 +31,9 @@ export const DetailRequestView: React.FC<DetailRequestProps> = ({
         <section className="field_genre_mood">
           <section className="field">
             <div id="fieldTag">요청 분야</div>
-            {fields.map((field, idx) => field)}
+            {fields.map((field, idx) => (
+              <div key={idx}>{field}</div>
+            ))}
           </section>
           <section className="genre">
             <div id="genreTag">장르</div>
