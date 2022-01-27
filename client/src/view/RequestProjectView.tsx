@@ -37,10 +37,12 @@ export const RequestProjectView: React.FC<
               ? userProfile
               : `../../assets/defaultProfile/defaultProfile.png`
           }
-          alt={userEmail}
+          alt={userProfile}
           className="profile"
         />
-        <div className="email">{userEmail}</div>
+        <div className="email">
+          {userEmail !== undefined ? userEmail : "sunghyuk1609@gmail.com"}
+        </div>
       </section>
       <section className="title">{title}</section>
       <section className="field">
@@ -56,13 +58,17 @@ export const RequestProjectView: React.FC<
         <section className="genre">
           <div id="genreTag">장르</div>
           {genres.map((genre, idx) => (
-            <div key={idx}>{genre}</div>
+            <div className="genreText" id={String(idx)} key={String(idx)}>
+              {genre}
+            </div>
           ))}
         </section>
         <section className="mood">
           <div id="moodTag">분위기</div>
           {moods.map((mood, idx) => (
-            <div key={idx}>{mood}</div>
+            <div className="moodText" id={String(idx)} key={String(idx)}>
+              {mood}
+            </div>
           ))}
         </section>
       </section>
@@ -70,7 +76,7 @@ export const RequestProjectView: React.FC<
         {uploadFilePath != undefined ? (
           <Audio src={uploadFilePath!} key={id} />
         ) : (
-          <div>{lyrics}</div>
+          <div className="lyrics">{lyrics}</div>
         )}
       </section>
     </section>

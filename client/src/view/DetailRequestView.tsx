@@ -53,17 +53,23 @@ export const DetailRequestView: React.FC<DetailRequestProps> = ({
       <article className="user">
         <img
           src={
-            userProfile !== ""
+            userProfile !== undefined
               ? userProfile
               : `../../assets/defaultProfile/defaultProfile@3x.png`
           }
-          alt={userEmail}
+          alt={userProfile}
           className="profile"
         />
 
         <section className="user-info">
-          <div className="email">{userEmail}</div>
-          <div className="detail">{userDetail}</div>
+          <div className="email">
+            {userEmail !== undefined ? userEmail : "sunghyuk1609@gmail.com"}
+          </div>
+          <div className="detail">
+            {userDetail !== undefined
+              ? userDetail
+              : "대한민국 최고의 작사가를 꿈꾸는 김성혁입니다."}
+          </div>
         </section>
       </article>
     </article>
