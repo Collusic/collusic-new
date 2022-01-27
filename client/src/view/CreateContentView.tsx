@@ -1,10 +1,16 @@
 import React from "react";
+import { CreateProjectType } from "../types/createProjectType";
+
 import "./CreateContent.scss";
 
-export const CreateContentView: React.FC = () => {
+type CreateContentViewProps = CreateProjectType;
+
+export const CreateContentView: React.FC<CreateContentViewProps> = ({
+  createType,
+}) => {
   return (
     <section className="content-container">
-      <h4>요청 내용</h4>
+      <h4>{createType.description} 내용</h4>
       <div className="textarea-container">
         <textarea
           name="content"

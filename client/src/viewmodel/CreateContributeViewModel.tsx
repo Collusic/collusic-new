@@ -1,7 +1,6 @@
 import React from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { onChangeMeldoyFile } from "../utils/eventHandler";
-
 import { CreateFieldView } from "../view/CreateFieldView";
 import {
   getRequestProjectField,
@@ -14,6 +13,8 @@ import { CreateMelodyView } from "../view/CreateMelodyView";
 import { TEST_API } from "../utils/axios";
 
 export const CreateContributeViewModel: React.FC = () => {
+  const createType = { kind: "contribute", description: "기여" };
+
   const requestFields = useRecoilValue(getRequestProjectField);
   const [contriFields, setContriFields] = useRecoilState(contributeFields);
 
@@ -56,14 +57,15 @@ export const CreateContributeViewModel: React.FC = () => {
         encType="multipart/form-data"
       >
         <CreateFieldView
+          createType={createType}
           fields={requestFields}
           onClickFieldHandler={onClickFieldHandler}
         ></CreateFieldView>
-        <CreateContentView />
+        <CreateContentView createType={createType}></CreateContentView>
         <CreateLyricView />
         <CreateMelodyView onChangeFiles={onChangeMeldoyFile}></CreateMelodyView>
         <button className="submit-btn" type="submit">
-          기여하기
+          {createType.description}하기
         </button>
       </form>
     </article>
