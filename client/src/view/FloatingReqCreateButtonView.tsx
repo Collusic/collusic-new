@@ -22,7 +22,7 @@ export const FloatingReqCreateButtonView: React.FC = () => {
         className="plus-button"
         alt="plus-button"
         src="../../assets/createButton/createButton.png"
-        onClick={() => (window.location.href = "/createRequest")}
+        onClick={() => (window.location.href = "/requestProjects")}
         onMouseOver={mouseOverHandler}
         onMouseLeave={mouseLeaveHandler}
       ></img>
