@@ -54,7 +54,7 @@ public class RequestProjectApiController {
     }
 
     @GetMapping("/api/main/requestprojects")
-    public ResponseEntity<RequestProjectsWithPaginationDto> getRequestProjectsWithPagination(@PageableDefault(sort = "createdDate", direction = Sort.Direction.DESC)Pageable pageable) {
+    public ResponseEntity<RequestProjectsWithPaginationDto> getRequestProjectsWithPagination(@PageableDefault(size = 8, sort = "createdDate", direction = Sort.Direction.DESC)Pageable pageable) {
         RequestProjectsWithPaginationDto requestProjectsWithPagination = requestProjectService.getRequestProjectsWithPagination(pageable);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(requestProjectsWithPagination);
