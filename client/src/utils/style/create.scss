@@ -25,7 +25,8 @@
     justify-content: flex-start;
     align-items: flex-start;
     width: 65rem;
-    height: $HEIGHT_MEDIUM_SMALL;
+    height: $HEIGHT_LARGE;
+
 
     .button {
       display: flex;
@@ -33,7 +34,6 @@
       align-items: center;
       width: 8rem;
       height: $HEIGHT_EXTRA_SMALL;
-      margin: 3px;
       color: $Font_Sub;
       font-weight: 700;
       border-radius: 20px;

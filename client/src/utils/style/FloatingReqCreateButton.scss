@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Krona+One&display=swap');
 
 @import "./color";
 @import "./size";
@@ -20,12 +21,13 @@
   visibility: hidden;
 
   .create-text {
-    font-family: 'Noto Sans KR', sans-serif;
+    font-family: 'Krona One', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 14rem;
-    font-weight: 600;
+    width: 15rem;
+    font-weight: 400;
+    color: $Color_Main;
   }
 }
 
@@ -49,22 +51,22 @@
 
 @keyframes slidein {
   0% {
-    width: 8rem;
+    width: 13rem;
     visibility: hidden;
   }
 
   100% {
-    width: 17rem;
+    width: 18rem;
     visibility: visible;
   }
 }
 
 @keyframes fontsize {
   from {
-    font-size: large;
+    font-size: normal;
   }
 
   to {
-    font-size: x-large;
+    font-size: large;
   }
 }

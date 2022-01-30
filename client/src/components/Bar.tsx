@@ -28,7 +28,6 @@ export const Bar: React.FC<BarProps> = ({
   function calcClickedTime(e: MouseEvent | React.MouseEvent<HTMLDivElement>) {
     const clickPositionInPage = e.pageX;
     const bar = e.currentTarget as HTMLDivElement;
-    console.dir(bar);
     const barStart = bar.getBoundingClientRect().left + window.scrollX;
     const barWidth = bar.offsetWidth;
     const clickPositionInBar = clickPositionInPage - barStart;

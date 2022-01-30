@@ -52,7 +52,7 @@ export const CreateContributeViewModel: React.FC = () => {
     TEST_API.post(
       `/api/requestprojects/${requestProjectId}/contributeprojects`,
       formData
-    ).then((res) => console.log(res));
+    ).then((e) => (window.location.href = "/main/requestprojects"));
   };
 
   return (

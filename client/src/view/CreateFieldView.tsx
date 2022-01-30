@@ -20,7 +20,7 @@ export const CreateFieldView: React.FC<CreateFieldProps> = ({
     <section className="button-box">
       {fields.map((field, idx) => (
         <div className="button" onClick={onClickFieldHandler} key={idx}>
-          {field}
+          {field}s
         </div>
       ))}
     </section>
