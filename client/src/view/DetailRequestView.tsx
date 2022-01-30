@@ -4,6 +4,7 @@ import "../utils/style/detailRequest.scss";
 import { RequestProjectType } from "../types/requestProjectType";
 import { User } from "../types/userType";
 import { requestStates } from "../utils/requestStates";
+import Audio from "../components/Audio";
 
 type DetailRequestProps = User & RequestProjectType;
 
@@ -24,27 +25,29 @@ export const DetailRequestView: React.FC<DetailRequestProps> = ({
       <article className="request">
         <section className="title">{title}</section>
         <section className="upload">
-          {fields.map((key, idx) => {
-            return requestStates(idx, uploadFilePath!, lyrics!)[key];
-          })}
+          {uploadFilePath != undefined ? (
+            <Audio src={uploadFilePath!} key={uploadFilePath} />
+          ) : (
+            <div className="lyrics">{lyrics}</div>
+          )}
         </section>
         <section className="field_genre_mood">
           <section className="field">
             <div id="fieldTag">요청 분야</div>
             {fields.map((field, idx) => (
-              <div key={idx}>{field}</div>
+              <span key={idx}>{field}</span>
             ))}
           </section>
           <section className="genre">
             <div id="genreTag">장르</div>
             {genres.map((genre, idx) => (
-              <div key={idx}>{genre}</div>
+              <span key={idx}>{genre}</span>
             ))}
           </section>
           <section className="mood">
             <div id="moodTag">분위기</div>
             {moods.map((mood, idx) => (
-              <div key={idx}>{mood}</div>
+              <span key={idx}>{mood}</span>
             ))}
           </section>
         </section>

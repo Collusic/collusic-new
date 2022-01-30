@@ -57,11 +57,23 @@ export const forceReloadBoardListState = atom({
 export const getRequestList = selector<any>({
   key: "getRequestList",
   get: async ({ get }) => {
+    // try {
+    //   const currentPage = get(currentPageState);
+    //   const response = await TEST_API.get(
+    //     `/api/main/requestprojects?page=${currentPage - 1}`
+    //   );
+    //   const { requestProjectResponseDtos } = await response.data;
+    //   return requestProjectResponseDtos;
+    // } catch (err) {
+    //   new Error("get api가 호출되지 않았습니다.");
+    // }
+    // get(forceReloadBoardListState);
     get(forceReloadBoardListState);
     const currentPage = get(currentPageState);
     const response = await TEST_API.get(
       `/api/main/requestprojects?page=${currentPage - 1}`
     );
+    // console.log(response);
     // const response = await getData(currentPage - 1);
 
     const { requestProjectResponseDtos, totalPages } = await response.data;
@@ -70,4 +82,7 @@ export const getRequestList = selector<any>({
   set: ({ set }) => {
     set(forceReloadBoardListState, Math.random());
   },
+  // set: ({ set }) => {
+  //   set(forceReloadBoardListState, Math.random());
+  // },
 });

@@ -14,6 +14,7 @@ export const ContributeListView: React.FC<ContributeListProps> = ({
   contributeList,
   onClickHandler,
 }) => {
+  console.log(contributeList);
   return (
     <article className="contributeList-box">
       <div className="menu">
@@ -26,14 +27,19 @@ export const ContributeListView: React.FC<ContributeListProps> = ({
         <section className="contribute-project" key={idx}>
           <img
             src={
-              project.userProfile !== ""
+              project.userProfile !== undefined
                 ? project.userProfile
                 : `../../assets/defaultProfile/defaultProfile.png`
             }
             alt={project.userEmail}
             className="profile"
           />
-          <section className="email">{project.userEmail}</section>
+          <section className="email">
+            {" "}
+            {project.userEmail !== undefined
+              ? project.userEmail
+              : "sunghyuk1609@gmail.com"}
+          </section>
           <section className="field">{project.fields}</section>
           <section className="upload">
             {project.fields.map((key, idx) => {

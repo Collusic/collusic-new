@@ -93,7 +93,7 @@ export const CreateRequestViewModel: React.FC = () => {
         timeout: 5000,
       })
       .post("/api/requestprojects", formData)
-      .then((res) => console.log(res));
+      .then(() => (window.location.href = "/main/requestprojects"));
   };
 
   return (

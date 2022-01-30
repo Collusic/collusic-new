@@ -1,5 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
 @import "./color";
 @import "./size";
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+}
 
 .detailRequestBox {
   display: flex;
@@ -22,7 +27,6 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    width: 16rem;
     height: $HEIGHT_SMALL;
     padding: 5px 10px;
     margin: 10px 10px;
@@ -36,6 +40,7 @@
     align-items: center;
     width: 30vw;
     padding: 2rem 0 0 1rem;
+
     audio {
       width: 30vw;
     }
@@ -43,29 +48,33 @@
 
   .field_genre_mood {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     align-items: center;
     width: 33vw;
     height: $HEIGHT_EXTRA_LARGE;
     padding: 2rem 1rem;
-    font-weight: 600;
+    font-weight: 500;
+
     .field {
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
       align-items: flex-start;
       width: 8vw;
-      height: $HEIGHT_MEDIUM_LARGE;
+      height: 5.5rem;
       padding: 1rem 1rem;
       background-color: #fffcf2;
       margin: 0;
+
       #fieldTag {
         display: flex;
         justify-content: flex-start;
         align-items: center;
         color: $Color_Main;
         font-size: $FONT_SMALL;
-        div {
+        font-weight: 600;
+
+        span {
           display: flex;
           justify-content: flex-start;
           align-items: center;
@@ -80,16 +89,17 @@
       justify-content: flex-start;
       align-items: flex-start;
       width: 8vw;
-      height: $HEIGHT_MEDIUM_LARGE;
+      height: 5.5rem;
       padding: 1rem 1rem;
       background-color: #fffcf2;
+
       #genreTag {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
+
         color: $Color_Main;
         font-size: $FONT_SMALL;
-        div {
+        font-weight: 600;
+
+        span {
           display: flex;
           justify-content: flex-start;
           align-items: center;
@@ -105,16 +115,19 @@
       justify-content: flex-start;
       align-items: flex-start;
       width: 8vw;
-      height: $HEIGHT_MEDIUM_LARGE;
+      height: 5.5rem;
       padding: 1rem 1rem;
       background-color: #fffcf2;
+
       #moodTag {
         display: flex;
         justify-content: flex-start;
         align-items: center;
         color: $Color_Main;
         font-size: $FONT_SMALL;
-        div {
+        font-weight: 600;
+
+        span {
           display: flex;
           justify-content: flex-start;
           align-items: center;
@@ -136,10 +149,10 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    width: 16rem;
     height: $HEIGHT_SMALL;
     padding: 3rem 0;
     margin: 20px 10px 10px 10px;
+
     img {
       display: flex;
       justify-content: center;
@@ -150,8 +163,8 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 4rem;
-      height: $HEIGHT_MEDIUM_LARGE;
+      width: 3rem;
+      height: 3rem;
     }
 
     .user-info {
@@ -161,6 +174,7 @@
       align-items: flex-start;
       min-width: 8rem;
       padding-left: 1rem;
+
       .email {
         display: flex;
         justify-content: flex-start;
@@ -168,7 +182,7 @@
         width: 10rem;
         height: $HEIGHT_EXTRA_SMALL;
         font-size: $FONT_MEDIUM_SMALL;
-        font-weight: 600;
+        font-weight: 500;
         color: $Font_Main;
       }
 
@@ -177,8 +191,8 @@
         justify-content: flex-start;
         align-items: center;
         min-width: 8rem;
-        font-size: $FONT_SMALL;
-        font-weight: 600;
+        font-size: $FONT_EXTRA_SMALL;
+        font-weight: 400;
         color: $Font_Sub;
       }
     }
