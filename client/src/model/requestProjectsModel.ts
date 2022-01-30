@@ -73,6 +73,7 @@ export const getRequestList = selector<any>({
     const response = await TEST_API.get(
       `/api/main/requestprojects?page=${currentPage - 1}`
     );
+    // console.log(response);
     // const response = await getData(currentPage - 1);
 
     const { requestProjectResponseDtos, totalPages } = await response.data;
