@@ -17,9 +17,8 @@ export const DetailRequestView: React.FC<DetailRequestProps> = ({
   moods,
   title,
   content,
-  instrument,
   lyrics,
-  melody,
+  uploadFilePath,
 }) => {
   return (
     <article className="detailRequestBox">

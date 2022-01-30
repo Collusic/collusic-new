@@ -1,4 +1,4 @@
-import { atom, selector } from "recoil";
+import { atom, selector, selectorFamily } from "recoil";
 import { ContributeProject } from "../types/contributeProjectType";
 import { RequestProjectType } from "../types/requestProjectType";
 import { User } from "../types/userType";
@@ -9,13 +9,12 @@ const detailRequestProjectIdState = atom({
   default: "1",
 });
 
-const getDetailRequestState = selector<User & RequestProjectType>({
+const getDetailRequestState = selector({
   key: "getDetailRequestState",
   get: async ({ get }) => {
     const id = get(detailRequestProjectIdState);
-
     const { data } = await TEST_API.get(
-      `/api/requestprojects/${id}/contributeprojects`
+      `api/requestprojects/${id}/contributeprojects`
     );
 
     return {
@@ -28,10 +27,9 @@ const getDetailRequestState = selector<User & RequestProjectType>({
       fields: data.fields,
       genres: data.genres,
       moods: data.moods,
-      instrument: data.instrument,
       lyrics: data.lyrics,
-      melody: data.melody,
-      contributeList: data.contributeProjectResponseDtos,
+      uploadFilePath: data.uploadFilePath,
+      contributeProjectResponseDtos: data.contributeProjectResponseDtos,
     };
   },
 });
@@ -40,7 +38,7 @@ const contributeListState = selector<Array<User & ContributeProject>>({
   key: "contributeListState",
   get: ({ get }) => {
     const data = get(getDetailRequestState);
-    const contributeList = data.contributeList!;
+    const contributeList = data.contributeProjectResponseDtos!;
     return contributeList;
   },
 });

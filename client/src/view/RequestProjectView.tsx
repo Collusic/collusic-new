@@ -2,7 +2,7 @@ import React from "react";
 import "../utils/style/RequestProject.scss";
 import { RequestProjectType } from "../types/requestProjectType";
 import { User } from "../types/userType";
-import { Audio } from "../components/Audio";
+import Audio from "../components/Audio";
 
 type RequestProjectProps = User & RequestProjectType;
 type redirectHandler = {
@@ -19,8 +19,7 @@ export const RequestProjectView: React.FC<
   fields,
   genres,
   moods,
-  melody,
-  instrument,
+  uploadFilePath,
   lyrics,
   onClickRedirectHandler,
 }) => {
@@ -74,8 +73,8 @@ export const RequestProjectView: React.FC<
         </section>
       </section>
       <section className="upload">
-        {instrument !== undefined ? (
-          <Audio src={instrument!} key={id} />
+        {uploadFilePath != undefined ? (
+          <Audio src={uploadFilePath!} key={id} />
         ) : (
           <div className="lyrics">{lyrics}</div>
         )}
