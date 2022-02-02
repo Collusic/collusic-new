@@ -2,25 +2,17 @@ import React from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 
 import {
-  detailRequestProjectIdState,
-  getDetailRequestState,
-} from "../model/detailRequestProjectModel";
-import {
   getRequestList,
   getPageList,
   currentPageState,
 } from "../model/requestProjectsModel";
-import { RequestProjectType } from "../types/requestProjectType";
-import { User } from "../types/userType";
 import { RequestListPagenationView } from "../view/RequestListPagenationView";
 import { RequestListView } from "../view/RequestListView";
 
 export const RequestListViewModel: React.FC = () => {
-  const [requestList, totalPage] = useRecoilValue(getRequestList);
+  const [requestList, ] = useRecoilValue(getRequestList);
   const [currentPage, setCurrentPage] = useRecoilState(currentPageState);
   const pagenationList: number[] = useRecoilValue(getPageList)!;
-  const [projectId, setProjectId] = useRecoilState(detailRequestProjectIdState);
-  const getDetailRequest = useRecoilValue(getDetailRequestState);
 
   const onClickNumberHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     setCurrentPage(Number(e.currentTarget.value));
