@@ -1,5 +1,5 @@
 import React from "react";
-import { CreateProjectType } from "../types/createProjectType";
+import type { CreateProjectType } from "../types/createProjectType";
 
 import "./CreateContent.scss";
 

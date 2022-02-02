@@ -1,6 +1,6 @@
 import React from "react";
-import { Field } from "../types/requestProjectType";
-import { CreateProjectType } from "../types/createProjectType";
+import type { Field } from "../types/requestProjectType";
+import type { CreateProjectType } from "../types/createProjectType";
 
 import "../utils/style/create.scss";
 

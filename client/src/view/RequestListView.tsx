@@ -1,7 +1,7 @@
 import React from "react";
 
-import { User } from "../types/userType";
-import { RequestProjectType } from "../types/requestProjectType";
+import type { User } from "../types/userType";
+import type { RequestProjectType } from "../types/requestProjectType";
 import { RequestProjectView } from "./RequestProjectView";
 import "../utils/style/RequestList.scss";
 
