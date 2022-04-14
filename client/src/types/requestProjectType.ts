@@ -50,4 +50,4 @@ type RequestProjectType = {
   contributeProjectResponseDtos?: Array<User & ContributeProject>;
 };
 
-export { Field, Genre, Mood, RequestProjectType };
+export type { Field, Genre, Mood, RequestProjectType };

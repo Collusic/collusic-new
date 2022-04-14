@@ -1,7 +1,7 @@
 import React from "react";
 import "../utils/style/RequestProject.scss";
-import { RequestProjectType } from "../types/requestProjectType";
-import { User } from "../types/userType";
+import type { RequestProjectType } from "../types/requestProjectType";
+import type { User } from "../types/userType";
 import Audio from "../components/Audio";
 
 type RequestProjectProps = User & RequestProjectType;

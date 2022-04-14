@@ -23,7 +23,7 @@
     "react-infinite-scroll-component": "^6.1.0",
     "react-modal": "^3.14.3",
     "react-router-dom": "^6.2.1",
-    "react-scripts": "^3.0.1",
+    "react-scripts": "^5.0.0",
     "recoil": "^0.5.2",
     "typescript": "^4.5.4",
     "web-vitals": "^2.1.2"
@@ -54,6 +54,7 @@
   },
   "devDependencies": {
     "@types/moment-duration-format": "^2.2.3",
+    "sass": "^1.49.7",
     "tsconfig-paths": "^3.12.0"
   }
 }

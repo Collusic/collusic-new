@@ -1,7 +1,7 @@
 import React from "react";
 
 import { ContributeProject } from "../types/contributeProjectType";
-import { User } from "../types/userType";
+import type { User } from "../types/userType";
 import { requestStates } from "../utils/requestStates";
 import "../utils/style/contributeList.scss";
 

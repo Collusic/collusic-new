@@ -1,8 +1,8 @@
 import React from "react";
 
 import "../utils/style/detailRequest.scss";
-import { RequestProjectType } from "../types/requestProjectType";
-import { User } from "../types/userType";
+import type { RequestProjectType } from "../types/requestProjectType";
+import type { User } from "../types/userType";
 import { requestStates } from "../utils/requestStates";
 import Audio from "../components/Audio";
 

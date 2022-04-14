@@ -7,7 +7,7 @@ import {
   contributeFields,
 } from "../model/createContributeProjectModel";
 import { getDetailRequestState } from "../model/detailRequestProjectModel";
-import { Field } from "../types/requestProjectType";
+import type { Field } from "../types/requestProjectType";
 import { CreateContentView } from "../view/CreateContentView";
 import { CreateLyricView } from "../view/CreateLyricView";
 import { CreateMelodyView } from "../view/CreateMelodyView";
