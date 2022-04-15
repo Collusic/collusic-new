@@ -39,6 +39,7 @@ export const Bar: React.FC<BarProps> = ({
     onTimeUpdate(calcClickedTime(e));
 
     const updateTimeOnMove = (eMove: MouseEvent) => {
+      e.stopPropagation();
       onTimeUpdate(calcClickedTime(eMove));
     };
     document.addEventListener("mousemove", updateTimeOnMove);
@@ -48,10 +49,15 @@ export const Bar: React.FC<BarProps> = ({
     });
   }
 
+  const stopEventBubbling = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+  }
+
   return (
     <div className="bar">
       <div
         className="bar__progress"
+        onClick={stopEventBubbling}
         style={{
           background: `linear-gradient(to right, orange ${curPercentage}%, #f1f1f1 0)`,
         }}
@@ -68,10 +74,12 @@ export const Bar: React.FC<BarProps> = ({
           onTimeUpdate(calcClickedTime(e));
 
           const updateTimeOnMove = (eMove: MouseEvent) => {
+            e.stopPropagation();
             onTimeUpdate(calcClickedTime(eMove));
           };
 
           const removeListener = (eMove: MouseEvent) => {
+            e.stopPropagation();
             document.removeEventListener("mousemove", updateTimeOnMove);
           };
           document.addEventListener("mousemove", updateTimeOnMove);
