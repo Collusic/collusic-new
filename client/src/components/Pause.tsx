@@ -1,5 +1,8 @@
 import React from "react";
 
+import { stopEventBubbling } from "../utils/eventHandler";
+
+
 type PauseProps = {
   handleClick(): void;
 };
@@ -7,7 +10,7 @@ type PauseProps = {
 export const Pause: React.FC<PauseProps> = ({ handleClick }) => {
   return (
     <button className="player__button" onClick={(e) => {
-      e.stopPropagation();
+      stopEventBubbling(e);
       handleClick();
     }}>
       <img src="../assets/pause/pause.png" alt="일시정지버튼" />

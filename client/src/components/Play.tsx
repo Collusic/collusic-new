@@ -1,5 +1,7 @@
 import React from "react";
 
+import { stopEventBubbling } from "../utils/eventHandler";
+
 type PlayProps = {
   handleClick(): void;
 };
@@ -7,7 +9,7 @@ type PlayProps = {
 export const Play: React.FC<PlayProps> = ({ handleClick }) => {
   return (
     <button className="player__button" onClick={(e) => {
-      e.stopPropagation();
+      stopEventBubbling(e);
       handleClick();
       }
     }>

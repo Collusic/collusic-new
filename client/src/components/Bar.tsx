@@ -1,7 +1,9 @@
 import moment from "moment";
 import React from "react";
 import "moment-duration-format";
+
 import "../utils/style/audio.scss";
+import { stopEventBubbling } from "../utils/eventHandler";
 
 type BarProps = {
   duration: number; // 미디어 파일 총 길이
@@ -49,10 +51,6 @@ export const Bar: React.FC<BarProps> = ({
     });
   }
 
-  const stopEventBubbling = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
-  }
-
   return (
     <div className="bar">
       <div
@@ -74,12 +72,12 @@ export const Bar: React.FC<BarProps> = ({
           onTimeUpdate(calcClickedTime(e));
 
           const updateTimeOnMove = (eMove: MouseEvent) => {
-            e.stopPropagation();
+            stopEventBubbling(eMove);
             onTimeUpdate(calcClickedTime(eMove));
           };
 
           const removeListener = (eMove: MouseEvent) => {
-            e.stopPropagation();
+            stopEventBubbling(eMove);
             document.removeEventListener("mousemove", updateTimeOnMove);
           };
           document.addEventListener("mousemove", updateTimeOnMove);
