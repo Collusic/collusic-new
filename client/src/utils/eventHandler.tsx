@@ -1,4 +1,4 @@
-export const onChangeMeldoyFile = (
+const onChangeMeldoyFile = (
   e: React.ChangeEvent<HTMLInputElement> | any
 ) => {
   e.preventDefault();
@@ -11,3 +11,12 @@ export const onChangeMeldoyFile = (
   }
   e.currentTarget.parentNode.lastChild.innerText = fileName;
 };
+
+const stopEventBubbling = (e: React.MouseEvent<HTMLDivElement> | MouseEvent | React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  e.stopPropagation();
+}
+
+export {
+  onChangeMeldoyFile,
+  stopEventBubbling,
+}

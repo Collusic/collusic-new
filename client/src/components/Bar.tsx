@@ -1,7 +1,9 @@
 import moment from "moment";
 import React from "react";
 import "moment-duration-format";
+
 import "../utils/style/audio.scss";
+import { stopEventBubbling } from "../utils/eventHandler";
 
 type BarProps = {
   duration: number; // 미디어 파일 총 길이
@@ -39,6 +41,7 @@ export const Bar: React.FC<BarProps> = ({
     onTimeUpdate(calcClickedTime(e));
 
     const updateTimeOnMove = (eMove: MouseEvent) => {
+      e.stopPropagation();
       onTimeUpdate(calcClickedTime(eMove));
     };
     document.addEventListener("mousemove", updateTimeOnMove);
@@ -52,6 +55,7 @@ export const Bar: React.FC<BarProps> = ({
     <div className="bar">
       <div
         className="bar__progress"
+        onClick={stopEventBubbling}
         style={{
           background: `linear-gradient(to right, orange ${curPercentage}%, #f1f1f1 0)`,
         }}
@@ -68,10 +72,12 @@ export const Bar: React.FC<BarProps> = ({
           onTimeUpdate(calcClickedTime(e));
 
           const updateTimeOnMove = (eMove: MouseEvent) => {
+            stopEventBubbling(eMove);
             onTimeUpdate(calcClickedTime(eMove));
           };
 
           const removeListener = (eMove: MouseEvent) => {
+            stopEventBubbling(eMove);
             document.removeEventListener("mousemove", updateTimeOnMove);
           };
           document.addEventListener("mousemove", updateTimeOnMove);
