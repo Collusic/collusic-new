@@ -2,8 +2,8 @@
 name: Feature request
 about: Suggest an idea for this project
 title: "[FE or BE]"
-labels: "✨ feature"
-assignees: ''
+labels: "\U0001F41B bug, ✨ feature, ♻️ refactor"
+assignees: Bellroute
 
 ---
 
