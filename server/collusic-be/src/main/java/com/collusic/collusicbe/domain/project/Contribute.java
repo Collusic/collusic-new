@@ -18,11 +18,11 @@ public class Contribute extends BaseTimeEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name = "MEMBER_ID")
+    @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name = "PROJECT_ID")
+    @JoinColumn(name = "PROJECT_ID")
     private Project project;
 
     @Column(columnDefinition = "tinyint(1) default 1", nullable = false)
