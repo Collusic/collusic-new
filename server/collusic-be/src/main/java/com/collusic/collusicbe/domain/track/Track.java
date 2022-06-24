@@ -24,7 +24,7 @@ public class Track extends BaseTimeEntity {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private SessionTag sessionTag;
+    private TrackTag trackTag;
 
     @Column(columnDefinition = "tinyint(1) default 1", nullable = false)
     private boolean editable;
