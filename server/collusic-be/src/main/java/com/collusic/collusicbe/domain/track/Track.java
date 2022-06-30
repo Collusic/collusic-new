@@ -3,6 +3,7 @@ package com.collusic.collusicbe.domain.track;
 import com.collusic.collusicbe.domain.BaseTimeEntity;
 import com.collusic.collusicbe.domain.member.Member;
 import com.collusic.collusicbe.domain.project.Project;
+import com.collusic.collusicbe.domain.state.State;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,4 +43,7 @@ public class Track extends BaseTimeEntity {
 
     @Column(nullable = false)
     private String fileUrl;
+
+    @Enumerated(EnumType.STRING)
+    private State trackState;
 }
