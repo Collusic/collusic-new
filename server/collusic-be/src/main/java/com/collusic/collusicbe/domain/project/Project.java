@@ -1,6 +1,7 @@
 package com.collusic.collusicbe.domain.project;
 
 import com.collusic.collusicbe.domain.BaseTimeEntity;
+import com.collusic.collusicbe.domain.state.State;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,4 +32,7 @@ public class Project extends BaseTimeEntity {
 
     @Column(nullable = false)
     private String fileUrl;
+
+    @Enumerated(EnumType.STRING)
+    private State projectState;
 }
