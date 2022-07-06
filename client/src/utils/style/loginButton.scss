@@ -1,0 +1,24 @@
+button {
+  border-style: none;
+  cursor: pointer;
+}
+
+.login-button {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 320px;
+  height: 56px;
+  margin: 24px 40px 12px 0;
+  padding: 16px 93px 16px 64px;
+  border-radius: 28px;
+}
+
+.login-button img {
+  padding-right: 10%;
+}
+
+.login-button p {
+  font-size: 17px;
+  font-weight: bold;
+}
