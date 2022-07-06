@@ -1,0 +1,14 @@
+@import "./color.scss";
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20rem;
+  height: 30rem;
+  padding: 40px;
+  border-radius: 16px;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.4);
+  background-color: $Color_BG_Sub;
+}
