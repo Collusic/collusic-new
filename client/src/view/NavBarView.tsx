@@ -1,7 +1,12 @@
 import React from "react";
+import { useSetRecoilState } from "recoil";
+
+import { modalOpenState } from "../model/signInModel";
 import "../utils/style/NavBar.scss";
 
-export const NavBarView: React.FC = () => {
+export function NavBarView() {
+  const  setIsModalOpen = useSetRecoilState(modalOpenState);
+
   return (
     <header>
       <h1>
@@ -17,12 +22,7 @@ export const NavBarView: React.FC = () => {
             </a>
           </li>
           <li>
-            <a href="">
-              <img
-                src="../../assets/defaultProfile/defaultProfile.png"
-                alt="defaultProfile"
-              />
-            </a>
+          <button onClick={() => setIsModalOpen(true)}>로그인/회원가입</button>
           </li>
         </ul>
       </nav>
