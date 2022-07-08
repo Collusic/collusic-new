@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <defs>
+        <clipPath id="9ify23zt2a">
+            <path data-name="사각형 2299" transform="translate(1232 1026)" style="fill:#fff;stroke:#707070" d="M0 0h24v24H0z"/>
+        </clipPath>
+        <clipPath id="ff5shp69mb">
+            <path data-name="패스 1309" d="M-79.5 243.649a10.292 10.292 0 0 0-.164-1.841h-8.476v3.482h4.844a4.141 4.141 0 0 1-1.8 2.716v2.258h2.908a8.776 8.776 0 0 0 2.684-6.615zm0 0" style="fill:none;clip-rule:evenodd"/>
+        </clipPath>
+        <clipPath id="h9tq08dbbc">
+            <path data-name="패스 1310" d="M-88.137 252.445a8.59 8.59 0 0 0 5.956-2.181l-2.908-2.258a5.41 5.41 0 0 1-3.048.859 5.364 5.364 0 0 1-5.036-3.71h-3.007v2.332a9 9 0 0 0 8.043 4.958zm0 0" style="fill:none;clip-rule:evenodd"/>
+        </clipPath>
+        <clipPath id="gr6skn1u3d">
+            <path data-name="패스 1311" d="M-93.173 245.155a5.411 5.411 0 0 1-.282-1.71 5.411 5.411 0 0 1 .282-1.71V239.4h-3.007a9.005 9.005 0 0 0-.957 4.042 9.005 9.005 0 0 0 .957 4.042l3.007-2.332zm0 0" style="fill:none;clip-rule:evenodd"/>
+        </clipPath>
+        <clipPath id="q15klutg7e">
+            <path data-name="패스 1312" d="M-88.137 238.024a4.86 4.86 0 0 1 3.44 1.346l2.582-2.581a8.652 8.652 0 0 0-6.022-2.344 9 9 0 0 0-8.043 4.955l3.007 2.332a5.365 5.365 0 0 1 5.036-3.711zm0 0" style="fill:none;clip-rule:evenodd"/>
+        </clipPath>
+    </defs>
+    <g data-name="마스크 그룹 119" transform="translate(-1232 -1026)" style="clip-path:url(#9ify23zt2a)">
+        <g data-name="그룹 3036">
+            <g data-name="그룹 3029">
+                <g data-name="그룹 3028" style="clip-path:url(#ff5shp69mb)" transform="translate(1332.137 794.555)">
+                    <path data-name="사각형 2295" transform="translate(-93.137 236.808)" style="fill:#3e82f1" d="M0 0h18.64v18.456H0z"/>
+                </g>
+            </g>
+            <g data-name="그룹 3031">
+                <g data-name="그룹 3030" style="clip-path:url(#h9tq08dbbc)" transform="translate(1332.137 794.555)">
+                    <path data-name="사각형 2296" transform="translate(-101.18 240.155)" style="fill:#32a753" d="M0 0h23.999v17.29H0z"/>
+                </g>
+            </g>
+            <g data-name="그룹 3033">
+                <g data-name="그룹 3032" style="clip-path:url(#gr6skn1u3d)" transform="translate(1332.137 794.555)">
+                    <path data-name="사각형 2297" transform="translate(-102.137 234.403)" style="fill:#f9bb00" d="M0 0h13.964v18.084H0z"/>
+                </g>
+            </g>
+            <g data-name="그룹 3035">
+                <g data-name="그룹 3034" style="clip-path:url(#q15klutg7e)" transform="translate(1332.137 794.555)">
+                    <path data-name="사각형 2298" transform="translate(-101.18 229.445)" style="fill:#e74235" d="M0 0h24.065v17.29H0z"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
