@@ -51,4 +51,18 @@ public class JWTUtilTest {
         // when & then
         assertDoesNotThrow(() -> JWTUtil.verify(token));
     }
+
+    @DisplayName("리프레시 토큰 생성 테스트")
+    @Test
+    void createRefreshTokenTest() {
+        // given
+        String email = "collusic-new@gmail.com";
+        String token = JWTUtil.createRefreshToken(email);
+
+        // when
+        Jws<Claims> tokenInfo = Jwts.parser().setSigningKey(JWTUtil.KEY).parseClaimsJws(token);
+
+        // then
+        assertEquals(email, tokenInfo.getBody().get("email"));
+    }
 }
