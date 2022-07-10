@@ -12,15 +12,12 @@ import java.util.Map;
 public class JWTUtil {
 
     private static final long ACCESS_TIME = 60 * 60;
+    private static final long REFRESH_TIME = 60 * 60 * 24 * 7;
     public static final String KEY = "collusic-new";
 
     public static String createAccessToken(String email) {
-        Map<String, Object> headers = new HashMap<>();
-        headers.put("typ", "JWT");
-        headers.put("alg", SignatureAlgorithm.HS256);
-
         return Jwts.builder()
-                   .setHeader(headers)
+                   .setHeader(jwtHeaders())
                    .claim("email", email)
                    .claim("exp", Instant.now().getEpochSecond() + ACCESS_TIME)
                    .signWith(SignatureAlgorithm.HS256, KEY)
@@ -31,5 +28,21 @@ public class JWTUtil {
         return Jwts.parser()
                    .setSigningKey(KEY)
                    .parseClaimsJws(token);
+    }
+
+    public static String createRefreshToken(String email) {
+        return Jwts.builder()
+                .setHeader(jwtHeaders())
+                .claim("email", email)
+                .claim("exp", Instant.now().getEpochSecond() + REFRESH_TIME)
+                .signWith(SignatureAlgorithm.HS256, KEY)
+                .compact();
+    }
+
+    private static Map<String, Object> jwtHeaders() {
+        Map<String, Object> headers = new HashMap<>();
+        headers.put("typ", "JWT");
+        headers.put("alg", SignatureAlgorithm.HS256);
+        return headers;
     }
 }
