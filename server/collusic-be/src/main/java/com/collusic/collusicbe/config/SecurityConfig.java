@@ -20,9 +20,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .de
+                .formLogin().disable()
+                .httpBasic().disable()
+                // TODO : authorizeRequests()
+                // TODO : logout()
                 .oauth2Login()
                 .userInfoEndpoint()
-                .userService(customOAuthUserService)
+                .userService(customOAuthUserService);
+                // TODO : success 시 JWT 처리
     }
 }
