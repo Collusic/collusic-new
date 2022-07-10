@@ -32,11 +32,11 @@ public class JWTUtil {
 
     public static String createRefreshToken(String email) {
         return Jwts.builder()
-                .setHeader(jwtHeaders())
-                .claim("email", email)
-                .claim("exp", Instant.now().getEpochSecond() + REFRESH_TIME)
-                .signWith(SignatureAlgorithm.HS256, KEY)
-                .compact();
+                   .setHeader(jwtHeaders())
+                   .claim("email", email)
+                   .claim("exp", Instant.now().getEpochSecond() + REFRESH_TIME)
+                   .signWith(SignatureAlgorithm.HS256, KEY)
+                   .compact();
     }
 
     private static Map<String, Object> jwtHeaders() {
