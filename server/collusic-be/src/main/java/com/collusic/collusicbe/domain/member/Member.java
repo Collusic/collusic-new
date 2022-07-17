@@ -2,6 +2,7 @@ package com.collusic.collusicbe.domain.member;
 
 import com.collusic.collusicbe.domain.BaseTimeEntity;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,16 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Member extends BaseTimeEntity {
+
+    @Builder
+    public Member(String authId, String email, String nickname, String profileImageUrl, SnsType snsType, Role role) {
+        this.authId = authId;
+        this.email = email;
+        this.nickname = nickname;
+        this.profileImageUrl = profileImageUrl;
+        this.snsType = snsType;
+        this.role = role;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,4 +45,12 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private SnsType snsType;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    public boolean isSameSnsType(String snsName) {
+        return this.snsType.toString().equals(snsName);
+    }
 }

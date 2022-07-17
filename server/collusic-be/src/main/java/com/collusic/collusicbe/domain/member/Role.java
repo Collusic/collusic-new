@@ -1,21 +1,16 @@
 package com.collusic.collusicbe.domain.member;
 
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
-import javax.persistence.*;
-
-@Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Role {
+@RequiredArgsConstructor
+public enum Role {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ROLE_ID")
-    private Long id;
+    GUEST("ROLE_GUEST", "손님"),
+    USER("ROLE_USER", "일반 사용자"),
+    EXISTED_USER("ROLE_EXISTED_USER", "이미 가입된 사용자");
 
-    @Column(unique = true, nullable = false)
-    private String roleName;
+    private final String key;
+    private final String title;
 }

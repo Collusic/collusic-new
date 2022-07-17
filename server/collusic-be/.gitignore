@@ -3,6 +3,8 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+!**/src/main/resources/application-oauth.properties
+application-oauth.properties
 
 ### STS ###
 .apt_generated
@@ -33,4 +35,5 @@ build/
 .vscode/
 .DS_Store
 src/main/resources/application-aws.properties
+src/main/resources/application-oauth.properties
 src/main/resources/application-real-db.properties
