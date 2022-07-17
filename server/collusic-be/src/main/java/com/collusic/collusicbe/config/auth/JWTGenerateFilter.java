@@ -1,6 +1,9 @@
 package com.collusic.collusicbe.config.auth;
 
+import com.collusic.collusicbe.config.auth.dto.OAuthInfoResponseDto;
+import com.collusic.collusicbe.domain.member.Member;
 import com.collusic.collusicbe.domain.member.Role;
+import com.collusic.collusicbe.util.JWTUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.core.log.LogMessage;
 import org.springframework.http.HttpHeaders;
@@ -13,6 +16,7 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
@@ -58,11 +62,21 @@ public class JWTGenerateFilter extends OAuth2LoginAuthenticationFilter {
         }
 
         if (authResult.getAuthorities().contains(Role.GUEST.getKey())) {
+            OAuth2User oAuth2User = (OAuth2User) authResult.getPrincipal();
+            String authId = (String) oAuth2User.getAttributes().get("authId");
+            String email = (String) oAuth2User.getAttributes().get("email");
             response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-            response.getOutputStream().write(objectMapper.writeValueAsBytes(authResult));
+            response.getWriter().write(objectMapper.writeValueAsString(new OAuthInfoResponseDto(authId, email)));
+            // 현재 authResult를 응답으로 넘겨주는데 authResult에는 authId와 email 이외의 정보도 포함됨.
+            // 프론트에 응답을 정제해서 보내줄 필요성(?)
             return;
         }
 
         // JWT 발행
+        // authResult의 email이 존재하는 위치 확인하기
+        OAuth2User oAuth2User = (OAuth2User) authResult.getPrincipal();
+        String email = (String) oAuth2User.getAttributes().get("email");
+        response.setHeader("access_token", JWTUtil.createAccessToken(email));
+        response.setHeader("refresh_token", JWTUtil.createRefreshToken(email));
     }
 }
