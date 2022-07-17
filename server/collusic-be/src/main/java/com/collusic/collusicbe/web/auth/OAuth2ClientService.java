@@ -2,6 +2,6 @@ package com.collusic.collusicbe.web.auth;
 
 import java.util.Map;
 
-public interface OAuth2Client {
+public interface OAuth2ClientService {
     OAuth2Response requestLogin(Map<String, Object> authCode);
 }

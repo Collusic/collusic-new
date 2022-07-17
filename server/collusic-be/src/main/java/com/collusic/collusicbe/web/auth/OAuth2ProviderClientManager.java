@@ -1,9 +1,6 @@
 package com.collusic.collusicbe.web.auth;
 
 import com.collusic.collusicbe.domain.member.SnsType;
-import com.collusic.collusicbe.web.auth.google.GoogleClient;
-import com.collusic.collusicbe.web.auth.kakao.KakaoClient;
-import com.collusic.collusicbe.web.auth.naver.NaverClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -11,11 +8,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class OAuth2ProviderClientManager {
 
-    private final GoogleClient googleClient;
-    private final KakaoClient kakaoClient;
-    private final NaverClient naverClient;
+    private final OAuth2ClientService googleClient;
+    private final OAuth2ClientService kakaoClient;
+    private final OAuth2ClientService naverClient;
 
-    public OAuth2Client getClient(String provider) {
+    public OAuth2ClientService getClientService(String provider) {
         provider = provider.toUpperCase();
 
         if (provider.equals(SnsType.NAVER.name())) {

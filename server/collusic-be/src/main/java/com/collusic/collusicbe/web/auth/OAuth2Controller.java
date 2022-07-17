@@ -16,7 +16,7 @@ public class OAuth2Controller {
 
     @GetMapping("/oauth2/login/{provider}")
     public String loginToSns(@PathVariable String provider, @RequestParam Map<String, Object> authCode) {
-        OAuth2Client oAuth2Client = oAuth2ProviderClientManager.getClient(provider);
+        OAuth2ClientService oAuth2Client = oAuth2ProviderClientManager.getClientService(provider);
         OAuth2Response response = oAuth2Client.requestLogin(authCode);
 
         return null;

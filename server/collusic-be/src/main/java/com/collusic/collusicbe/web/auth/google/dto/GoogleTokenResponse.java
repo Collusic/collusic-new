@@ -1,13 +1,18 @@
 package com.collusic.collusicbe.web.auth.google.dto;
 
-import lombok.Builder;
+import com.collusic.collusicbe.web.auth.OAuth2Response;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @Getter
+@Setter
 @NoArgsConstructor
-public class GoogleTokenResponse {
+@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
+public class GoogleTokenResponse implements OAuth2Response {
 
     private String accessToken;
     private String idToken;
@@ -15,15 +20,4 @@ public class GoogleTokenResponse {
     private String tokenType;
     private String scope;
     private String refreshToken;
-
-    @Builder
-    public GoogleTokenResponse(String accessToken, String idToken, Integer expiresIn,
-                               String tokenType, String scope, String refreshToken) {
-        this.accessToken = accessToken;
-        this.idToken = idToken;
-        this.expiresIn = expiresIn;
-        this.tokenType = tokenType;
-        this.scope = scope;
-        this.refreshToken = refreshToken;
-    }
 }

@@ -1,5 +1,6 @@
 package com.collusic.collusicbe.web.auth.kakao.dto;
 
+import com.collusic.collusicbe.web.auth.OAuth2Response;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
@@ -10,7 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class KakaoTokenResponse {
+public class KakaoTokenResponse implements OAuth2Response {
 
     private String tokenType;
     private String accessToken;
