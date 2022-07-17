@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -21,4 +24,20 @@ public class KakaoTokenResponse implements OAuth2Response {
     private Integer refreshTokenExpiresIn;
     private String email;
     private String scope;
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        Map<String, Object> attributes = new HashMap<>();
+
+        attributes.put("token_type", tokenType);
+        attributes.put("access_token", accessToken);
+        attributes.put("id_token", idToken);
+        attributes.put("expires_in", expiresIn);
+        attributes.put("refresh_token", refreshToken);
+        attributes.put("refresh_token_expires_in", refreshTokenExpiresIn);
+        attributes.put("email", email);
+        attributes.put("scope", scope);
+
+        return attributes;
+    }
 }

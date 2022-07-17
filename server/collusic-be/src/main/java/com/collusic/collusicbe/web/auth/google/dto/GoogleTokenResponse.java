@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 @Getter
 @Setter
@@ -20,4 +23,18 @@ public class GoogleTokenResponse implements OAuth2Response {
     private String tokenType;
     private String scope;
     private String refreshToken;
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        Map<String, Object> attributes = new HashMap<>();
+
+        attributes.put("token_type", tokenType);
+        attributes.put("access_token", accessToken);
+        attributes.put("id_token", idToken);
+        attributes.put("expires_in", expiresIn);
+        attributes.put("refresh_token", refreshToken);
+        attributes.put("scope", scope);
+
+        return attributes;
+    }
 }
