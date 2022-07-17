@@ -5,7 +5,7 @@ import { modalOpenState } from "../model/signInModel";
 import "../utils/style/NavBar.scss";
 
 export function NavBarView() {
-  const  setIsModalOpen = useSetRecoilState(modalOpenState);
+  const setIsModalOpen = useSetRecoilState(modalOpenState);
 
   return (
     <header>
@@ -17,15 +17,17 @@ export function NavBarView() {
       <nav>
         <ul>
           <li>
-            <a href="">
+            <a href="/">
               <img src="../../assets/alarm/alarm.png" alt="alarm" />
             </a>
           </li>
           <li>
-          <button onClick={() => setIsModalOpen(true)}>로그인/회원가입</button>
+            <button type="button" onClick={() => setIsModalOpen(true)}>
+              로그인/회원가입
+            </button>
           </li>
         </ul>
       </nav>
     </header>
   );
-};
+}
