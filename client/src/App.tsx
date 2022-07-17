@@ -11,7 +11,7 @@ function App() {
   return (
     <RecoilRoot>
       <BrowserRouter>
-        <NavBarView></NavBarView>
+        <NavBarView />
         <Routes>
           <Route path="/login" element={<LoginView />} />
           <Route path="/" element={<StartPageView />} />

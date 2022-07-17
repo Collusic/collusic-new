@@ -10,10 +10,7 @@ export function StartPageView() {
 
   return (
     <>
-      <div
-        className="start-page-view"
-        style={{ opacity: isModalOpen ? "0.4" : "" }}
-      ></div>
+      <div className="start-page-view" style={{ opacity: isModalOpen ? "0.4" : "" }} />
       <SignInView />
     </>
   );
