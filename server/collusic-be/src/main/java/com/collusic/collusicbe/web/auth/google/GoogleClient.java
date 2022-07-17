@@ -1,5 +1,6 @@
 package com.collusic.collusicbe.web.auth.google;
 
+import com.collusic.collusicbe.web.auth.OAuth2Client;
 import com.collusic.collusicbe.web.auth.google.dto.GoogleTokenResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -7,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(name = "googleClient", url = "https://www.googleapis.com")
-public interface GoogleClient {
+public interface GoogleClient extends OAuth2Client {
 
     @PostMapping(value = "/oauth2/v4/token")
     GoogleTokenResponse requestGoogleAccessToken(
