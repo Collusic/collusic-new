@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.time.Instant;
 import java.util.HashMap;
@@ -14,6 +15,9 @@ public class JWTUtil {
     private static final long ACCESS_TIME = 60 * 60;
     private static final long REFRESH_TIME = 60 * 60 * 24 * 7;
     public static final String KEY = "collusic-new";
+
+    @Value("${google.id_token.kid}")
+    private static String kid;
 
     public static String createAccessToken(String email) {
         return Jwts.builder()
@@ -37,6 +41,14 @@ public class JWTUtil {
                    .claim("exp", Instant.now().getEpochSecond() + REFRESH_TIME)
                    .signWith(SignatureAlgorithm.HS256, KEY)
                    .compact();
+    }
+
+    public static String parseClaimToEmail(String token) {
+        return (String) Jwts.parser()
+                            .setSigningKey(kid)
+                            .parseClaimsJws(token)
+                            .getBody()
+                            .get("email");
     }
 
     private static Map<String, Object> jwtHeaders() {
