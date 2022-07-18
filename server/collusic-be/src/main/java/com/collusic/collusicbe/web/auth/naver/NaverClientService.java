@@ -27,6 +27,6 @@ public class NaverClientService implements OAuth2ClientService {
     @Override
     public OAuth2Response requestLogin(Map<String, Object> authCode) {
         // TODO: Naver는 OIDC를 지원하지 않기 때문에 OAuth 플로우 처리를 위한 수정 필요
-        return naverClient.requestKakaoToken(CONTENT_TYPE, GRANT_TYPE, clientId, clientSecret, (String) authCode.get("code"), (String) authCode.get("state"));
+        return naverClient.requestNaverToken(CONTENT_TYPE, GRANT_TYPE, clientId, clientSecret, (String) authCode.get("code"), (String) authCode.get("state"));
     }
 }

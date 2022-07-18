@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface NaverClient {
 
     @PostMapping(value = "/oauth2.0/token", consumes = "application/json")
-    NaverTokenResponse requestKakaoToken(
+    NaverTokenResponse requestNaverToken(
             @RequestHeader("Content-Type") String contentType,
             @RequestParam("grant_type") String grantType,
             @RequestParam("client_id") String clientId,
