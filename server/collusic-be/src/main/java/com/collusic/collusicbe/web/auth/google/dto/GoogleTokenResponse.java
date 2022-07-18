@@ -1,5 +1,6 @@
 package com.collusic.collusicbe.web.auth.google.dto;
 
+import com.collusic.collusicbe.util.JWTUtil;
 import com.collusic.collusicbe.web.auth.OAuth2Response;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -34,6 +35,7 @@ public class GoogleTokenResponse implements OAuth2Response {
         attributes.put("expires_in", expiresIn);
         attributes.put("refresh_token", refreshToken);
         attributes.put("scope", scope);
+        attributes.put("email", JWTUtil.parseClaimToEmail(idToken));
 
         return attributes;
     }

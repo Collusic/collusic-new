@@ -25,7 +25,39 @@ public class OAuth2Controller {
     public ResponseEntity<OAuth2LoginResponseDto> loginToSns(@PathVariable String provider, @RequestParam Map<String, Object> authCode) {
         OAuth2ClientService oAuth2Client = oAuth2ProviderClientManager.getClientService(provider);
         OAuth2Response response = oAuth2Client.requestLogin(authCode);
+        String email = (String) response.getAttributes().get("email");
 
-        return null;
+        Optional<Member> member = memberRepository.findByEmail(email);
+        OAuth2LoginResponseDto responseDto = afterOAuth2Login(member.get(), SnsType.valueOf(provider.toUpperCase()), email);
+
+        return ResponseEntity.ok(responseDto);
+    }
+
+    private OAuth2LoginResponseDto afterOAuth2Login(Member member, SnsType snsType, String email) {
+        if (member == null) {
+            return OAuth2LoginResponseDto.builder()
+                                         .responseType(OAuth2LoginResponseType.SIGN_UP)
+                                         .snsType(snsType)
+                                         .email(email)
+                                         .build();
+        }
+
+        if (validateUserAttributes(member, snsType)) {
+            return OAuth2LoginResponseDto.builder()
+                                         .responseType(OAuth2LoginResponseType.SIGN_IN)
+                                         .accessToken(JWTUtil.createAccessToken(email))
+                                         .refreshToken(JWTUtil.createRefreshToken(email))
+                                         .build();
+        }
+
+        return OAuth2LoginResponseDto.builder()
+                                     .responseType(OAuth2LoginResponseType.INVALID)
+                                     .snsType(snsType)
+                                     .message("해당 email은 이미 다른 sns로 가입되어 있습니다.")
+                                     .build();
+    }
+
+    private boolean validateUserAttributes(Member member, SnsType snsType) {
+        return member.isSameSnsType(snsType.name());
     }
 }
