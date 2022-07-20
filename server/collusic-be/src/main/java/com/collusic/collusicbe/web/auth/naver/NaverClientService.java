@@ -5,6 +5,7 @@ import com.collusic.collusicbe.web.auth.OAuth2Response;
 import com.collusic.collusicbe.web.auth.naver.dto.NaverTokenResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -13,19 +14,20 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class NaverClientService implements OAuth2ClientService {
 
-    private final NaverAccessTokenClient naverAccessTokenClient;
-
-    private final NaverClient naverClient;
-
-    private static final String CONTENT_TYPE = "application/json";
-
-    private static final String GRANT_TYPE = "authorization_code"; // 발급 - 'authorization_code', 갱신 - 'refresh_token', 삭제 - 'delete'
+    private static final String CONTENT_TYPE = MediaType.APPLICATION_JSON_VALUE;
 
     @Value("${spring.security.oauth2.client.registration.naver.client-id}")
     private String clientId;
 
     @Value("${spring.security.oauth2.client.registration.naver.client-secret}")
     private String clientSecret;
+
+    @Value("${spring.security.oauth2.client.registration.naver.authorization-grant-type}")
+    private String grantType;
+
+    private final NaverAccessTokenClient naverAccessTokenClient;
+
+    private final NaverProfileClient naverProfileClient;
 
     @Override
     public OAuth2Response requestLogin(Map<String, Object> authCode) {
