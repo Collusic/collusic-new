@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "KakaoClient", url = "https://kauth.kakao.com")
-public interface KakaoClient {
+@FeignClient(name = "KakaoAccessTokenClient", url = "https://kauth.kakao.com")
+public interface KakaoAccessTokenClient {
 
     @PostMapping(value = "/oauth/token", consumes = "application/json")
     KakaoTokenResponse requestKakaoToken(

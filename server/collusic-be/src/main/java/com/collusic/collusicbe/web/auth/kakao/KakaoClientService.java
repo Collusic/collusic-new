@@ -2,6 +2,7 @@ package com.collusic.collusicbe.web.auth.kakao;
 
 import com.collusic.collusicbe.web.auth.OAuth2ClientService;
 import com.collusic.collusicbe.web.auth.OAuth2Response;
+import com.collusic.collusicbe.web.auth.kakao.dto.KakaoTokenResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -12,19 +13,23 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class KakaoClientService implements OAuth2ClientService {
 
-    private final KakaoClient kakaoClient;
-
     private static final String CONTENT_TYPE = "application/x-www-form-urlencoded;charset=utf-8";
 
-    private static final String GRANT_TYPE = "authorization_code";
+    private final KakaoAccessTokenClient kakaoAccessTokenClient;
 
-    private static final String REDIRECT_URI = "http://localhost:8080/oauth2/login/kakao";
+    private final KakaoProfileClient kakaoProfileClient;
 
     @Value("${spring.security.oauth2.client.registration.kakao.client-id}")
     private String clientId;
 
     @Value("${spring.security.oauth2.client.registration.kakao.client-secret}")
     private String clientSecret;
+
+    @Value("${spring.security.oauth2.client.registration.kakao.redirect-uri}")
+    private String redirectUri;
+
+    @Value("${spring.security.oauth2.client.registration.kakao.authorization-grant-type}")
+    private String grantType;
 
     @Override
     public OAuth2Response requestLogin(Map<String, Object> authCode) {
