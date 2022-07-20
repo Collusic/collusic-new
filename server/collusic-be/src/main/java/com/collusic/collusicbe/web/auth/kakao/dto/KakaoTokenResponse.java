@@ -35,7 +35,6 @@ public class KakaoTokenResponse implements OAuth2Response {
         attributes.put("expires_in", expiresIn);
         attributes.put("refresh_token", refreshToken);
         attributes.put("refresh_token_expires_in", refreshTokenExpiresIn);
-        attributes.put("email", email);
         attributes.put("scope", scope);
 
         return attributes;
