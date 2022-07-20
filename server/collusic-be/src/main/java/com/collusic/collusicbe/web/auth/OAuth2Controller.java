@@ -28,13 +28,13 @@ public class OAuth2Controller {
         String email = (String) response.getAttributes().get("email");
 
         Optional<Member> member = memberRepository.findByEmail(email);
-        OAuth2LoginResponseDto responseDto = afterOAuth2Login(member.get(), SnsType.valueOf(provider.toUpperCase()), email);
+        OAuth2LoginResponseDto responseDto = afterOAuth2Login(member, SnsType.valueOf(provider.toUpperCase()), email);
 
         return ResponseEntity.ok(responseDto);
     }
 
-    private OAuth2LoginResponseDto afterOAuth2Login(Member member, SnsType snsType, String email) {
-        if (member == null) {
+    private OAuth2LoginResponseDto afterOAuth2Login(Optional<Member> member, SnsType snsType, String email) {
+        if (!member.isPresent()) {
             return OAuth2LoginResponseDto.builder()
                                          .responseType(OAuth2LoginResponseType.SIGN_UP)
                                          .snsType(snsType)
@@ -42,7 +42,7 @@ public class OAuth2Controller {
                                          .build();
         }
 
-        if (validateUserAttributes(member, snsType)) {
+        if (validateUserAttributes(member.get(), snsType)) {
             return OAuth2LoginResponseDto.builder()
                                          .responseType(OAuth2LoginResponseType.SIGN_IN)
                                          .accessToken(JWTUtil.createAccessToken(email))
