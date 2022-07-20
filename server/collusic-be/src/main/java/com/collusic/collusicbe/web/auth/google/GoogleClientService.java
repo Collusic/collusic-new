@@ -2,21 +2,21 @@ package com.collusic.collusicbe.web.auth.google;
 
 import com.collusic.collusicbe.web.auth.OAuth2ClientService;
 import com.collusic.collusicbe.web.auth.OAuth2Response;
+import com.collusic.collusicbe.web.auth.google.dto.GoogleTokenResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class GoogleClientService implements OAuth2ClientService {
 
-    private final GoogleClient googleClient;
-
-    private static final String GOOGLE_CONTENT_TYPE = "application/x-www-form-urlencoded";
-
-    private static final String GOOGLE_GRANT_TYPE = "authorization_code";
+    private static final String CONTENT_TYPE = MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=utf-8";
 
     @Value("${spring.security.oauth2.client.registration.google.client-id}")
     private String clientId;
@@ -24,8 +24,31 @@ public class GoogleClientService implements OAuth2ClientService {
     @Value("${spring.security.oauth2.client.registration.google.client-secret}")
     private String clientSecret;
 
+    @Value("${spring.security.oauth2.client.registration.google.redirect-uri}")
+    private String redirectUri;
+
+    @Value("${spring.security.oauth2.client.registration.google.authorization-grant-type}")
+    private String grantType;
+
+    private final GoogleProfileClient googleProfileClient;
+
+    private final GoogleAccessTokenClient googleAccessTokenClient;
+
     @Override
     public OAuth2Response requestLogin(Map<String, Object> authCode) {
-        return googleClient.requestGoogleAccessToken(GOOGLE_CONTENT_TYPE, (String) authCode.get("code"), GOOGLE_GRANT_TYPE, clientId, clientSecret);
+        Map<String, Object> body = new HashMap<>();
+
+        body.put("code", authCode.get("code"));
+        body.put("grant_type", grantType);
+        body.put("client_id", clientId);
+        body.put("redirect_uri", redirectUri);
+        body.put("client_secret", clientSecret);
+
+        String parameterString = body.entrySet().stream()
+                                       .map(x -> x.getKey() + "=" + x.getValue())
+                                       .collect(Collectors.joining("&"));
+
+        GoogleTokenResponse googleTokenResponse = googleAccessTokenClient.requestGoogleAccessToken(CONTENT_TYPE, parameterString);
+        return googleProfileClient.requestGoogleProfile("Bearer " + googleTokenResponse.getAccessToken());
     }
 }
