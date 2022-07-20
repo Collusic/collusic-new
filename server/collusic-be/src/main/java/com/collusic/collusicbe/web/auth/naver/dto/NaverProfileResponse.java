@@ -15,7 +15,7 @@ import java.util.Map;
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class NaverProfileResponse implements OAuth2Response {
 
-    private String resultCode;
+    private String resultcode;
     private String message;
     private Map<String, Object> response;
 
