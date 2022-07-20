@@ -39,6 +39,14 @@ public class JWTUtil {
                    .compact();
     }
 
+    public static String parseClaimToEmail(String token) {
+        return (String) Jwts.parser()
+                            .setSigningKey(kid)
+                            .parseClaimsJws(token)
+                            .getBody()
+                            .get("email");
+    }
+
     private static Map<String, Object> jwtHeaders() {
         Map<String, Object> headers = new HashMap<>();
         headers.put("typ", "JWT");
