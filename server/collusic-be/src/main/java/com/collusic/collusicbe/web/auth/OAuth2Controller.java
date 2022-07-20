@@ -23,8 +23,8 @@ public class OAuth2Controller {
 
     @GetMapping("/oauth2/login/{provider}")
     public ResponseEntity<OAuth2LoginResponseDto> loginToSns(@PathVariable String provider, @RequestParam Map<String, Object> authCode) {
-        OAuth2ClientService oAuth2Client = oAuth2ProviderClientManager.getClientService(provider);
-        OAuth2Response response = oAuth2Client.requestLogin(authCode);
+        OAuth2ClientService oAuth2ClientService = oAuth2ProviderClientManager.getClientService(provider);
+        OAuth2Response response = oAuth2ClientService.requestLogin(authCode);
         String email = (String) response.getAttributes().get("email");
 
         Optional<Member> member = memberRepository.findByEmail(email);
