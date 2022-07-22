@@ -21,6 +21,8 @@ public class NaverProfileResponse implements OAuth2Response {
 
     @Override
     public Map<String, Object> getAttributes() {
-        return response;
+        this.response.put("sub", this.response.get("id"));
+        this.response.remove("id");
+        return this.response;
     }
 }
