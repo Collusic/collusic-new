@@ -3,7 +3,6 @@ package com.collusic.collusicbe.config.auth;
 import com.collusic.collusicbe.domain.member.Member;
 import com.collusic.collusicbe.domain.member.MemberRepository;
 import com.collusic.collusicbe.domain.member.Role;
-import com.sun.tools.javac.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -13,6 +12,7 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor

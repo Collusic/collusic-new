@@ -1,10 +1,6 @@
 HELP.md
 target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
-!**/src/main/resources/application-oauth.properties
-application-oauth.properties
+.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
 .apt_generated
@@ -20,6 +16,9 @@ application-oauth.properties
 *.iws
 *.iml
 *.ipr
+src/main/resources/application-aws.properties
+src/main/resources/application-oauth.properties
+src/main/resources/application-real-db.properties
 
 ### NetBeans ###
 /nbproject/private/
@@ -28,12 +27,7 @@ application-oauth.properties
 /nbdist/
 /.nb-gradle/
 build/
-!**/src/main/**/build/
-!**/src/test/**/build/
 
 ### VS Code ###
 .vscode/
 .DS_Store
-src/main/resources/application-aws.properties
-src/main/resources/application-oauth.properties
-src/main/resources/application-real-db.properties

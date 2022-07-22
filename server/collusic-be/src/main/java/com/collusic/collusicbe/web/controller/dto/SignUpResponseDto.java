@@ -1,6 +1,7 @@
-package com.collusic.collusicbe.web.auth;
+package com.collusic.collusicbe.web.controller.dto;
 
 import com.collusic.collusicbe.domain.member.SnsType;
+import com.collusic.collusicbe.web.auth.OAuth2LoginResponseType;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -8,13 +9,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Getter
-public class OAuth2LoginResponseDto {
+public class SignUpResponseDto {
 
     private final OAuth2LoginResponseType responseType;
     private final Map<String, Object> attributes;
 
     @Builder
-    public OAuth2LoginResponseDto(OAuth2LoginResponseType responseType, SnsType snsType,
+    public SignUpResponseDto(OAuth2LoginResponseType responseType, SnsType snsType,
                                   String message, String accessToken, String refreshToken, String email, String authId) {
         this.responseType = responseType;
 
