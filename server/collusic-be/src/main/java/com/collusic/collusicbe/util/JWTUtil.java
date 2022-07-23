@@ -1,7 +1,7 @@
 package com.collusic.collusicbe.util;
 
+import com.collusic.collusicbe.config.auth.JWTVerifyResult;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -24,10 +24,23 @@ public class JWTUtil {
                    .compact();
     }
 
-    public static Jws<Claims> verify(String token) {
-        return Jwts.parser()
-                   .setSigningKey(KEY)
-                   .parseClaimsJws(token);
+    public static JWTVerifyResult verify(String token) {
+        try {
+            Claims claims = Jwts.parser()
+                                .setSigningKey(KEY)
+                                .parseClaimsJws(token)
+                                .getBody();
+
+            return JWTVerifyResult.builder()
+                                  .success(true)
+                                  .claims(claims)
+                                  .build();
+        } catch (Exception exception) {
+            return JWTVerifyResult.builder()
+                                  .success(false)
+                                  .errorMessage(exception.getMessage()) // TODO: 어떤 에러 메시지를 보낼 것인지
+                                  .build();
+        }
     }
 
     public static String createRefreshToken(String email) {
