@@ -1,10 +1,8 @@
 package com.collusic.collusicbe.config.auth;
 
 import com.collusic.collusicbe.domain.member.Role;
-import com.collusic.collusicbe.util.JWTUtil;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,8 +19,11 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
 
     private final static String BEARER_PREFIX = "Bearer ";
 
+    private final AuthenticationManager authenticationManager;
+
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
+        this.authenticationManager = authenticationManager;
     }
 
     @Override
@@ -39,18 +40,8 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
             return;
         }
 
-        String token = bearer.substring(BEARER_PREFIX.length());
-        JWTVerifyResult result = JWTUtil.verify(token);
-
-        if (!result.isSuccess()) {
-            throw new RuntimeException(result.getErrorMessage()); // TODO: 어떤 Exception 클래스를 사용할 것인지
-        }
-
-        Authentication authentication = new UsernamePasswordAuthenticationToken(
-                result.getClaims().get("email"),
-                null,
-                Set.of((GrantedAuthority) Role.USER::getKey) // GrantedAuthority 를 생각하면 JWT에 담기는 값에 role이 추가되어야하지 않을까 생각됨
-        );
+        JWTAuthenticationToken authenticationToken = new JWTAuthenticationToken(bearer.substring(BEARER_PREFIX.length()), Set.of((GrantedAuthority) Role.USER::getKey)); // GrantedAuthority 를 생각하면 JWT에 담기는 값에 role이 추가되어야하지 않을까 생각됨
+        Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
 
         SecurityContextHolder.getContext()
                              .setAuthentication(authentication);
