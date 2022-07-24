@@ -1,5 +1,6 @@
 package com.collusic.collusicbe.util;
 
+import com.collusic.collusicbe.domain.member.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -12,7 +13,8 @@ import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JWTUtilTest {
 
@@ -21,7 +23,7 @@ public class JWTUtilTest {
     void createAccessTokenTest() {
         // given
         String email = "collusic-new@gmail.com";
-        String token = JWTUtil.createAccessToken(email);
+        String token = JWTUtil.createAccessToken(email, Role.USER.getKey());
 
         // when
         Jws<Claims> tokenInfo = Jwts.parser().setSigningKey(JWTUtil.KEY).parseClaimsJws(token);
@@ -57,7 +59,7 @@ public class JWTUtilTest {
     void createRefreshTokenTest() {
         // given
         String email = "collusic-new@gmail.com";
-        String token = JWTUtil.createRefreshToken(email);
+        String token = JWTUtil.createRefreshToken(email, Role.USER.getKey());
 
         // when
         Jws<Claims> tokenInfo = Jwts.parser().setSigningKey(JWTUtil.KEY).parseClaimsJws(token);
