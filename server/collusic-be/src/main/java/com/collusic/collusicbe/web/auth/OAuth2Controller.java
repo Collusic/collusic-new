@@ -47,8 +47,8 @@ public class OAuth2Controller {
         if (validateUserAttributes(member.get(), snsType)) {
             return OAuth2LoginResponseDto.builder()
                                          .responseType(OAuth2LoginResponseType.SIGN_IN)
-                                         .accessToken(JWTUtil.createAccessToken(email))
-                                         .refreshToken(JWTUtil.createRefreshToken(email))
+                                         .accessToken(JWTUtil.createAccessToken(email, member.get().getRole().getKey()))
+                                         .refreshToken(JWTUtil.createRefreshToken(email, member.get().getRole().getKey()))
                                          .build();
         }
 

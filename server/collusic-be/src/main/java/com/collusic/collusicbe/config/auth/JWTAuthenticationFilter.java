@@ -1,10 +1,10 @@
 package com.collusic.collusicbe.config.auth;
 
-import com.collusic.collusicbe.domain.member.Role;
+import com.collusic.collusicbe.util.JWTUtil;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
@@ -28,10 +28,6 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        // 인가처리를 위한 access token을 어떻게 받을지 결정해야할 필요가 있음
-        // 1. Bearer 방식 : 요청 헤더의 'Authorization'으로 'Berer {jwt token}' 형식의 값이 담기는 방식
-        // 2. 전용 헤더를 만들어 넘기는 방식
-        // -> 개인적으로 1번이 좋다고 생각. 표준?을 따르는게 좋지 않을까 싶기도 하고, 커스텀 헤더 사용시 cors 관련 이슈도 있기 때문
 
         String bearer = request.getHeader(HttpHeaders.AUTHORIZATION);
 
@@ -40,7 +36,9 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
             return;
         }
 
-        JWTAuthenticationToken authenticationToken = new JWTAuthenticationToken(bearer.substring(BEARER_PREFIX.length()), Set.of((GrantedAuthority) Role.USER::getKey)); // GrantedAuthority 를 생각하면 JWT에 담기는 값에 role이 추가되어야하지 않을까 생각됨
+        String token = bearer.substring(BEARER_PREFIX.length());
+
+        JWTAuthenticationToken authenticationToken = new JWTAuthenticationToken(token, Set.of(new SimpleGrantedAuthority(JWTUtil.getRole(token)))); // TODO: JWT 형식이 아닌 토큰이 들어왔을 때 예외가 예상되는 부분. 해결이 필요함.
         Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
 
         SecurityContextHolder.getContext()
