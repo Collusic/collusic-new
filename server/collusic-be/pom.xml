@@ -71,12 +71,6 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
-        <!-- Spring OAuth2.0 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-oauth2-client</artifactId>
-        </dependency>
-
         <!-- Spring Cloud Starter OpenFeign -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

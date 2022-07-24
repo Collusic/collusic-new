@@ -1,11 +1,14 @@
 package com.collusic.collusicbe.util;
 
+import com.collusic.collusicbe.config.auth.JWTVerifyResult;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 import java.time.Instant;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,28 +18,52 @@ public class JWTUtil {
     private static final long REFRESH_TIME = 60 * 60 * 24 * 7;
     public static final String KEY = "collusic-new";
 
-    public static String createAccessToken(String email) {
+    public static String createAccessToken(String email, String role) {
         return Jwts.builder()
                    .setHeader(jwtHeaders())
                    .claim("email", email)
+                   .claim("role", role)
                    .claim("exp", Instant.now().getEpochSecond() + ACCESS_TIME)
                    .signWith(SignatureAlgorithm.HS256, KEY)
                    .compact();
     }
 
-    public static Jws<Claims> verify(String token) {
-        return Jwts.parser()
-                   .setSigningKey(KEY)
-                   .parseClaimsJws(token);
+    public static JWTVerifyResult verify(String token) {
+        try {
+            Claims claims = Jwts.parser()
+                                .setSigningKey(KEY)
+                                .parseClaimsJws(token)
+                                .getBody();
+
+            return JWTVerifyResult.builder()
+                                  .success(true)
+                                  .claims(claims)
+                                  .build();
+        } catch (Exception exception) {
+            return JWTVerifyResult.builder()
+                                  .success(false)
+                                  .errorMessage(exception.getMessage()) // TODO: 어떤 에러 메시지를 보낼 것인지
+                                  .build();
+        }
     }
 
-    public static String createRefreshToken(String email) {
+    public static String createRefreshToken(String email, String role) {
         return Jwts.builder()
                    .setHeader(jwtHeaders())
                    .claim("email", email)
+                   .claim("role", role)
                    .claim("exp", Instant.now().getEpochSecond() + REFRESH_TIME)
                    .signWith(SignatureAlgorithm.HS256, KEY)
                    .compact();
+    }
+
+    public static String getRole(String token) throws JsonProcessingException {
+        Base64.Decoder decoder = Base64.getDecoder();
+        String payload = new String(decoder.decode(token.split("\\.")[1]));
+
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Object> claims = mapper.readValue(payload, Map.class);
+        return (String) claims.get("role");
     }
 
     private static Map<String, Object> jwtHeaders() {

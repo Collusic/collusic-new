@@ -24,9 +24,8 @@ public class MemberController {
 
         SignUpResponseDto responseBody = SignUpResponseDto.builder()
                                                           .responseType(OAuth2LoginResponseType.SIGN_IN)
-                                                          .authId(member.getAuthId())
-                                                          .accessToken(JWTUtil.createAccessToken(member.getEmail()))
-                                                          .refreshToken(JWTUtil.createRefreshToken(member.getEmail()))
+                                                          .accessToken(JWTUtil.createAccessToken(member.getEmail(), member.getRole().getKey()))
+                                                          .refreshToken(JWTUtil.createRefreshToken(member.getEmail(), member.getRole().getKey()))
                                                           .build();
         return ResponseEntity.ok(responseBody);
     }
