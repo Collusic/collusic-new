@@ -2,13 +2,13 @@ import React from "react";
 import { useRecoilValue } from "recoil";
 
 import { modalOpenState } from "../model/signInModel";
-import "../utils/style/SignIn.scss";
+import "../utils/style/Modal.scss";
 
 type modalProps = {
   children: React.ReactNode;
 };
 
-export function SignInView(props: modalProps) {
+export function ModalView(props: modalProps) {
   const isModalOpen = useRecoilValue(modalOpenState);
   const { children } = props;
 

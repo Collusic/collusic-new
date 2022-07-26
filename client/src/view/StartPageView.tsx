@@ -1,7 +1,7 @@
 import React from "react";
 import { useRecoilValue } from "recoil";
 
-import { SignInView } from "./SignInView";
+import { ModalView } from "./ModalView";
 import { LoginView } from "./LoginView";
 
 import { modalOpenState } from "../model/signInModel";
@@ -15,10 +15,10 @@ export function StartPageView() {
   return (
     <>
       <div className="start-page-view" style={{ opacity: isModalOpen ? "0.4" : "" }} />
-      <SignInView>
+      <ModalView>
         <img src="../../assets/signin/modal.png" alt="logo" />
         <LoginView />
-      </SignInView>
+      </ModalView>
     </>
   );
 }
