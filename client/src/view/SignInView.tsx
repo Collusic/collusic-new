@@ -4,16 +4,13 @@ import { useRecoilValue } from "recoil";
 import { modalOpenState } from "../model/signInModel";
 import "../utils/style/SignIn.scss";
 
-export function SignInView() {
-  const isModalOpen = useRecoilValue(modalOpenState);
+type modalProps = {
+  children: React.ReactNode;
+};
 
-  return (
-    <>
-      {isModalOpen ? (
-        <div className="modal">
-          <img src="../../assets/signin/modal.png" alt="logo" />
-        </div>
-      ) : null}
-    </>
-  );
+export function SignInView(props: modalProps) {
+  const isModalOpen = useRecoilValue(modalOpenState);
+  const { children } = props;
+
+  return isModalOpen ? <div className="modal">{children}</div> : null;
 }
