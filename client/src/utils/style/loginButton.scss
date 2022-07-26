@@ -7,11 +7,11 @@ button {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  width: 320px;
-  height: 56px;
-  margin: 24px 40px 12px 0;
-  padding: 16px 93px 16px 64px;
-  border-radius: 28px;
+  min-width: 300px;
+  min-height: 56px;
+  border-radius: 2rem;
+  margin-top: 1rem;
+  padding-left: 4rem;
 }
 
 .login-button img {
@@ -19,6 +19,6 @@ button {
 }
 
 .login-button p {
-  font-size: 17px;
+  font-size: 16px;
   font-weight: bold;
 }

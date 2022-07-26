@@ -16,7 +16,7 @@ export function StartPageView() {
     <>
       <div className="start-page-view" style={{ opacity: isModalOpen ? "0.4" : "" }} />
       <ModalView>
-        <img src="../../assets/signin/modal.png" alt="logo" />
+        <img width="100%" src="../../assets/signin/logo@2x.png" alt="logo" />
         <LoginView />
       </ModalView>
     </>
