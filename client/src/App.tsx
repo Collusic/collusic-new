@@ -1,5 +1,4 @@
 import React from "react";
-import { RecoilRoot } from "recoil";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { NavBarView } from "./view/NavBarView";
@@ -9,7 +8,6 @@ import { StartPageView } from "./view/StartPageView";
 
 function App() {
   return (
-    <RecoilRoot>
       <BrowserRouter>
         <NavBarView />
         <Routes>
@@ -17,7 +15,6 @@ function App() {
           <Route path="/" element={<StartPageView />} />
         </Routes>
       </BrowserRouter>
-    </RecoilRoot>
   );
 }
 

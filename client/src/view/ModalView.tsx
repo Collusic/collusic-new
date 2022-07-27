@@ -1,5 +1,5 @@
 import React from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 
 import { modalOpenState } from "../model/signInModel";
 import "../utils/style/Modal.scss";
@@ -9,8 +9,15 @@ type modalProps = {
 };
 
 export function ModalView(props: modalProps) {
-  const isModalOpen = useRecoilValue(modalOpenState);
+  const [isModalOpen, setIsModalOpen] = useRecoilState(modalOpenState);
   const { children } = props;
 
-  return isModalOpen ? <div className="modal">{children}</div> : null;
+  return isModalOpen ? (
+    <div className="modal">
+      <button type="button" onClick={() => setIsModalOpen(false)}>
+        <img src="../../assets/close/close_black_24dp.png" alt="close" />
+      </button>
+      {children}
+    </div>
+  ) : null;
 }
