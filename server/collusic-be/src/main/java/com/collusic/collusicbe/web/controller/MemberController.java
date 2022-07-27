@@ -2,15 +2,19 @@ package com.collusic.collusicbe.web.controller;
 
 import com.collusic.collusicbe.domain.member.Member;
 import com.collusic.collusicbe.service.MemberService;
-import com.collusic.collusicbe.util.JWTUtil;
+import com.collusic.collusicbe.service.TokenService;
+import com.collusic.collusicbe.util.ParsingUtil;
 import com.collusic.collusicbe.web.auth.OAuth2LoginResponseType;
 import com.collusic.collusicbe.web.controller.dto.SignUpRequestDto;
 import com.collusic.collusicbe.web.controller.dto.SignUpResponseDto;
+import com.collusic.collusicbe.web.controller.dto.TokenResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RequiredArgsConstructor
 @RestController

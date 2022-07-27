@@ -3,7 +3,9 @@ package com.collusic.collusicbe.web.auth;
 import com.collusic.collusicbe.domain.member.Member;
 import com.collusic.collusicbe.domain.member.MemberRepository;
 import com.collusic.collusicbe.domain.member.SnsType;
-import com.collusic.collusicbe.util.JWTUtil;
+import com.collusic.collusicbe.service.TokenService;
+import com.collusic.collusicbe.util.ParsingUtil;
+import com.collusic.collusicbe.web.controller.dto.TokenResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.Optional;
 

@@ -1,6 +1,5 @@
 package com.collusic.collusicbe.util;
 
-import com.collusic.collusicbe.config.auth.JWTVerifyResult;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
@@ -28,22 +27,14 @@ public class JWTUtil {
                    .compact();
     }
 
-    public static JWTVerifyResult verify(String token) {
+    public static Claims verify(String token) {
         try {
-            Claims claims = Jwts.parser()
-                                .setSigningKey(KEY)
-                                .parseClaimsJws(token)
-                                .getBody();
-
-            return JWTVerifyResult.builder()
-                                  .success(true)
-                                  .claims(claims)
-                                  .build();
+            return Jwts.parser()
+                       .setSigningKey(KEY)
+                       .parseClaimsJws(token)
+                       .getBody();
         } catch (Exception exception) {
-            return JWTVerifyResult.builder()
-                                  .success(false)
-                                  .errorMessage(exception.getMessage()) // TODO: 어떤 에러 메시지를 보낼 것인지
-                                  .build();
+            throw new RuntimeException("토큰 만료"); // TODO : 어떤 에러 메시지를 보낼 것인가?
         }
     }
 
@@ -55,6 +46,24 @@ public class JWTUtil {
                    .claim("exp", Instant.now().getEpochSecond() + REFRESH_TIME)
                    .signWith(SignatureAlgorithm.HS256, KEY)
                    .compact();
+    }
+
+    public static Map<String, Object> getClaims(String token) {
+        Base64.Decoder decoder = Base64.getDecoder();
+        String payload = new String(decoder.decode(token.split("\\.")[1]));
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        try {
+            Map<String, Object> claims = mapper.readValue(payload, Map.class);
+            return claims;
+        } catch (JsonProcessingException exception) {
+            throw new RuntimeException(exception.getMessage());
+        }
+    }
+
+    public static String getEmail(String token) {
+        return (String) getClaims(token).get("email");
     }
 
     public static String getRole(String token) throws JsonProcessingException {

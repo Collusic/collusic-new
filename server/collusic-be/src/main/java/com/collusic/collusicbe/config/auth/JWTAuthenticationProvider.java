@@ -12,12 +12,8 @@ public class JWTAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String token = (String) authentication.getPrincipal();
-        JWTVerifyResult result = JWTUtil.verify(token);
 
-        if (!result.isSuccess()) {
-            throw new RuntimeException(result.getErrorMessage()); // TODO: 어떤 Exception 클래스를 사용할 것인지
-        }
-
+        JWTUtil.verify(token);
         authentication.setAuthenticated(true);
 
         return authentication;
