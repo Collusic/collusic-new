@@ -23,21 +23,22 @@ public class OAuth2Controller {
 
     private final OAuth2ProviderClientManager oAuth2ProviderClientManager;
     private final MemberRepository memberRepository;
+    private final TokenService tokenService;
 
     @GetMapping("/oauth2/login/{provider}")
-    public ResponseEntity<OAuth2LoginResponseDto> loginToSns(@PathVariable String provider, @RequestParam Map<String, Object> authCode) {
+    public ResponseEntity<OAuth2LoginResponseDto> loginToSns(@PathVariable String provider, @RequestParam Map<String, Object> authCode, HttpServletRequest request) {
         OAuth2ClientService oAuth2ClientService = oAuth2ProviderClientManager.getClientService(provider);
         OAuth2Response response = oAuth2ClientService.requestLogin(authCode);
         String email = (String) response.getAttributes().get("email");
         String authId = (String) response.getAttributes().get("sub");
 
         Optional<Member> member = memberRepository.findByEmail(email);
-        OAuth2LoginResponseDto responseDto = afterOAuth2Login(member, SnsType.valueOf(provider.toUpperCase()), email, authId);
+        OAuth2LoginResponseDto responseDto = afterOAuth2Login(member, SnsType.valueOf(provider.toUpperCase()), email, authId, ParsingUtil.getRemoteAddress(request));
 
         return ResponseEntity.ok(responseDto);
     }
 
-    private OAuth2LoginResponseDto afterOAuth2Login(Optional<Member> member, SnsType snsType, String email, String authId) {
+    private OAuth2LoginResponseDto afterOAuth2Login(Optional<Member> member, SnsType snsType, String email, String authId, String remoteAddress) {
         if (!member.isPresent()) {
             return OAuth2LoginResponseDto.builder()
                                          .responseType(OAuth2LoginResponseType.SIGN_UP)
@@ -48,10 +49,11 @@ public class OAuth2Controller {
         }
 
         if (validateUserAttributes(member.get(), snsType)) {
+            TokenResponseDto tokens = tokenService.issue(email, member.get().getRole().getKey(), remoteAddress);
             return OAuth2LoginResponseDto.builder()
                                          .responseType(OAuth2LoginResponseType.SIGN_IN)
-                                         .accessToken(JWTUtil.createAccessToken(email, member.get().getRole().getKey()))
-                                         .refreshToken(JWTUtil.createRefreshToken(email, member.get().getRole().getKey()))
+                                         .accessToken(tokens.getAccessToken())
+                                         .refreshToken(tokens.getRefreshToken())
                                          .build();
         }
 

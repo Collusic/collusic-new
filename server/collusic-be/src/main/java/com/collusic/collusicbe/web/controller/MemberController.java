@@ -21,15 +21,17 @@ import javax.servlet.http.HttpServletRequest;
 public class MemberController {
 
     private final MemberService memberService;
+    private final TokenService tokenService;
 
     @PostMapping("/members")
-    public ResponseEntity<SignUpResponseDto> signUp(@RequestBody SignUpRequestDto signUpRequestDto) { // TODO: validation
+    public ResponseEntity<SignUpResponseDto> signUp(@RequestBody SignUpRequestDto signUpRequestDto, HttpServletRequest request) { // TODO: validation
         Member member = memberService.signUp(signUpRequestDto);
+        TokenResponseDto tokens = tokenService.issue(member.getEmail(), member.getRole().getKey(), ParsingUtil.getRemoteAddress(request));
 
         SignUpResponseDto responseBody = SignUpResponseDto.builder()
                                                           .responseType(OAuth2LoginResponseType.SIGN_IN)
-                                                          .accessToken(JWTUtil.createAccessToken(member.getEmail(), member.getRole().getKey()))
-                                                          .refreshToken(JWTUtil.createRefreshToken(member.getEmail(), member.getRole().getKey()))
+                                                          .accessToken(tokens.getAccessToken())
+                                                          .refreshToken(tokens.getRefreshToken())
                                                           .build();
         return ResponseEntity.ok(responseBody);
     }

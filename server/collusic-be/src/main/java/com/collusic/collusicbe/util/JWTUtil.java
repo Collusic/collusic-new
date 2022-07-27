@@ -66,13 +66,8 @@ public class JWTUtil {
         return (String) getClaims(token).get("email");
     }
 
-    public static String getRole(String token) throws JsonProcessingException {
-        Base64.Decoder decoder = Base64.getDecoder();
-        String payload = new String(decoder.decode(token.split("\\.")[1]));
-
-        ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> claims = mapper.readValue(payload, Map.class);
-        return (String) claims.get("role");
+    public static String getRole(String token) {
+        return (String) getClaims(token).get("role");
     }
 
     private static Map<String, Object> jwtHeaders() {
