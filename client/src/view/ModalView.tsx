@@ -14,7 +14,7 @@ export function ModalView(props: modalProps) {
 
   return isModalOpen ? (
     <div className="modal">
-      <button type="button" onClick={() => setIsModalOpen(false)}>
+      <button type="button" className="close" onClick={() => setIsModalOpen(false)}>
         <img src="../../assets/close/close_black_24dp.png" alt="close" />
       </button>
       {children}

@@ -5,15 +5,15 @@
   top: 50%;
   left: 50%;
   width: 20rem;
-  height: 26rem;
-  padding: 0 40px;
+  height: fit-content;
+  padding: 0 40px 40px;
   border-radius: 16px;
   text-align: right;
   transform: translate(-50%, -50%);
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.4);
   background-color: $Color_BG_Sub;
 
-  button {
+  .close {
     position: relative;
     left: 45px;
     background-color: transparent;
