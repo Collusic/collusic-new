@@ -14,9 +14,7 @@ export default {
   } as ComponentMeta<typeof LoginButton>,
 };
 
-const Template: ComponentStory<typeof LoginButton> = (args) => (
-  <LoginButton {...args} />
-);
+const Template: ComponentStory<typeof LoginButton> = (args) => <LoginButton {...args} />;
 
 export const Naver = Template.bind({});
 Naver.args = {
