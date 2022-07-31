@@ -28,23 +28,25 @@ public class OAuth2Controller {
     @GetMapping("/oauth2/login/{provider}")
     public ResponseEntity<OAuth2LoginResponseDto> loginToSns(@PathVariable String provider, @RequestParam Map<String, Object> authCode, HttpServletRequest request) {
         OAuth2ClientService oAuth2ClientService = oAuth2ProviderClientManager.getClientService(provider);
-        OAuth2Response response = oAuth2ClientService.requestLogin(authCode);
+           OAuth2Response response = oAuth2ClientService.requestLogin(authCode);
         String email = (String) response.getAttributes().get("email");
         String authId = (String) response.getAttributes().get("sub");
+        String profileImageUrl = (String) response.getAttributes().get("picture");
 
         Optional<Member> member = memberRepository.findByEmail(email);
-        OAuth2LoginResponseDto responseDto = afterOAuth2Login(member, SnsType.valueOf(provider.toUpperCase()), email, authId, ParsingUtil.getRemoteAddress(request));
+        OAuth2LoginResponseDto responseDto = afterOAuth2Login(member, SnsType.valueOf(provider.toUpperCase()), email, authId, profileImageUrl, ParsingUtil.getRemoteAddress(request));
 
         return ResponseEntity.ok(responseDto);
     }
 
-    private OAuth2LoginResponseDto afterOAuth2Login(Optional<Member> member, SnsType snsType, String email, String authId, String remoteAddress) {
+    private OAuth2LoginResponseDto afterOAuth2Login(Optional<Member> member, SnsType snsType, String email, String authId, String profileImageUrl, String remoteAddress) {
         if (!member.isPresent()) {
             return OAuth2LoginResponseDto.builder()
                                          .responseType(OAuth2LoginResponseType.SIGN_UP)
                                          .snsType(snsType)
                                          .email(email)
                                          .authId(authId)
+                                         .profileImageUrl(profileImageUrl)
                                          .build();
         }
 

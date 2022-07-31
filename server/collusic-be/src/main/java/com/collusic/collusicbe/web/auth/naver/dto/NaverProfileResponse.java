@@ -23,6 +23,8 @@ public class NaverProfileResponse implements OAuth2Response {
     public Map<String, Object> getAttributes() {
         this.response.put("sub", this.response.get("id"));
         this.response.remove("id");
+        this.response.put("picture", this.response.get("profile_image")); // picture로 한 이유는 컨트롤러에서 공통 이름이 picture이기 때문입니다~
+        this.response.remove("profile_image");
         return this.response;
     }
 }
