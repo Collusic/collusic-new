@@ -20,16 +20,20 @@ public class GoogleProfileResponse implements OAuth2Response {
     private String picture;
     private String email;
     private String emailVerified;
+    private Map<String, Object> attributes;
 
     @Override
     public Map<String, Object> getAttributes() {
-        Map<String, Object> attributes = new HashMap<>();
+        if (attributes != null) {
+            return this.attributes;
+        }
 
-        attributes.put("sub", sub);
-        attributes.put("picture", picture);
-        attributes.put("email", email);
-        attributes.put("emailVerified", emailVerified);
+        this.attributes = new HashMap<>();
+        this.attributes.put("sub", sub);
+        this.attributes.put("picture", picture);
+        this.attributes.put("email", email);
+        this.attributes.put("emailVerified", emailVerified);
 
-        return attributes;
+        return this.attributes;
     }
 }
