@@ -6,6 +6,8 @@ import com.collusic.collusicbe.web.controller.dto.SignUpRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class MemberService {
@@ -14,5 +16,15 @@ public class MemberService {
 
     public Member signUp(SignUpRequestDto signUpRequestDto) {
         return memberRepository.save(signUpRequestDto.toEntity());
+    }
+
+    public boolean isDuplicatedNickname(String nickname) {
+        List<Member> members = memberRepository.findMemberByNickname(nickname);
+
+        if (members.size() > 0) {
+            return true;
+        }
+
+        return false;
     }
 }
