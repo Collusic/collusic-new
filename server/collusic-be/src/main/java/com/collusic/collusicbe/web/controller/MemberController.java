@@ -37,7 +37,7 @@ public class MemberController {
     }
 
     @GetMapping("/members/{nickname}")
-    public ResponseEntity<NicknameValidationResponseDto> validateDuplicatedNickname(@RequestParam String nickname) {
+    public ResponseEntity<NicknameValidationResponseDto> validateDuplicatedNickname(@PathVariable String nickname) {
         if (memberService.isDuplicatedNickname(nickname)) {
             NicknameValidationResponseDto nicknameValidationResponseDto = NicknameValidationResponseDto.builder()
                                                                                                        .isDuplicated(true)
