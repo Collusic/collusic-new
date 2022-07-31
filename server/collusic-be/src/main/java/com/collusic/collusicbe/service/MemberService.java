@@ -21,7 +21,7 @@ public class MemberService {
     public boolean isDuplicatedNickname(String nickname) {
         List<Member> members = memberRepository.findMemberByNickname(nickname);
 
-        if (members.size() > 1) {
+        if (members.size() > 0) {
             return true;
         }
 

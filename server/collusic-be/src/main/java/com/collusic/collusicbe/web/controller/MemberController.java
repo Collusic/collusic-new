@@ -12,10 +12,7 @@ import com.collusic.collusicbe.web.controller.dto.TokenResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -39,11 +36,11 @@ public class MemberController {
         return ResponseEntity.ok(responseBody);
     }
 
-    @PostMapping("/members/{nickname}")
+    @GetMapping("/members/{nickname}")
     public ResponseEntity<NicknameValidationResponseDto> validateDuplicatedNickname(@RequestParam String nickname) {
         if (memberService.isDuplicatedNickname(nickname)) {
             NicknameValidationResponseDto nicknameValidationResponseDto = NicknameValidationResponseDto.builder()
-                                                                                                       .result("fail")
+                                                                                                       .isDuplicated(true)
                                                                                                        .message("중복된 닉네임입니다.")
                                                                                                        .build();
             return ResponseEntity.status(HttpStatus.CONFLICT)
@@ -51,7 +48,7 @@ public class MemberController {
         }
 
         NicknameValidationResponseDto nicknameValidationResponseDto = NicknameValidationResponseDto.builder()
-                                                                                                   .result("success")
+                                                                                                   .isDuplicated(false)
                                                                                                    .message("사용 가능한 닉네임입니다.")
                                                                                                    .build();
         return ResponseEntity.ok(nicknameValidationResponseDto);

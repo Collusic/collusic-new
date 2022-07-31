@@ -6,12 +6,12 @@ import lombok.Getter;
 @Getter
 public class NicknameValidationResponseDto {
 
-    private String result;
+    private boolean isDuplicated;
     private String message;
 
     @Builder
-    public NicknameValidationResponseDto(String result, String message) {
-        this.result = result;
+    public NicknameValidationResponseDto(boolean isDuplicated, String message) {
+        this.isDuplicated = isDuplicated;
         this.message = message;
     }
 }
