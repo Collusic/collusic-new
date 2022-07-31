@@ -3,18 +3,20 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { NavBarView } from "./view/NavBarView";
 
-import { LoginView } from "./view/LoginView";
+import { SignInViewModel } from "./viewmodel/SignInViewModel";
 import { StartPageView } from "./view/StartPageView";
+import { SignUpViewModel } from "./viewmodel/SignUpViewModel";
 
 function App() {
   return (
-      <BrowserRouter>
-        <NavBarView />
-        <Routes>
-          <Route path="/login" element={<LoginView />} />
-          <Route path="/" element={<StartPageView />} />
-        </Routes>
-      </BrowserRouter>
+    <BrowserRouter>
+      <NavBarView />
+      <Routes>
+        <Route path="/signin" element={<SignInViewModel />} />
+        <Route path="/signup" element={<SignUpViewModel />} />
+        <Route path="/" element={<StartPageView />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
