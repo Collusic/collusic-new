@@ -6,6 +6,7 @@ import com.collusic.collusicbe.domain.member.SnsType;
 import com.collusic.collusicbe.service.TokenService;
 import com.collusic.collusicbe.util.ParsingUtil;
 import com.collusic.collusicbe.web.controller.dto.TokenResponseDto;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,7 @@ public class OAuth2Controller {
     private final MemberRepository memberRepository;
     private final TokenService tokenService;
 
+    @Operation(summary = "sns 로그인", description = "sns로부터 받은 auth code를 query string으로 보내 로그인 및 회원정보 응답")
     @GetMapping("/oauth2/login/{provider}")
     public ResponseEntity<OAuth2LoginResponseDto> loginToSns(@PathVariable String provider, @RequestParam Map<String, Object> authCode, HttpServletRequest request) {
         OAuth2ClientService oAuth2ClientService = oAuth2ProviderClientManager.getClientService(provider);
