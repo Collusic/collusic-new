@@ -9,6 +9,7 @@ import com.collusic.collusicbe.web.controller.dto.NicknameValidationResponseDto;
 import com.collusic.collusicbe.web.controller.dto.SignUpRequestDto;
 import com.collusic.collusicbe.web.controller.dto.SignUpResponseDto;
 import com.collusic.collusicbe.web.controller.dto.TokenResponseDto;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ public class MemberController {
     private final MemberService memberService;
     private final TokenService tokenService;
 
+    @Operation(summary = "회원가입", description = "회원정보를 통해 회원가입 후 성공 시 access token, refresh token 응답")
     @PostMapping("/members")
     public ResponseEntity<SignUpResponseDto> signUp(@RequestBody SignUpRequestDto signUpRequestDto, HttpServletRequest request) { // TODO: validation
         Member member = memberService.signUp(signUpRequestDto);
