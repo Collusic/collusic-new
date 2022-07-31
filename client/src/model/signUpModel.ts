@@ -12,7 +12,6 @@ export const getSignUpUserInfo = selector({
     return {
       profileSrc: "../../assets/signin/default_profile@2x.png",
       email: "kkr991221@gmail.com",
-      nickName: "후라이"
     }
   },
 })
