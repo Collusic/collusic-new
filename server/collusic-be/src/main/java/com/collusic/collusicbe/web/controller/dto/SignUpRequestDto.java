@@ -13,12 +13,14 @@ public class SignUpRequestDto {
     private String email;
     private String authId;
     private String nickName;
+    private String profileImageUrl;
     private SnsType snsType;
 
-    public SignUpRequestDto(String email, String authId, String nickName, String snsType) {
+    public SignUpRequestDto(String email, String authId, String nickName, String profileImageUrl, String snsType) {
         this.email = email;
         this.authId = authId;
         this.nickName = nickName;
+        this.profileImageUrl = profileImageUrl;
         this.snsType = SnsType.valueOf(snsType);
     }
 
@@ -27,6 +29,7 @@ public class SignUpRequestDto {
                      .authId(authId)
                      .email(email)
                      .nickname(nickName)
+                     .profileImageUrl(profileImageUrl)
                      .snsType(snsType)
                      .role(Role.USER)
                      .build();

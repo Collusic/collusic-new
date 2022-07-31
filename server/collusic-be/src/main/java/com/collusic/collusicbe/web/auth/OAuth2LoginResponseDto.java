@@ -15,7 +15,7 @@ public class OAuth2LoginResponseDto {
 
     @Builder
     public OAuth2LoginResponseDto(OAuth2LoginResponseType responseType, SnsType snsType,
-                                  String message, String accessToken, String refreshToken, String email, String authId) {
+                                  String message, String accessToken, String refreshToken, String email, String authId, String profileImageUrl) {
         this.responseType = responseType;
 
         attributes = new HashMap<>();
@@ -34,6 +34,9 @@ public class OAuth2LoginResponseDto {
         }
         if (authId != null) {
             attributes.put("authId", authId);
+        }
+        if (profileImageUrl != null) {
+            attributes.put("profileImageUrl", profileImageUrl);
         }
     }
 }
