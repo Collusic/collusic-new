@@ -38,6 +38,7 @@ public class MemberController {
         return ResponseEntity.ok(responseBody);
     }
 
+    @Operation(summary = "닉네임 중복 체크", description = "회원가입 과정 중 닉네임 중복 체크에 대한 결과를 응답")
     @GetMapping("/members/{nickname}")
     public ResponseEntity<NicknameValidationResponseDto> validateDuplicatedNickname(@PathVariable String nickname) {
         if (memberService.isDuplicatedNickname(nickname)) {
