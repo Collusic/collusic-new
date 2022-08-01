@@ -15,7 +15,7 @@ export function SignUpViewModel() {
   const { profileSrc, email } = useRecoilValue(getSignUpUserInfo);
 
   const signUpEventHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    const nickName = event.target.parentElement.querySelector("input").value;
+    const nickName = (event.target as HTMLInputElement).parentElement!.querySelector("input")!.value;
 
     const formData = new FormData();
     formData.append("nickName", nickName);
