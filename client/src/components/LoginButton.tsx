@@ -7,7 +7,7 @@ type LoginButtonProps = {
   backgroundColor: string;
   textColor: string;
   src: string;
-  onClickHandler: Function;
+  onClickHandler(): void;
 };
 
 export function LoginButton({ innerText, backgroundColor, textColor, src, onClickHandler }: LoginButtonProps) {
@@ -16,7 +16,7 @@ export function LoginButton({ innerText, backgroundColor, textColor, src, onClic
       type="button"
       className="login-button"
       style={{ backgroundColor: `${backgroundColor}`, color: `${textColor}` }}
-      onClick={() => onClickHandler}
+      onClick={onClickHandler}
     >
       <img src={src} alt="logo" />
       <p>{innerText}</p>
