@@ -4,7 +4,7 @@ import "../utils/style/login.scss";
 import { LoginButton } from "../components/LoginButton";
 
 type signInProps = {
-  onClickHandler(): void;
+  onClickHandler: Function;
 };
 
 export function SignInView({ onClickHandler }: signInProps) {
