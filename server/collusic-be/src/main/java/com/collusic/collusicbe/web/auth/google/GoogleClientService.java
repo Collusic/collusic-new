@@ -18,16 +18,16 @@ public class GoogleClientService implements OAuth2ClientService {
 
     private static final String CONTENT_TYPE = MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=utf-8";
 
-    @Value("${spring.security.oauth2.client.registration.google.client-id}")
+    @Value("${oauth2.client.google.client-id}")
     private String clientId;
 
-    @Value("${spring.security.oauth2.client.registration.google.client-secret}")
+    @Value("${oauth2.client.google.client-secret}")
     private String clientSecret;
 
-    @Value("${spring.security.oauth2.client.registration.google.redirect-uri}")
+    @Value("${oauth2.client.google.redirect-uri}")
     private String redirectUri;
 
-    @Value("${spring.security.oauth2.client.registration.google.authorization-grant-type}")
+    @Value("${oauth2.client.google.authorization-grant-type}")
     private String grantType;
 
     private final GoogleProfileClient googleProfileClient;

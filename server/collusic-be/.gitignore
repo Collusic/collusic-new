@@ -17,7 +17,8 @@ target/
 *.iml
 *.ipr
 src/main/resources/application-aws.properties
-src/main/resources/application-oauth.properties
+src/main/resources/application-local_oauth.yml
+src/main/resources/application-dev_oauth.yml
 src/main/resources/application-real-db.properties
 
 ### NetBeans ###

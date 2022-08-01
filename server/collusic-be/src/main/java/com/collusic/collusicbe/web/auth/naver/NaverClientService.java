@@ -16,13 +16,13 @@ public class NaverClientService implements OAuth2ClientService {
 
     private static final String CONTENT_TYPE = MediaType.APPLICATION_JSON_VALUE;
 
-    @Value("${spring.security.oauth2.client.registration.naver.client-id}")
+    @Value("${oauth2.client.naver.client-id}")
     private String clientId;
 
-    @Value("${spring.security.oauth2.client.registration.naver.client-secret}")
+    @Value("${oauth2.client.naver.client-secret}")
     private String clientSecret;
 
-    @Value("${spring.security.oauth2.client.registration.naver.authorization-grant-type}")
+    @Value("${oauth2.client.naver.authorization-grant-type}")
     private String grantType;
 
     private final NaverAccessTokenClient naverAccessTokenClient;
