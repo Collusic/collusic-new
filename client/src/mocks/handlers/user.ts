@@ -4,11 +4,11 @@ export const signIn = rest.get("http://localhost:8080/oauth2/login/:provider", (
   res(
     ctx.status(200),
     ctx.json({
-      response_type: "SIGN_UP",
+      responseType: "SIGN_UP",
       email: "singco@gmail.com",
       authId: "singco",
       profile: "",
-      sns_type: "google",
+      snsType: "kakao",
     }),
   ),
 );
@@ -17,9 +17,9 @@ export const signUp = rest.post("http://localhost:8080/members", (req, res, ctx)
   res(
     ctx.status(200),
     ctx.json({
-      response_type: "SIGN_IN",
-      access_token: "slkdfjaiefj.sefiajsef.sfiaejlf",
-      resfresh_token: "dkfjaie.feiajfiose.fjsiae212d",
+      responseType: "SIGN_IN",
+      accessToken: "slkdfjaiefj.sefiajsef.sfiaejlf",
+      resfreshToken: "dkfjaie.feiajfiose.fjsiae212d",
     }),
   ),
 );
