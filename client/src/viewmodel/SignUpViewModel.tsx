@@ -1,7 +1,8 @@
 import React from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
+import { useLocation } from "react-router-dom";
 
-import { signUpState, getSignUpUserInfo } from "../model/signUpModel";
+import { signUpState } from "../model/signUpModel";
 
 import { SignUpView } from "../view/SignUpView";
 import { Modal } from "../components/Modal";
@@ -10,9 +11,18 @@ import { TEST_API } from "../utils/axios";
 
 import "../utils/style/SignUp.scss";
 
+type UserData = {
+  responseType?: string;
+  email: string;
+  authId?: string;
+  profile: string;
+  snsType?: string;
+};
+
 export function SignUpViewModel() {
   const [signUp, setSignUp] = useRecoilState(signUpState);
-  const { profileSrc, email } = useRecoilValue(getSignUpUserInfo);
+  const location = useLocation();
+  const { email, profile } = location.state as UserData;
 
   const signUpEventHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     const nickName = (event.target as HTMLInputElement).parentElement!.querySelector("input")!.value;
@@ -26,7 +36,7 @@ export function SignUpViewModel() {
 
   return (
     <Modal showModal={signUp} setShowModal={setSignUp}>
-      <SignUpView profileSrc={profileSrc} email={email} signUpEventHandler={signUpEventHandler} />
+      <SignUpView profileSrc={profile} email={email} signUpEventHandler={signUpEventHandler} />
     </Modal>
   );
 }
