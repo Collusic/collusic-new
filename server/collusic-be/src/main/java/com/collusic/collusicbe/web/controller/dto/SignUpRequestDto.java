@@ -5,10 +5,15 @@ import com.collusic.collusicbe.domain.member.Role;
 import com.collusic.collusicbe.domain.member.SnsType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class SignUpRequestDto {
 
@@ -28,14 +33,6 @@ public class SignUpRequestDto {
 
     @NotBlank
     private SnsType snsType;
-
-    public SignUpRequestDto(String email, String authId, String nickName, String profileImageUrl, String snsType) {
-        this.email = email;
-        this.authId = authId;
-        this.nickName = nickName;
-        this.profileImageUrl = profileImageUrl;
-        this.snsType = SnsType.valueOf(snsType);
-    }
 
     public Member toEntity() {
         return Member.builder()
