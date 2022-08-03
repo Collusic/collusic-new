@@ -2,6 +2,7 @@ package com.collusic.collusicbe.service;
 
 import com.collusic.collusicbe.domain.member.Member;
 import com.collusic.collusicbe.domain.member.MemberRepository;
+import com.collusic.collusicbe.global.exception.DuplicatedNicknameException;
 import com.collusic.collusicbe.web.controller.dto.SignUpRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,13 +19,11 @@ public class MemberService {
         return memberRepository.save(signUpRequestDto.toEntity());
     }
 
-    public boolean isDuplicatedNickname(String nickname) {
+    public void validateDuplicatedNickname(String nickname) {
         List<Member> members = memberRepository.findMemberByNickname(nickname);
 
         if (members.size() > 0) {
-            return true;
+            throw new DuplicatedNicknameException("닉네임이 중복되었습니다.");
         }
-
-        return false;
     }
 }
