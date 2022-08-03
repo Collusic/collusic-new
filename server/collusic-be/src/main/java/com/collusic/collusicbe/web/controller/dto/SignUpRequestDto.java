@@ -24,7 +24,7 @@ public class SignUpRequestDto {
     private String authId;
 
     @NotBlank
-    @Pattern(regexp = "^[ㄱ-ㅎ가-힣a-z0-9-_]", message = "닉네임에 특수문자를 포함할 수 없습니다.")
+    @Pattern(regexp = "^[ㄱ-ㅎ가-힣a-z0-9A-Z]*$", message = "닉네임에 특수문자를 포함할 수 없습니다.")
     @Size(min = 2, max = 24, message = "닉네임은 2 ~ 24자 이내여야 합니다.")
     private String nickName;
 
@@ -32,7 +32,7 @@ public class SignUpRequestDto {
     private String profileImageUrl;
 
     @NotBlank
-    private SnsType snsType;
+    private String snsType;
 
     public Member toEntity() {
         return Member.builder()
@@ -40,7 +40,7 @@ public class SignUpRequestDto {
                      .email(email)
                      .nickname(nickName)
                      .profileImageUrl(profileImageUrl)
-                     .snsType(snsType)
+                     .snsType(SnsType.valueOf(snsType))
                      .role(Role.USER)
                      .build();
     }

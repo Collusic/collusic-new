@@ -1,10 +1,10 @@
 package com.collusic.collusicbe.global.exception;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ExceptionInfoResponse {
 
     private final String status;
