@@ -1,8 +1,9 @@
 import axios from "axios";
 
 export const API = axios.create({
-  baseURL: "http://collusic.com/",
+  baseURL: process.env.REACT_APP_MOCK_API,
   headers: { "X-Custom-Header": "foobar" },
+  withCredentials: true,
   timeout: 1000,
 });
 

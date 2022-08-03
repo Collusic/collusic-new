@@ -4,6 +4,7 @@ import "../utils/style/Modal.scss";
 
 type modalProps = {
   showModal: boolean;
+  // eslint-disable-next-line no-unused-vars
   setShowModal(arg: boolean): void;
   children: React.ReactNode;
 };
