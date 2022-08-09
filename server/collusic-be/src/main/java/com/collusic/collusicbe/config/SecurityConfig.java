@@ -26,7 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .formLogin().disable()
                 .authorizeRequests(request -> request.antMatchers(HttpMethod.POST, "/members").permitAll()
-                                                     .antMatchers(HttpMethod.GET, "/oauth2/login/**").permitAll()
+                                                     .antMatchers(HttpMethod.GET, "/oauth2/login/**", "/members/{nickname}").permitAll()
                                                      .antMatchers("/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs").permitAll()
                                                      .anyRequest().authenticated())
                 .addFilterAt(new JWTAuthenticationFilter(authenticationManager()), BasicAuthenticationFilter.class);
