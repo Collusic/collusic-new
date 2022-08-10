@@ -29,9 +29,7 @@
 
 ## 기술 스택
 
-서버 : Spring Boot, Spring Web MVC, Spring Data JPA
-    
-      Spring Security, Spring Data Redis ...(프로젝트 진행에 따른 추가 예정)
+서버 : Spring Boot, Spring Web MVC, Spring Data JPA, Spring Security, Spring Data Redis ...(프로젝트 진행에 따른 추가 예정)
 
 ## 팀 소개
 
