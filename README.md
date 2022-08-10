@@ -12,24 +12,33 @@
 
 🎤🎶🎸🎹
 
+<br />
+
 ## 서비스 소개
 
 ### 회원가입을 진행해주세요.
 
 <img width="1557" alt="회원가입" src="https://user-images.githubusercontent.com/62830487/184039783-9d31e3b6-02bb-4d68-aa18-c58b712d4c4a.png">
 
+<br />
+
 ### 첫 음원을 업로드해서 기초가 되는 음원을 공유해주세요.
 
 <img width="1556" alt="녹음 중" src="https://user-images.githubusercontent.com/62830487/184040203-c370b992-c31d-48b9-b9af-f3f04e2a94ff.png">
 
+<br />
 
 ### 베이스가 되는 첫 음원에 음원을 붙여 릴레이로 작곡을 진행해주세요.
 
 트랙 편집 허용된 이전 음원들에 한해 자유롭게 음원을 복사할 수 있어요.
 
+<br />
+
 ## 기술 스택
 
 서버 : Spring Boot, Spring Web MVC, Spring Data JPA, Spring Security, Spring Data Redis ...(프로젝트 진행에 따른 추가 예정)
+
+<br />
 
 ## 팀 소개
 
