@@ -15,8 +15,8 @@ class JasyptTest {
     private PooledPBEStringEncryptor jasyptStringEncryptor;
 
     private static final String testSecret = "test_secret";
-    private static final String rawText = "test";
-    private static final String encryptedText = "SjDuT0jdRa9F8UJHbuk+Vg==";
+    private static final String defaultRawText = "test";
+    private static final String defaultEncryptedText = "SjDuT0jdRa9F8UJHbuk+Vg==";
 
     @BeforeEach
     public void setUp() {
@@ -38,17 +38,25 @@ class JasyptTest {
     @Test
     public void decryptTest() {
 
-        String decryptedText = jasyptStringEncryptor.decrypt(encryptedText);
+        String decryptedText = jasyptStringEncryptor.decrypt(defaultEncryptedText);
 
-        assertThat(decryptedText).isEqualTo(rawText);
+        assertThat(decryptedText).isEqualTo(defaultRawText);
     }
 
     @DisplayName("암호화 테스트")
     @Test
     public void encryptTest() {
 
-        String encryptedText = jasyptStringEncryptor.encrypt(rawText);
+        String encryptedText = jasyptStringEncryptor.encrypt(defaultRawText);
         System.out.println(encryptedText);
-        assertThat(jasyptStringEncryptor.decrypt(encryptedText)).isEqualTo(rawText);
+        assertThat(jasyptStringEncryptor.decrypt(encryptedText)).isEqualTo(defaultRawText);
+    }
+
+    @DisplayName("암호화된 문자열 생성 테스트")
+    @Test
+    public void test() {
+        String plainText = "";
+
+        System.out.println(jasyptStringEncryptor.encrypt(plainText));
     }
 }
