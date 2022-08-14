@@ -19,15 +19,15 @@ public class OAuth2LoginResponseDto {
         this.responseType = responseType;
 
         attributes = new HashMap<>();
-        attributes.put("sns_type", snsType);
+        attributes.put("snsType", snsType);
         if (message != null) {
-            attributes.put("error_message", message);
+            attributes.put("errorMessage", message);
         }
         if (accessToken != null) {
-            attributes.put("access_token", accessToken);
+            attributes.put("accessToken", accessToken);
         }
         if (refreshToken != null) {
-            attributes.put("refresh_token", refreshToken);
+            attributes.put("refreshToken", refreshToken);
         }
         if (email != null) {
             attributes.put("email", email);

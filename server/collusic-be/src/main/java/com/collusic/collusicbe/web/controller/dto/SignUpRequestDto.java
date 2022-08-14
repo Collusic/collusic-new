@@ -5,24 +5,34 @@ import com.collusic.collusicbe.domain.member.Role;
 import com.collusic.collusicbe.domain.member.SnsType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class SignUpRequestDto {
 
+    @Email
     private String email;
-    private String authId;
-    private String nickName;
-    private String profileImageUrl;
-    private SnsType snsType;
 
-    public SignUpRequestDto(String email, String authId, String nickName, String profileImageUrl, String snsType) {
-        this.email = email;
-        this.authId = authId;
-        this.nickName = nickName;
-        this.profileImageUrl = profileImageUrl;
-        this.snsType = SnsType.valueOf(snsType);
-    }
+    @NotBlank
+    private String authId;
+
+    @NotBlank
+    @Pattern(regexp = "^[ㄱ-ㅎ가-힣a-z0-9A-Z]*$", message = "닉네임에 특수문자를 포함할 수 없습니다.")
+    @Size(min = 2, max = 24, message = "닉네임은 2 ~ 24자 이내여야 합니다.")
+    private String nickName;
+
+    @NotBlank
+    private String profileImageUrl;
+
+    @NotBlank
+    private String snsType;
 
     public Member toEntity() {
         return Member.builder()
@@ -30,7 +40,7 @@ public class SignUpRequestDto {
                      .email(email)
                      .nickname(nickName)
                      .profileImageUrl(profileImageUrl)
-                     .snsType(snsType)
+                     .snsType(SnsType.valueOf(snsType))
                      .role(Role.USER)
                      .build();
     }
