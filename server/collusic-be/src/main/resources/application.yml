@@ -43,3 +43,7 @@ spring:
         enabled: true
     pathmatch:
       matching-strategy: ant_path_matcher
+
+jasypt:
+  encryptor:
+    password: ${JASYPT_PASSWORD}
