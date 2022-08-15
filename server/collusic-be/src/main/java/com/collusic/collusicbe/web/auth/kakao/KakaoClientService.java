@@ -19,16 +19,16 @@ public class KakaoClientService implements OAuth2ClientService {
 
     private final KakaoProfileClient kakaoProfileClient;
 
-    @Value("${spring.security.oauth2.client.registration.kakao.client-id}")
+    @Value("${oauth2.client.kakao.client-id}")
     private String clientId;
 
-    @Value("${spring.security.oauth2.client.registration.kakao.client-secret}")
+    @Value("${oauth2.client.kakao.client-secret}")
     private String clientSecret;
 
-    @Value("${spring.security.oauth2.client.registration.kakao.redirect-uri}")
+    @Value("${oauth2.client.kakao.redirect-uri}")
     private String redirectUri;
 
-    @Value("${spring.security.oauth2.client.registration.kakao.authorization-grant-type}")
+    @Value("${oauth2.client.kakao.authorization-grant-type}")
     private String grantType;
 
     @Override
