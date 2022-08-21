@@ -9,5 +9,5 @@ cloud:
       secret-key: ENC(160fSjzHjr+WlualFQLy+0zBnIz9cnA+5lgrND4TyaaYOC759gMuH38luM9A1t1nYXnKvibPQNc=)
     s3:
       bucket: ENC(Yn+dhp+Db9HHEcIktA2umG1VxK0Zr3Nl)
-
-
+    cloudfront:
+      domain: https://d3772eclzunqu8.cloudfront.net
