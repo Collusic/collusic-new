@@ -11,11 +11,16 @@ import com.collusic.collusicbe.web.controller.dto.SignUpResponseDto;
 import com.collusic.collusicbe.web.controller.dto.TokenResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 @RequiredArgsConstructor
 @RestController
@@ -48,5 +53,25 @@ public class MemberController {
                                                                                                    .message("사용 가능한 닉네임입니다.")
                                                                                                    .build();
         return ResponseEntity.ok(nicknameValidationResponseDto);
+    }
+
+    @Operation(summary = "회원 프로필 이미지 업로드", description = "회원의 프로필 이미지를 업로드한다. 기존에 존재하는 경우 덮어씀")
+    @PostMapping("/members/{nickname}/profile")
+    public ResponseEntity<String> uploadMemberProfile(@PathVariable String nickname, @RequestParam("image") MultipartFile multipartFile) throws IOException {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        if (multipartFile.isEmpty()) {
+            return new ResponseEntity(new HttpHeaders(), HttpStatus.BAD_REQUEST);
+        }
+        if (!memberService.checkProfileValidation(multipartFile)) {
+            return new ResponseEntity(new HttpHeaders(), HttpStatus.BAD_REQUEST);
+        }
+        Member loginMember = memberService.findByNickname(nickname).orElseThrow(RuntimeException::new);
+        String profilePath = memberService.uploadProfile(nickname, multipartFile);
+
+        memberService.updateProfilePath(loginMember, profilePath);
+
+        return ResponseEntity.ok(profilePath);
     }
 }
