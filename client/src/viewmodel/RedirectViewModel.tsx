@@ -14,7 +14,7 @@ export function RedirectViewModel() {
   const setRefreshToken = useSetRecoilState(refreshTokenState);
 
   const navigate = useNavigate();
-  const { provider } = useParams();
+  const { snsType } = useParams();
   const [query] = useSearchParams();
   const code = query.get("code");
   const state = query.get("state");
@@ -22,7 +22,7 @@ export function RedirectViewModel() {
   useEffect(() => {
     const getLoginState = async () => {
       try {
-        const { data }: AxiosResponse = await LOCAL_API.get(`/oauth2/login/${provider}`, {
+        const { data }: AxiosResponse = await LOCAL_API.get(`/oauth2/login/${snsType}`, {
           params: {
             code,
             state,
@@ -53,5 +53,5 @@ export function RedirectViewModel() {
     getLoginState();
   });
 
-  return <div>{provider} 로그인 로딩중</div>;
+  return <div>{snsType} 로그인 로딩중</div>;
 }
