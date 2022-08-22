@@ -8,10 +8,10 @@ export const API = axios.create({
 });
 
 export const LOCAL_API = axios.create({
-  baseURL: "http://localhost:8080/",
+  baseURL: process.env.REACT_APP_API,
   headers: { "X-Custom-Header": "foobar" },
   withCredentials: true,
-  timeout: 2000,
+  timeout: 3000,
 });
 
 export const TEST_API = axios.create({
