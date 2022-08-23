@@ -8,7 +8,7 @@ import { SignUpView } from "../view/SignUpView";
 import { Modal } from "../components/Modal";
 
 import { LOCAL_API } from "../utils/axios";
-import { isValidLetter, isValidLength } from "../utils/validation";
+import { validateLetter, validateLength } from "../utils/validation";
 
 import "../utils/style/SignUp.scss";
 
@@ -25,10 +25,11 @@ export function SignUpViewModel() {
   const location = useLocation();
 
   const { authId, email, profileImageUrl, snsType } = location.state as UserData;
+
   const signUpEventHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     const nickName = (event.target as HTMLInputElement).parentElement!.querySelector("input")!.value;
 
-    if (!isValidLetter(nickName) || !isValidLength(nickName)) {
+    if (!validateLetter(nickName) || !validateLength(nickName)) {
       alert("최소 2자 이상 최대 12자 이하(영문, 한글, 숫자)로 입력해 주세요.");
       return;
     }
