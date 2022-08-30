@@ -13,8 +13,8 @@ import java.util.Map;
 
 public class JWTUtil {
 
-    private static final long ACCESS_TIME = 60 * 60;
-    private static final long REFRESH_TIME = 60 * 60 * 24 * 7;
+    private static final int ACCESS_TIME = 60 * 60;
+    public static final int REFRESH_TIME = 60 * 60 * 24 * 7;
     public static final String KEY = "collusic-new";
 
     public static String createAccessToken(String email, String role) {
