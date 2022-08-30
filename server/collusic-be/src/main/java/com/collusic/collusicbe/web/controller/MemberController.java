@@ -59,7 +59,7 @@ public class MemberController {
     private Cookie setCookieWithRefreshToken(String refreshToken) {
         Cookie cookie = new Cookie("refreshToken", refreshToken);
         cookie.setMaxAge(REFRESH_TIME);
-        cookie.setSecure(true);
+        cookie.setSecure(false); // TODO : HTTPS 적용 시 true로 옵션 변경하기
         cookie.setHttpOnly(true);
         return cookie;
     }
