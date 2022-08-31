@@ -15,7 +15,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import static com.collusic.collusicbe.util.JWTUtil.REFRESH_TIME;
 
 @RequiredArgsConstructor
 @RestController
@@ -26,15 +30,17 @@ public class MemberController {
 
     @Operation(summary = "회원가입", description = "회원정보를 통해 회원가입 후 성공 시 access token, refresh token 응답")
     @PostMapping("/members")
-    public ResponseEntity<SignUpResponseDto> signUp(@ModelAttribute @Validated SignUpRequestDto signUpRequestDto, HttpServletRequest request) { // TODO: validation
+    public ResponseEntity<SignUpResponseDto> signUp(@ModelAttribute @Validated SignUpRequestDto signUpRequestDto, HttpServletRequest request, HttpServletResponse response) { // TODO: validation
         Member member = memberService.signUp(signUpRequestDto);
         TokenResponseDto tokens = tokenService.issue(member.getEmail(), member.getRole().getKey(), ParsingUtil.getRemoteAddress(request));
 
         SignUpResponseDto responseBody = SignUpResponseDto.builder()
                                                           .responseType(OAuth2LoginResponseType.SIGN_IN)
                                                           .accessToken(tokens.getAccessToken())
-                                                          .refreshToken(tokens.getRefreshToken())
                                                           .build();
+
+        response.addCookie(setCookieWithRefreshToken(tokens.getRefreshToken()));
+
         return ResponseEntity.ok(responseBody);
     }
 
@@ -48,5 +54,13 @@ public class MemberController {
                                                                                                    .message("사용 가능한 닉네임입니다.")
                                                                                                    .build();
         return ResponseEntity.ok(nicknameValidationResponseDto);
+    }
+
+    private Cookie setCookieWithRefreshToken(String refreshToken) {
+        Cookie cookie = new Cookie("refreshToken", refreshToken);
+        cookie.setMaxAge(REFRESH_TIME);
+        cookie.setSecure(false); // TODO : HTTPS 적용 시 true로 옵션 변경하기
+        cookie.setHttpOnly(true);
+        return cookie;
     }
 }

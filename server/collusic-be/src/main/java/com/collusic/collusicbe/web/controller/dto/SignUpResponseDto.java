@@ -15,7 +15,7 @@ public class SignUpResponseDto {
 
     @Builder
     public SignUpResponseDto(OAuth2LoginResponseType responseType, String message,
-                             String accessToken, String refreshToken, String email) {
+                             String accessToken, String email) {
         this.responseType = responseType;
 
         attributes = new HashMap<>();
@@ -24,9 +24,6 @@ public class SignUpResponseDto {
         }
         if (accessToken != null) {
             attributes.put("accessToken", accessToken);
-        }
-        if (refreshToken != null) {
-            attributes.put("refreshToken", refreshToken);
         }
         if (email != null) {
             attributes.put("email", email);

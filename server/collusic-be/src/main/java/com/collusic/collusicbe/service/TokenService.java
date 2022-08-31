@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 
+import static com.collusic.collusicbe.util.JWTUtil.REFRESH_TIME;
+
 @RequiredArgsConstructor
 @Service
 public class TokenService {
-
-    private static final long REFRESH_TIME = 60 * 60 * 24 * 7;
 
     private final RedisRepository redisRepository;
 
