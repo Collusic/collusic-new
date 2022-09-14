@@ -1,10 +1,6 @@
 @import "./color";
 @import "./size";
 
-img {
-  position: absolute;
-}
-
 .toggle {
   display: flex;
   align-items: center;
@@ -38,6 +34,11 @@ img {
     transform: translateX(2.2rem);
     will-change: transform;
   }
+
+  &>img {
+    position: absolute;
+  }
+
 }
 
 .locked {
