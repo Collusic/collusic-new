@@ -1,14 +1,14 @@
 ---
 name: Feature request
 about: Suggest an idea for this project
-title: '[Feature]'
-labels: '💻프론트엔드'
-assignees: 'spiderq2697'
+title: "[FE or BE]"
+labels: "✨ feature"
+assignees: ''
 
 ---
 
-### 컴포넌트 설명
+## Details
+// 해결하고자하는 문제를 해결하기 위한 세부 구현 및 작업 내용 (체크박스로 표시)
 
-### 디자인
-
-### 고려할 사항
+##  Notes
+// (optional) 이슈 해결을 위해 고려해야할 것들 및 기타사항
