@@ -1,0 +1,35 @@
+@import "./color.scss";
+
+.dimmed {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  background-color: $Color_BG_Main;
+  overflow: hidden;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 20rem;
+  height: fit-content;
+  padding: 0 40px 40px;
+  border-radius: 16px;
+  text-align: right;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.4);
+  background-color: $Color_BG_Sub;
+  overflow: hidden;
+
+  .close {
+    position: relative;
+    left: 45px;
+    background-color: transparent;
+  }
+}

@@ -1,0 +1,13 @@
+@import "./color.scss";
+@import "./size.scss";
+
+body {
+  margin: 0
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  font-family: 'Noto Sans KR', sans-serif;
+}
