@@ -16,7 +16,7 @@ function App() {
       <Routes>
         <Route path="/signin" element={<SignInViewModel />} />
         <Route path="/signup" element={<SignUpViewModel />} />
-        <Route path="/auth/redirect" element={<RedirectViewModel />} />
+        <Route path="/auth/redirect/:snsType" element={<RedirectViewModel />} />
         <Route path="/" element={<StartPageView />} />
         <Route path="/projectlist" element={<ProjectListView />} />
       </Routes>
