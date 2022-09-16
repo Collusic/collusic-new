@@ -11,6 +11,7 @@ import com.collusic.collusicbe.web.controller.dto.SignUpResponseDto;
 import com.collusic.collusicbe.web.controller.dto.TokenResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -50,7 +51,7 @@ public class MemberController {
         memberService.validateDuplicatedNickname(nickname);
 
         NicknameValidationResponseDto nicknameValidationResponseDto = NicknameValidationResponseDto.builder()
-                                                                                                   .isDuplicated(false)
+                                                                                                   .status(HttpStatus.OK.value())
                                                                                                    .message("사용 가능한 닉네임입니다.")
                                                                                                    .build();
         return ResponseEntity.ok(nicknameValidationResponseDto);
