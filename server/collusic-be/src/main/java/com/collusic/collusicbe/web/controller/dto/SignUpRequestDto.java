@@ -3,6 +3,7 @@ package com.collusic.collusicbe.web.controller.dto;
 import com.collusic.collusicbe.domain.member.Member;
 import com.collusic.collusicbe.domain.member.Role;
 import com.collusic.collusicbe.domain.member.SnsType;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,6 +34,15 @@ public class SignUpRequestDto {
 
     @NotBlank
     private String snsType;
+
+    @Builder
+    public SignUpRequestDto(String email, String authId, String nickName, String profileImageUrl, String snsType) {
+        this.email = email;
+        this.authId = authId;
+        this.nickName = nickName;
+        this.profileImageUrl = profileImageUrl;
+        this.snsType = snsType;
+    }
 
     public Member toEntity() {
         return Member.builder()
