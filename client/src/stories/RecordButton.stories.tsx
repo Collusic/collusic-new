@@ -7,6 +7,9 @@ export default {
   component: RecordButton,
 };
 
-const Template: ComponentStory<typeof RecordButton> = () => <RecordButton />;
+const Template: ComponentStory<typeof RecordButton> = (args) => <RecordButton {...args} />;
 
 export const Default = Template.bind({});
+Default.args = {
+  clickHandler: () => {},
+};

@@ -1,0 +1,51 @@
+@import "./color";
+@import "./size";
+
+.outside-round {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-color: rgba(177, 250, 0, 0.05);
+  width: 80px;
+  height: 80px;
+  border-radius: 48px;
+  z-index: 1;
+}
+
+.inside-round {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-color: rgba(177, 250, 0, 0.15);
+  width: 64px;
+  height: 64px;
+  border-radius: 48px;
+  z-index: 2;
+}
+
+.record-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-color: $Color_Main;
+  width: 48px;
+  height: 48px;
+  border-radius: 24px;
+  z-index: 3;
+}
+
+.count-down {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: $FONT_LARGE;
+  font-weight: bold;
+  line-height: 1.46;
+}
+
+.hidden {
+  display: none;
+}

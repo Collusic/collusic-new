@@ -1,14 +1,22 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, MouseEventHandler } from "react";
+import classNames from "classnames";
 
 import MikeImg from "../../public/assets/mike/mike.svg";
+import "utils/style/recordButton.scss";
 
-function RecordButton() {
+interface RecordButtonProps {
+  isStartedRecording: boolean;
+  clickHandler: MouseEventHandler;
+}
+
+function RecordButton({ isStartedRecording, clickHandler }: RecordButtonProps) {
   const [count, setCount] = useState(3);
   const [isStartCountDown, setIsStartCountDown] = useState(false);
   const countDownInterval = useRef<NodeJS.Timer | null>(null);
 
-  const buttonClickHandler = () => {
+  const buttonClickHandler = (e: React.MouseEvent) => {
     setIsStartCountDown(true);
+    clickHandler(e);
   };
 
   useEffect(() => {
@@ -24,15 +32,16 @@ function RecordButton() {
       clearInterval(countDownInterval.current as NodeJS.Timer);
       countDownInterval.current = null;
       setIsStartCountDown(false);
+      setCount(3);
     }
   }, [count]);
 
   return (
-    <div className="outside-round">
+    <div className={classNames("outside-round", { hidden: isStartedRecording })}>
       <div className="inside-round">
-        <button type="submit" className="record-btn" onClick={buttonClickHandler}>
-          <img src={MikeImg} alt="record" />
-          <p className="count-down">{count}</p>
+        <button type="button" className="record-btn" onClick={buttonClickHandler}>
+          <img src={MikeImg} alt="record" className={classNames("mike-img", { hidden: isStartCountDown })} />
+          <p className={classNames("count-down", { hidden: !isStartCountDown })}>{count}</p>
         </button>
       </div>
     </div>
