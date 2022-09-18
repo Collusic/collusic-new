@@ -38,10 +38,6 @@ public class S3Service {
         StringBuilder newFileKey = new StringBuilder();
 
         newFileKey.append(nickname)
-                  .append("-")
-                  .append(getContentType(multipartFile.getOriginalFilename()))
-                  .append("-")
-                  .append(time)
                   .append(".png");
 
         ObjectMetadata objectMetadata = new ObjectMetadata();
