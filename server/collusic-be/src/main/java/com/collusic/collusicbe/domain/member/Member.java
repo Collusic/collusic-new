@@ -53,4 +53,8 @@ public class Member extends BaseTimeEntity {
     public boolean isSameSnsType(String snsName) {
         return this.snsType.toString().equals(snsName);
     }
+
+    public void updateProfile(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+    }
 }

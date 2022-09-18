@@ -15,10 +15,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 import static com.collusic.collusicbe.util.JWTUtil.REFRESH_TIME;
 
@@ -55,6 +57,23 @@ public class MemberController {
                                                                                                    .message("사용 가능한 닉네임입니다.")
                                                                                                    .build();
         return ResponseEntity.ok(nicknameValidationResponseDto);
+    }
+
+    @Operation(summary = "회원 프로필 이미지 업로드", description = "회원의 프로필 이미지를 업로드한다. 기존에 존재하는 경우 덮어씀")
+    @PostMapping("/members/{nickname}/profile")
+    public ResponseEntity<String> uploadMemberProfile(@PathVariable String nickname, @RequestParam("image") MultipartFile multipartFile) throws IOException {
+        if (multipartFile.isEmpty()) {
+            return ResponseEntity.badRequest().body("선택된 파일이 없습니다.");
+        }
+        if (!memberService.checkProfileValidation(multipartFile)) {
+            return ResponseEntity.badRequest().body("유효하지 않은 이미지 파일입니다. 확장자 및 용량을 확인하세요.");
+        }
+        Member loginMember = memberService.findByNickname(nickname).orElseThrow(RuntimeException::new);
+        String profilePath = memberService.uploadProfile(nickname, multipartFile);
+
+        memberService.updateProfilePath(loginMember, profilePath);
+
+        return ResponseEntity.ok(profilePath);
     }
 
     private Cookie setCookieWithRefreshToken(String refreshToken) {
