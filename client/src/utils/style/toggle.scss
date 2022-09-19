@@ -1,0 +1,60 @@
+@import "./color";
+@import "./size";
+
+.toggle {
+  display: flex;
+  align-items: center;
+  width: 3.2rem;
+  height: $HEIGHT_EXTRA_SMALL;
+  margin: 4px;
+  border-radius: 24px;
+  background-color: #555;
+  overflow: visible;
+  transition: 0.8s;
+
+  &.on {
+    background-color: $Color_Main;
+  }
+}
+
+.lock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  right: 1.0rem;
+  min-width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 24px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.4);
+  background-color: $Color_Sub_White;
+  transition: 0.8s;
+
+  &.on {
+    transform: translateX(2.2rem);
+    will-change: transform;
+  }
+
+  &>img {
+    position: absolute;
+  }
+
+}
+
+.locked {
+  visibility: visible;
+  width: 24px;
+
+  &.on {
+    visibility: hidden;
+  }
+}
+
+.unlocked {
+  width: 24px;
+  visibility: hidden;
+
+  &.on {
+    visibility: visible;
+  }
+}
