@@ -14,8 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
@@ -33,10 +33,8 @@ public class S3Service {
     @Value("${cloud.aws.cloudfront.domain}")
     private String cloudFrontDomain;
 
-    public String upload(String nickname, @ModelAttribute MultipartFile multipartFile) throws IOException {
-        String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+    public Map<String, String> upload(String nickname, @ModelAttribute MultipartFile multipartFile) throws IOException {
         StringBuilder newFileKey = new StringBuilder();
-
         newFileKey.append(nickname)
                   .append(".png");
 
@@ -47,7 +45,11 @@ public class S3Service {
         s3Client.putObject(new PutObjectRequest(bucket, IMAGE_DIR + "/" + newFileKey, multipartFile.getInputStream(), objectMetadata)
                 .withCannedAcl(CannedAccessControlList.PublicRead));
 
-        return cloudFrontDomain + "/profiles/" + newFileKey;
+        Map<String, String> profileUrls = new HashMap<>();
+        profileUrls.put("originalProfileUrl", cloudFrontDomain + "/profiles/" + newFileKey);
+        profileUrls.put("resizedProfileUrl", cloudFrontDomain + "/resized-profiles/" + newFileKey);
+
+        return profileUrls;
     }
 
     public String upload(@ModelAttribute MultipartFile multipartFile, String dirName) throws IOException {
