@@ -38,7 +38,7 @@ public class TokenService {
         redisRepository.delete(refreshToken);
     }
 
-    private String reissueAccessToken(String refreshToken, String remoteAddress) {
+    public String reissueAccessToken(String refreshToken, String remoteAddress) {
 
         if (!redisRepository.hasKey(refreshToken)) {
             throw new EntityNotFoundException("토큰이 존재하지 않습니다.");
