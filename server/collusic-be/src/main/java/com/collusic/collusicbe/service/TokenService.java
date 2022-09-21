@@ -34,6 +34,10 @@ public class TokenService {
         return new TokenResponseDto(accessToken, refreshToken);
     }
 
+    public void deleteRefreshToken(String refreshToken) {
+        redisRepository.delete(refreshToken);
+    }
+
     private String reissueAccessToken(String refreshToken, String remoteAddress) {
 
         if (!redisRepository.hasKey(refreshToken)) {
