@@ -9,4 +9,8 @@ public class ExceptionInfoResponse {
 
     private final String status;
     private final String message;
+
+    public static ExceptionInfoResponse from(String status, String message) {
+        return new ExceptionInfoResponse(status, message);
+    }
 }
