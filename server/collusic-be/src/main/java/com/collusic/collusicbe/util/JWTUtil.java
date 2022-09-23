@@ -2,15 +2,16 @@ package com.collusic.collusicbe.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
+import com.collusic.collusicbe.global.exception.jwt.ExpiredJwtException;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.Instant;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 public class JWTUtil {
 
     private static final int ACCESS_TIME = 60 * 60;
@@ -33,8 +34,21 @@ public class JWTUtil {
                        .setSigningKey(KEY)
                        .parseClaimsJws(token)
                        .getBody();
-        } catch (Exception exception) {
-            throw new RuntimeException("토큰 만료"); // TODO : 어떤 에러 메시지를 보낼 것인가?
+        } catch (ExpiredJwtException e) {
+            log.info("토큰 만료");
+            throw new ExpiredJwtException("토큰 만료");
+        } catch (UnsupportedJwtException e) {
+            log.info("애플리케이션에서 지원하지 않는 토큰 형식");
+            throw new UnsupportedJwtException("애플리케이션에서 지원하지 않는 토큰 형식");
+        } catch (MalformedJwtException e) {
+            log.info("구조적인 문제가 있는 토큰");
+            throw new MalformedJwtException("구조적인 문제가 있는 토큰");
+        } catch (SignatureException e) {
+            log.info("시그니처 검증 실패");
+            throw new SignatureException("시그니처 검증 실패");
+        } catch (IllegalArgumentException e) {
+            log.info("부적합한 인수");
+            throw new IllegalArgumentException("부적합한 인수");
         }
     }
 

@@ -1,10 +1,12 @@
 package com.collusic.collusicbe.service;
 
+import com.collusic.collusicbe.global.exception.jwt.AbnormalAccessException;
 import com.collusic.collusicbe.util.JWTUtil;
 import com.collusic.collusicbe.web.controller.dto.TokenResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.Duration;
 
 import static com.collusic.collusicbe.util.JWTUtil.REFRESH_TIME;
@@ -32,14 +34,18 @@ public class TokenService {
         return new TokenResponseDto(accessToken, refreshToken);
     }
 
-    private String reissueAccessToken(String refreshToken, String remoteAddress) {
+    public void deleteRefreshToken(String refreshToken) {
+        redisRepository.delete(refreshToken);
+    }
+
+    public String reissueAccessToken(String refreshToken, String remoteAddress) {
 
         if (!redisRepository.hasKey(refreshToken)) {
-            throw new RuntimeException("사용할 수 없는 토큰");
+            throw new EntityNotFoundException("토큰이 존재하지 않습니다.");
         }
 
-        if (redisRepository.findByKey(refreshToken).equals(remoteAddress)) {
-            throw new RuntimeException("ip 주소가 다름"); // TODO: 비정상적인 접근으로 redis에서 refreshtoken을 지워줘야함
+        if (!redisRepository.findByKey(refreshToken).equals(remoteAddress)) {
+            throw new AbnormalAccessException("사용자의 IP 주소가 다릅니다."); // TODO: 비정상적인 접근으로 redis에서 refreshtoken을 지워줘야함
         }
 
         String email = JWTUtil.getEmail(refreshToken);
