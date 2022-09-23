@@ -44,10 +44,15 @@ export function SignUpViewModel() {
         formData.append("profileImageUrl", profileImageUrl);
         formData.append("snsType", snsType);
 
-        LOCAL_API.post("/members", formData).then(() => {
-          alert("회원가입 완료");
-          navigate("/");
-        });
+        LOCAL_API.post("/members", formData)
+          .then(() => {
+            alert("회원가입 완료");
+            navigate("/");
+          })
+          .catch((err) => {
+            const { message } = err.response.data.fieldErrors[0];
+            alert(message);
+          });
       })
       .catch(() => {
         alert("이미 존재하는 닉네임입니다.");
