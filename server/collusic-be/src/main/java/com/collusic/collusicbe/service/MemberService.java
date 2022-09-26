@@ -49,4 +49,8 @@ public class MemberService {
     public boolean checkProfileValidation(MultipartFile multipartFile) {
         return ProfileContentType.isImageType(multipartFile.getContentType()) && multipartFile.getSize() < 20_000_000;
     }
+
+    public String getProfileUrlByNickname(String nickname, String type) {
+        return s3Service.getPath(type) + "/" + memberRepository.findByNickname(nickname).orElseThrow().getProfileImageUrl();
+    }
 }

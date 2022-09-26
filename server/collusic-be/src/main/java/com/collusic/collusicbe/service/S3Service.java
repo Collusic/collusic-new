@@ -24,6 +24,7 @@ public class S3Service {
     private final AmazonS3 s3Client;
 
     private static final String IMAGE_DIR = "profiles";
+    private static final String RESIZED_IMAGE_DIR = "resized-profiles";
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
@@ -107,14 +108,11 @@ public class S3Service {
         return s3Client.doesObjectExist(bucket, fileName);
     }
 
-    public String getContentType(String filePath) {
-        if (filePath == null) {
-            return "";
+    public String getPath(String type) {
+        String path = cloudFrontDomain + "/";
+        if (type.equals("resized")) {
+            return path + RESIZED_IMAGE_DIR;
         }
-
-        String[] splitFilePath = filePath.split("\\.");
-        int contentTypeIndex = splitFilePath.length - 1;
-
-        return splitFilePath[contentTypeIndex];
+        return path + IMAGE_DIR;
     }
 }

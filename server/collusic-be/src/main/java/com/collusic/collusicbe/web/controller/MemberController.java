@@ -5,10 +5,7 @@ import com.collusic.collusicbe.service.MemberService;
 import com.collusic.collusicbe.service.TokenService;
 import com.collusic.collusicbe.util.ParsingUtil;
 import com.collusic.collusicbe.web.auth.OAuth2LoginResponseType;
-import com.collusic.collusicbe.web.controller.dto.NicknameValidationResponseDto;
-import com.collusic.collusicbe.web.controller.dto.SignUpRequestDto;
-import com.collusic.collusicbe.web.controller.dto.SignUpResponseDto;
-import com.collusic.collusicbe.web.controller.dto.TokenResponseDto;
+import com.collusic.collusicbe.web.controller.dto.*;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -79,6 +76,16 @@ public class MemberController {
         headers.setContentType(MediaType.APPLICATION_JSON);
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
+
+    @Operation
+    @GetMapping("/members/{nickname}/profile")
+    public ResponseEntity<ProfileUrlResponseDto> getProfileUrl(@PathVariable String nickname, @RequestParam("type") String type) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        ProfileUrlResponseDto responseDto = new ProfileUrlResponseDto(memberService.getProfileUrlByNickname(nickname, type));
+        return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);
+    }
+
 
     private Cookie setCookieWithRefreshToken(String refreshToken) {
         Cookie cookie = new Cookie("refreshToken", refreshToken);
