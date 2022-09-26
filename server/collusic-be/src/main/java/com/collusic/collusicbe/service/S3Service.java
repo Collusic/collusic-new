@@ -14,8 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
@@ -33,23 +31,21 @@ public class S3Service {
     @Value("${cloud.aws.cloudfront.domain}")
     private String cloudFrontDomain;
 
-    public Map<String, String> upload(String nickname, @ModelAttribute MultipartFile multipartFile) throws IOException {
-        StringBuilder newFileKey = new StringBuilder();
-        newFileKey.append(nickname)
-                  .append(".png");
+    public String upload(String nickname, @ModelAttribute MultipartFile multipartFile) throws IOException {
+        StringBuilder path = new StringBuilder();
+        path.append(IMAGE_DIR)
+            .append("/")
+            .append(nickname)
+            .append(".png");
 
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentType(multipartFile.getContentType());
         objectMetadata.setContentLength(multipartFile.getSize());
 
-        s3Client.putObject(new PutObjectRequest(bucket, IMAGE_DIR + "/" + newFileKey, multipartFile.getInputStream(), objectMetadata)
+        s3Client.putObject(new PutObjectRequest(bucket, path.toString(), multipartFile.getInputStream(), objectMetadata)
                 .withCannedAcl(CannedAccessControlList.PublicRead));
 
-        Map<String, String> profileUrls = new HashMap<>();
-        profileUrls.put("originalProfileUrl", cloudFrontDomain + "/profiles/" + newFileKey);
-        profileUrls.put("resizedProfileUrl", cloudFrontDomain + "/resized-profiles/" + newFileKey);
-
-        return profileUrls;
+        return cloudFrontDomain + path;
     }
 
     public String upload(@ModelAttribute MultipartFile multipartFile, String dirName) throws IOException {
