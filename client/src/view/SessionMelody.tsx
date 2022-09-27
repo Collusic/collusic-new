@@ -3,9 +3,10 @@ import React, { MouseEventHandler } from "react";
 import Button from "components/Button";
 import Span from "components/Span";
 import "utils/style/sessionMelody.scss";
+import { MelodyLength } from "types/projectType";
 
 interface SessionMelodyProps {
-  melodyType: string;
+  melodyType: MelodyLength;
   clickHandler: MouseEventHandler;
 }
 
