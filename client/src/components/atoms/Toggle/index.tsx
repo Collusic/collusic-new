@@ -1,9 +1,9 @@
 import React, { MouseEventHandler } from "react";
 import classNames from "classnames";
 
-import Locked from "../../public/assets/locker/locked.svg";
-import UnLocked from "../../public/assets/locker/unlocked.svg";
-import "utils/style/toggle.scss";
+import Locked from "../../../../public/assets/locker/locked.svg";
+import UnLocked from "../../../../public/assets/locker/unlocked.svg";
+import "./style.scss";
 
 interface ToggleProps {
   isLocked: boolean;

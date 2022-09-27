@@ -1,8 +1,8 @@
 import React, { KeyboardEventHandler, MouseEventHandler, useEffect, useState } from "react";
 import classNames from "classnames";
 
-import ArrowUpImg from "../../public/assets/arrow_down/arrow_down.png";
-import "utils/style/recordDevice.scss";
+import ArrowUpImg from "../../../../public/assets/arrow_down/arrow_down.png";
+import "./style.scss";
 
 interface RecordDeviceProps {
   clickHandler: MouseEventHandler<HTMLUListElement> | KeyboardEventHandler<HTMLUListElement>;

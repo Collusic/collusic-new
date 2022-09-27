@@ -1,6 +1,6 @@
 import React from "react";
 
-import "../utils/style/Modal.scss";
+import "./style.scss";
 
 type modalProps = {
   showModal: boolean;

@@ -1,9 +1,9 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import Toggle from "components/Toggle";
+import Toggle from "components/atoms/Toggle";
 
 export default {
-  title: "Atoms/Toggle",
+  title: "atoms/Toggle",
   component: Toggle,
   argTypes: {
     isLocked: { control: "boolean" },

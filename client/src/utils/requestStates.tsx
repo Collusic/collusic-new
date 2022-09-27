@@ -1,5 +1,5 @@
 import React from "react";
-import Audio from "../components/Audio";
+import Audio from "../components/atoms/Audio";
 
 export const requestStates = (
   key: number,
