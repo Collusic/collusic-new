@@ -17,10 +17,12 @@ export const Green = Template.bind({});
 Green.args = {
   type: "green",
   isSelected: false,
+  children: "BUTTON",
 };
 
 export const White = Template.bind({});
 White.args = {
   type: "white",
   isSelected: false,
+  children: "BUTTON",
 };

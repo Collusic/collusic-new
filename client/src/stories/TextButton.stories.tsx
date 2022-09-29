@@ -17,4 +17,5 @@ export const Default = Template.bind({});
 Default.args = {
   type: "text",
   isSelected: false,
+  children: "BUTTON",
 };

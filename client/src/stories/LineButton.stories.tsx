@@ -17,10 +17,12 @@ export const Default = Template.bind({});
 Default.args = {
   type: "line",
   isSelected: false,
+  children: "BUTTON",
 };
 
 export const Selected = Template.bind({});
 Selected.args = {
   type: "line",
   isSelected: true,
+  children: "BUTTON",
 };
