@@ -1,9 +1,9 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import SessionMelody from "view/SessionMelody";
+import SessionMelody from "components/blocks/SessionMelody";
 
 export default {
-  title: "Views/SessionMelody",
+  title: "blocks/SessionMelody",
   component: SessionMelody,
   argTypes: {
     melodyType: { control: "text" },
@@ -14,5 +14,5 @@ const Template: ComponentStory<typeof SessionMelody> = (args) => <SessionMelody 
 
 export const Default = Template.bind({});
 Default.args = {
-  melodyType: 4,
+  melodyType: "4",
 };

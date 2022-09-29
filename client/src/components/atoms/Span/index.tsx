@@ -1,6 +1,6 @@
 import React from "react";
 
-import "utils/style/span.scss";
+import "./style.scss";
 
 interface SpanProps {
   children: string;

@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import Span from "components/Span";
+import Span from "components/atoms/Span";
 
 export default {
   title: "Atoms/Span",

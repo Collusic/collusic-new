@@ -1,9 +1,9 @@
 import React, { MouseEventHandler } from "react";
 
-import Button from "components/Button";
-import Span from "components/Span";
-import "utils/style/sessionMelody.scss";
+import Button from "components/atoms/Button";
+import Span from "components/atoms/Span";
 import { MelodyLength } from "types/projectType";
+import "./style.scss";
 
 interface SessionMelodyProps {
   melodyType: MelodyLength;

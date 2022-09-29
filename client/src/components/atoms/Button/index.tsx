@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React, { MouseEventHandler, ReactNode } from "react";
 import classNames from "classnames";
 
