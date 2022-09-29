@@ -1,14 +1,13 @@
 import React from "react";
 import { useRecoilState } from "recoil";
 
-import { modalOpenState } from "../model/signInModel";
-import { SignInViewModel } from "../viewmodel/SignInViewModel";
+import { modalOpenState } from "../../../model/signInModel";
+import { SignInViewModel } from "../../../viewmodel/SignInViewModel";
+import { Modal } from "../../atoms/Modal";
 
-import { Modal } from "../components/Modal";
+import "./style.scss";
 
-import "../utils/style/NavBar.scss";
-
-export function NavBarView() {
+export function NavBar() {
   const [isModalOpen, setIsModalOpen] = useRecoilState(modalOpenState);
 
   return (

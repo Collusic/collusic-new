@@ -1,7 +1,7 @@
 import React from "react";
 import { useSetRecoilState } from "recoil";
 
-import { SignInView } from "../view/SignInView";
+import { SignIn } from "../components/blocks/SignIn";
 import { loginTypeState } from "../model/userModel";
 
 export function SignInViewModel() {
@@ -26,7 +26,7 @@ export function SignInViewModel() {
   };
 
   return (
-    <SignInView
+    <SignIn
       naverClickHandler={naverClickHandler}
       kakaoClickHandler={kakaoClickHandler}
       googleClickHandler={googleClickHandler}

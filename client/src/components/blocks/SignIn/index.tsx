@@ -1,7 +1,7 @@
 import React from "react";
 
-import "../utils/style/login.scss";
-import { LoginButton } from "../components/LoginButton";
+import { LoginButton } from "../../atoms/LoginButton";
+import "./style.scss";
 
 type signInProps = {
   naverClickHandler(): void;
@@ -9,7 +9,7 @@ type signInProps = {
   googleClickHandler(): void;
 };
 
-export function SignInView({ naverClickHandler, kakaoClickHandler, googleClickHandler }: signInProps) {
+export function SignIn({ naverClickHandler, kakaoClickHandler, googleClickHandler }: signInProps) {
   return (
     <div className="login-view">
       <LoginButton

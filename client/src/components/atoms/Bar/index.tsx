@@ -2,8 +2,7 @@ import moment from "moment";
 import React from "react";
 import "moment-duration-format";
 
-import "../utils/style/audio.scss";
-import { stopEventBubbling } from "../utils/eventHandler";
+import { stopEventBubbling } from "../../../utils/eventHandler";
 
 type BarProps = {
   duration: number; // 미디어 파일 총 길이
@@ -11,11 +10,7 @@ type BarProps = {
   onTimeUpdate(num: number): void;
 };
 
-export const Bar: React.FC<BarProps> = ({
-  duration,
-  curTime,
-  onTimeUpdate,
-}) => {
+export const Bar: React.FC<BarProps> = ({ duration, curTime, onTimeUpdate }) => {
   const curPercentage = (curTime / duration) * 100;
 
   const formatDuration = (duration: moment.DurationInputArg1) => {

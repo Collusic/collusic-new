@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-const useAudioPlayer = () => {
+const AudioPlayer = () => {
   const [duration, setDuration] = useState(0);
   const [curTime, setCurTime] = useState(0);
   const [playing, setPlaying] = useState(false);
@@ -49,4 +49,4 @@ const useAudioPlayer = () => {
   };
 };
 
-export default useAudioPlayer;
+export default AudioPlayer;

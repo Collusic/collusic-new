@@ -1,6 +1,6 @@
 import React from "react";
 
-import "../utils/style/loginButton.scss";
+import "./style.scss";
 
 type LoginButtonProps = {
   innerText: string;
