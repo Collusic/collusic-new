@@ -1,5 +1,5 @@
-@import "./color";
-@import "./size";
+@import "utils/style/color";
+@import "utils/style/size";
 
 .App {
   font-family: sans-serif;
@@ -16,6 +16,7 @@
   .song {
     user-select: none;
     margin: 0 20px;
+
     .song__title {
       text-align: left;
       margin: 0;
@@ -63,8 +64,10 @@
     &:focus {
       outline: none;
     }
+
     &:hover {
       cursor: pointer;
+
       svg {
         color: greenyellow;
       }

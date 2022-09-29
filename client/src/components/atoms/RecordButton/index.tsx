@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, MouseEventHandler } from "react";
 import classNames from "classnames";
 
-import MikeImg from "../../public/assets/mike/mike.svg";
-import "utils/style/recordButton.scss";
+import MikeImg from "../../../../public/assets/mike/mike.svg";
+import "./style.scss";
 
 interface RecordButtonProps {
   clickHandler: MouseEventHandler;

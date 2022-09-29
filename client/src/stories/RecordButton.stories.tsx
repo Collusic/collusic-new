@@ -1,9 +1,9 @@
 import { ComponentStory } from "@storybook/react";
 
-import RecordButton from "components/RecordButton";
+import RecordButton from "components/atoms/RecordButton";
 
 export default {
-  title: "Atoms/RecordButton",
+  title: "atoms/RecordButton",
   component: RecordButton,
 };
 
