@@ -4,13 +4,11 @@ import { useLocation } from "react-router-dom";
 
 import { signUpState } from "../model/signUpModel";
 
-import { SignUpView } from "../view/SignUpView";
-import { Modal } from "../components/Modal";
+import { SignUp } from "../components/blocks/SignUp";
+import { Modal } from "../components/atoms/Modal";
 
 import { LOCAL_API } from "../utils/axios";
 import { validateLetter, validateLength } from "../utils/validation";
-
-import "../utils/style/SignUp.scss";
 
 type UserData = {
   responseType?: string;
@@ -48,7 +46,7 @@ export function SignUpViewModel() {
 
   return (
     <Modal showModal={signUp} setShowModal={setSignUp}>
-      <SignUpView profileSrc={profileImageUrl} email={email} signUpEventHandler={signUpEventHandler} />
+      <SignUp profileSrc={profileImageUrl} email={email} signUpEventHandler={signUpEventHandler} />
     </Modal>
   );
 }

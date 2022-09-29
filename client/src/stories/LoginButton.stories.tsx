@@ -1,10 +1,10 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
-import { LoginButton } from "../components/LoginButton";
+import { LoginButton } from "../components/atoms/LoginButton";
 
 export default {
-  title: "Button/LoginButton",
+  title: "atoms/LoginButton",
   component: LoginButton,
   argTypes: {
     innerText: { control: "text" },

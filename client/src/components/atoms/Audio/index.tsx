@@ -1,11 +1,10 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 
-import { Play } from "./Play";
-import { Pause } from "./Pause";
-
-// import useAudioPlayer from "./useAudioPlayer";
-import { Bar } from "./Bar";
+import { Play } from "../PlayButton";
+import { Pause } from "../PauseButton";
+import { Bar } from "../Bar";
+import "./style.scss";
 
 type AudioProps = {
   src: string;
@@ -46,30 +45,17 @@ const Audio: React.FC<AudioProps> = ({ src }) => {
   };
 
   // const { curTime, duration, playing, setPlaying, setClickedTime, audioRef } =
-  //   useAudioPlayer();
+  //   AudioPlayer();
   return (
     <div className="player">
-      <audio
-        ref={audioRef}
-        className="audio"
-        onLoadedData={setAudioData}
-        onTimeUpdate={setAudioTime}
-      >
+      <audio ref={audioRef} className="audio" onLoadedData={setAudioData} onTimeUpdate={setAudioTime}>
         <source src={src} />
         Your browser does not support the <code>audio</code> element.
       </audio>
 
       <div className="controls">
-        {playing ? (
-          <Pause handleClick={() => setPlaying(false)} />
-        ) : (
-          <Play handleClick={() => setPlaying(true)} />
-        )}
-        <Bar
-          curTime={curTime}
-          duration={duration}
-          onTimeUpdate={(time) => setClickedTime(time)}
-        />
+        {playing ? <Pause handleClick={() => setPlaying(false)} /> : <Play handleClick={() => setPlaying(true)} />}
+        <Bar curTime={curTime} duration={duration} onTimeUpdate={(time) => setClickedTime(time)} />
       </div>
     </div>
   );

@@ -2,7 +2,7 @@
 import React, { MouseEventHandler, ReactNode } from "react";
 import classNames from "classnames";
 
-import "utils/style/button.scss";
+import "./style.scss";
 
 type ColorType = "green" | "white" | "text" | "line";
 

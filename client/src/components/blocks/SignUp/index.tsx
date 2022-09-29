@@ -1,5 +1,7 @@
 import React from "react";
 
+import "./style.scss";
+
 type signUpProps = {
   profileSrc: string;
   email: string;
@@ -7,7 +9,7 @@ type signUpProps = {
   signUpEventHandler(e: React.MouseEvent<HTMLButtonElement>): void;
 };
 
-export function SignUpView({ profileSrc, email, signUpEventHandler }: signUpProps) {
+export function SignUp({ profileSrc, email, signUpEventHandler }: signUpProps) {
   return (
     <div className="signup">
       <img className="profile" src={profileSrc} alt="profile" />

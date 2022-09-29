@@ -1,13 +1,13 @@
 import { ComponentStory } from "@storybook/react";
 
-import RecordDevice from "components/RecordDevice";
+import RecordDevice from "components/blocks/RecordDevice";
 
 export default {
-  title: "Atoms/RecordDevice",
+  title: "blocks/RecordDevice",
   component: RecordDevice,
 };
 
-const Template: ComponentStory<typeof RecordDevice> = () => <RecordDevice />;
+const Template: ComponentStory<typeof RecordDevice> = (args) => <RecordDevice {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {

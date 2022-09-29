@@ -1,9 +1,9 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import Button from "components/Button";
+import Button from "components/atoms/Button";
 
 export default {
-  title: "Atoms/Button",
+  title: "atoms/Button",
   component: Button,
   argTypes: {
     type: { control: "text" },
