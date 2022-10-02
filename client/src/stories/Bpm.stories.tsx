@@ -7,6 +7,9 @@ export default {
   component: Bpm,
 };
 
-const Template: ComponentStory<typeof Bpm> = () => <Bpm />;
+const Template: ComponentStory<typeof Bpm> = (args) => <Bpm {...args} />;
 
 export const Default = Template.bind({});
+Default.args = {
+  bpm: 60,
+};
