@@ -1,0 +1,60 @@
+@import "utils/style/color";
+@import "utils/style/size";
+
+.green {
+  width: 140px;
+  height: 56px;
+  padding: 16px 36px;
+  border-radius: 28px;
+  font-size: $FONT_SMALL;
+  font-weight: bold;
+  background-color: $Color_Main;
+
+  &:hover {
+    background-color: $Color_Main_Hover;
+
+  }
+}
+
+.white {
+  width: 140px;
+  height: 56px;
+  padding: 16px 36px;
+  border-radius: 28px;
+  font-size: $FONT_SMALL;
+  font-weight: bold;
+  background-color: $Color_Sub_White;
+
+  &:hover {
+    background-color: $Color_White_Hover;
+  }
+}
+
+.text {
+  width: 102px;
+  height: 24px;
+  background-color: rgba(255, 255, 255, 0);
+  font-size: $FONT_SMALL;
+  font-weight: bold;
+  color: $Font_Main;
+
+  &:hover {
+    color: $Color_Main;
+  }
+}
+
+.line {
+  height: 40px;
+  padding: 8px 20px;
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 24px;
+  border: solid 1px #999;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #999;
+
+  &.selected {
+    color: $Font_Main;
+    border-color: $Color_Sub_White;
+  }
+}

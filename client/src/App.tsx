@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import { NavBarView } from "./view/NavBarView";
+import { NavBar } from "./components/blocks/NavBar";
 
 import { SignInViewModel } from "./viewmodel/SignInViewModel";
 import { StartPageView } from "./view/StartPageView";
@@ -12,7 +12,7 @@ import { ProjectListView } from "./view/ProjectListView";
 function App() {
   return (
     <BrowserRouter>
-      <NavBarView />
+      <NavBar />
       <Routes>
         <Route path="/signin" element={<SignInViewModel />} />
         <Route path="/signup" element={<SignUpViewModel />} />
