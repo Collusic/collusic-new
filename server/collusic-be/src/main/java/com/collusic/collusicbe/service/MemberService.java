@@ -12,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -35,7 +34,7 @@ public class MemberService {
         }
     }
 
-    public Map<String, String> uploadProfile(String nickname, @ModelAttribute MultipartFile multipartFile) throws IOException {
+    public String uploadProfile(String nickname, @ModelAttribute MultipartFile multipartFile) throws IOException {
         return s3Service.upload(nickname, multipartFile);
     }
 
@@ -49,5 +48,9 @@ public class MemberService {
 
     public boolean checkProfileValidation(MultipartFile multipartFile) {
         return ProfileContentType.isImageType(multipartFile.getContentType()) && multipartFile.getSize() < 20_000_000;
+    }
+
+    public String getProfileUrlByNickname(String nickname, String type) {
+        return s3Service.getPath(type) + "/" + memberRepository.findByNickname(nickname).orElseThrow().getProfileImageUrl();
     }
 }
