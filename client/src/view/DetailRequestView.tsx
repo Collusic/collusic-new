@@ -4,7 +4,7 @@ import "../utils/style/detailRequest.scss";
 import type { RequestProjectType } from "../types/requestProjectType";
 import type { User } from "../types/userType";
 import { requestStates } from "../utils/requestStates";
-import Audio from "../components/atoms/Audio";
+import Audio from "../components/blocks/Audio";
 
 type DetailRequestProps = User & RequestProjectType;
 

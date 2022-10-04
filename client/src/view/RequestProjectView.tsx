@@ -2,7 +2,7 @@ import React from "react";
 import "../utils/style/RequestProject.scss";
 import type { RequestProjectType } from "../types/requestProjectType";
 import type { User } from "../types/userType";
-import Audio from "../components/atoms/Audio";
+import Audio from "../components/blocks/Audio";
 
 type RequestProjectProps = User & RequestProjectType;
 type redirectHandler = {
