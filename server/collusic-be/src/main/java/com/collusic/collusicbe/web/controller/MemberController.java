@@ -8,7 +8,9 @@ import com.collusic.collusicbe.web.auth.OAuth2LoginResponseType;
 import com.collusic.collusicbe.web.controller.dto.*;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +20,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Map;
 
 import static com.collusic.collusicbe.util.JWTUtil.REFRESH_TIME;
 
@@ -59,7 +60,7 @@ public class MemberController {
 
     @Operation(summary = "회원 프로필 이미지 업로드", description = "회원의 프로필 이미지를 업로드한다. 기존에 존재하는 경우 덮어씀")
     @PostMapping("/members/{nickname}/profile")
-    public ResponseEntity uploadMemberProfile(@PathVariable String nickname, @RequestParam("image") MultipartFile multipartFile) throws IOException {
+    public ResponseEntity<String> uploadMemberProfile(@PathVariable String nickname, @RequestParam("image") MultipartFile multipartFile) throws IOException {
         if (multipartFile.isEmpty()) {
             return ResponseEntity.badRequest().body("선택된 파일이 없습니다.");
         }
@@ -67,17 +68,24 @@ public class MemberController {
             return ResponseEntity.badRequest().body("유효하지 않은 이미지 파일입니다. 확장자 및 용량을 확인하세요.");
         }
         Member loginMember = memberService.findByNickname(nickname).orElseThrow(RuntimeException::new);
-        Map<String, String> profileUrls = memberService.uploadProfile(nickname, multipartFile);
+        String profileFileName = memberService.uploadProfile(nickname, multipartFile);
 
-        memberService.updateProfilePath(loginMember, profileUrls.get("originalProfileUrl")); // TODO: member 엔티티에 resized profile url 추가
+        memberService.updateProfilePath(loginMember, profileFileName);
 
-        ProfileUploadResponseDto responseDto = new ProfileUploadResponseDto(
-                profileUrls.get("originalProfileUrl"),
-                profileUrls.get("resizedProfileUrl")
-        );
-
-        return ResponseEntity.ok(responseDto);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
+
+    @Operation
+    @GetMapping("/members/{nickname}/profile")
+    public ResponseEntity<ProfileUrlResponseDto> getProfileUrl(@PathVariable String nickname, @RequestParam("type") String type) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        ProfileUrlResponseDto responseDto = new ProfileUrlResponseDto(memberService.getProfileUrlByNickname(nickname, type));
+        return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);
+    }
+
 
     private Cookie setCookieWithRefreshToken(String refreshToken) {
         Cookie cookie = new Cookie("refreshToken", refreshToken);
