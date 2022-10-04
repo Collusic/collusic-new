@@ -59,7 +59,7 @@ public class MemberController {
     }
 
     @Operation(summary = "회원 프로필 이미지 업로드", description = "회원의 프로필 이미지를 업로드한다. 기존에 존재하는 경우 덮어씀")
-    @PostMapping("/members/{nickname}/profile")
+    @PostMapping("/members/profile")
     public ResponseEntity<String> uploadMemberProfile(@PathVariable String nickname, @RequestParam("image") MultipartFile multipartFile) throws IOException {
         if (multipartFile.isEmpty()) {
             return ResponseEntity.badRequest().body("선택된 파일이 없습니다.");
