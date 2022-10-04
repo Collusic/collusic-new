@@ -1,6 +1,5 @@
-import { atom, selector, selectorFamily } from "recoil";
+import { atom, selector } from "recoil";
 import { ContributeProject } from "../types/contributeProjectType";
-import { RequestProjectType } from "../types/requestProjectType";
 import { User } from "../types/userType";
 import { TEST_API } from "../utils/axios";
 

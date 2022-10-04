@@ -22,7 +22,7 @@ export function NavBar() {
           <ul>
             <li>
               <a href="/">
-                <img src="../../assets/alarm/alarm.png" alt="alarm" />
+                <img src="../../../../public" alt="alarm" />
               </a>
             </li>
             <li className="signin">
