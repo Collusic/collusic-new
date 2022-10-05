@@ -7,7 +7,7 @@ import { signUpState } from "../model/signUpModel";
 import { SignUp } from "../components/blocks/SignUp";
 import { Modal } from "../components/atoms/Modal";
 
-import { LOCAL_API } from "../utils/axios";
+import { API } from "../utils/axios";
 import { validateLetter, validateLength } from "../utils/validation";
 
 type UserData = {
@@ -33,7 +33,7 @@ export function SignUpViewModel() {
       return;
     }
 
-    LOCAL_API.get(`/members/${nickName}`)
+    API.get(`/members/${nickName}`)
       .then(() => {
         const formData = new FormData();
         formData.append("authId", authId);
@@ -42,7 +42,7 @@ export function SignUpViewModel() {
         formData.append("profileImageUrl", profileImageUrl);
         formData.append("snsType", snsType);
 
-        LOCAL_API.post("/members", formData)
+        API.post("/members", formData)
           .then(() => {
             alert("회원가입 완료");
             navigate("/");
