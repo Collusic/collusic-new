@@ -76,14 +76,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
 
     private String reissueAccessToken(HttpServletRequest request, HttpServletResponse response) {
 
-        Cookie[] cookies = request.getCookies();
-
-        Cookie cookie = Arrays.stream(cookies)
-                              .filter(c -> c.getName().equals("refreshToken"))
-                              .findFirst()
-                              .orElseThrow(NoSuchElementException::new); // TODO : NoSuch에 대한 예외 처리하기
-
-        String refreshToken = cookie.getValue();
+        String refreshToken = getRefreshToken(request);
 
         try {
             JWTUtil.verify(refreshToken);
@@ -99,5 +92,18 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
             throw e;
         }
 
+    }
+
+    private String getRefreshToken(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+
+        Cookie cookie = Arrays.stream(cookies)
+                              .filter(c -> c.getName().equals("refreshToken"))
+                              .findFirst()
+                              .orElseThrow(NoSuchElementException::new); // TODO : NoSuch에 대한 예외 처리하기
+
+        String refreshToken = cookie.getValue();
+
+        return refreshToken;
     }
 }
