@@ -28,8 +28,7 @@ public class TokenService {
         String accessToken = JWTUtil.createAccessToken(email, role);
         String refreshToken = JWTUtil.createRefreshToken(email, role);
 
-        long time = 30L;
-        redisRepository.save(refreshToken, remoteAddress, Duration.ofSeconds(time));
+        redisRepository.save(refreshToken, remoteAddress, Duration.ofSeconds(REFRESH_TIME));
 
         return new TokenResponseDto(accessToken, refreshToken);
     }
