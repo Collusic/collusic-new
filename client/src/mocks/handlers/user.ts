@@ -7,15 +7,14 @@ export const signUp = rest.get("http://localhost:5000/oauth2/login/:provider", (
       responseType: "SIGN_UP",
         attributes: {
           responseType: "SIGN_UP",
-          email: "singco@gmail.com",
-          authId: "singco",
+          email: "collusic@gmail.com",
+          authId: "collusic",
           profileImageUrl: "../../assets/signin/default_profile@3x.png",
-          snsType: "kakao",
+          snsType: req.params.provider,
         }
       }
     ),
-  ),
-);
+  ));
 
 export const signIn = rest.post("http://localhost:5000/members", (req, res, ctx) =>
   res(
