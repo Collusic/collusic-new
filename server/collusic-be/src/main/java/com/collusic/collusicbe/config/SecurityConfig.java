@@ -26,7 +26,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JWTAuthenticationProvider jwtAuthenticationProvider;
     private final TokenService tokenService;
-    private final ObjectMapper objectMapper;
     private final ExceptionHandlerFilter exceptionHandlerFilter;
 
     @Override
@@ -40,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                                      .antMatchers("/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs").permitAll()
                                                      .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                                                      .anyRequest().authenticated())
-                .addFilterAt(new JWTAuthenticationFilter(authenticationManager(), tokenService, objectMapper), BasicAuthenticationFilter.class)
+                .addFilterAt(new JWTAuthenticationFilter(authenticationManager(), tokenService), BasicAuthenticationFilter.class)
                 .addFilterBefore(exceptionHandlerFilter, JWTAuthenticationFilter.class);
     }
 

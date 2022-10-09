@@ -32,13 +32,10 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
 
     private final TokenService tokenService;
 
-    private final ObjectMapper objectMapper;
-
-    public JWTAuthenticationFilter(AuthenticationManager authenticationManager, TokenService tokenService, ObjectMapper objectMapper) {
+    public JWTAuthenticationFilter(AuthenticationManager authenticationManager, TokenService tokenService) {
         super(authenticationManager);
         this.authenticationManager = authenticationManager;
         this.tokenService = tokenService;
-        this.objectMapper = objectMapper;
     }
 
     @Override
