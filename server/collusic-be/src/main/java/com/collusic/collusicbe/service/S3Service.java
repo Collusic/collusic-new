@@ -2,6 +2,7 @@ package com.collusic.collusicbe.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,11 +23,34 @@ public class S3Service {
 
     private final AmazonS3 s3Client;
 
+    private static final String IMAGE_DIR = "profiles";
+    private static final String RESIZED_IMAGE_DIR = "resized-profiles";
+
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    public String upload(@ModelAttribute MultipartFile multiparFile, String dirName) throws IOException {
-        File uploadFile = convert(multiparFile)
+    @Value("${cloud.aws.cloudfront.domain}")
+    private String cloudFrontDomain;
+
+    public String upload(String nickname, @ModelAttribute MultipartFile multipartFile) throws IOException {
+        StringBuilder path = new StringBuilder();
+        path.append(IMAGE_DIR)
+            .append("/")
+            .append(nickname)
+            .append(".png");
+
+        ObjectMetadata objectMetadata = new ObjectMetadata();
+        objectMetadata.setContentType(multipartFile.getContentType());
+        objectMetadata.setContentLength(multipartFile.getSize());
+
+        s3Client.putObject(new PutObjectRequest(bucket, path.toString(), multipartFile.getInputStream(), objectMetadata)
+                .withCannedAcl(CannedAccessControlList.PublicRead));
+
+        return cloudFrontDomain + path;
+    }
+
+    public String upload(@ModelAttribute MultipartFile multipartFile, String dirName) throws IOException {
+        File uploadFile = convert(multipartFile)
                 .orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File로 전환이 실패했습니다."));
 
         return upload(uploadFile, dirName);
@@ -39,8 +63,8 @@ public class S3Service {
         return uploadImageUrl;
     }
 
-    public String update(@ModelAttribute MultipartFile multiparFile, String dirName, String savedFileName) throws IOException {
-        File uploadFile = convert(multiparFile)
+    public String update(@ModelAttribute MultipartFile multipartFile, String dirName, String savedFileName) throws IOException {
+        File uploadFile = convert(multipartFile)
                 .orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File로 전환이 실패했습니다."));
 
         return update(uploadFile, dirName, savedFileName);
@@ -48,7 +72,7 @@ public class S3Service {
 
     private String update(File uploadFile, String dirName, String savedFileName) {
         String fileName = dirName + "/" + uploadFile.getName();
-        if(isExist(savedFileName)) {
+        if (isExist(savedFileName)) {
             s3Client.deleteObject(bucket, savedFileName);
         }
         String uploadImageUrl = putS3(uploadFile, fileName);
@@ -82,5 +106,13 @@ public class S3Service {
 
     private boolean isExist(String fileName) {
         return s3Client.doesObjectExist(bucket, fileName);
+    }
+
+    public String getPath(String type) {
+        String path = cloudFrontDomain + "/";
+        if (type.equals("resized")) {
+            return path + RESIZED_IMAGE_DIR;
+        }
+        return path + IMAGE_DIR;
     }
 }

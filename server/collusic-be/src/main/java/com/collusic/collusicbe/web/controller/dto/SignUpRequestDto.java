@@ -26,7 +26,7 @@ public class SignUpRequestDto {
 
     @NotBlank
     @Pattern(regexp = "^[ㄱ-ㅎ가-힣a-z0-9A-Z]*$", message = "닉네임에 특수문자를 포함할 수 없습니다.")
-    @Size(min = 2, max = 24, message = "닉네임은 2 ~ 24자 이내여야 합니다.")
+    @Size(min = 2, max = 24, message = "닉네임은 2 ~ 12자 이내여야 합니다.")
     private String nickName;
 
     @NotBlank
