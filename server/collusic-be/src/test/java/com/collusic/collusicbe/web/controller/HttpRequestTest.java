@@ -32,21 +32,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(controllers = MemberController.class,
         excludeFilters = {
-        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class)
-})
-//@AutoConfigureMockMvc(addFilters = false)
-//@SpringBootTest
+                @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class)
+        })
 public class HttpRequestTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
-    private JpaMetamodelMappingContext jpaMetamodelMappingContext;
-
 //    @MockBean
 //    private JWTAuthenticationProvider jwtAuthenticationProvider;
-//
+
 //    @MockBean
 //    private JWTAuthenticationFilter jwtAuthenticationFilter; // 문제가 발견된 부분 java.lang.IllegalArgumentException: Attribute name must not be null
 
