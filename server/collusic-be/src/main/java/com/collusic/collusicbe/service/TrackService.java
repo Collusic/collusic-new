@@ -15,6 +15,18 @@ public class TrackService {
     private final TrackRepository trackRepository;
 
     public Track create(Member member, Project project, TrackCreateRequestDto trackData) {
-        return null;
+        if (project.isTrackFull()) {
+            throw new RuntimeException();
+        }
+        Track track = Track.builder()
+                           .creator(member)
+                           .project(project)
+                           .trackName(trackData.getTrackName())
+                           .trackTag(trackData.getTrackTag())
+                           .measure(trackData.getMeasure())
+                           .volume(trackData.getVolume())
+                           .order(project.getNextTrackOrder())
+                           .build();
+        return trackRepository.save(track);
     }
 }

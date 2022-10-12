@@ -37,6 +37,7 @@ public class TrackServiceTest {
 
         testProject = Project.builder()
                              .id(1L)
+                             .tracks(new ArrayList<>())
                              .build();
     }
 
@@ -51,6 +52,8 @@ public class TrackServiceTest {
                                                                 .volume(50)
                                                                 .build();
         Track track = Track.builder()
+                           .creator(testMember)
+                           .project(testProject)
                            .trackName("test track name")
                            .trackTag(TrackTag.PIANO)
                            .editable(true)

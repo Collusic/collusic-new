@@ -51,7 +51,7 @@ public class Track extends BaseTimeEntity {
     private int order;
 
     @Builder
-    public Track(String trackName, TrackTag trackTag, boolean editable, Member creator, Project project, Measure measure, int volume) {
+    public Track(String trackName, TrackTag trackTag, boolean editable, Member creator, Project project, Measure measure, int volume, int order) {
         this.trackName = trackName;
         this.trackTag = trackTag;
         this.editable = editable;
@@ -59,5 +59,6 @@ public class Track extends BaseTimeEntity {
         this.project = project;
         this.measure = measure;
         this.volume = volume;
+        this.order = order;
     }
 }

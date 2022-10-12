@@ -51,4 +51,12 @@ public class Project extends BaseTimeEntity {
         this.projectState = projectState;
         this.tracks = tracks;
     }
+
+    public boolean isTrackFull() {
+        return tracks.size() == 10;
+    }
+
+    public int getNextTrackOrder() {
+        return tracks.size();
+    }
 }
