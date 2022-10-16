@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { ComponentStory } from "@storybook/react";
 
 import Bpm from "components/blocks/Bpm";
 
@@ -11,5 +11,7 @@ const Template: ComponentStory<typeof Bpm> = (args) => <Bpm {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  bpm: 60,
+  inputHandler: (e) => {
+    console.log((e.target as HTMLInputElement).value);
+  },
 };
