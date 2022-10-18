@@ -5,15 +5,15 @@ import ArrowUpImg from "../../../../public/assets/arrow_down/arrow_down.png";
 import "./style.scss";
 
 interface RecordDeviceProps {
-  clickHandler: MouseEventHandler<HTMLUListElement> | KeyboardEventHandler<HTMLUListElement>;
+  handleDeviceClick: MouseEventHandler<HTMLUListElement> | KeyboardEventHandler<HTMLUListElement>;
 }
 
-function RecordDevice({ clickHandler }: RecordDeviceProps) {
+function RecordDevice({ handleDeviceClick }: RecordDeviceProps) {
   const [deviceList, setDeviceList] = useState<MediaDeviceInfo[]>([]);
   const [isOpenDeviceList, setIsOpenDeviceList] = useState(false);
   const [selectedDevice] = useState("입력장치를 선택해주세요.");
 
-  const buttonClickHandler = () => {
+  const handleBtnClick = () => {
     if (isOpenDeviceList === false) setIsOpenDeviceList(true);
     else setIsOpenDeviceList(false);
   };
@@ -40,14 +40,14 @@ function RecordDevice({ clickHandler }: RecordDeviceProps) {
         <button
           type="button"
           className={classNames({ "rotate-button": isOpenDeviceList })}
-          onClick={buttonClickHandler}
+          onClick={handleBtnClick}
         >
           <img src={ArrowUpImg} alt="record device" />
         </button>
       </div>
       <div className={classNames("device-list", { "hidden-device-list": !isOpenDeviceList })}>
         <div className="scroll-box">
-          <ul onClick={clickHandler as MouseEventHandler} onKeyDown={clickHandler as KeyboardEventHandler}>
+          <ul onClick={handleDeviceClick as MouseEventHandler} onKeyDown={handleDeviceClick as KeyboardEventHandler}>
             {deviceList.map((device) => (
               <li key={device.deviceId}>{device.label}</li>
             ))}

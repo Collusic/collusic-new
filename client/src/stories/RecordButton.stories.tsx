@@ -11,5 +11,5 @@ const Template: ComponentStory<typeof RecordButton> = (args) => <RecordButton {.
 
 export const Default = Template.bind({});
 Default.args = {
-  clickHandler: () => {},
+  handleBtnClickEvent: () => {},
 };
