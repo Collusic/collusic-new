@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import javax.validation.ConstraintViolationException;
+
 @RestControllerAdvice
 public class ExceptionControllerAdvice {
 
@@ -28,5 +30,17 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(DuplicatedNicknameException.class)
     public ExceptionInfoResponse duplicatedNicknameExceptionHandler(DuplicatedNicknameException e) {
         return new ExceptionInfoResponse(HttpStatus.BAD_REQUEST.getReasonPhrase(), e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ConstraintViolationException.class)
+    public Object constraintViolationExceptionHandler(Exception e) {
+        return e.getMessage();
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({IllegalArgumentException.class, IllegalStateException.class})
+    public Object illegalExceptionHandler(Exception e) {
+        return e.getMessage();
     }
 }

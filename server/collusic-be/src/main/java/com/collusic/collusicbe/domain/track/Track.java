@@ -48,10 +48,10 @@ public class Track extends BaseTimeEntity {
     private int volume;
 
     @Column(nullable = false)
-    private int order;
+    private int orderInProject;
 
     @Builder
-    public Track(String trackName, TrackTag trackTag, boolean editable, Member creator, Project project, Measure measure, int volume, int order) {
+    public Track(String trackName, TrackTag trackTag, boolean editable, Member creator, Project project, Measure measure, int volume, int orderInProject) {
         this.trackName = trackName;
         this.trackTag = trackTag;
         this.editable = editable;
@@ -59,6 +59,7 @@ public class Track extends BaseTimeEntity {
         this.project = project;
         this.measure = measure;
         this.volume = volume;
-        this.order = order;
+        this.orderInProject = orderInProject;
+        this.fileUrl = "empty"; // TODO : 음원 파일 데이터 시 추가 처리할 것
     }
 }

@@ -1,8 +1,8 @@
 package com.collusic.collusicbe.acceptanceTest;
 
 import com.collusic.collusicbe.domain.track.TrackRepository;
-import com.collusic.collusicbe.domain.track.TrackTag;
 import com.collusic.collusicbe.web.controller.dto.TrackCreateRequestDto;
+import com.collusic.collusicbe.web.controller.dto.TrackCreateResponseDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +23,13 @@ public class TrackAcceptanceTest extends AbstractAcceptanceTest {
         // given
         TrackCreateRequestDto requestDto = TrackCreateRequestDto.builder()
                                                                 .trackName("test track name")
-                                                                .trackTag(TrackTag.valueOf("PIANO"))
+                                                                .trackTag("피아노")
                                                                 .editable(true)
                                                                 .volume(50)
                                                                 .build();
 
         // when
-        ResponseEntity<Long> response = template().postForEntity("/projects/1/tracks", requestEntityWithToken(requestDto), Long.class);
+        ResponseEntity<TrackCreateResponseDto> response = template().postForEntity("/projects/1/tracks", requestEntityWithToken(requestDto), TrackCreateResponseDto.class);
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
@@ -41,13 +41,13 @@ public class TrackAcceptanceTest extends AbstractAcceptanceTest {
         // given
         TrackCreateRequestDto requestDto = TrackCreateRequestDto.builder()
                                                                 .trackName("test track name")
-                                                                .trackTag(TrackTag.valueOf("PIANO"))
+                                                                .trackTag("피아노")
                                                                 .editable(true)
                                                                 .volume(50)
                                                                 .build();
 
         // when
-        ResponseEntity<Long> response = template().postForEntity("/projects/1/tracks", requestEntity(requestDto), Long.class);
+        ResponseEntity<TrackCreateResponseDto> response = template().postForEntity("/projects/1/tracks", requestEntity(requestDto), TrackCreateResponseDto.class);
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
@@ -57,27 +57,28 @@ public class TrackAcceptanceTest extends AbstractAcceptanceTest {
     @DisplayName("트랙 생성 테스트 - 필수 데이터가 누락된 요청인 경우 BAD_REQUEST(400)으로 응답")
     void testBadRequestCreatingTrack() {
         // given
-        TrackCreateRequestDto emptyDto = new TrackCreateRequestDto();
+        TrackCreateRequestDto emptyDto = TrackCreateRequestDto.builder()
+                                                              .build();
 
         // when
-        ResponseEntity<Long> response = template().postForEntity("/projects/1/tracks", requestEntityWithToken(emptyDto), Long.class);
+        ResponseEntity<TrackCreateResponseDto> response = template().postForEntity("/projects/1/tracks", requestEntityWithToken(emptyDto), TrackCreateResponseDto.class);
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
     @Test
-    @DisplayName("트랙 생성 테스트 - 프로젝트에 더이상 트랙을 등록할 수 없을 때의 요청의 경우 FORBIDDEN(403)으로 응답")
+    @DisplayName("트랙 생성 테스트 - 프로젝트에 더이상 트랙을 등록할 수 없을 때의 요청의 경우 BAD_REQUEST(400)으로 응답")
     void testForbiddenCreatingTrack() {
         // given
         TrackCreateRequestDto requestDto = TrackCreateRequestDto.builder()
                                                                 .trackName("test track name")
-                                                                .trackTag(TrackTag.valueOf("PIANO"))
+                                                                .trackTag("피아노")
                                                                 .editable(true)
                                                                 .volume(50)
                                                                 .build();
         // when
-        ResponseEntity<Long> response = template().postForEntity("/projects/1/tracks", requestEntityWithToken(requestDto), Long.class);
+        ResponseEntity<TrackCreateResponseDto> response = template().postForEntity("/projects/1/tracks", requestEntityWithToken(requestDto), TrackCreateResponseDto.class);
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);

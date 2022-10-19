@@ -16,7 +16,7 @@ public class TrackService {
 
     public Track create(Member member, Project project, TrackCreateRequestDto trackData) {
         if (project.isTrackFull()) {
-            throw new RuntimeException();
+            throw new IllegalStateException();
         }
         Track track = Track.builder()
                            .creator(member)
@@ -25,7 +25,7 @@ public class TrackService {
                            .trackTag(trackData.getTrackTag())
                            .measure(trackData.getMeasure())
                            .volume(trackData.getVolume())
-                           .order(project.getNextTrackOrder())
+                           .orderInProject(project.getNextTrackOrder())
                            .build();
         return trackRepository.save(track);
     }

@@ -47,7 +47,7 @@ public class TrackServiceTest {
         // given
         TrackCreateRequestDto requestDto = TrackCreateRequestDto.builder()
                                                                 .trackName("test track name")
-                                                                .trackTag(TrackTag.valueOf("PIANO"))
+                                                                .trackTag("피아노")
                                                                 .editable(true)
                                                                 .volume(50)
                                                                 .build();
@@ -74,12 +74,12 @@ public class TrackServiceTest {
     }
 
     @Test
-    @DisplayName("트랙 생성 테스트 - 프로젝트에 이미 10개의 트랙이 포함되어 있는 경우 생성 실패")
+    @DisplayName("트랙 생성 테스트 - 프로젝트에 이미 10개의 트랙이 포함되어 있는 경우 생성 실패(throw IllegalStateException)")
     void testCreateTrack_when_already_over_size_then_throw_exception() {
         // given
         TrackCreateRequestDto requestDto = TrackCreateRequestDto.builder()
                                                                 .trackName("test track name")
-                                                                .trackTag(TrackTag.valueOf("PIANO"))
+                                                                .trackTag("피아노")
                                                                 .editable(true)
                                                                 .volume(50)
                                                                 .build();
@@ -94,6 +94,6 @@ public class TrackServiceTest {
                                               .build();
 
         // then
-        assertThrows(RuntimeException.class, () -> trackService.create(testMember, projectWithFullTrack, requestDto));
+        assertThrows(IllegalStateException.class, () -> trackService.create(testMember, projectWithFullTrack, requestDto));
     }
 }
