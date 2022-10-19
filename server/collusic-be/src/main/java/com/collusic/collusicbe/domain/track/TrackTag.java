@@ -1,12 +1,13 @@
 package com.collusic.collusicbe.domain.track;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-@JsonFormat(shape = JsonFormat.Shape.OBJECT)
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 @Getter
 @RequiredArgsConstructor
 public enum TrackTag {
@@ -21,10 +22,13 @@ public enum TrackTag {
     MARACAS("마라카스"),
     ETC("etc");
 
-    private final String name;
+    private static final Map<String, TrackTag> stringToEnum =
+            Stream.of(values()).collect(Collectors.toMap(x -> x.label, x -> x));
 
-    @JsonCreator
-    public static TrackTag fromJson(@JsonProperty("key") String name) {
-        return valueOf(name);
+    @JsonValue
+    private final String label;
+
+    public static TrackTag valueOfLabel(String label) {
+        return stringToEnum.get(label);
     }
 }
