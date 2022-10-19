@@ -12,7 +12,7 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class OAuth2ProviderClientManagerTest {
@@ -35,7 +35,7 @@ class OAuth2ProviderClientManagerTest {
     public void getClientService_provider_GOOGLE_returnGoogleClientService() {
         String provider = "google";
 
-        doReturn(googleClientService).when(oAuth2ProviderClientManager).getClientService(provider);
+        when(oAuth2ProviderClientManager.getClientService(provider)).thenReturn(googleClientService);
 
         assertThat(oAuth2ProviderClientManager.getClientService(provider)).isInstanceOf(GoogleClientService.class);
     }
@@ -45,7 +45,7 @@ class OAuth2ProviderClientManagerTest {
     public void getClientService_provider_KAKAO_returnKakaoClientService() {
         String provider = "kakao";
 
-        doReturn(kakaoClientService).when(oAuth2ProviderClientManager).getClientService(provider);
+        when(oAuth2ProviderClientManager.getClientService(provider)).thenReturn(kakaoClientService);
 
         assertThat(oAuth2ProviderClientManager.getClientService(provider)).isInstanceOf(KakaoClientService.class);
     }
@@ -55,9 +55,8 @@ class OAuth2ProviderClientManagerTest {
     public void getClientService_provider_NAVER_returnNaverClientService() {
         String provider = "naver";
 
-        doReturn(naverClientService).when(oAuth2ProviderClientManager).getClientService(provider);
+        when(oAuth2ProviderClientManager.getClientService(provider)).thenReturn(naverClientService);
 
         assertThat(oAuth2ProviderClientManager.getClientService(provider)).isInstanceOf(NaverClientService.class);
     }
-
 }
