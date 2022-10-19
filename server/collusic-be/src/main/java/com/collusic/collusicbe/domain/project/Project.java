@@ -42,6 +42,8 @@ public class Project extends BaseTimeEntity {
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<Track> tracks;
 
+    private static final int MAX_TRACK_CAPACITY = 10;
+
     @Builder
     public Project(Long id, String projectName, int bpm, String fileUrl, State projectState, List<Track> tracks) {
         this.id = id;
@@ -53,7 +55,7 @@ public class Project extends BaseTimeEntity {
     }
 
     public boolean isTrackFull() {
-        return tracks.size() == 10;
+        return tracks.size() == MAX_TRACK_CAPACITY;
     }
 
     public int getNextTrackOrder() {
