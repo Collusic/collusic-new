@@ -3,6 +3,7 @@ package com.collusic.collusicbe.global.exception.advice;
 import com.collusic.collusicbe.global.exception.DuplicatedNicknameException;
 import com.collusic.collusicbe.global.exception.ExceptionInfoResponse;
 import com.collusic.collusicbe.global.exception.ExceptionResponse;
+import com.collusic.collusicbe.global.exception.UnAuthorizedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -30,6 +31,12 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(DuplicatedNicknameException.class)
     public ExceptionInfoResponse duplicatedNicknameExceptionHandler(DuplicatedNicknameException e) {
         return new ExceptionInfoResponse(HttpStatus.BAD_REQUEST.getReasonPhrase(), e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(UnAuthorizedException.class)
+    public ExceptionInfoResponse unAuthorizedExceptionHandler(UnAuthorizedException e) {
+        return new ExceptionInfoResponse(HttpStatus.UNAUTHORIZED.getReasonPhrase(), e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

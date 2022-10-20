@@ -3,6 +3,7 @@ package com.collusic.collusicbe.config;
 import com.collusic.collusicbe.config.auth.ExceptionHandlerFilter;
 import com.collusic.collusicbe.config.auth.JWTAuthenticationFilter;
 import com.collusic.collusicbe.config.auth.JWTAuthenticationProvider;
+import com.collusic.collusicbe.config.auth.JwtAuthenticationEntryPoint;
 import com.collusic.collusicbe.service.TokenService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,8 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -25,6 +28,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JWTAuthenticationProvider jwtAuthenticationProvider;
+    private final AuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final TokenService tokenService;
     private final ObjectMapper objectMapper;
     private final ExceptionHandlerFilter exceptionHandlerFilter;
@@ -40,6 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                                      .antMatchers("/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs").permitAll()
                                                      .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                                                      .anyRequest().authenticated())
+                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
                 .addFilterAt(new JWTAuthenticationFilter(authenticationManager(), tokenService, objectMapper), BasicAuthenticationFilter.class)
                 .addFilterBefore(exceptionHandlerFilter, JWTAuthenticationFilter.class);
     }

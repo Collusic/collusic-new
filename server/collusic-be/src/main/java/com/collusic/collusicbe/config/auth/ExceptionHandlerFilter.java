@@ -1,6 +1,7 @@
 package com.collusic.collusicbe.config.auth;
 
 import com.collusic.collusicbe.global.exception.ExceptionInfoResponse;
+import com.collusic.collusicbe.global.exception.UnAuthorizedException;
 import com.collusic.collusicbe.global.exception.jwt.AbnormalAccessException;
 import com.collusic.collusicbe.global.exception.jwt.ExpiredJwtException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,7 +28,7 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
 
         try {
             filterChain.doFilter(request, response);
-        } catch (ExpiredJwtException | AbnormalAccessException | EntityNotFoundException e) {
+        } catch (ExpiredJwtException | AbnormalAccessException | EntityNotFoundException | UnAuthorizedException e) {
             sendErrorResponse(HttpStatus.UNAUTHORIZED.value(), response, e);
         }
     }
