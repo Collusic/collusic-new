@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -36,19 +34,7 @@ public class GoogleClientService implements OAuth2ClientService {
 
     @Override
     public OAuth2Response requestLogin(Map<String, Object> authCode) {
-        Map<String, Object> body = new HashMap<>();
-
-        body.put("code", authCode.get("code"));
-        body.put("grant_type", grantType);
-        body.put("client_id", clientId);
-        body.put("redirect_uri", redirectUri);
-        body.put("client_secret", clientSecret);
-
-        String parameterString = body.entrySet().stream()
-                                       .map(x -> x.getKey() + "=" + x.getValue())
-                                       .collect(Collectors.joining("&"));
-
-        GoogleTokenResponse googleTokenResponse = googleAccessTokenClient.requestGoogleAccessToken(CONTENT_TYPE, parameterString);
+        GoogleTokenResponse googleTokenResponse = googleAccessTokenClient.requestGoogleAccessToken(CONTENT_TYPE, grantType, clientId, redirectUri, (String) authCode.get("code"), clientSecret);
         return googleProfileClient.requestGoogleProfile("Bearer " + googleTokenResponse.getAccessToken());
     }
 }
