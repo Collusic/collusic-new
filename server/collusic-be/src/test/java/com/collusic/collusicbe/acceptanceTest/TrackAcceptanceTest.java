@@ -25,6 +25,7 @@ public class TrackAcceptanceTest extends AbstractAcceptanceTest {
                                                                 .trackName("test track name")
                                                                 .trackTag("피아노")
                                                                 .editable(true)
+                                                                .measure(4)
                                                                 .volume(50)
                                                                 .build();
 
@@ -43,6 +44,7 @@ public class TrackAcceptanceTest extends AbstractAcceptanceTest {
                                                                 .trackName("test track name")
                                                                 .trackTag("피아노")
                                                                 .editable(true)
+                                                                .measure(4)
                                                                 .volume(50)
                                                                 .build();
 
@@ -74,14 +76,15 @@ public class TrackAcceptanceTest extends AbstractAcceptanceTest {
         TrackCreateRequestDto requestDto = TrackCreateRequestDto.builder()
                                                                 .trackName("test track name")
                                                                 .trackTag("피아노")
+                                                                .measure(4)
                                                                 .editable(true)
                                                                 .volume(50)
                                                                 .build();
         // when
-        ResponseEntity<TrackCreateResponseDto> response = template().postForEntity("/projects/1/tracks", requestEntityWithToken(requestDto), TrackCreateResponseDto.class);
+        ResponseEntity<TrackCreateResponseDto> response = template().postForEntity("/projects/2/tracks", requestEntityWithToken(requestDto), TrackCreateResponseDto.class);
 
         // then
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
     @Test
