@@ -66,7 +66,7 @@ public class Project extends BaseTimeEntity {
         return tracks.size();
     }
 
-    public Track getLastTrack() {
-        return tracks.get(tracks.size() - 1);
+    public boolean isLastTrackId(Long trackId) {
+        return tracks.get(tracks.size() - 1).getId().equals(trackId);
     }
 }
