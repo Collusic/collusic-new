@@ -3,7 +3,6 @@ package com.collusic.collusicbe.config;
 import com.collusic.collusicbe.config.auth.ExceptionHandlerFilter;
 import com.collusic.collusicbe.config.auth.JWTAuthenticationFilter;
 import com.collusic.collusicbe.config.auth.JWTAuthenticationProvider;
-import com.collusic.collusicbe.config.auth.JwtAuthenticationEntryPoint;
 import com.collusic.collusicbe.service.TokenService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +16,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.AuthenticationEntryPoint;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -42,6 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests(request -> request.antMatchers(HttpMethod.POST, "/members").permitAll()
                                                      .antMatchers(HttpMethod.GET, "/oauth2/login/**", "/members/{nickname}").permitAll()
                                                      .antMatchers("/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs").permitAll()
+                                                     .antMatchers(HttpMethod.GET, "/projects/**").permitAll()
                                                      .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                                                      .anyRequest().authenticated())
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()

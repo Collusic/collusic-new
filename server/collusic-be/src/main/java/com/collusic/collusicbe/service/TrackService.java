@@ -5,6 +5,7 @@ import com.collusic.collusicbe.domain.project.Project;
 import com.collusic.collusicbe.domain.project.ProjectRepository;
 import com.collusic.collusicbe.domain.track.Track;
 import com.collusic.collusicbe.domain.track.TrackRepository;
+import com.collusic.collusicbe.global.exception.ForbiddenException;
 import com.collusic.collusicbe.web.controller.dto.TrackCreateRequestDto;
 import com.collusic.collusicbe.web.controller.dto.TrackUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -57,7 +58,7 @@ public class TrackService {
         Track track = project.getTrack(id);
 
         if (!member.isSameMember(track.getCreator())) {
-            throw new IllegalStateException();
+            throw new ForbiddenException();
         }
 
         if (project.getTracks().size() == 1) {
