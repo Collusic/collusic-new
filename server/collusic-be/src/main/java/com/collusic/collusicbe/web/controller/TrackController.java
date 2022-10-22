@@ -31,18 +31,18 @@ public class TrackController {
         return ResponseEntity.created(URI.create("/projects/" + projectId + "/tracks/" + track.getId())).body(new TrackCreateResponseDto(track));
     }
 
-    @PutMapping("/tracks/{trackId}")
-    public ResponseEntity<Void> updateTrack(@LoginMember Member member, @PathVariable Long trackId, @Validated @RequestBody final TrackUpdateRequestDto requestDto) {
-        Project project = projectService.findById(requestDto.getProjectId());
+    @PutMapping("/projects/{projectId}/tracks/{trackId}")
+    public ResponseEntity<Void> updateTrack(@LoginMember Member member, @PathVariable Long projectId, @PathVariable Long trackId, @Validated @RequestBody final TrackUpdateRequestDto requestDto) {
+        Project project = projectService.findById(projectId);
 
         if (!project.isLastTrackId(trackId)) {
             throw new IllegalArgumentException();
         }
 
-        trackService.update(member,trackId,requestDto);
+        trackService.update(member, trackId, requestDto);
 
         return ResponseEntity.ok(null);
-}
+    }
 
     @DeleteMapping("/projects/{projectId}/tracks/{trackId}")
     public ResponseEntity<Void> deleteTrack(@LoginMember Member member, @PathVariable Long projectId, @PathVariable Long trackId) {
