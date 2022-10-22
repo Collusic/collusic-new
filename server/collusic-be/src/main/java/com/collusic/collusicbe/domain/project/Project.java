@@ -13,6 +13,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -47,13 +48,12 @@ public class Project extends BaseTimeEntity {
     private static final int MAX_TRACK_CAPACITY = 10;
 
     @Builder
-    public Project(Long id, String projectName, int bpm, String fileUrl, State projectState, List<Track> tracks) {
+    public Project(Long id, String projectName, int bpm, String fileUrl, State projectState) {
         this.id = id;
         this.projectName = projectName;
         this.bpm = bpm;
         this.fileUrl = fileUrl;
         this.projectState = projectState;
-        this.tracks = tracks;
     }
 
     public boolean isTrackFull() {
@@ -76,17 +76,24 @@ public class Project extends BaseTimeEntity {
     }
 
     public Track getTrack(long trackId) {
+        this.tracks.sort(Comparator.comparingInt(Track::getOrderInProject));
+
         return tracks.stream()
                      .filter(track -> track.getId().equals(trackId))
                      .findFirst()
                      .orElseThrow(NoSuchElementException::new);
     }
 
-    public void removeTrack(int order) {
-        tracks.remove(order);
+    public void removeTrack(long trackId) {
+        Track track = tracks.stream()
+                            .filter(t -> t.getId().equals(trackId))
+                            .findFirst()
+                            .orElseThrow(NoSuchElementException::new);
 
-        for (int i = order; i < tracks.size(); i++) {
-            Track track = tracks.get(i);
+        tracks.remove(track);
+
+        for (int i = 0; i < tracks.size(); i++) {
+            track = tracks.get(i);
             track.changeOrder(i);
         }
     }

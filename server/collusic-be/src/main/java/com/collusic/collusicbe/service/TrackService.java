@@ -39,7 +39,7 @@ public class TrackService {
         Track track = trackRepository.findById(trackId)
                                      .orElseThrow(NoSuchElementException::new);
 
-        if (!member.isSameMember(track.getCreator().getNickname())) {
+        if (!member.isSameMember(track.getCreator())) {
             throw new IllegalArgumentException();
         }
 
@@ -56,16 +56,16 @@ public class TrackService {
     public void delete(Member member, Project project, long id) {
         Track track = project.getTrack(id);
 
-        if (!member.isSameMember(track.getCreator().getNickname())) {
+        if (!member.isSameMember(track.getCreator())) {
             throw new IllegalStateException();
         }
 
-        if (track.getOrderInProject() == 0) {
+        if (project.getTracks().size() == 1) {
             projectRepository.delete(project);
             return;
         }
 
-        project.removeTrack(track.getOrderInProject());
+        project.removeTrack(track.getId());
         trackRepository.delete(track);
     }
 }
