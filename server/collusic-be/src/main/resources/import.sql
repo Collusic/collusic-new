@@ -2,6 +2,7 @@ insert into member (member_id, auth_id, email, nickname, role, sns_type) values 
 
 insert into project (project_id, project_name, bpm, file_url) values (1, 'test project', 50, 'test_url');
 insert into project (project_id, project_name, bpm, file_url) values (2, 'test project', 50, 'test_url');
+insert into project (project_id, project_name, bpm, file_url) values (3, 'test project', 50, 'test_url');
 
 insert into track (track_id, member_id, editable, file_url, measure, order_in_project, project_id, track_name, track_tag, volume) values (1, 1, true, 'test', 'FOUR', 0, 2, 'test1', 'PIANO', 50);
 insert into track (track_id, member_id, editable, file_url, measure, order_in_project, project_id, track_name, track_tag, volume) values (2, 1, true, 'test', 'FOUR', 1, 2, 'test1', 'PIANO', 50);
@@ -13,3 +14,6 @@ insert into track (track_id, member_id, editable, file_url, measure, order_in_pr
 insert into track (track_id, member_id, editable, file_url, measure, order_in_project, project_id, track_name, track_tag, volume) values (8, 1, true, 'test', 'FOUR', 7, 2, 'test1', 'PIANO', 50);
 insert into track (track_id, member_id, editable, file_url, measure, order_in_project, project_id, track_name, track_tag, volume) values (9, 1, true, 'test', 'FOUR', 8, 2, 'test1', 'PIANO', 50);
 insert into track (track_id, member_id, editable, file_url, measure, order_in_project, project_id, track_name, track_tag, volume) values (10, 1, true, 'test', 'FOUR', 9, 2, 'test1', 'PIANO', 50);
+
+insert into track (track_id, member_id, editable, file_url, measure, order_in_project, project_id, track_name, track_tag, volume) values (11, 1, true, 'test', 'FOUR', 0, 3, 'test1', 'PIANO', 50);
+insert into track (track_id, member_id, editable, file_url, measure, order_in_project, project_id, track_name, track_tag, volume) values (12, 1, true, 'test', 'FOUR', 1, 3, 'test1', 'PIANO', 50);

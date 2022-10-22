@@ -12,6 +12,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -40,7 +41,7 @@ public class Project extends BaseTimeEntity {
     private State projectState;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
-    private List<Track> tracks;
+    private List<Track> tracks = new ArrayList<>();
 
     private static final int MAX_TRACK_CAPACITY = 10;
 
@@ -59,6 +60,13 @@ public class Project extends BaseTimeEntity {
     }
 
     public int getNextTrackOrder() {
+        if (tracks == null) {
+            return 0;
+        }
         return tracks.size();
+    }
+
+    public Track getLastTrack() {
+        return tracks.get(tracks.size() - 1);
     }
 }

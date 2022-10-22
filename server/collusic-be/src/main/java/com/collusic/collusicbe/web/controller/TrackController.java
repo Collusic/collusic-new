@@ -33,8 +33,14 @@ public class TrackController {
 
     @PutMapping("/tracks/{trackId}")
     public ResponseEntity<Void> updateTrack(@LoginMember Member member, @PathVariable Long trackId, @Validated @RequestBody final TrackUpdateRequestDto requestDto) {
-        trackService.update(member, trackId, requestDto);
+        Project project = projectService.findById(requestDto.getProjectId());
+
+        if (!project.getLastTrack().getId().equals(trackId)) {
+            throw new IllegalArgumentException();
+        }
+
+        trackService.update(member,trackId,requestDto);
 
         return ResponseEntity.ok(null);
-    }
+}
 }

@@ -94,6 +94,7 @@ public class TrackAcceptanceTest extends AbstractAcceptanceTest {
     void testUpdatingTrack() {
         // given
         TrackUpdateRequestDto requestDto = TrackUpdateRequestDto.builder()
+                                                                .projectId(3L)
                                                                 .trackName("test track name")
                                                                 .trackTag("피아노")
                                                                 .editable(true)
@@ -102,7 +103,7 @@ public class TrackAcceptanceTest extends AbstractAcceptanceTest {
                                                                 .build();
 
         // when
-        ResponseEntity<Void> response = template().exchange("/tracks/1", HttpMethod.PUT, requestEntityWithToken(requestDto), Void.class);
+        ResponseEntity<Void> response = template().exchange("/tracks/12", HttpMethod.PUT, requestEntityWithToken(requestDto), Void.class);
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -116,7 +117,27 @@ public class TrackAcceptanceTest extends AbstractAcceptanceTest {
                                                                 .build();
 
         // when
-        ResponseEntity<Void> response = template().exchange("/tracks/1", HttpMethod.PUT, requestEntityWithToken(requestDto), Void.class);
+        ResponseEntity<Void> response = template().exchange("/tracks/12", HttpMethod.PUT, requestEntityWithToken(requestDto), Void.class);
+
+        // then
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    @DisplayName("트랙 수정 테스트 - 해당 트랙이 속한 프로젝트의 마지막 프로젝트가 아닌 경우 BAD_REQUEST(400)으로 응답")
+    void testBadRequestUpdatingTrack_when_not_last_track_in_project() {
+        // given
+        TrackUpdateRequestDto requestDto = TrackUpdateRequestDto.builder()
+                                                                .projectId(3L)
+                                                                .trackName("test track name")
+                                                                .trackTag("피아노")
+                                                                .editable(true)
+                                                                .measure(4)
+                                                                .volume(50)
+                                                                .build();
+
+        // when
+        ResponseEntity<Void> response = template().exchange("/tracks/11", HttpMethod.PUT, requestEntityWithToken(requestDto), Void.class);
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);

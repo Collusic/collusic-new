@@ -14,6 +14,8 @@ import javax.validation.constraints.*;
 @NoArgsConstructor
 public class TrackUpdateRequestDto {
 
+    @NotNull
+    private Long projectId;
     @NotBlank
     @Size(min = 1, max = 20, message = "트랙 명은 1자 이상 20자 이내로 한다.")
     private String trackName;
@@ -29,7 +31,8 @@ public class TrackUpdateRequestDto {
     private Integer volume;
 
     @Builder
-    public TrackUpdateRequestDto(String trackName, String trackTag, Boolean editable, Integer measure, Integer volume) {
+    public TrackUpdateRequestDto(Long projectId, String trackName, String trackTag, Boolean editable, Integer measure, Integer volume) {
+        this.projectId = projectId;
         this.trackName = trackName;
         this.trackTag = TrackTag.valueOfLabel(trackTag);
         this.editable = editable;
