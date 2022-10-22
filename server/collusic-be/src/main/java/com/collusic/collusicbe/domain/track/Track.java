@@ -62,4 +62,12 @@ public class Track extends BaseTimeEntity {
         this.orderInProject = orderInProject;
         this.fileUrl = "empty"; // TODO : 음원 파일 데이터 시 추가 처리할 것
     }
+
+    public void changeTrackInfo(String trackName, TrackTag trackTag, boolean editable, Measure measure, int volume) {
+        this.trackName = trackName;
+        this.trackTag = trackTag;
+        this.editable = editable;
+        this.measure = measure;
+        this.volume = volume;
+    }
 }

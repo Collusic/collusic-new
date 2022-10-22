@@ -57,4 +57,8 @@ public class Member extends BaseTimeEntity {
     public void updateProfile(String profileImageUrl) {
         this.profileImageUrl = profileImageUrl;
     }
+
+    public boolean isSameMember(String nickname) {
+        return this.nickname.equals(nickname);
+    }
 }

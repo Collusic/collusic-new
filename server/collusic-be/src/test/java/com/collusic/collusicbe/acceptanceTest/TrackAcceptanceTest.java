@@ -3,9 +3,11 @@ package com.collusic.collusicbe.acceptanceTest;
 import com.collusic.collusicbe.domain.track.TrackRepository;
 import com.collusic.collusicbe.web.controller.dto.TrackCreateRequestDto;
 import com.collusic.collusicbe.web.controller.dto.TrackCreateResponseDto;
+import com.collusic.collusicbe.web.controller.dto.TrackUpdateRequestDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -90,21 +92,35 @@ public class TrackAcceptanceTest extends AbstractAcceptanceTest {
     @Test
     @DisplayName("트랙 수정 테스트 - 정상적인 요청의 경우 OK(200)으로 응답")
     void testUpdatingTrack() {
-        // TODO
+        // given
+        TrackUpdateRequestDto requestDto = TrackUpdateRequestDto.builder()
+                                                                .trackName("test track name")
+                                                                .trackTag("피아노")
+                                                                .editable(true)
+                                                                .measure(4)
+                                                                .volume(50)
+                                                                .build();
+
+        // when
+        ResponseEntity<Void> response = template().exchange("/tracks/1", HttpMethod.PUT, requestEntityWithToken(requestDto), Void.class);
+
+        // then
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
     @Test
     @DisplayName("트랙 수정 테스트 - 비정상적인 요청의 경우 BAD_REQUEST(400)으로 응답")
     void testBadRequestUpdatingTrack() {
-        // TODO
-    }
+        // given
+        TrackUpdateRequestDto requestDto = TrackUpdateRequestDto.builder()
+                                                                .build();
 
-    @Test
-    @DisplayName("트랙 수정 테스트 - 잠금이 활성화되어 있는 트랙을 수정 요청하는 경우 UNAUTHORIZED(401)으로 응답")
-    void testBadRequestUpdatingTrack2() {
-        // TODO
-    }
+        // when
+        ResponseEntity<Void> response = template().exchange("/tracks/1", HttpMethod.PUT, requestEntityWithToken(requestDto), Void.class);
 
+        // then
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
 
     @Test
     @DisplayName("트랙 삭제 테스트 - 정상적인 요청의 경우 OK(200)으로 응답")
@@ -119,7 +135,7 @@ public class TrackAcceptanceTest extends AbstractAcceptanceTest {
     }
 
     @Test
-    @DisplayName("트랙 삭제 테스트 - 현재 사용자가 등록하지 않은 트랙을 삭제 요청하는 경우 UNAUTHORIZED(401)으로 응답")
+    @DisplayName("트랙 삭제 테스트 - 현재 사용자가 등록하지 않은 트랙을 삭제 요청하는 경우 FORBIDDEN(403)으로 응답")
     void testBadRequestDeletingTrack() {
         // TODO
     }

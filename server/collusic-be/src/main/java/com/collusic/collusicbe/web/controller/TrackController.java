@@ -8,13 +8,11 @@ import com.collusic.collusicbe.service.ProjectService;
 import com.collusic.collusicbe.service.TrackService;
 import com.collusic.collusicbe.web.controller.dto.TrackCreateRequestDto;
 import com.collusic.collusicbe.web.controller.dto.TrackCreateResponseDto;
+import com.collusic.collusicbe.web.controller.dto.TrackUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
@@ -31,5 +29,12 @@ public class TrackController {
         Track track = trackService.create(member, project, requestDto);
 
         return ResponseEntity.created(URI.create("/projects/" + projectId + "/tracks/" + track.getId())).body(new TrackCreateResponseDto(track));
+    }
+
+    @PutMapping("/tracks/{trackId}")
+    public ResponseEntity<Void> updateTrack(@LoginMember Member member, @PathVariable Long trackId, @Validated @RequestBody final TrackUpdateRequestDto requestDto) {
+        trackService.update(member, trackId, requestDto);
+
+        return ResponseEntity.ok(null);
     }
 }
