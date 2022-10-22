@@ -43,4 +43,12 @@ public class TrackController {
 
         return ResponseEntity.ok(null);
 }
+
+    @DeleteMapping("/projects/{projectId}/tracks/{trackId}")
+    public ResponseEntity<Void> deleteTrack(@LoginMember Member member, @PathVariable Long projectId, @PathVariable Long trackId) {
+        Project project = projectService.findById(projectId);
+        trackService.delete(member, project, trackId);
+
+        return ResponseEntity.ok(null);
+    }
 }

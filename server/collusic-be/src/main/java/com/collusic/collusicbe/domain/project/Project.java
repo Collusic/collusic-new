@@ -14,6 +14,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -68,5 +69,25 @@ public class Project extends BaseTimeEntity {
 
     public boolean isLastTrackId(Long trackId) {
         return tracks.get(tracks.size() - 1).getId().equals(trackId);
+    }
+
+    public void addTrack(Track track) {
+        this.tracks.add(track);
+    }
+
+    public Track getTrack(long trackId) {
+        return tracks.stream()
+                     .filter(track -> track.getId().equals(trackId))
+                     .findFirst()
+                     .orElseThrow(NoSuchElementException::new);
+    }
+
+    public void removeTrack(int order) {
+        tracks.remove(order);
+
+        for (int i = order; i < tracks.size(); i++) {
+            Track track = tracks.get(i);
+            track.changeOrder(i);
+        }
     }
 }

@@ -2,6 +2,7 @@ package com.collusic.collusicbe.service;
 
 import com.collusic.collusicbe.domain.member.Member;
 import com.collusic.collusicbe.domain.project.Project;
+import com.collusic.collusicbe.domain.project.ProjectRepository;
 import com.collusic.collusicbe.domain.track.Track;
 import com.collusic.collusicbe.domain.track.TrackRepository;
 import com.collusic.collusicbe.web.controller.dto.TrackCreateRequestDto;
@@ -15,6 +16,7 @@ import java.util.NoSuchElementException;
 @RequiredArgsConstructor
 public class TrackService {
 
+    private final ProjectRepository projectRepository;
     private final TrackRepository trackRepository;
 
     public Track create(Member member, Project project, TrackCreateRequestDto trackData) {
@@ -49,5 +51,21 @@ public class TrackService {
                 trackData.getVolume());
 
         return trackRepository.save(track);
+    }
+
+    public void delete(Member member, Project project, long id) {
+        Track track = project.getTrack(id);
+
+        if (!member.isSameMember(track.getCreator().getNickname())) {
+            throw new IllegalStateException();
+        }
+
+        if (track.getOrderInProject() == 0) {
+            projectRepository.delete(project);
+            return;
+        }
+
+        project.removeTrack(track.getOrderInProject());
+        trackRepository.delete(track);
     }
 }
