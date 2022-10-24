@@ -30,7 +30,7 @@ public class NaverClientService implements OAuth2ClientService {
     private final NaverProfileClient naverProfileClient;
 
     @Override
-    public OAuth2Response requestLogin(Map<String, Object> authCode) {
+    public OAuth2Response requestLogin(Map<String, String> authCode) {
         NaverTokenResponse naverTokenResponse = naverAccessTokenClient.requestNaverToken(CONTENT_TYPE, grantType, clientId, clientSecret, (String) authCode.get("code"), (String) authCode.get("state"));
         return naverProfileClient.requestNaverProfile("Bearer " + naverTokenResponse.getAccessToken());
     }

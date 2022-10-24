@@ -33,7 +33,7 @@ public class GoogleClientService implements OAuth2ClientService {
     private final GoogleAccessTokenClient googleAccessTokenClient;
 
     @Override
-    public OAuth2Response requestLogin(Map<String, Object> authCode) {
+    public OAuth2Response requestLogin(Map<String, String> authCode) {
         GoogleTokenResponse googleTokenResponse = googleAccessTokenClient.requestGoogleAccessToken(CONTENT_TYPE, grantType, clientId, redirectUri, (String) authCode.get("code"), clientSecret);
         return googleProfileClient.requestGoogleProfile("Bearer " + googleTokenResponse.getAccessToken());
     }

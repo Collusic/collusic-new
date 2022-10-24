@@ -32,7 +32,7 @@ public class KakaoClientService implements OAuth2ClientService {
     private String grantType;
 
     @Override
-    public OAuth2Response requestLogin(Map<String, Object> authCode) {
+    public OAuth2Response requestLogin(Map<String, String> authCode) {
         KakaoTokenResponse kakaoTokenResponse = kakaoAccessTokenClient.requestKakaoToken(CONTENT_TYPE, grantType, clientId, redirectUri, (String) authCode.get("code"), clientSecret);
         return kakaoProfileClient.requestKakaoProfile(CONTENT_TYPE, "Bearer " + kakaoTokenResponse.getAccessToken());
     }

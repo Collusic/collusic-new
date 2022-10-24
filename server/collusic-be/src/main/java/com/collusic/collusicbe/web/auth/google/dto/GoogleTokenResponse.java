@@ -28,12 +28,12 @@ public class GoogleTokenResponse implements OAuth2Response {
     public Map<String, Object> getAttributes() {
         Map<String, Object> attributes = new HashMap<>();
 
-        attributes.put("token_type", tokenType);
         attributes.put("access_token", accessToken);
         attributes.put("id_token", idToken);
         attributes.put("expires_in", expiresIn);
-        attributes.put("refresh_token", refreshToken);
+        attributes.put("token_type", tokenType);
         attributes.put("scope", scope);
+        attributes.put("refresh_token", refreshToken);
 
         return attributes;
     }
