@@ -2,7 +2,9 @@ package com.collusic.collusicbe.domain.project;
 
 import com.collusic.collusicbe.domain.BaseTimeEntity;
 import com.collusic.collusicbe.domain.state.State;
+import com.collusic.collusicbe.domain.track.Track;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +12,10 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -35,4 +41,60 @@ public class Project extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     private State projectState;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    private List<Track> tracks = new ArrayList<>();
+
+    private static final int MAX_TRACK_CAPACITY = 10;
+
+    @Builder
+    public Project(Long id, String projectName, int bpm, String fileUrl, State projectState) {
+        this.id = id;
+        this.projectName = projectName;
+        this.bpm = bpm;
+        this.fileUrl = fileUrl;
+        this.projectState = projectState;
+    }
+
+    public boolean isTrackFull() {
+        return tracks.size() == MAX_TRACK_CAPACITY;
+    }
+
+    public int getNextTrackOrder() {
+        if (tracks == null) {
+            return 0;
+        }
+        return tracks.size();
+    }
+
+    public boolean isLastTrackId(Long trackId) {
+        return tracks.get(tracks.size() - 1).getId().equals(trackId);
+    }
+
+    public void addTrack(Track track) {
+        this.tracks.add(track);
+    }
+
+    public Track getTrack(long trackId) {
+        this.tracks.sort(Comparator.comparingInt(Track::getOrderInProject));
+
+        return tracks.stream()
+                     .filter(track -> track.getId().equals(trackId))
+                     .findFirst()
+                     .orElseThrow(NoSuchElementException::new);
+    }
+
+    public void removeTrack(long trackId) {
+        Track track = tracks.stream()
+                            .filter(t -> t.getId().equals(trackId))
+                            .findFirst()
+                            .orElseThrow(NoSuchElementException::new);
+
+        tracks.remove(track);
+
+        for (int i = 0; i < tracks.size(); i++) {
+            track = tracks.get(i);
+            track.changeOrder(i);
+        }
+    }
 }

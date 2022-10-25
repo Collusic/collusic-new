@@ -21,6 +21,7 @@ spring:
           batch_size: 10
     hibernate:
       ddl-auto: create
+    generate-ddl: true
 
   h2:
     console:

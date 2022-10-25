@@ -3,8 +3,8 @@ package com.collusic.collusicbe.domain.track;
 import com.collusic.collusicbe.domain.BaseTimeEntity;
 import com.collusic.collusicbe.domain.member.Member;
 import com.collusic.collusicbe.domain.project.Project;
-import com.collusic.collusicbe.domain.state.State;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -44,6 +44,35 @@ public class Track extends BaseTimeEntity {
     @Column(nullable = false)
     private String fileUrl;
 
-    @Enumerated(EnumType.STRING)
-    private State trackState;
+    @Column(columnDefinition = "integer default 50", nullable = false)
+    private int volume;
+
+    @Column(nullable = false)
+    private int orderInProject;
+
+    @Builder
+    public Track(Long id, String trackName, TrackTag trackTag, boolean editable, Member creator, Project project, Measure measure, int volume, int orderInProject) {
+        this.id = id;
+        this.trackName = trackName;
+        this.trackTag = trackTag;
+        this.editable = editable;
+        this.creator = creator;
+        this.project = project;
+        this.measure = measure;
+        this.volume = volume;
+        this.orderInProject = orderInProject;
+        this.fileUrl = "empty"; // TODO : 음원 파일 데이터 시 추가 처리할 것
+    }
+
+    public void changeTrackInfo(String trackName, TrackTag trackTag, boolean editable, Measure measure, int volume) {
+        this.trackName = trackName;
+        this.trackTag = trackTag;
+        this.editable = editable;
+        this.measure = measure;
+        this.volume = volume;
+    }
+
+    public void changeOrder(int order) {
+        this.orderInProject = order;
+    }
 }

@@ -15,7 +15,8 @@ import javax.validation.constraints.Size;
 public class Member extends BaseTimeEntity {
 
     @Builder
-    public Member(String authId, String email, String nickname, String profileImageUrl, SnsType snsType, Role role) {
+    public Member(Long id, String authId, String email, String nickname, String profileImageUrl, SnsType snsType, Role role) {
+        this.id = id;
         this.authId = authId;
         this.email = email;
         this.nickname = nickname;
@@ -56,5 +57,9 @@ public class Member extends BaseTimeEntity {
 
     public void updateProfile(String profileImageUrl) {
         this.profileImageUrl = profileImageUrl;
+    }
+
+    public boolean isSameMember(Member member) {
+        return this.id.equals(member.getId());
     }
 }

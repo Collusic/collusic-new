@@ -1,5 +1,6 @@
 package com.collusic.collusicbe.config.auth;
 
+import com.collusic.collusicbe.global.exception.UnAuthorizedException;
 import com.collusic.collusicbe.global.exception.jwt.AbnormalAccessException;
 import com.collusic.collusicbe.service.TokenService;
 import com.collusic.collusicbe.util.JWTUtil;
@@ -21,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.Set;
 
 public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
@@ -76,12 +77,15 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
 
     private String reissueAccessToken(HttpServletRequest request, HttpServletResponse response) {
 
-        Cookie[] cookies = request.getCookies();
+        Cookie[] cookies = Optional.ofNullable(request.getCookies())
+                                   .orElseGet(() -> new Cookie[]{});
 
-        Cookie cookie = Arrays.stream(cookies)
-                              .filter(c -> c.getName().equals("refreshToken"))
-                              .findFirst()
-                              .orElseThrow(NoSuchElementException::new); // TODO : NoSuch에 대한 예외 처리하기
+        Cookie cookie; // TODO : NoSuch에 대한 예외 처리하기
+
+        cookie = Arrays.stream(cookies)
+                       .filter(c -> c.getName().equals("refreshToken"))
+                       .findFirst()
+                       .orElseThrow(UnAuthorizedException::new);
 
         String refreshToken = cookie.getValue();
 
