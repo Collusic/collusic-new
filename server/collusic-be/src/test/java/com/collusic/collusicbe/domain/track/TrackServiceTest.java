@@ -3,6 +3,7 @@ package com.collusic.collusicbe.domain.track;
 import com.collusic.collusicbe.domain.member.Member;
 import com.collusic.collusicbe.domain.project.Project;
 import com.collusic.collusicbe.domain.project.ProjectRepository;
+import com.collusic.collusicbe.global.exception.ForbiddenException;
 import com.collusic.collusicbe.service.TrackService;
 import com.collusic.collusicbe.web.controller.dto.TrackCreateRequestDto;
 import com.collusic.collusicbe.web.controller.dto.TrackUpdateRequestDto;
@@ -155,6 +156,6 @@ public class TrackServiceTest {
         when(trackRepository.findById(any(Long.class))).thenReturn(Optional.of(testTrack));
         doThrow(IllegalStateException.class).when(trackRepository).delete(any(Track.class));
 
-        assertThrows(IllegalStateException.class, () -> trackService.delete(anotherMember, testProject, 1L));
+        assertThrows(ForbiddenException.class, () -> trackService.delete(anotherMember, testProject, 1L));
     }
 }
