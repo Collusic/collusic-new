@@ -19,7 +19,9 @@ public class OAuth2LoginResponseDto {
         this.responseType = responseType;
 
         attributes = new HashMap<>();
-        attributes.put("snsType", snsType);
+        if (snsType != null) {
+            attributes.put("snsType", snsType);
+        }
         if (message != null) {
             attributes.put("errorMessage", message);
         }

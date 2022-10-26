@@ -1,7 +1,7 @@
 package com.collusic.collusicbe.web.auth;
 
 import com.collusic.collusicbe.domain.member.SnsType;
-import com.collusic.collusicbe.service.OAuth2Service;
+import com.collusic.collusicbe.service.AfterOAuth2Service;
 import com.collusic.collusicbe.util.ParsingUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ import java.util.Map;
 public class OAuth2Controller {
 
     private final OAuth2ProviderClientManager oAuth2ProviderClientManager;
-    private final OAuth2Service oAuth2Service;
+    private final AfterOAuth2Service afterOAuth2Service;
 
     @Operation(summary = "sns 로그인", description = "sns로부터 받은 auth code를 query string으로 보내 로그인 및 회원정보 응답")
     @GetMapping("/oauth2/login/{provider}")
@@ -30,7 +30,7 @@ public class OAuth2Controller {
         String authId = (String) response.getAttributes().get("sub");
         String profileImageUrl = (String) response.getAttributes().get("picture");
 
-        OAuth2LoginResponseDto responseDto = oAuth2Service.executeAfterOAuth2Login(SnsType.valueOf(provider.toUpperCase()), email, authId, profileImageUrl, ParsingUtil.getRemoteAddress(request));
+        OAuth2LoginResponseDto responseDto = afterOAuth2Service.executeAfterOAuth2Login(SnsType.valueOf(provider.toUpperCase()), email, authId, profileImageUrl, ParsingUtil.getRemoteAddress(request));
 
         return ResponseEntity.ok(responseDto);
     }
