@@ -23,7 +23,7 @@ public class OAuth2Controller {
 
     @Operation(summary = "sns 로그인", description = "sns로부터 받은 auth code를 query string으로 보내 로그인 및 회원정보 응답")
     @GetMapping("/oauth2/login/{provider}")
-    public ResponseEntity<OAuth2LoginResponseDto> loginToSns(@PathVariable String provider, @RequestParam Map<String, String> authCode, HttpServletRequest request) {
+    public ResponseEntity<OAuth2LoginResponseDto> loginToSns(@PathVariable String provider, @RequestParam Map<String, Object> authCode, HttpServletRequest request) {
         OAuth2ClientService oAuth2ClientService = oAuth2ProviderClientManager.getClientService(provider);
         OAuth2Response response = oAuth2ClientService.requestLogin(authCode);
         String email = (String) response.getAttributes().get("email");

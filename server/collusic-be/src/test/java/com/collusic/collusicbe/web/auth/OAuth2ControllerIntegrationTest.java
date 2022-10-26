@@ -50,7 +50,7 @@ public class OAuth2ControllerIntegrationTest {
     @MockBean
     private MemberRepository memberRepository;
 
-    private Map<String, String> authCode;
+    private Map<String, Object> authCode;
 
     @BeforeEach
     void setUp() {
@@ -66,7 +66,7 @@ public class OAuth2ControllerIntegrationTest {
         when(googleClientService.requestLogin(authCode)).thenReturn(googleProfileResponse);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/oauth2/login/" + "google")
-                                              .param("code", authCode.get("code")))
+                                              .param("code", (String) authCode.get("code")))
                .andDo(print())
                .andExpect(jsonPath("$.responseType").value(SIGN_UP.name()))
                .andExpect(jsonPath("$.attributes.snsType").value(GOOGLE.name()))
@@ -83,7 +83,7 @@ public class OAuth2ControllerIntegrationTest {
         when(kakaoClientService.requestLogin(authCode)).thenReturn(kakaoProfileResponse);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/oauth2/login/" + "kakao")
-                                              .param("code", authCode.get("code")))
+                                              .param("code", (String) authCode.get("code")))
                .andDo(print())
                .andExpect(jsonPath("$.responseType").value(SIGN_UP.name()))
                .andExpect(jsonPath("$.attributes.snsType").value(KAKAO.name()))
@@ -100,7 +100,7 @@ public class OAuth2ControllerIntegrationTest {
         when(naverClientService.requestLogin(authCode)).thenReturn(naverProfileResponse);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/oauth2/login/" + "naver")
-                                              .param("code", authCode.get("code")))
+                                              .param("code", (String) authCode.get("code")))
                .andDo(print())
                .andExpect(jsonPath("$.responseType").value(SIGN_UP.name()))
                .andExpect(jsonPath("$.attributes.snsType").value(NAVER.name()))
@@ -129,7 +129,7 @@ public class OAuth2ControllerIntegrationTest {
         when(memberRepository.findByEmail(email)).thenReturn(Optional.ofNullable(member));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/oauth2/login/" + "google")
-                                              .param("code", authCode.get("code")))
+                                              .param("code", (String) authCode.get("code")))
                .andDo(print())
                .andExpect(jsonPath("$.responseType").value(SIGN_IN.name()))
                .andExpect(jsonPath("$.attributes.accessToken").exists())
@@ -156,7 +156,7 @@ public class OAuth2ControllerIntegrationTest {
         when(memberRepository.findByEmail(email)).thenReturn(Optional.ofNullable(member));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/oauth2/login/" + "kakao")
-                                              .param("code", authCode.get("code")))
+                                              .param("code", (String) authCode.get("code")))
                .andDo(print())
                .andExpect(jsonPath("$.responseType").value(SIGN_IN.name()))
                .andExpect(jsonPath("$.attributes.accessToken").exists())
@@ -183,7 +183,7 @@ public class OAuth2ControllerIntegrationTest {
         when(memberRepository.findByEmail(email)).thenReturn(Optional.ofNullable(member));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/oauth2/login/" + "naver")
-                                              .param("code", authCode.get("code")))
+                                              .param("code", (String) authCode.get("code")))
                .andDo(print())
                .andExpect(jsonPath("$.responseType").value(SIGN_IN.name()))
                .andExpect(jsonPath("$.attributes.accessToken").exists())
@@ -211,7 +211,7 @@ public class OAuth2ControllerIntegrationTest {
         when(memberRepository.findByEmail(email)).thenReturn(Optional.ofNullable(member));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/oauth2/login/" + "google")
-                                              .param("code", authCode.get("code")))
+                                              .param("code", (String) authCode.get("code")))
                .andDo(print())
                .andExpect(jsonPath("$.responseType").value(INVALID.name()))
                .andExpect(jsonPath("$.attributes.errorMessage").value("해당 email은 이미 다른 sns로 가입되어 있습니다."));
