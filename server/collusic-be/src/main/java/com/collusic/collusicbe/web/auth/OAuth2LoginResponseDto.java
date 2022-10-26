@@ -23,7 +23,7 @@ public class OAuth2LoginResponseDto {
             attributes.put("snsType", snsType);
         }
         if (message != null) {
-            attributes.put("errorMessage", message);
+            attributes.put("message", message);
         }
         if (accessToken != null) {
             attributes.put("accessToken", accessToken);
