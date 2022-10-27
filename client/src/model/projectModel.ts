@@ -22,8 +22,8 @@ export const bpmState = atom({
   default: 0,
 });
 
-export const tagState = atom<Track[]>({
-  key: "TagState",
+export const tagListState = atom<Track[]>({
+  key: "TagListState",
   default: [],
 });
 
