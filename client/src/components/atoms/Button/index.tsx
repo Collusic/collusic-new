@@ -8,28 +8,35 @@ type ColorType = "green" | "white" | "text" | "line";
 interface ButtonProps {
   type: ColorType;
   isSelected: boolean;
-  clickHandler: MouseEventHandler;
+  onBtnClick: MouseEventHandler;
   children: ReactNode;
   width?: string;
   marginLeft?: string;
+  marginTop?: string;
+  svgSrc?: string | null;
 }
 
 const defaultProps = {
   width: "fit-content",
   marginLeft: "0",
+  marginTop: "0",
+  svgSrc: null,
 };
 
-function Button({ type, isSelected, clickHandler, children, width, marginLeft }: ButtonProps) {
+function Button({ type, isSelected, onBtnClick, children, width, marginLeft, marginTop, svgSrc }: ButtonProps) {
   return (
     <button
+      id="button"
       type="button"
       className={classNames(type, { selected: isSelected })}
-      onClick={clickHandler}
+      onClick={onBtnClick}
       style={{
         width,
         marginLeft,
+        marginTop,
       }}
     >
+      {svgSrc && <img src={svgSrc} alt={children as string} />}
       {children}
     </button>
   );
