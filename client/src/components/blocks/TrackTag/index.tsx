@@ -4,6 +4,7 @@ import Button from "components/atoms/Button";
 import { SelectedTrackSrc, UnselectedTrackSrc } from "utils/data/trackSrc";
 import { Track } from "types/projectType";
 import "./style.scss";
+import Span from "components/atoms/Span";
 
 // todo: recorder.svg 에러
 
@@ -20,21 +21,24 @@ function TrackTag({ handleBtnClick, selectedTrack, tracks }: TrackTagProps) {
   };
 
   return (
-    <div id="track-tag">
-      {tracks.map((track) => (
-        <Button
-          key={track}
-          type="line"
-          isSelected={selectedTrack === track}
-          onBtnClick={handleBtnClick}
-          svgSrc={track === "ETC" ? undefined : getTrackSrc(selectedTrack === track, track)}
-          marginLeft="8px"
-          marginTop="10px"
-        >
-          {track}
-        </Button>
-      ))}
-    </div>
+    <>
+      <Span>트랙 태그</Span>
+      <div id="track-tag">
+        {tracks.map((track) => (
+          <Button
+            key={track}
+            type="line"
+            isSelected={selectedTrack === track}
+            onBtnClick={handleBtnClick}
+            svgSrc={track === "ETC" ? undefined : getTrackSrc(selectedTrack === track, track)}
+            marginLeft="8px"
+            marginTop="10px"
+          >
+            {track}
+          </Button>
+        ))}
+      </div>
+    </>
   );
 }
 
