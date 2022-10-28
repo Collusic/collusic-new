@@ -5,17 +5,17 @@ import MikeImg from "../../../../public/assets/mike/mike.svg";
 import "./style.scss";
 
 interface RecordButtonProps {
-  clickHandler: MouseEventHandler;
+  handleBtnClickEvent: MouseEventHandler;
 }
 
-function RecordButton({ clickHandler }: RecordButtonProps) {
+function RecordButton({ handleBtnClickEvent }: RecordButtonProps) {
   const [count, setCount] = useState(3);
   const [isStartCountDown, setIsStartCountDown] = useState(false);
   const countDownInterval = useRef<NodeJS.Timer | null>(null);
 
-  const buttonClickHandler = (e: React.MouseEvent) => {
+  const handleBtnClick = (e: React.MouseEvent) => {
     setIsStartCountDown(true);
-    clickHandler(e);
+    handleBtnClickEvent(e);
   };
 
   useEffect(() => {
@@ -38,7 +38,7 @@ function RecordButton({ clickHandler }: RecordButtonProps) {
   return (
     <div className="outside-round">
       <div className="inside-round">
-        <button type="button" className="record-btn" onClick={buttonClickHandler}>
+        <button type="button" className="record-btn" onClick={handleBtnClick}>
           <img src={MikeImg} alt="record" className={classNames("mike-img", { hidden: isStartCountDown })} />
           <p className={classNames("count-down", { hidden: !isStartCountDown })}>{count}</p>
         </button>

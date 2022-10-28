@@ -14,16 +14,19 @@ interface ButtonProps {
   marginLeft?: string;
   marginTop?: string;
   svgSrc?: string | null;
+  children: ReactNode;
 }
 
 const defaultProps = {
+  imgSrc: "",
   width: "fit-content",
   marginLeft: "0",
   marginTop: "0",
   svgSrc: null,
 };
 
-function Button({ type, isSelected, onBtnClick, children, width, marginLeft, marginTop, svgSrc }: ButtonProps) {
+
+function Button({ type, isSelected, onBtnClick, svgSrc, width, marginLeft, marginTop, children }: ButtonProps) {
   return (
     <button
       id="button"

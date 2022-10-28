@@ -1,9 +1,8 @@
-import React from "react";
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
-import { Play } from "../PlayButton";
-import { Pause } from "../PauseButton";
-import { Bar } from "../Bar";
+import { PlayButton } from "components/atoms/PlayButton";
+import { PauseButton } from "components/atoms/PauseButton";
+import { Bar } from "../../atoms/Bar";
 import "./style.scss";
 
 type AudioProps = {
@@ -54,7 +53,11 @@ const Audio: React.FC<AudioProps> = ({ src }) => {
       </audio>
 
       <div className="controls">
-        {playing ? <Pause handleClick={() => setPlaying(false)} /> : <Play handleClick={() => setPlaying(true)} />}
+        {playing ? (
+          <PauseButton handleClick={() => setPlaying(false)} />
+        ) : (
+          <PlayButton handleClick={() => setPlaying(true)} />
+        )}
         <Bar curTime={curTime} duration={duration} onTimeUpdate={(time) => setClickedTime(time)} />
       </div>
     </div>
