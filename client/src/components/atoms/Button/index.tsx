@@ -25,7 +25,6 @@ const defaultProps = {
   svgSrc: null,
 };
 
-
 function Button({ type, isSelected, onBtnClick, svgSrc, width, marginLeft, marginTop, children }: ButtonProps) {
   return (
     <button
