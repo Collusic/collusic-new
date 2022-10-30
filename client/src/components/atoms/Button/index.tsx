@@ -9,10 +9,11 @@ interface ButtonProps {
   type: ColorType;
   isSelected: boolean;
   onBtnClick: MouseEventHandler;
-  imgSrc?: string;
+  children: ReactNode;
   width?: string;
   marginLeft?: string;
   marginTop?: string;
+  svgSrc?: string | null;
   children: ReactNode;
 }
 
@@ -21,9 +22,10 @@ const defaultProps = {
   width: "fit-content",
   marginLeft: "0",
   marginTop: "0",
+  svgSrc: null,
 };
 
-function Button({ type, isSelected, onBtnClick, imgSrc, width, marginLeft, marginTop, children }: ButtonProps) {
+function Button({ type, isSelected, onBtnClick, svgSrc, width, marginLeft, marginTop, children }: ButtonProps) {
   return (
     <button
       id="button"
@@ -36,7 +38,7 @@ function Button({ type, isSelected, onBtnClick, imgSrc, width, marginLeft, margi
         marginTop,
       }}
     >
-      {imgSrc && <object data={imgSrc} type="image/svg+xml" aria-label={children as string} />}
+      {svgSrc && <img src={svgSrc} alt={children as string} />}
       {children}
     </button>
   );
