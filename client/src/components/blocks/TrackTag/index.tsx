@@ -9,12 +9,12 @@ import Span from "components/atoms/Span";
 // todo: recorder.svg 에러
 
 interface TrackTagProps {
-  handleBtnClick: MouseEventHandler;
+  onBtnClick: MouseEventHandler;
   selectedTrack: Track;
   tracks: Track[];
 }
 
-function TrackTag({ handleBtnClick, selectedTrack, tracks }: TrackTagProps) {
+function TrackTag({ onBtnClick, selectedTrack, tracks }: TrackTagProps) {
   const getTrackSrc = (isSelected: boolean, track: Track): string => {
     if (isSelected) return SelectedTrackSrc[track];
     return UnselectedTrackSrc[track];
@@ -29,7 +29,7 @@ function TrackTag({ handleBtnClick, selectedTrack, tracks }: TrackTagProps) {
             key={track}
             type="line"
             isSelected={selectedTrack === track}
-            onBtnClick={handleBtnClick}
+            onBtnClick={onBtnClick}
             svgSrc={track === "ETC" ? undefined : getTrackSrc(selectedTrack === track, track)}
             marginLeft="8px"
             marginTop="10px"

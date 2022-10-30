@@ -9,7 +9,6 @@ interface ButtonProps {
   type: ColorType;
   isSelected: boolean;
   onBtnClick: MouseEventHandler;
-  children: ReactNode;
   width?: string;
   marginLeft?: string;
   marginTop?: string;
