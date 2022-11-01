@@ -57,7 +57,6 @@ public class OAuth2Controller {
             return OAuth2LoginResponseDto.builder()
                                          .responseType(OAuth2LoginResponseType.SIGN_IN)
                                          .accessToken(tokens.getAccessToken())
-                                         .refreshToken(tokens.getRefreshToken())
                                          .build();
         }
 

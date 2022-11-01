@@ -26,9 +26,6 @@ public class OAuth2LoginResponseDto {
         if (accessToken != null) {
             attributes.put("accessToken", accessToken);
         }
-        if (refreshToken != null) {
-            attributes.put("refreshToken", refreshToken);
-        }
         if (email != null) {
             attributes.put("email", email);
         }
