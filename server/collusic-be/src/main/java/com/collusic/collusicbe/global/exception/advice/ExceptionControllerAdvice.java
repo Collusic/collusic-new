@@ -1,6 +1,7 @@
 package com.collusic.collusicbe.global.exception.advice;
 
 import com.collusic.collusicbe.global.exception.*;
+import io.jsonwebtoken.JwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -59,5 +60,11 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(ForbiddenException.class)
     public Object forbiddenExceptionHandler(Exception e) {
         return e.getMessage();
+    }
+
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(JwtException.class)
+    public Object jwtExceptionHandler(Exception e) {
+        return new ExceptionInfoResponse(HttpStatus.UNAUTHORIZED.getReasonPhrase(), e.getMessage());
     }
 }
