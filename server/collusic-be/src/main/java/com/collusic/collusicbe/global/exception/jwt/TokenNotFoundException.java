@@ -2,9 +2,9 @@ package com.collusic.collusicbe.global.exception.jwt;
 
 import io.jsonwebtoken.JwtException;
 
-public class AbnormalAccessException extends JwtException {
+public class TokenNotFoundException extends JwtException {
 
-    public AbnormalAccessException(String message) {
+    public TokenNotFoundException(String message) {
         super(message);
     }
 }
