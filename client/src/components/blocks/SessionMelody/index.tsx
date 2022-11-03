@@ -18,9 +18,22 @@ function SessionMelody({ melodyType, onSessionMelodyClick }: SessionMelodyProps)
         <Button type="line" isSelected={melodyType === "4"} onBtnClick={onSessionMelodyClick} width="6rem">
           4마디
         </Button>
-        <Button type="line" isSelected={melodyType === "8"} onBtnClick={onSessionMelodyClick} width="8rem" marginLeft="8px">
-          8마디SessionMelody     </Button>
-        <Button type="line" isSelected={melodyType === "16"} onBtnClick={onSessionMelodyClick} width="10rem" marginLeft="8px">
+        <Button
+          type="line"
+          isSelected={melodyType === "8"}
+          onBtnClick={onSessionMelodyClick}
+          width="8rem"
+          marginLeft="8px"
+        >
+          8마디
+        </Button>
+        <Button
+          type="line"
+          isSelected={melodyType === "16"}
+          onBtnClick={onSessionMelodyClick}
+          width="10rem"
+          marginLeft="8px"
+        >
           16마디
         </Button>
       </div>
