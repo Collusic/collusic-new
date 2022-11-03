@@ -13,7 +13,7 @@ interface ButtonProps {
   marginLeft?: string;
   marginTop?: string;
   svgSrc?: string | null;
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 const defaultProps = {
