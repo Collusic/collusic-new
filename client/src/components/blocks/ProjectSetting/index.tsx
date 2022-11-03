@@ -45,7 +45,7 @@ function ProjectSetting({
       <Bpm bpmState={bpmState} onBpmInput={onBpmInput} />
       <TrackTag onTrackClick={onTrackClick} selectedTrack={selectedTrack} tracks={tracks} />
       <Toggle isLocked={isLocked} onToggleClick={onToggleClick} />
-      <Button type="green" isSelected={isSelected} onBtnClick={onBtnClick} />
+      <Button type="green" isSelected={isSelected} onBtnClick={onBtnClick}>프로젝트 수정하기</Button>
     </div>
   );
 }
