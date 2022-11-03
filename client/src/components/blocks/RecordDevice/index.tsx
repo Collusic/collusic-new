@@ -5,10 +5,10 @@ import ArrowUpImg from "../../../../public/assets/arrow_down/arrow_down.png";
 import "./style.scss";
 
 interface RecordDeviceProps {
-  handleDeviceClick: MouseEventHandler<HTMLUListElement> | KeyboardEventHandler<HTMLUListElement>;
+  onDeviceClick: MouseEventHandler<HTMLUListElement> | KeyboardEventHandler<HTMLUListElement>;
 }
 
-function RecordDevice({ handleDeviceClick }: RecordDeviceProps) {
+function RecordDevice({ onDeviceClick }: RecordDeviceProps) {
   const [deviceList, setDeviceList] = useState<MediaDeviceInfo[]>([]);
   const [isOpenDeviceList, setIsOpenDeviceList] = useState(false);
   const [selectedDevice] = useState("입력장치를 선택해주세요.");
@@ -47,7 +47,7 @@ function RecordDevice({ handleDeviceClick }: RecordDeviceProps) {
       </div>
       <div className={classNames("device-list", { "hidden-device-list": !isOpenDeviceList })}>
         <div className="scroll-box">
-          <ul onClick={handleDeviceClick as MouseEventHandler} onKeyDown={handleDeviceClick as KeyboardEventHandler}>
+          <ul onClick={onDeviceClick as MouseEventHandler} onKeyDown={onDeviceClick as KeyboardEventHandler}>
             {deviceList.map((device) => (
               <li key={device.deviceId}>{device.label}</li>
             ))}

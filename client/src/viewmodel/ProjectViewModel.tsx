@@ -12,7 +12,7 @@ function ProjectViewModel() {
     setBpm(Number((e.target as HTMLInputElement).value));
   };
 
-  return <Bpm bpmState={bpm} inputHandler={inputHandler} />;
+  return <Bpm bpmState={bpm} onBpmInput={inputHandler} />;
 }
 
 export default ProjectViewModel;

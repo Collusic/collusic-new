@@ -11,7 +11,7 @@ const Template: ComponentStory<typeof Bpm> = (args) => <Bpm {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  inputHandler: (e) => {
+  onBpmInput: (e) => {
     console.log((e.target as HTMLInputElement).value);
   },
 };

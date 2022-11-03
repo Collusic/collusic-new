@@ -14,7 +14,7 @@ const Template: ComponentStory<typeof TrackTag> = (args) => <TrackTag {...args} 
 
 export const Default = Template.bind({});
 Default.args = {
-  onBtnClick: (e) => {
+  onTrackClick: (e) => {
     console.log(e);
   },
   tracks: ["피아노", "드럼", "보컬", "박수", "어쿠스틱 기타", "일렉 기타", "바이올린", "리코더", "마라카스", "ETC"],

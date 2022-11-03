@@ -7,12 +7,12 @@ import "./style.scss";
 
 interface ToggleProps {
   isLocked: boolean;
-  handleBtnClick: MouseEventHandler;
+  onToggleClick: MouseEventHandler;
 }
 
-function Toggle({ isLocked, handleBtnClick }: ToggleProps) {
+function Toggle({ isLocked, onToggleClick }: ToggleProps) {
   return (
-    <button type="button" className={classNames("toggle", { on: !isLocked })} onClick={handleBtnClick}>
+    <button type="button" className={classNames("toggle", { on: !isLocked })} onClick={onToggleClick}>
       <span className={classNames("lock", { on: !isLocked })}>
         <img src={Locked} alt="locked" className={classNames("locked", { on: !isLocked })} />
         <img src={UnLocked} alt="unlocked" className={classNames("unlocked", { on: !isLocked })} />
