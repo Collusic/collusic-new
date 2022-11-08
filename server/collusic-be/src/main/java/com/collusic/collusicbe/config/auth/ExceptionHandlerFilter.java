@@ -7,6 +7,8 @@ import com.collusic.collusicbe.global.exception.jwt.ExpiredJwtException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.CookieClearingLogoutHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -22,6 +24,7 @@ import java.io.IOException;
 public class ExceptionHandlerFilter extends OncePerRequestFilter {
 
     private final ObjectMapper objectMapper;
+    private final CookieClearingLogoutHandler cookieClearingLogoutHandler;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -29,6 +32,8 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
         try {
             filterChain.doFilter(request, response);
         } catch (ExpiredJwtException | AbnormalAccessException | EntityNotFoundException | UnAuthorizedException e) {
+            cookieClearingLogoutHandler.logout(request, response, SecurityContextHolder.getContext().getAuthentication());
+            SecurityContextHolder.clearContext();
             sendErrorResponse(HttpStatus.UNAUTHORIZED.value(), response, e);
         }
     }

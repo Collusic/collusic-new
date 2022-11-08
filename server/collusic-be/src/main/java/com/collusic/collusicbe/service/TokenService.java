@@ -44,7 +44,7 @@ public class TokenService {
         }
 
         if (!redisRepository.findByKey(refreshToken).equals(remoteAddress)) {
-            throw new AbnormalAccessException("사용자의 IP 주소가 다릅니다."); // TODO: 비정상적인 접근으로 redis에서 refreshtoken을 지워줘야함
+            throw new AbnormalAccessException("사용자의 IP 주소가 다릅니다.");
         }
 
         String email = JWTUtil.getEmail(refreshToken);
