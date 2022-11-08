@@ -64,21 +64,25 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
 
             chain.doFilter(request, response);
         } catch (ExpiredJwtException | NullPointerException accessExpiredException) {
-            try {
-                JWTAuthenticationToken authenticationToken = new JWTAuthenticationToken(refreshToken, Set.of(new SimpleGrantedAuthority(JWTUtil.getRole(refreshToken))));
-                Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
+            authenticateWithRefreshToken(request, response, chain, refreshToken);
+        }
+    }
 
-                String token = tokenService.reissueAccessToken(refreshToken, ParsingUtil.getRemoteAddress(request));
-                response.setHeader("Authorization", BEARER_PREFIX + token);
+    private void authenticateWithRefreshToken(HttpServletRequest request, HttpServletResponse response, FilterChain chain, String refreshToken) throws IOException, ServletException {
+        try {
+            JWTAuthenticationToken authenticationToken = new JWTAuthenticationToken(refreshToken, Set.of(new SimpleGrantedAuthority(JWTUtil.getRole(refreshToken))));
+            Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
 
-                SecurityContextHolder.getContext()
-                                     .setAuthentication(authentication);
+            String token = tokenService.reissueAccessToken(refreshToken, ParsingUtil.getRemoteAddress(request));
+            response.setHeader("Authorization", BEARER_PREFIX + token);
 
-                chain.doFilter(request, response);
-            } catch (ExpiredJwtException | EntityNotFoundException | AbnormalAccessException refreshExpiredException) {
-                tokenService.deleteRefreshToken(refreshToken);
-                throw refreshExpiredException;
-            }
+            SecurityContextHolder.getContext()
+                                 .setAuthentication(authentication);
+
+            chain.doFilter(request, response);
+        } catch (ExpiredJwtException | EntityNotFoundException | AbnormalAccessException refreshExpiredException) {
+            tokenService.deleteRefreshToken(refreshToken);
+            throw refreshExpiredException;
         }
     }
 
