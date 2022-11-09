@@ -36,18 +36,30 @@ public class TrackServiceTest {
         projectRepository = mock(ProjectRepository.class);
         trackService = new TrackService(projectRepository, trackRepository);
 
-        testMember = Member.builder().id(1L).nickname("testMember").build();
-
-        testProject = Project.builder().id(1L).build();
-
-        testTrack = Track.builder().id(1L).creator(testMember).project(testProject).trackName("test track name").trackTag(TrackTag.PIANO).editable(true).volume(50).build();
+        testMember = Member.builder()
+                           .id(1L)
+                           .nickname("testMember")
+                           .build();
+        testProject = Project.builder()
+                             .id(1L)
+                             .build();
+        testTrack = Track.builder()
+                         .id(1L)
+                         .creator(testMember)
+                         .project(testProject)
+                         .trackName("test track name")
+                         .trackTag(TrackTag.PIANO)
+                         .build();
     }
 
     @Test
     @DisplayName("트랙 생성 테스트 - 정상적인 생성")
     void testCreateTrack() {
         // given
-        TrackCreateRequestDto requestDto = TrackCreateRequestDto.builder().trackName("test track name").trackTag("피아노").editable(true).volume(50).build();
+        TrackCreateRequestDto requestDto = TrackCreateRequestDto.builder()
+                                                                .trackName("test track name")
+                                                                .trackTag("피아노")
+                                                                .build();
 
         // when
         when(trackRepository.save(any(Track.class))).thenReturn(testTrack);
@@ -58,15 +70,16 @@ public class TrackServiceTest {
         assertThat(savedTrack.getProject().getId()).isEqualTo(testProject.getId());
         assertThat(savedTrack.getTrackName()).isEqualTo(testTrack.getTrackName());
         assertThat(savedTrack.getTrackTag()).isEqualTo(testTrack.getTrackTag());
-        assertThat(savedTrack.isEditable()).isEqualTo(testTrack.isEditable());
-        assertThat(savedTrack.getVolume()).isEqualTo(testTrack.getVolume());
     }
 
     @Test
     @DisplayName("트랙 생성 테스트 - 프로젝트에 이미 10개의 트랙이 포함되어 있는 경우 생성 실패(throw IllegalStateException)")
     void testCreateTrack_when_already_over_size_then_throw_exception() {
         // given
-        TrackCreateRequestDto requestDto = TrackCreateRequestDto.builder().trackName("test track name").trackTag("피아노").editable(true).volume(50).build();
+        TrackCreateRequestDto requestDto = TrackCreateRequestDto.builder()
+                                                                .trackName("test track name")
+                                                                .trackTag("피아노")
+                                                                .build();
 
         // when
         Project projectWithFullTrack = Project.builder().build();
@@ -83,10 +96,15 @@ public class TrackServiceTest {
     @DisplayName("트랙 수정 테스트 - 정상적인 수정")
     void testUpdateTrack() {
         // given
-        TrackUpdateRequestDto requestDto = TrackUpdateRequestDto.builder().trackName("updated test track name").trackTag("드럼").editable(false).volume(90).build();
+        TrackUpdateRequestDto requestDto = TrackUpdateRequestDto.builder().trackName("updated test track name").trackTag("드럼").build();
         Track originalTrack = testTrack;
 
-        Track updatedTrack = Track.builder().creator(testMember).project(testProject).trackName("updated test track name").trackTag(TrackTag.DRUM).editable(false).volume(90).build();
+        Track updatedTrack = Track.builder()
+                                  .creator(testMember)
+                                  .project(testProject)
+                                  .trackName("updated test track name")
+                                  .trackTag(TrackTag.DRUM)
+                                  .build();
 
         // when
         when(trackRepository.findById(any(Long.class))).thenReturn(Optional.of(originalTrack));
@@ -96,17 +114,23 @@ public class TrackServiceTest {
         //then
         assertThat(savedTrack.getTrackName()).isEqualTo(requestDto.getTrackName());
         assertThat(savedTrack.getTrackTag()).isEqualTo(requestDto.getTrackTag());
-        assertThat(savedTrack.isEditable()).isEqualTo(requestDto.getEditable());
-        assertThat(savedTrack.getVolume()).isEqualTo(requestDto.getVolume());
     }
 
     @Test
     @DisplayName("트랙 수정 테스트 - 트랙 생성자가 아닌 사용자의 요청의 경우 실패")
     void testUpdateTrack_when_other_try_update_than_throw_exception() {
         // given
-        TrackUpdateRequestDto requestDto = TrackUpdateRequestDto.builder().trackName("updated test track name").trackTag("드럼").editable(false).volume(90).build();
+        TrackUpdateRequestDto requestDto = TrackUpdateRequestDto.builder()
+                                                                .trackName("updated test track name")
+                                                                .trackTag("드럼")
+                                                                .build();
         Track originalTrack = testTrack;
-        Track updatedTrack = Track.builder().creator(testMember).project(testProject).trackName("updated test track name").trackTag(TrackTag.DRUM).editable(false).volume(90).build();
+        Track updatedTrack = Track.builder()
+                                  .creator(testMember)
+                                  .project(testProject)
+                                  .trackName("updated test track name")
+                                  .trackTag(TrackTag.DRUM)
+                                  .build();
 
         Member anotherMember = Member.builder().id(2L).nickname("otherMember").build();
 

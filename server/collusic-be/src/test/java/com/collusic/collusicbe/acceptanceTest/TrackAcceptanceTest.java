@@ -27,9 +27,6 @@ public class TrackAcceptanceTest extends AbstractAcceptanceTest {
         TrackCreateRequestDto requestDto = TrackCreateRequestDto.builder()
                                                                 .trackName("test track name")
                                                                 .trackTag("피아노")
-                                                                .editable(true)
-                                                                .measure(4)
-                                                                .volume(50)
                                                                 .build();
 
         // when
@@ -46,9 +43,6 @@ public class TrackAcceptanceTest extends AbstractAcceptanceTest {
         TrackCreateRequestDto requestDto = TrackCreateRequestDto.builder()
                                                                 .trackName("test track name")
                                                                 .trackTag("피아노")
-                                                                .editable(true)
-                                                                .measure(4)
-                                                                .volume(50)
                                                                 .build();
 
         // when
@@ -79,9 +73,6 @@ public class TrackAcceptanceTest extends AbstractAcceptanceTest {
         TrackCreateRequestDto requestDto = TrackCreateRequestDto.builder()
                                                                 .trackName("test track name")
                                                                 .trackTag("피아노")
-                                                                .measure(4)
-                                                                .editable(true)
-                                                                .volume(50)
                                                                 .build();
         // when
         ResponseEntity<TrackCreateResponseDto> response = template().postForEntity("/projects/2/tracks", requestEntityWithToken(requestDto), TrackCreateResponseDto.class);
@@ -97,9 +88,6 @@ public class TrackAcceptanceTest extends AbstractAcceptanceTest {
         TrackUpdateRequestDto requestDto = TrackUpdateRequestDto.builder()
                                                                 .trackName("test track name")
                                                                 .trackTag("피아노")
-                                                                .editable(true)
-                                                                .measure(4)
-                                                                .volume(50)
                                                                 .build();
 
         // when
@@ -130,9 +118,6 @@ public class TrackAcceptanceTest extends AbstractAcceptanceTest {
         TrackUpdateRequestDto requestDto = TrackUpdateRequestDto.builder()
                                                                 .trackName("test track name")
                                                                 .trackTag("피아노")
-                                                                .editable(true)
-                                                                .measure(4)
-                                                                .volume(50)
                                                                 .build();
 
         // when
