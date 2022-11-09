@@ -4,7 +4,7 @@ import com.collusic.collusicbe.global.exception.jwt.AbnormalAccessException;
 import com.collusic.collusicbe.service.TokenService;
 import com.collusic.collusicbe.util.JWTUtil;
 import com.collusic.collusicbe.util.ParsingUtil;
-import io.jsonwebtoken.ExpiredJwtException;
+import com.collusic.collusicbe.global.exception.jwt.ExpiredTokenException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
@@ -38,7 +38,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException, ExpiredTokenException {
 
         String bearer = request.getHeader(HttpHeaders.AUTHORIZATION);
 
@@ -63,7 +63,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
                                  .setAuthentication(authentication);
 
             chain.doFilter(request, response);
-        } catch (ExpiredJwtException | NullPointerException accessExpiredException) {
+        } catch (ExpiredTokenException | NullPointerException e) {
             authenticateWithRefreshToken(request, response, chain, refreshToken);
         }
     }
@@ -80,9 +80,9 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
                                  .setAuthentication(authentication);
 
             chain.doFilter(request, response);
-        } catch (ExpiredJwtException | EntityNotFoundException | AbnormalAccessException refreshExpiredException) {
+        } catch (ExpiredTokenException | EntityNotFoundException | AbnormalAccessException e) {
             tokenService.deleteRefreshToken(refreshToken);
-            throw refreshExpiredException;
+            throw e;
         }
     }
 

@@ -57,7 +57,7 @@ public class JWTUtil {
                    .setHeader(jwtHeaders())
                    .claim("email", email)
                    .claim("role", role)
-                   .claim("exp", Instant.now().getEpochSecond() + 1)
+                   .claim("exp", Instant.now().getEpochSecond() + REFRESH_TIME)
                    .signWith(SignatureAlgorithm.HS256, KEY)
                    .compact();
     }
