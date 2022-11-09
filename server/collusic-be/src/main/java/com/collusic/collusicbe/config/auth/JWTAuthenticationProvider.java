@@ -1,5 +1,5 @@
 package com.collusic.collusicbe.config.auth;
-import com.collusic.collusicbe.global.exception.jwt.ExpiredJwtException;
+import com.collusic.collusicbe.global.exception.jwt.ExpiredTokenException;
 import com.collusic.collusicbe.util.JWTUtil;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class JWTAuthenticationProvider implements AuthenticationProvider {
 
     @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException, ExpiredJwtException {
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException, ExpiredTokenException {
         String token = (String) authentication.getPrincipal();
 
         JWTUtil.verify(token);

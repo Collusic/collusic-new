@@ -1,9 +1,9 @@
 package com.collusic.collusicbe.util;
 
+import com.collusic.collusicbe.global.exception.jwt.ExpiredTokenException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.*;
-import com.collusic.collusicbe.global.exception.jwt.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.Instant;
@@ -36,7 +36,7 @@ public class JWTUtil {
                        .getBody();
         } catch (ExpiredJwtException e) {
             log.info("토큰 만료");
-            throw new ExpiredJwtException("토큰 만료");
+            throw new ExpiredTokenException("토큰 만료");
         } catch (UnsupportedJwtException e) {
             log.info("애플리케이션에서 지원하지 않는 토큰 형식");
             throw new UnsupportedJwtException("애플리케이션에서 지원하지 않는 토큰 형식");

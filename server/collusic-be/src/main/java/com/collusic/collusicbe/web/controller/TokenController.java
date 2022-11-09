@@ -1,6 +1,7 @@
 package com.collusic.collusicbe.web.controller;
 
-import com.collusic.collusicbe.util.JWTUtil;
+import com.collusic.collusicbe.web.controller.dto.ReissuedTokenDto;
+
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,14 +19,11 @@ public class TokenController {
 
     @Operation(summary = "토큰 재발급", description = "refresh token을 통한 access token 재발급")
     @PostMapping("/reissue")
-    public ResponseEntity<String> reissue(HttpServletResponse response) {
+    public ResponseEntity<ReissuedTokenDto> reissue(HttpServletResponse response) {
         String bearer = response.getHeader("Authorization");
-        String token = bearer.substring(BEARER_PREFIX.length());
-        String accessToken = JWTUtil.createAccessToken(JWTUtil.getEmail(token), JWTUtil.getRole(token));
-        response.setHeader("Authorization", BEARER_PREFIX + accessToken);
+        String accessToken = bearer.substring(BEARER_PREFIX.length());
+        response.setHeader("Authorization", null);
         return ResponseEntity.status(HttpStatus.CREATED)
-                             .body(accessToken);
+                             .body(new ReissuedTokenDto(accessToken));
     }
-
-    // TODO : refresh token 무효화 api -> 사실상 로그아웃
 }
