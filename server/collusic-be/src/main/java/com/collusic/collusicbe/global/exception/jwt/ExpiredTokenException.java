@@ -2,9 +2,9 @@ package com.collusic.collusicbe.global.exception.jwt;
 
 import io.jsonwebtoken.JwtException;
 
-public class ExpiredJwtException extends JwtException {
+public class ExpiredTokenException extends JwtException {
 
-    public ExpiredJwtException(String message) {
+    public ExpiredTokenException(String message) {
         super(message);
     }
 }
