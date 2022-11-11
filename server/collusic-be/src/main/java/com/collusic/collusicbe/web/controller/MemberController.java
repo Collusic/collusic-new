@@ -4,6 +4,7 @@ import com.collusic.collusicbe.config.auth.LoginMember;
 import com.collusic.collusicbe.domain.member.Member;
 import com.collusic.collusicbe.service.MemberService;
 import com.collusic.collusicbe.service.TokenService;
+import com.collusic.collusicbe.util.CookieUtils;
 import com.collusic.collusicbe.util.ParsingUtil;
 import com.collusic.collusicbe.web.auth.OAuth2LoginResponseType;
 import com.collusic.collusicbe.web.controller.dto.*;
@@ -17,12 +18,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
-import static com.collusic.collusicbe.util.JWTUtil.REFRESH_TIME;
 
 @RequiredArgsConstructor
 @RestController
@@ -42,7 +40,7 @@ public class MemberController {
                                                           .accessToken(tokens.getAccessToken())
                                                           .build();
 
-        response.addCookie(setCookieWithRefreshToken(tokens.getRefreshToken()));
+        response.addCookie(CookieUtils.setCookieWith(tokens.getRefreshToken()));
 
         return ResponseEntity.ok(responseBody);
     }
@@ -87,12 +85,11 @@ public class MemberController {
         return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);
     }
 
-
-    private Cookie setCookieWithRefreshToken(String refreshToken) {
-        Cookie cookie = new Cookie("refreshToken", refreshToken);
-        cookie.setMaxAge(REFRESH_TIME);
-        cookie.setSecure(false); // TODO : HTTPS 적용 시 true로 옵션 변경하기
-        cookie.setHttpOnly(true);
-        return cookie;
+    @Operation(summary = "로그아웃", description = "로그인된 회원을 로그아웃 시킨다.")
+    @GetMapping("/logout")
+    public ResponseEntity<Void> logout(HttpServletRequest request, HttpServletResponse response) {
+        tokenService.deleteRefreshToken(CookieUtils.extractRefreshToken(request));
+        CookieUtils.expireCookie(response, "refreshToken");
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
