@@ -3,6 +3,7 @@ import classNames from "classnames";
 
 import ArrowUpImg from "../../../../public/assets/arrow_down/arrow_down.png";
 import "./style.scss";
+import Span from "components/atoms/Span";
 
 interface RecordDeviceProps {
   onDeviceClick: MouseEventHandler<HTMLUListElement> | KeyboardEventHandler<HTMLUListElement>;
@@ -34,14 +35,11 @@ function RecordDevice({ onDeviceClick }: RecordDeviceProps) {
   }, []);
 
   return (
-    <>
+    <div id="record-device">
+      <Span>입력장치</Span>
       <div className="selected-device">
         <span>{selectedDevice}</span>
-        <button
-          type="button"
-          className={classNames({ "rotate-button": isOpenDeviceList })}
-          onClick={handleBtnClick}
-        >
+        <button type="button" className={classNames({ "rotate-button": isOpenDeviceList })} onClick={handleBtnClick}>
           <img src={ArrowUpImg} alt="record device" />
         </button>
       </div>
@@ -54,7 +52,7 @@ function RecordDevice({ onDeviceClick }: RecordDeviceProps) {
           </ul>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
