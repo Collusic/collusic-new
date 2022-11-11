@@ -4,6 +4,7 @@ import com.collusic.collusicbe.global.exception.ExceptionInfoResponse;
 import com.collusic.collusicbe.global.exception.UnAuthorizedException;
 import com.collusic.collusicbe.global.exception.jwt.AbnormalAccessException;
 import com.collusic.collusicbe.global.exception.jwt.ExpiredTokenException;
+import com.collusic.collusicbe.util.CookieUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,7 +15,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -31,16 +31,10 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
         try {
             filterChain.doFilter(request, response);
         } catch (ExpiredTokenException | AbnormalAccessException | EntityNotFoundException | UnAuthorizedException e) {
-            expireCookie(response, "refreshToken");
+            CookieUtils.expireCookie(response, "refreshToken");
             SecurityContextHolder.clearContext();
             sendErrorResponse(HttpStatus.UNAUTHORIZED.value(), response, e);
         }
-    }
-
-    private void expireCookie(HttpServletResponse response, String cookieName) {
-        Cookie cookie = new Cookie(cookieName, null);
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
     }
 
     private void sendErrorResponse(int status, HttpServletResponse response, RuntimeException e) throws IOException {
