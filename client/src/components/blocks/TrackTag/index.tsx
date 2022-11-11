@@ -21,9 +21,9 @@ function TrackTag({ onTrackClick, selectedTrack, tracks }: TrackTagProps) {
   };
 
   return (
-    <>
+    <div id="track-tag">
       <Span>트랙 태그</Span>
-      <div id="track-tag">
+      <div id="track-tag-list">
         {tracks.map((track) => (
           <Button
             key={track}
@@ -38,7 +38,7 @@ function TrackTag({ onTrackClick, selectedTrack, tracks }: TrackTagProps) {
           </Button>
         ))}
       </div>
-    </>
+    </div>
   );
 }
 
