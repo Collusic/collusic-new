@@ -4,6 +4,7 @@ import com.collusic.collusicbe.domain.member.Member;
 import com.collusic.collusicbe.domain.member.MemberRepository;
 import com.collusic.collusicbe.domain.member.SnsType;
 import com.collusic.collusicbe.service.TokenService;
+import com.collusic.collusicbe.util.CookieUtils;
 import com.collusic.collusicbe.util.ParsingUtil;
 import com.collusic.collusicbe.web.controller.dto.TokenResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -54,6 +55,7 @@ public class OAuth2Controller {
 
         if (validateUserAttributes(member.get(), snsType)) {
             TokenResponseDto tokens = tokenService.issue(email, member.get().getRole().getKey(), remoteAddress);
+            CookieUtils.setCookieWith(tokens.getRefreshToken());
             return OAuth2LoginResponseDto.builder()
                                          .responseType(OAuth2LoginResponseType.SIGN_IN)
                                          .accessToken(tokens.getAccessToken())
