@@ -1,10 +1,11 @@
 package com.collusic.collusicbe.config.auth;
 
 import com.collusic.collusicbe.global.exception.jwt.AbnormalAccessException;
+import com.collusic.collusicbe.global.exception.jwt.ExpiredTokenException;
 import com.collusic.collusicbe.service.TokenService;
+import com.collusic.collusicbe.util.CookieUtils;
 import com.collusic.collusicbe.util.JWTUtil;
 import com.collusic.collusicbe.util.ParsingUtil;
-import com.collusic.collusicbe.global.exception.jwt.ExpiredTokenException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
@@ -15,12 +16,9 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Optional;
 import java.util.Set;
 
 public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
@@ -42,7 +40,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
 
         String bearer = request.getHeader(HttpHeaders.AUTHORIZATION);
 
-        String refreshToken = extractRefreshToken(request);
+        String refreshToken = CookieUtils.extractRefreshToken(request);
 
         if ((bearer == null || !bearer.startsWith(BEARER_PREFIX)) && refreshToken == null) {
             chain.doFilter(request, response);
@@ -84,17 +82,5 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
             tokenService.deleteRefreshToken(refreshToken);
             throw e;
         }
-    }
-
-    private String extractRefreshToken(HttpServletRequest request) {
-        Cookie[] cookies = Optional.ofNullable(request.getCookies())
-                                   .orElseGet(() -> new Cookie[]{});
-
-        Cookie cookie = Arrays.stream(cookies)
-                              .filter(c -> c.getName().equals("refreshToken"))
-                              .findFirst()
-                              .orElse(new Cookie("refreshToken", null));
-
-        return cookie.getValue();
     }
 }
