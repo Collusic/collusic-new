@@ -28,10 +28,12 @@ function ProjectSetting({
 }: ProjectSettingProps) {
   return (
     <div id="project-setting">
-      <input className="project-title" type="text" placeholder="프로젝트명" />
-      <RecordDevice onDeviceClick={onDeviceClick} />
-      <Bpm bpmState={bpmState} onBpmInput={onBpmInput} />
-      <TrackTag onTrackClick={onTrackClick} selectedTrack={selectedTrack} tracks={tracks} />
+      <div id="setting-box">
+        <input className="project-title" type="text" placeholder="프로젝트명" />
+        <RecordDevice onDeviceClick={onDeviceClick} />
+        <Bpm bpmState={bpmState} onBpmInput={onBpmInput} />
+        <TrackTag onTrackClick={onTrackClick} selectedTrack={selectedTrack} tracks={tracks} />
+      </div>
       <Button type="green" onBtnClick={onBtnClick} width="20rem" marginTop="5rem">
         프로젝트 생성하기
       </Button>

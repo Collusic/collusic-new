@@ -1,11 +1,24 @@
 #project-setting {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
   width: 30rem;
+  height: 100%;
   padding: 40px;
   background-color: #242424;
   border-radius: 24px;
+
+  #setting-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    input:focus {
+      outline: none;
+    }
+  }
 }
 
 .project-title {
