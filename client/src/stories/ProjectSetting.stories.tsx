@@ -12,9 +12,7 @@ const Template: ComponentStory<typeof ProjectSetting> = (args) => <ProjectSettin
 export const Default = Template.bind({});
 Default.args = {
   onDeviceClick: () => {},
-  onSessionMelodyClick: () => {},
   onTrackClick: () => {},
-  onToggleClick: () => {},
   onBtnClick: () => {},
   onBpmInput: () => {},
   tracks: ["피아노", "드럼", "보컬", "박수", "어쿠스틱 기타", "일렉 기타", "바이올린", "리코더", "마라카스", "ETC"],
