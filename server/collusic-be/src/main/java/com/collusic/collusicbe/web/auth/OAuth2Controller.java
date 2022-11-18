@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 import java.util.Optional;
 
@@ -29,20 +30,20 @@ public class OAuth2Controller {
 
     @Operation(summary = "sns 로그인", description = "sns로부터 받은 auth code를 query string으로 보내 로그인 및 회원정보 응답")
     @GetMapping("/oauth2/login/{provider}")
-    public ResponseEntity<OAuth2LoginResponseDto> loginToSns(@PathVariable String provider, @RequestParam Map<String, Object> authCode, HttpServletRequest request) {
+    public ResponseEntity<OAuth2LoginResponseDto> loginToSns(@PathVariable String provider, @RequestParam Map<String, Object> authCode, HttpServletRequest request, HttpServletResponse response) {
         OAuth2ClientService oAuth2ClientService = oAuth2ProviderClientManager.getClientService(provider);
-           OAuth2Response response = oAuth2ClientService.requestLogin(authCode);
-        String email = (String) response.getAttributes().get("email");
-        String authId = (String) response.getAttributes().get("sub");
-        String profileImageUrl = (String) response.getAttributes().get("picture");
+           OAuth2Response oAuth2Response = oAuth2ClientService.requestLogin(authCode);
+        String email = (String) oAuth2Response.getAttributes().get("email");
+        String authId = (String) oAuth2Response.getAttributes().get("sub");
+        String profileImageUrl = (String) oAuth2Response.getAttributes().get("picture");
 
         Optional<Member> member = memberRepository.findByEmail(email);
-        OAuth2LoginResponseDto responseDto = afterOAuth2Login(member, SnsType.valueOf(provider.toUpperCase()), email, authId, profileImageUrl, ParsingUtil.getRemoteAddress(request));
+        OAuth2LoginResponseDto responseDto = afterOAuth2Login(response, member, SnsType.valueOf(provider.toUpperCase()), email, authId, profileImageUrl, ParsingUtil.getRemoteAddress(request));
 
         return ResponseEntity.ok(responseDto);
     }
 
-    private OAuth2LoginResponseDto afterOAuth2Login(Optional<Member> member, SnsType snsType, String email, String authId, String profileImageUrl, String remoteAddress) {
+    private OAuth2LoginResponseDto afterOAuth2Login(HttpServletResponse response, Optional<Member> member, SnsType snsType, String email, String authId, String profileImageUrl, String remoteAddress) {
         if (!member.isPresent()) {
             return OAuth2LoginResponseDto.builder()
                                          .responseType(OAuth2LoginResponseType.SIGN_UP)
@@ -55,7 +56,7 @@ public class OAuth2Controller {
 
         if (validateUserAttributes(member.get(), snsType)) {
             TokenResponseDto tokens = tokenService.issue(email, member.get().getRole().getKey(), remoteAddress);
-            CookieUtils.setCookieWith(tokens.getRefreshToken());
+            response.addCookie(CookieUtils.setCookieWith(tokens.getRefreshToken()));
             return OAuth2LoginResponseDto.builder()
                                          .responseType(OAuth2LoginResponseType.SIGN_IN)
                                          .accessToken(tokens.getAccessToken())
