@@ -27,6 +27,11 @@ export const tagListState = atom<Track[]>({
   default: [],
 });
 
+export const selectedTrackState = atom<Track>({
+  key: "SelectedTrackState",
+  default: "",
+});
+
 export const isEditableState = atom({
   key: "IsEditableState",
   default: true,
