@@ -1,7 +1,6 @@
 import React, { KeyboardEventHandler, MouseEventHandler, useEffect, useState } from "react";
 import classNames from "classnames";
 
-import ArrowUpImg from "../../../../public/assets/arrow_down/arrow_down.png";
 import "./style.scss";
 import Span from "components/atoms/Span";
 
@@ -40,7 +39,7 @@ function RecordDevice({ onDeviceClick }: RecordDeviceProps) {
       <div className="selected-device">
         <span>{selectedDevice}</span>
         <button type="button" className={classNames({ "rotate-button": isOpenDeviceList })} onClick={handleBtnClick}>
-          <img src={ArrowUpImg} alt="record device" />
+          <img src={`${process.env.PUBLIC_URL}/assets/arrow_down/arrow_down.png`} alt="record device" />
         </button>
       </div>
       <div className={classNames("device-list", { "hidden-device-list": !isOpenDeviceList })}>
