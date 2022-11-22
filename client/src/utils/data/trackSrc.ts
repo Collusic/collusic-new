@@ -9,6 +9,7 @@ export const SelectedTrackSrc = {
   리코더: `${process.env.PUBLIC_URL}/assets/track/selected/recorder.svg`,
   마라카스: `${process.env.PUBLIC_URL}/assets/track/selected/maracas.svg`,
   ETC: "",
+  "": "",
 };
 
 export const UnselectedTrackSrc = {
@@ -22,4 +23,5 @@ export const UnselectedTrackSrc = {
   리코더: `${process.env.PUBLIC_URL}/assets/track/unselected/recorder.svg`,
   마라카스: `${process.env.PUBLIC_URL}/assets/track/unselected/maracas.svg`,
   ETC: "",
+  "": "",
 };

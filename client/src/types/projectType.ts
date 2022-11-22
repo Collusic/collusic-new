@@ -8,6 +8,7 @@ export type Track =
   | "바이올린"
   | "리코더"
   | "마라카스"
-  | "ETC";
+  | "ETC"
+  | "";
 
 export type MelodyLength = "4" | "8" | "16";
