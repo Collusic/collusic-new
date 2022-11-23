@@ -1,7 +1,8 @@
 import React from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { useLocation, useNavigate } from "react-router-dom";
 
+import { signInState } from "model/signInModel";
 import { signUpState } from "../model/signUpModel";
 
 import { SignUp } from "../components/blocks/SignUp";
@@ -19,6 +20,7 @@ type UserData = {
 };
 
 export function SignUpViewModel() {
+  const setSignInState = useSetRecoilState(signInState);
   const [signUp, setSignUp] = useRecoilState(signUpState);
   const location = useLocation();
   const navigate = useNavigate();
@@ -42,8 +44,9 @@ export function SignUpViewModel() {
         formData.append("profileImageUrl", profileImageUrl);
         formData.append("snsType", snsType);
 
-        API.post("/members", formData)
+        API.post("/members", formData, { withCredentials: true })
           .then(() => {
+            setSignInState(true);
             alert("회원가입 완료");
             navigate("/");
           })

@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { NavBar } from "./components/blocks/NavBar";
 
+import AuthVerify from "./viewmodel/AuthVerify";
 import { SignInViewModel } from "./viewmodel/SignInViewModel";
 import { StartPageView } from "./view/StartPageView";
 import { SignUpViewModel } from "./viewmodel/SignUpViewModel";
@@ -10,6 +11,10 @@ import { RedirectViewModel } from "./viewmodel/RedirectViewModel";
 import { ProjectListView } from "./view/ProjectListView";
 
 function App() {
+  const logOut = () => {
+    console.log("logOut!");
+  };
+
   return (
     <BrowserRouter>
       <NavBar />
@@ -20,6 +25,7 @@ function App() {
         <Route path="/" element={<StartPageView />} />
         <Route path="/projectlist" element={<ProjectListView />} />
       </Routes>
+      <AuthVerify logout={logOut} />
     </BrowserRouter>
   );
 }
