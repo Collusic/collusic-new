@@ -35,6 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .formLogin().disable()
+                .logout().disable()
                 .authorizeRequests(request -> request.antMatchers(HttpMethod.POST, "/members").permitAll()
                                                      .antMatchers(HttpMethod.GET, "/oauth2/login/{provider}", "/members/{nickname}").permitAll()
                                                      .antMatchers("/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs").permitAll()
