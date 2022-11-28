@@ -1,7 +1,6 @@
 package com.collusic.collusicbe.domain.project;
 
 import com.collusic.collusicbe.domain.BaseTimeEntity;
-import com.collusic.collusicbe.domain.state.State;
 import com.collusic.collusicbe.domain.track.Track;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -39,21 +38,17 @@ public class Project extends BaseTimeEntity {
     @Column(nullable = false)
     private String fileUrl;
 
-    @Enumerated(EnumType.STRING)
-    private State projectState;
-
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<Track> tracks = new ArrayList<>();
 
     private static final int MAX_TRACK_CAPACITY = 10;
 
     @Builder
-    public Project(Long id, String projectName, int bpm, String fileUrl, State projectState) {
+    public Project(Long id, String projectName, int bpm, String fileUrl) {
         this.id = id;
         this.projectName = projectName;
         this.bpm = bpm;
         this.fileUrl = fileUrl;
-        this.projectState = projectState;
     }
 
     public boolean isTrackFull() {

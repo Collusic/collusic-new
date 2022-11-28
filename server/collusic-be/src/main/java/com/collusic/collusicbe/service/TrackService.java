@@ -29,8 +29,6 @@ public class TrackService {
                            .project(project)
                            .trackName(trackData.getTrackName())
                            .trackTag(trackData.getTrackTag())
-                           .measure(trackData.getMeasure())
-                           .volume(trackData.getVolume())
                            .orderInProject(project.getNextTrackOrder())
                            .build();
         return trackRepository.save(track);
@@ -44,12 +42,7 @@ public class TrackService {
             throw new IllegalArgumentException();
         }
 
-        track.changeTrackInfo(
-                trackData.getTrackName(),
-                trackData.getTrackTag(),
-                trackData.getEditable(),
-                trackData.getMeasure(),
-                trackData.getVolume());
+        track.changeTrackInfo(trackData.getTrackName(), trackData.getTrackTag());
 
         return trackRepository.save(track);
     }

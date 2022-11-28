@@ -1,6 +1,5 @@
 package com.collusic.collusicbe.web.controller.dto;
 
-import com.collusic.collusicbe.domain.track.Measure;
 import com.collusic.collusicbe.domain.track.TrackTag;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,21 +18,10 @@ public class TrackUpdateRequestDto {
     private String trackName;
     @NotNull
     private TrackTag trackTag;
-    @NotNull
-    private Boolean editable;
-    @NotNull
-    private Measure measure;
-    @NotNull
-    @Min(0)
-    @Max(100)
-    private Integer volume;
 
     @Builder
-    public TrackUpdateRequestDto(String trackName, String trackTag, Boolean editable, Integer measure, Integer volume) {
+    public TrackUpdateRequestDto(String trackName, String trackTag) {
         this.trackName = trackName;
         this.trackTag = TrackTag.valueOfLabel(trackTag);
-        this.editable = editable;
-        this.measure = Measure.valueOfInteger(measure);
-        this.volume = volume;
     }
 }
