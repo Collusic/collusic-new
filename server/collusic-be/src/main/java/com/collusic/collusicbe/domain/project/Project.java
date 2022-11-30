@@ -6,15 +6,13 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -22,9 +20,9 @@ import java.util.NoSuchElementException;
 public class Project extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Type(type="uuid-char")
     @Column(name = "PROJECT_ID")
-    private Long id;
+    private UUID id;
 
     @Size(min = 1, max = 20)
     @Column(length = 20, nullable = false)
@@ -44,7 +42,7 @@ public class Project extends BaseTimeEntity {
     private static final int MAX_TRACK_CAPACITY = 10;
 
     @Builder
-    public Project(Long id, String projectName, int bpm, String fileUrl) {
+    public Project(UUID id, String projectName, int bpm, String fileUrl) {
         this.id = id;
         this.projectName = projectName;
         this.bpm = bpm;
@@ -67,6 +65,7 @@ public class Project extends BaseTimeEntity {
     }
 
     public void addTrack(Track track) {
+        track.setProject(this);
         this.tracks.add(track);
     }
 

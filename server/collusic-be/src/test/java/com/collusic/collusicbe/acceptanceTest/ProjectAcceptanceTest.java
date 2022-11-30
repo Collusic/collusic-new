@@ -19,7 +19,7 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
         ProjectCreateRequestDto requestDto = ProjectCreateRequestDto.builder()
                 .projectName("test project name")
                 .bpm(45)
-                .trackTag("기타")
+                .trackTag("피아노")
                 .build();
 
         // when

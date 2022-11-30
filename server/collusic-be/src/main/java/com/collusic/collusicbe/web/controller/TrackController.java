@@ -15,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,7 +25,7 @@ public class TrackController {
     private final ProjectService projectService;
 
     @PostMapping("/projects/{projectId}/tracks")
-    public ResponseEntity<TrackCreateResponseDto> createTrack(@LoginMember Member member, @PathVariable Long projectId, @Validated @RequestBody final TrackCreateRequestDto requestDto) {
+    public ResponseEntity<TrackCreateResponseDto> createTrack(@LoginMember Member member, @PathVariable UUID projectId, @Validated @RequestBody final TrackCreateRequestDto requestDto) {
         Project project = projectService.findById(projectId);
         Track track = trackService.create(member, project, requestDto);
 
@@ -32,7 +33,7 @@ public class TrackController {
     }
 
     @PutMapping("/projects/{projectId}/tracks/{trackId}")
-    public ResponseEntity<Void> updateTrack(@LoginMember Member member, @PathVariable Long projectId, @PathVariable Long trackId, @Validated @RequestBody final TrackUpdateRequestDto requestDto) {
+    public ResponseEntity<Void> updateTrack(@LoginMember Member member, @PathVariable UUID projectId, @PathVariable Long trackId, @Validated @RequestBody final TrackUpdateRequestDto requestDto) {
         Project project = projectService.findById(projectId);
 
         if (!project.isLastTrackId(trackId)) {
@@ -45,7 +46,7 @@ public class TrackController {
     }
 
     @DeleteMapping("/projects/{projectId}/tracks/{trackId}")
-    public ResponseEntity<Void> deleteTrack(@LoginMember Member member, @PathVariable Long projectId, @PathVariable Long trackId) {
+    public ResponseEntity<Void> deleteTrack(@LoginMember Member member, @PathVariable UUID projectId, @PathVariable Long trackId) {
         Project project = projectService.findById(projectId);
         trackService.delete(member, project, trackId);
 

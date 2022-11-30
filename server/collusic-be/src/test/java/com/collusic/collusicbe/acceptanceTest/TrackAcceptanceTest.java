@@ -30,7 +30,7 @@ public class TrackAcceptanceTest extends AbstractAcceptanceTest {
                                                                 .build();
 
         // when
-        ResponseEntity<TrackCreateResponseDto> response = template().postForEntity("/projects/1/tracks", requestEntityWithToken(requestDto), TrackCreateResponseDto.class);
+        ResponseEntity<TrackCreateResponseDto> response = template().postForEntity("/projects/247f720a-3eb6-4ba4-9dc9-9f5bde8014a3/tracks", requestEntityWithToken(requestDto), TrackCreateResponseDto.class);
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
@@ -46,7 +46,7 @@ public class TrackAcceptanceTest extends AbstractAcceptanceTest {
                                                                 .build();
 
         // when
-        ResponseEntity<TrackCreateResponseDto> response = template().postForEntity("/projects/1/tracks", requestEntity(requestDto), TrackCreateResponseDto.class);
+        ResponseEntity<TrackCreateResponseDto> response = template().postForEntity("/projects/247f720a-3eb6-4ba4-9dc9-9f5bde8014a3/tracks", requestEntity(requestDto), TrackCreateResponseDto.class);
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
@@ -60,7 +60,7 @@ public class TrackAcceptanceTest extends AbstractAcceptanceTest {
                                                               .build();
 
         // when
-        ResponseEntity<TrackCreateResponseDto> response = template().postForEntity("/projects/1/tracks", requestEntityWithToken(emptyDto), TrackCreateResponseDto.class);
+        ResponseEntity<TrackCreateResponseDto> response = template().postForEntity("/projects/247f720a-3eb6-4ba4-9dc9-9f5bde8014a3/tracks", requestEntityWithToken(emptyDto), TrackCreateResponseDto.class);
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -75,7 +75,7 @@ public class TrackAcceptanceTest extends AbstractAcceptanceTest {
                                                                 .trackTag("피아노")
                                                                 .build();
         // when
-        ResponseEntity<TrackCreateResponseDto> response = template().postForEntity("/projects/2/tracks", requestEntityWithToken(requestDto), TrackCreateResponseDto.class);
+        ResponseEntity<TrackCreateResponseDto> response = template().postForEntity("/projects/e51933e5-1104-4302-905f-7a7629f5bf02/tracks", requestEntityWithToken(requestDto), TrackCreateResponseDto.class);
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -91,7 +91,7 @@ public class TrackAcceptanceTest extends AbstractAcceptanceTest {
                                                                 .build();
 
         // when
-        ResponseEntity<Void> response = template().exchange("/projects/3/tracks/12", HttpMethod.PUT, requestEntityWithToken(requestDto), Void.class);
+        ResponseEntity<Void> response = template().exchange("/projects/a7fdca9b-23e1-4533-a3c5-8beeb28fb66b/tracks/12", HttpMethod.PUT, requestEntityWithToken(requestDto), Void.class);
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -105,7 +105,7 @@ public class TrackAcceptanceTest extends AbstractAcceptanceTest {
                                                                 .build();
 
         // when
-        ResponseEntity<Void> response = template().exchange("/projects/3/tracks/12", HttpMethod.PUT, requestEntityWithToken(requestDto), Void.class);
+        ResponseEntity<Void> response = template().exchange("/projects/a7fdca9b-23e1-4533-a3c5-8beeb28fb66b/tracks/12", HttpMethod.PUT, requestEntityWithToken(requestDto), Void.class);
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -121,7 +121,7 @@ public class TrackAcceptanceTest extends AbstractAcceptanceTest {
                                                                 .build();
 
         // when
-        ResponseEntity<Void> response = template().exchange("/projects/3/tracks/11", HttpMethod.PUT, requestEntityWithToken(requestDto), Void.class);
+        ResponseEntity<Void> response = template().exchange("/projects/a7fdca9b-23e1-4533-a3c5-8beeb28fb66b/tracks/11", HttpMethod.PUT, requestEntityWithToken(requestDto), Void.class);
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -130,24 +130,24 @@ public class TrackAcceptanceTest extends AbstractAcceptanceTest {
     @Test
     @DisplayName("트랙 삭제 테스트 - 정상적인 요청의 경우 OK(200)으로 응답")
     void testDeletingTrack() {
-        ResponseEntity<Void> response = template().exchange("/projects/4/tracks/13", HttpMethod.DELETE, requestEntityWithToken(null), Void.class);
+        ResponseEntity<Void> response = template().exchange("/projects/721da6c6-cf51-4000-9853-754b2a2ac193/tracks/13", HttpMethod.DELETE, requestEntityWithToken(null), Void.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
     @Test
     @DisplayName("트랙 삭제 테스트 - 정상적인 요청의 경우 OK(200)으로 응답 + 프로젝트의 루트 트랙인 경우 프로젝트도 삭제되어야 함")
     void testDeletingTrack2() {
-        ResponseEntity<Void> responseForDeleting = template().exchange("/projects/5/tracks/15", HttpMethod.DELETE, requestEntityWithToken(null), Void.class);
+        ResponseEntity<Void> responseForDeleting = template().exchange("/projects/adf231b2-fe97-4034-8517-1c4a0f3ba742/tracks/15", HttpMethod.DELETE, requestEntityWithToken(null), Void.class);
         assertThat(responseForDeleting.getStatusCode()).isEqualTo(HttpStatus.OK);
 
-        ResponseEntity<ProjectResponseDto> responseForCheckingDeleted = template().getForEntity("/projects/5", ProjectResponseDto.class);
+        ResponseEntity<ProjectResponseDto> responseForCheckingDeleted = template().getForEntity("/projects/adf231b2-fe97-4034-8517-1c4a0f3ba742", ProjectResponseDto.class);
         assertThat(responseForCheckingDeleted.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
 
     @Test
     @DisplayName("트랙 삭제 테스트 - 현재 사용자가 등록하지 않은 트랙을 삭제 요청하는 경우 FORBIDDEN(403)으로 응답")
     void testBadRequestDeletingTrack() {
-        ResponseEntity<Void> response = template().exchange("/projects/4/tracks/14", HttpMethod.DELETE, requestEntityWithToken(null), Void.class);
+        ResponseEntity<Void> response = template().exchange("/projects/721da6c6-cf51-4000-9853-754b2a2ac193/tracks/14", HttpMethod.DELETE, requestEntityWithToken(null), Void.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
     }
 }
