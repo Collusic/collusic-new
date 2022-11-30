@@ -1,5 +1,6 @@
 package com.collusic.collusicbe.acceptanceTest;
 
+import com.collusic.collusicbe.web.controller.ProjectsResponseDto;
 import com.collusic.collusicbe.web.controller.dto.ProjectCreateRequestDto;
 import com.collusic.collusicbe.web.controller.dto.ProjectCreateResponseDto;
 import org.junit.jupiter.api.DisplayName;
@@ -58,5 +59,18 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    @DisplayName("프로젝트 목록 보기 테스트 - 등록된 사용자/방문자로서, 프로젝트에 대한 목록을 12개씩 확인할 수 있다.")
+    void test() {
+        // given
+        int elementSize = 12;
+
+        // when
+        ProjectsResponseDto responseDto = template().getForObject("/projects?page=0", ProjectsResponseDto.class);
+
+        // then
+        assertThat(responseDto.getResponseDtos().size()).isEqualTo(elementSize);
     }
 }

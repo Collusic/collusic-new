@@ -13,6 +13,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -90,5 +91,13 @@ public class Project extends BaseTimeEntity {
             track = tracks.get(i);
             track.changeOrder(i);
         }
+    }
+
+    public List<String> collectTrackTage() {
+        this.tracks.sort(Comparator.comparingInt(Track::getOrderInProject));
+
+        return tracks.stream()
+                .map(track -> track.getTrackTag().getLabel())
+                .collect(Collectors.toList());
     }
 }
