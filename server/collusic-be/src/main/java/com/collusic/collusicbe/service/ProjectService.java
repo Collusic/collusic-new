@@ -43,7 +43,7 @@ public class ProjectService {
                            .orderInProject(project.getNextTrackOrder())
                            .build();
 
-        track.setProject(project);
+        project.addTrack(track);
 
         trackRepository.save(track);
 
