@@ -8,6 +8,7 @@ import com.collusic.collusicbe.web.controller.dto.ProjectCreateRequestDto;
 import com.collusic.collusicbe.web.controller.dto.ProjectCreateResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -27,7 +28,7 @@ public class ProjectController {
     }
 
     @PostMapping("/projects")
-    public ResponseEntity<ProjectCreateResponseDto> createProject(@LoginMember Member member, @RequestBody ProjectCreateRequestDto requestDto) {
+    public ResponseEntity<ProjectCreateResponseDto> createProject(@LoginMember Member member, @Validated @RequestBody ProjectCreateRequestDto requestDto) {
         Project project = projectService.createProject(member, requestDto);
         return ResponseEntity.created(URI.create("/projects/" + project.getId())).body(new ProjectCreateResponseDto(project));
     }
