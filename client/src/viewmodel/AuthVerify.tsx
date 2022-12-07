@@ -5,23 +5,19 @@ import { useLocation } from "react-router-dom";
 import { API } from "../utils/axios";
 import { signInState } from "../model/signInModel";
 
-export default function AuthVerify(props: { logout: () => void }) {
+export default function AuthVerify() {
   const setSignInState = useSetRecoilState(signInState);
   const location = useLocation();
-  const { logout } = props;
 
   useEffect(() => {
     if (API.defaults.headers.common.Authorization) {
-      console.log(API.defaults.headers.common.Authorization);
       return;
     }
 
-    console.log(API.defaults.headers.common);
     API.post("/reissue", {}, { withCredentials: true })
       .then((res) => {
         const { token } = res.data;
 
-        console.log(res);
         if (!token) return;
 
         API.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -30,7 +26,7 @@ export default function AuthVerify(props: { logout: () => void }) {
       .catch((err) => {
         console.log("dd", err);
       });
-  }, [location, logout]);
+  }, [location]);
 
-  return <div> </div>;
+  return <> </>;
 }

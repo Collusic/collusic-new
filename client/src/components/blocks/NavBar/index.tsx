@@ -1,7 +1,8 @@
 import React from "react";
-import { useRecoilState } from "recoil";
-import { API } from "utils/axios";
 
+import { useRecoilState } from "recoil";
+
+import { API } from "utils/axios";
 import { modalOpenState, signInState } from "../../../model/signInModel";
 import { SignInViewModel } from "../../../viewmodel/SignInViewModel";
 import { Modal } from "../../atoms/Modal";
@@ -13,16 +14,14 @@ export function NavBar() {
   const [isSignIn, setIsSignIn] = useRecoilState(signInState);
 
   const handleLoginButtonClick = () => {
-    console.log(isSignIn);
-
     if (!isSignIn) {
       setIsModalOpen(!isModalOpen);
       return;
     }
 
     setIsSignIn(false);
-    API.get("/logout").then((res) => {
-      console.log(res);
+
+    API.get("/logout").then(() => {
       console.log("로그아웃 완료!");
     });
   };

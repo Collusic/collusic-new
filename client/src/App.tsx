@@ -11,10 +11,6 @@ import { RedirectViewModel } from "./viewmodel/RedirectViewModel";
 import { ProjectListView } from "./view/ProjectListView";
 
 function App() {
-  const logOut = () => {
-    console.log("logOut!");
-  };
-
   return (
     <BrowserRouter>
       <NavBar />
@@ -25,7 +21,7 @@ function App() {
         <Route path="/" element={<StartPageView />} />
         <Route path="/projectlist" element={<ProjectListView />} />
       </Routes>
-      <AuthVerify logout={logOut} />
+      <AuthVerify />
     </BrowserRouter>
   );
 }
