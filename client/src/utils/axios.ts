@@ -4,7 +4,6 @@ const setInterceptors = (instance : AxiosInstance) => {
   // request interceptor 설정
   instance.interceptors.request.use(
     (config) => {
-      console.log(config);
       return config;
     }, (err) => {
       return Promise.reject(err);
