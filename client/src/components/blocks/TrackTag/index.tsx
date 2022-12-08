@@ -1,7 +1,7 @@
 import React, { MouseEventHandler } from "react";
 
 import Button from "components/atoms/Button";
-import { SelectedTrackSrc, UnselectedTrackSrc } from "utils/data/trackSrc";
+import { SelectedTrackSrc, UnselectedTrackSrc } from "utils/data/track";
 import { Track } from "types/projectType";
 import "./style.scss";
 import Span from "components/atoms/Span";

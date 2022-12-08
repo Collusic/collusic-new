@@ -1,21 +1,21 @@
-import React, { KeyboardEventHandler, MouseEventHandler, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import classNames from "classnames";
 
 import "./style.scss";
 import Span from "components/atoms/Span";
 
 interface RecordDeviceProps {
-  onDeviceClick: MouseEventHandler<HTMLUListElement> | KeyboardEventHandler<HTMLUListElement>;
+  onDeviceClick: (deviceId: string, deviceName: string) => void;
+  inputTextDevice: string;
 }
 
-function RecordDevice({ onDeviceClick }: RecordDeviceProps) {
+function RecordDevice({ onDeviceClick, inputTextDevice }: RecordDeviceProps) {
   const [deviceList, setDeviceList] = useState<MediaDeviceInfo[]>([]);
-  const [isOpenDeviceList, setIsOpenDeviceList] = useState(false);
-  const [selectedDevice] = useState("입력장치를 선택해주세요.");
+  const [showDropDown, setShowDropDown] = useState(false);
 
   const handleBtnClick = () => {
-    if (isOpenDeviceList === false) setIsOpenDeviceList(true);
-    else setIsOpenDeviceList(false);
+    if (!showDropDown) setShowDropDown(true);
+    else setShowDropDown(false);
   };
 
   useEffect(() => {
@@ -37,16 +37,26 @@ function RecordDevice({ onDeviceClick }: RecordDeviceProps) {
     <div id="record-device">
       <Span>입력장치</Span>
       <div className="selected-device">
-        <span>{selectedDevice}</span>
-        <button type="button" className={classNames({ "rotate-button": isOpenDeviceList })} onClick={handleBtnClick}>
+        <span>{inputTextDevice}</span>
+        <button type="button" className={classNames({ "rotate-button": showDropDown })} onClick={handleBtnClick}>
           <img src={`${process.env.PUBLIC_URL}/assets/arrow_down/arrow_down.png`} alt="record device" />
         </button>
       </div>
-      <div className={classNames("device-list", { "hidden-device-list": !isOpenDeviceList })}>
+      <div className={classNames("device-list", { "hidden-device-list": !showDropDown })}>
         <div className="scroll-box">
-          <ul onClick={onDeviceClick as MouseEventHandler} onKeyDown={onDeviceClick as KeyboardEventHandler}>
+          <ul>
             {deviceList.map((device) => (
-              <li key={device.deviceId}>{device.label}</li>
+              <li
+                onClick={() => {
+                  onDeviceClick(device.deviceId, device.label);
+                }}
+                onKeyDown={() => {
+                  onDeviceClick(device.deviceId, device.label);
+                }}
+                key={device.deviceId}
+              >
+                {device.label}
+              </li>
             ))}
           </ul>
         </div>

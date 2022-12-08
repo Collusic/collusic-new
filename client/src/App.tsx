@@ -7,7 +7,7 @@ import { StartPageView } from "./view/StartPageView";
 import { SignUpViewModel } from "./viewmodel/SignUpViewModel";
 import { RedirectViewModel } from "./viewmodel/RedirectViewModel";
 import { ProjectListView } from "./view/ProjectListView";
-import ProjectViewModel from "viewmodel/ProjectViewModel";
+import CreateProject from "components/pages/CreateProject";
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
         <Route path="/auth/redirect/:snsType" element={<RedirectViewModel />} />
         <Route path="/" element={<StartPageView />} />
         <Route path="/projectlist" element={<ProjectListView />} />
-        <Route path="/createproject" element={<ProjectViewModel />} />
+        <Route path="/createproject" element={<CreateProject />} />
       </Routes>
     </BrowserRouter>
   );

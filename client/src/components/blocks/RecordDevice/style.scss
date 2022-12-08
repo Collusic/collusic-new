@@ -7,6 +7,7 @@
   align-items: flex-start;
   width: 100%;
   padding-top: 3rem;
+  white-space: nowrap;
 }
 
 .selected-device {
@@ -21,13 +22,18 @@
   background-color: #555;
   color: $Font_Main;
 
+  span {
+    padding: 16px;
+    font-size: 1rem;
+  }
+
   & > button {
     background-color: rgba(0, 0, 0, 0);
   }
 }
 
 .device-list {
-  width: 27rem;
+  width: 90%;
   height: 128px;
   margin-top: 8px;
   padding: 8px 16px;
