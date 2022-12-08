@@ -1,0 +1,23 @@
+@import "./color";
+@import "./size";
+
+.pagenation {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 10rem;
+  height: $HEIGHT_SMALL;
+  padding-top: 3rem;
+  font-weight: 900;
+  font-size: $FONT_MEDIUM;
+  color: #c1c1c1;
+}
+
+.arrow {
+  color: $Color_Main;
+  font-weight: 900;
+}
+
+.clicked {
+  color: $Color_Main;
+}

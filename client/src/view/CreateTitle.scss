@@ -1,0 +1,17 @@
+*:focus {
+    outline: none;
+}
+
+input::placeholder {
+    color: #909090;
+}
+
+input {
+    width: 49%;
+    padding-left: 1%;
+    padding-bottom: .5%;
+    border: 0;
+    border-bottom: 2px solid #909090;
+    font-size: 20px;
+    font-weight: bolder;
+}

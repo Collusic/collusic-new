@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Krona+One&display=swap');
+
+@import "./color";
+@import "./size";
+
+.text-box {
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: fixed;
+  right: 13rem;
+  bottom: 4rem;
+  width: 8rem;
+  height: $HEIGHT_MEDIUM;
+  background-color: #ffffff;
+  border-radius: 40px;
+  box-shadow: 2px 2px 6px 0 rgba(0, 0, 0, 0.16);
+  z-index: -1;
+  visibility: hidden;
+
+  .create-text {
+    font-family: 'Krona One', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 15rem;
+    font-weight: 400;
+    color: $Color_Main;
+  }
+}
+
+.plus-button {
+  position: fixed;
+  right: 12rem;
+  bottom: 3rem;
+}
+
+.mouse-on-size {
+  animation-duration: 0.5s;
+  animation-name: slidein;
+  animation-fill-mode: forwards;
+}
+
+.mouse-on-font {
+  animation-duration: 0.5s;
+  animation-name: fontsize;
+  animation-fill-mode: forwards;
+}
+
+@keyframes slidein {
+  0% {
+    width: 13rem;
+    visibility: hidden;
+  }
+
+  100% {
+    width: 18rem;
+    visibility: visible;
+  }
+}
+
+@keyframes fontsize {
+  from {
+    font-size: normal;
+  }
+
+  to {
+    font-size: large;
+  }
+}
