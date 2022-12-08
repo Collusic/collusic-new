@@ -7,7 +7,7 @@ import { signUpState } from "../model/signUpModel";
 import { SignUp } from "../components/blocks/SignUp";
 import { Modal } from "../components/atoms/Modal";
 
-import { LOCAL_API } from "../utils/axios";
+import { LOCAL_API } from "../api/axios";
 import { validateLetter, validateLength } from "../utils/validation";
 
 type UserData = {

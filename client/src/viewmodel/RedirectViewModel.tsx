@@ -3,7 +3,7 @@ import { useSetRecoilState } from "recoil";
 import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import { AxiosResponse } from "axios";
 
-import { LOCAL_API } from "../utils/axios";
+import { LOCAL_API } from "../api/axios";
 import { refreshTokenState } from "../model/userModel";
 import { modalOpenState } from "../model/signInModel";
 import { signUpState } from "../model/signUpModel";

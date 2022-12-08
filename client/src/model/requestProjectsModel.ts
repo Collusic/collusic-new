@@ -1,6 +1,6 @@
 import { atom, selector } from "recoil";
 
-import { API, TEST_API } from "../utils/axios";
+import { TEST_API } from "../api/axios";
 
 export const requestProjectListState = atom({
   key: "requestProjectListState",
@@ -70,9 +70,7 @@ export const getRequestList = selector<any>({
     // get(forceReloadBoardListState);
     get(forceReloadBoardListState);
     const currentPage = get(currentPageState);
-    const response = await TEST_API.get(
-      `/api/main/requestprojects?page=${currentPage - 1}`
-    );
+    const response = await TEST_API.get(`/api/main/requestprojects?page=${currentPage - 1}`);
     // console.log(response);
     // const response = await getData(currentPage - 1);
 

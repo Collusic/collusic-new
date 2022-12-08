@@ -11,7 +11,7 @@ import type { Field } from "../types/requestProjectType";
 import { CreateContentView } from "../view/CreateContentView";
 import { CreateLyricView } from "../view/CreateLyricView";
 import { CreateMelodyView } from "../view/CreateMelodyView";
-import { TEST_API } from "../utils/axios";
+import { TEST_API } from "../api/axios";
 
 export const CreateContributeViewModel: React.FC = () => {
   const createType = { kind: "contribute", description: "기여" };
