@@ -31,24 +31,35 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn package
-      
-    ## 웹 이미지 빌드 및 도커허브에 push
-    - name: web docker build and push
+      working-directory: ./server/collusic-be
+      env:
+        JASYPT_PASSWORD: ${{ secrets.JASYPT_PASSWORD }}
+
+    ## 이미지 빌드 및 도커허브에 push
+    - name: docker build and push
+      working-directory: ./server/collusic-be
+      env:
+        JASYPT_PASSWORD: ${{ secrets.JASYPT_PASSWORD }}
       run: |
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        docker build -t ${{ secrets.DOCKER_REPO }}/collusic-api .
+        docker build -f Dockerfile-dev -t ${{ secrets.DOCKER_REPO }}/collusic-api .
         docker push ${{ secrets.DOCKER_REPO }}/collusic-api
-
+      
     ## docker compose up
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        host: ${{ secrets.HOST }}
         username: ubuntu
-        key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        key: ${{ secrets.SSH_KEY }}
+        port: 22
         script: |
-          sudo docker rm -f $(docker ps -qa)
-          sudo docker pull ${{ secrets.DOCKER_REPO }}/collusic-api
+          sudo docker rm -f $(docker ps -aq)
+          sudo docker rmi `docker images -a -q`
+          cd app
+          rm -rf docker-compose.yml
+          touch ./docker-compose.yml
+          echo "${{ secrets.DOCKER_COMPOSE }}" >> ./docker-compose.yml
+          export JASYPT_PASSWORD=${{ secrets.JASYPT_PASSWORD }}
           docker-compose up -d
           docker image prune -f
-
