@@ -4,12 +4,12 @@ import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import { AxiosResponse } from "axios";
 
 import { API } from "../utils/axios";
-import { modalOpenState, signInState } from "../model/signInModel";
+import { modalOpenState, isSignInState } from "../model/signInModel";
 import { signUpState } from "../model/signUpModel";
 
 export function RedirectViewModel() {
   const setModalOpenState = useSetRecoilState(modalOpenState);
-  const setSignInState = useSetRecoilState(signInState);
+  const setIsSignInState = useSetRecoilState(isSignInState);
   const setSignUpState = useSetRecoilState(signUpState);
 
   const navigate = useNavigate();
@@ -30,13 +30,11 @@ export function RedirectViewModel() {
 
         const { data } = response;
 
-        console.dir(response);
-
         if (data.responseType === "SIGN_IN") {
           const { accessToken } = data.attributes;
 
           API.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
-          setSignInState(true);
+          setIsSignInState(true);
           navigate("/");
         }
 

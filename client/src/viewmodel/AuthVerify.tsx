@@ -1,32 +1,36 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 
 import { useLocation } from "react-router-dom";
 import { API } from "../utils/axios";
-import { signInState } from "../model/signInModel";
+import { isSignInState } from "../model/signInModel";
 
 export default function AuthVerify() {
-  const setSignInState = useSetRecoilState(signInState);
+  const setIsSignInState = useSetRecoilState(isSignInState);
   const location = useLocation();
 
   useEffect(() => {
-    if (API.defaults.headers.common.Authorization) {
+    const isAuthorized = () => !!API.defaults.headers.common.Authorization;
+
+    if (isAuthorized()) {
       return;
     }
 
-    API.post("/reissue", {}, { withCredentials: true })
+    API.post("/reissue")
       .then((res) => {
         const { token } = res.data;
 
-        if (!token) return;
+        if (!token) {
+          return;
+        }
 
         API.defaults.headers.common.Authorization = `Bearer ${token}`;
-        setSignInState(true);
+        setIsSignInState(true);
       })
-      .catch((err) => {
-        console.log("dd", err);
+      .catch((error) => {
+        console.error(error);
       });
   }, [location]);
 
-  return <> </>;
+  return null;
 }

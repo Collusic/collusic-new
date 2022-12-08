@@ -1,12 +1,15 @@
 import axios, { AxiosInstance } from "axios";
 
+axios.defaults.withCredentials = true;
+
 const setInterceptors = (instance : AxiosInstance) => {
   // request interceptor 설정
   instance.interceptors.request.use(
     (config) => {
       return config;
-    }, (err) => {
-      return Promise.reject(err);
+    }, (error) => {
+      console.error(error);
+      return Promise.reject(error);
     }
   );
 
@@ -20,6 +23,9 @@ const setInterceptors = (instance : AxiosInstance) => {
       }
 
       return response;
+    }, (error) => {
+      console.error(error);
+      return Promise.reject(error);
     }
   );
 
@@ -30,18 +36,13 @@ export const API = setInterceptors(
   axios.create({
     baseURL: process.env.REACT_APP_API,
     headers: { "X-Custom-Header": "foobar" },
-    withCredentials: true,
     timeout: 3000,
-    validateStatus: (status) => {
-      return status < 500;
-    }
   })
 );
 
 export const LOCAL_API = axios.create({
   baseURL: process.env.REACT_APP_API,
   headers: { "X-Custom-Header": "foobar" },
-  withCredentials: true,
   timeout: 3000,
 });
 
