@@ -6,7 +6,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -21,9 +20,9 @@ import java.util.stream.Collectors;
 public class Project extends BaseTimeEntity {
 
     @Id
-    @Type(type="uuid-char")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PROJECT_ID")
-    private UUID id;
+    private Long id;
 
     @Size(min = 1, max = 20)
     @Column(length = 20, nullable = false)
@@ -43,7 +42,7 @@ public class Project extends BaseTimeEntity {
     private static final int MAX_TRACK_CAPACITY = 10;
 
     @Builder
-    public Project(UUID id, String projectName, int bpm, String fileUrl) {
+    public Project(Long id, String projectName, int bpm, String fileUrl) {
         this.id = id;
         this.projectName = projectName;
         this.bpm = bpm;
@@ -93,7 +92,7 @@ public class Project extends BaseTimeEntity {
         }
     }
 
-    public List<String> collectTrackTage() {
+    public List<String> collectTrackTags() {
         this.tracks.sort(Comparator.comparingInt(Track::getOrderInProject));
 
         return tracks.stream()

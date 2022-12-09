@@ -23,7 +23,6 @@ import org.springframework.data.domain.SliceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -53,7 +52,7 @@ public class ProjectServiceTest {
                            .nickname("testMember")
                            .build();
         testProject = Project.builder()
-                             .id(UUID.fromString("247f720a-3eb6-4ba4-9dc9-9f5bde8014a3"))
+                             .id(1L)
                              .projectName("test project name")
                              .bpm(45)
                              .build();

@@ -14,7 +14,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,7 +22,7 @@ public class ProjectController {
     private final ProjectService projectService;
 
     @GetMapping("/projects/{projectId}")
-    public ResponseEntity<Void> readProject(@PathVariable UUID projectId) {
+    public ResponseEntity<Void> readProject(@PathVariable Long projectId) {
         Project project = projectService.findById(projectId);
 
         return ResponseEntity.ok(null); // TODO: project resposne dto 클래스 추가하여 반영할 것

@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -42,7 +41,7 @@ public class TrackServiceTest {
                            .nickname("testMember")
                            .build();
         testProject = Project.builder()
-                             .id(UUID.fromString("247f720a-3eb6-4ba4-9dc9-9f5bde8014a3"))
+                             .id(1L)
                              .build();
         testTrack = Track.builder()
                          .id(1L)
