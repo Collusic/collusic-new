@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { NavBar } from "./components/blocks/NavBar";
 
+import AuthVerify from "./viewmodel/AuthVerify";
 import { SignInViewModel } from "./viewmodel/SignInViewModel";
 import { StartPageView } from "./view/StartPageView";
 import { SignUpViewModel } from "./viewmodel/SignUpViewModel";
@@ -20,6 +21,7 @@ function App() {
         <Route path="/" element={<StartPageView />} />
         <Route path="/projectlist" element={<ProjectListView />} />
       </Routes>
+      <AuthVerify />
     </BrowserRouter>
   );
 }
