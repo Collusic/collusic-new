@@ -1,6 +1,7 @@
 package com.collusic.collusicbe.acceptanceTest;
 
 import com.collusic.collusicbe.web.controller.ProjectsResponseDto;
+import com.collusic.collusicbe.web.controller.dto.LikeResponseDto;
 import com.collusic.collusicbe.web.controller.dto.ProjectCreateRequestDto;
 import com.collusic.collusicbe.web.controller.dto.ProjectCreateResponseDto;
 import org.junit.jupiter.api.DisplayName;
@@ -63,7 +64,7 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
 
     @Test
     @DisplayName("프로젝트 목록 보기 테스트 - 등록된 사용자/방문자로서, 프로젝트에 대한 목록을 12개씩 확인할 수 있다.")
-    void test() {
+    void test12ProjectsShowingProjectList() {
         // given
         int elementSize = 12;
 
@@ -72,5 +73,25 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
 
         // then
         assertThat(responseDto.getResponseDtos().size()).isEqualTo(elementSize);
+    }
+
+    @Test
+    @DisplayName("프로젝트 좋아요 테스트 - 등록된 사용자로서, 나는 프로젝트에 대해 좋아요를 누를 수 있다.")
+    void testLikeAction() {
+        // when
+        ResponseEntity<LikeResponseDto> response = template().postForEntity("/projects/2/like", requestEntityWithToken(null), LikeResponseDto.class);
+
+        // then
+        assertThat(response.getBody().getIsColor()).isTrue();
+    }
+
+    @Test
+    @DisplayName("프로젝트 좋아요 취소 테스트 - 등록된 사용자로서, 나는 좋아요를 취소할 수 있다.")
+    void testLikeActionCancel() {
+        // when
+        ResponseEntity<LikeResponseDto> response = template().postForEntity("/projects/13/like", requestEntityWithToken(null), LikeResponseDto.class);
+
+        // then
+        assertThat(response.getBody().getIsColor()).isFalse();
     }
 }

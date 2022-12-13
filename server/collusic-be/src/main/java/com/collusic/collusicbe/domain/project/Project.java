@@ -39,6 +39,9 @@ public class Project extends BaseTimeEntity {
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<Track> tracks = new ArrayList<>();
 
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProjectLike> likes = new ArrayList<>();
+
     private static final int MAX_TRACK_CAPACITY = 10;
 
     @Builder
@@ -98,5 +101,13 @@ public class Project extends BaseTimeEntity {
         return tracks.stream()
                 .map(track -> track.getTrackTag().getLabel())
                 .collect(Collectors.toList());
+    }
+
+    public void addLike(ProjectLike projectLike) {
+        getLikes().add(projectLike);
+    }
+
+    public void deleteLike(ProjectLike projectLike) {
+        getLikes().remove(projectLike);
     }
 }

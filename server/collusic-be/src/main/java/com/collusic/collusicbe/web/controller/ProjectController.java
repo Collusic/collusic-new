@@ -4,6 +4,7 @@ import com.collusic.collusicbe.config.auth.LoginMember;
 import com.collusic.collusicbe.domain.member.Member;
 import com.collusic.collusicbe.domain.project.Project;
 import com.collusic.collusicbe.service.ProjectService;
+import com.collusic.collusicbe.web.controller.dto.LikeResponseDto;
 import com.collusic.collusicbe.web.controller.dto.ProjectCreateRequestDto;
 import com.collusic.collusicbe.web.controller.dto.ProjectCreateResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -38,5 +39,11 @@ public class ProjectController {
     public ResponseEntity<ProjectsResponseDto> readProjects(@PageableDefault(size = 12) Pageable pageable) {
         ProjectsResponseDto responseDto = projectService.getProjects(pageable);
         return ResponseEntity.ok().body(responseDto);
+    }
+
+    @PostMapping("/projects/{projectId}/like")
+    public ResponseEntity<LikeResponseDto> likeProject(@PathVariable Long projectId, @LoginMember Member member) {
+        LikeResponseDto likeResponseDto = projectService.likeProject(projectId, member);
+        return ResponseEntity.ok().body(likeResponseDto);
     }
 }
