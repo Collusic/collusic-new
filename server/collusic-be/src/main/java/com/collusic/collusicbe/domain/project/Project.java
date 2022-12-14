@@ -11,10 +11,8 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -40,6 +38,9 @@ public class Project extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<Track> tracks = new ArrayList<>();
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProjectLike> likes = new ArrayList<>();
 
     private static final int MAX_TRACK_CAPACITY = 10;
 
@@ -67,6 +68,7 @@ public class Project extends BaseTimeEntity {
     }
 
     public void addTrack(Track track) {
+        track.setProject(this);
         this.tracks.add(track);
     }
 
@@ -91,5 +93,21 @@ public class Project extends BaseTimeEntity {
             track = tracks.get(i);
             track.changeOrder(i);
         }
+    }
+
+    public List<String> collectTrackTags() {
+        this.tracks.sort(Comparator.comparingInt(Track::getOrderInProject));
+
+        return tracks.stream()
+                .map(track -> track.getTrackTag().getLabel())
+                .collect(Collectors.toList());
+    }
+
+    public void addLike(ProjectLike projectLike) {
+        getLikes().add(projectLike);
+    }
+
+    public void deleteLike(ProjectLike projectLike) {
+        getLikes().remove(projectLike);
     }
 }

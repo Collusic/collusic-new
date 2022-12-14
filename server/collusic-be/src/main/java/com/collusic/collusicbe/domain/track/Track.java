@@ -60,4 +60,8 @@ public class Track extends BaseTimeEntity {
     public void changeOrder(int order) {
         this.orderInProject = order;
     }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
 }
