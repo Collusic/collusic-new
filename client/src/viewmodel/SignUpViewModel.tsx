@@ -1,28 +1,32 @@
 import React from "react";
-import { useRecoilState } from "recoil";
-import { useLocation } from "react-router-dom";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { useLocation, useNavigate } from "react-router-dom";
 
-import { signUpState } from "../model/signUpModel";
+import { isSignInState } from "model/signInModel";
+import { signUpState } from "model/signUpModel";
 
-import { SignUp } from "../components/blocks/SignUp";
-import { Modal } from "../components/atoms/Modal";
+import { SignUp } from "components/blocks/SignUp";
+import { Modal } from "components/atoms/Modal";
 
-import { LOCAL_API } from "../api/axios";
+import { API } from "api/axios";
 import { validateLetter, validateLength } from "../utils/validation";
 
-type UserData = {
-  responseType?: string;
+type MemberData = {
+  [key: string]: any;
   email: string;
   authId: string;
+  nickName?: string;
   profileImageUrl: string;
   snsType: string;
 };
 
 export function SignUpViewModel() {
   const [signUp, setSignUp] = useRecoilState(signUpState);
+  const setIsSignInState = useSetRecoilState(isSignInState);
   const location = useLocation();
+  const navigate = useNavigate();
 
-  const { authId, email, profileImageUrl, snsType } = location.state as UserData;
+  const { authId, email, profileImageUrl, snsType } = location.state as MemberData;
 
   const signUpEventHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     const nickName = (event.target as HTMLInputElement).parentElement!.querySelector("input")!.value;
@@ -32,16 +36,27 @@ export function SignUpViewModel() {
       return;
     }
 
-    const formData = new FormData();
-    formData.append("authId", authId);
-    formData.append("email", email);
-    formData.append("nickName", nickName);
-    formData.append("profileImageUrl", profileImageUrl);
-    formData.append("snsType", snsType);
+    API.get(`/members/${nickName}`)
+      .then(() => {
+        const memberData: MemberData = { authId, email, nickName, profileImageUrl, snsType };
+        const formData = new FormData();
 
-    LOCAL_API.post("/members", formData).then(() => {
-      alert("회원가입 완료");
-    });
+        Object.keys(memberData).forEach((key) => formData.append(key, memberData[key]));
+
+        API.post("/members", formData)
+          .then(() => {
+            setIsSignInState(true);
+            alert("회원가입 완료");
+            navigate("/");
+          })
+          .catch((err) => {
+            const { message } = err.response.data.fieldErrors[0];
+            alert(message);
+          });
+      })
+      .catch(() => {
+        alert("이미 존재하는 닉네임입니다.");
+      });
   };
 
   return (
