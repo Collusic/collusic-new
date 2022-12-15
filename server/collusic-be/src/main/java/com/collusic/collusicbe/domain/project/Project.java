@@ -11,7 +11,10 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Entity
@@ -99,8 +102,8 @@ public class Project extends BaseTimeEntity {
         this.tracks.sort(Comparator.comparingInt(Track::getOrderInProject));
 
         return tracks.stream()
-                .map(track -> track.getTrackTag().getLabel())
-                .collect(Collectors.toList());
+                     .map(track -> track.getTrackTag().getLabel())
+                     .collect(Collectors.toList());
     }
 
     public void addLike(ProjectLike projectLike) {
@@ -109,5 +112,14 @@ public class Project extends BaseTimeEntity {
 
     public void deleteLike(ProjectLike projectLike) {
         getLikes().remove(projectLike);
+    }
+
+    public boolean haveOnlyOwnTracks(Long memberId) {
+        for (Track track : tracks) {
+            if (!track.hasSameCreator(memberId)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

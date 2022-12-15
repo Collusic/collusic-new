@@ -46,4 +46,10 @@ public class ProjectController {
         LikeResponseDto likeResponseDto = projectService.likeProject(projectId, member);
         return ResponseEntity.ok().body(likeResponseDto);
     }
+
+    @DeleteMapping("/projects/{projectId}")
+    public ResponseEntity deleteProject(@PathVariable Long projectId, @LoginMember Member member) {
+        projectService.deleteProject(projectId, member.getId());
+        return ResponseEntity.noContent().build();
+    }
 }

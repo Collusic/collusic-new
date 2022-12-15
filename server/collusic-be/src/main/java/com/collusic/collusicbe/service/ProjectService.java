@@ -7,6 +7,7 @@ import com.collusic.collusicbe.domain.project.ProjectLike;
 import com.collusic.collusicbe.domain.project.ProjectRepository;
 import com.collusic.collusicbe.domain.track.Track;
 import com.collusic.collusicbe.domain.track.TrackRepository;
+import com.collusic.collusicbe.global.exception.CannotDeleteException;
 import com.collusic.collusicbe.web.controller.ProjectInventoryResponseDto;
 import com.collusic.collusicbe.web.controller.ProjectsResponseDto;
 import com.collusic.collusicbe.web.controller.dto.LikeResponseDto;
@@ -98,5 +99,18 @@ public class ProjectService {
         likeRepository.save(projectLike);
 
         return new LikeResponseDto(likeRepository.countByProjectIdAndMemberId(projectId, member.getId()).intValue(), true);
+    }
+
+    public void deleteProject(Long projectId, Long memberId) {
+        Project project = projectRepository.findById(projectId)
+                                           .orElseThrow(NoSuchElementException::new);
+
+        if (!project.haveOnlyOwnTracks(memberId)) {
+            throw new CannotDeleteException("타인이 생성한 트랙이 존재하는 경우, 프로젝트를 삭제할 수 없습니다.");
+        }
+
+        project.getTracks().forEach(trackRepository::delete);
+
+        projectRepository.delete(project);
     }
 }

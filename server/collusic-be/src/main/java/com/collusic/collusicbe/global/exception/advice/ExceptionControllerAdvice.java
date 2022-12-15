@@ -67,4 +67,10 @@ public class ExceptionControllerAdvice {
     public Object jwtExceptionHandler(Exception e) {
         return new ExceptionInfoResponse(HttpStatus.UNAUTHORIZED.getReasonPhrase(), e.getMessage());
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(CannotDeleteException.class)
+    public Object cannotDeleteExceptionHandler(Exception e) {
+        return e.getMessage();
+    }
 }

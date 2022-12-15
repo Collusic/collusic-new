@@ -6,6 +6,7 @@ import com.collusic.collusicbe.web.controller.dto.ProjectCreateRequestDto;
 import com.collusic.collusicbe.web.controller.dto.ProjectCreateResponseDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -93,5 +94,25 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
 
         // then
         assertThat(response.getBody().getIsColor()).isFalse();
+    }
+
+    @Test
+    @DisplayName("프로젝트 삭제 테스트 - 프로젝트에 본인이 등록한 트랙만 존재하는 경우, 프로젝트를 완전히 삭제할 수 있다.")
+    void testProjectDelete() {
+        // when
+        ResponseEntity<Void> response = template().exchange("/projects/10", HttpMethod.DELETE, requestEntityWithToken(null), Void.class);
+
+        // then
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+    }
+
+    @Test
+    @DisplayName("프로젝트 삭제 실패 테스트 - 프로젝트에 타인이 생성한 트랙이 존재하는 경우, 프로젝트를 삭제할 수 없다.")
+    void testProjectDeleteFail() {
+        // when
+        ResponseEntity<Void> response = template().exchange("/projects/5", HttpMethod.DELETE, requestEntityWithToken(null), Void.class);
+
+        // then
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 }
