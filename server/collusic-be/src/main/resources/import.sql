@@ -35,5 +35,7 @@ insert into track (track_id, creator_id, file_url, order_in_project, project_id,
 insert into track (track_id, creator_id, file_url, order_in_project, project_id, track_name, track_tag, created_date, modified_date) values (15, 1, 'test', 0, 5, 'test1', 'PIANO', '2004-12-01 00:07:21.952693', '2004-12-01 00:07:21.952693');
 insert into track (track_id, creator_id, file_url, order_in_project, project_id, track_name, track_tag, created_date, modified_date) values (16, 1, 'test', 0, 10, 'test1', 'PIANO', '2002-12-11 00:07:21.952693', '2002-12-11 00:07:21.952693');
 insert into track (track_id, creator_id, file_url, order_in_project, project_id, track_name, track_tag, created_date, modified_date) values (17, 2, 'test', 1, 5, 'test1', 'PIANO', '2004-12-01 00:07:21.952693', '2004-12-01 00:07:21.952693');
+insert into track (track_id, creator_id, file_url, order_in_project, project_id, track_name, track_tag, created_date, modified_date) values (18, 1, 'test', 0, 11, 'test1', 'PIANO', '2004-12-01 00:07:21.952693', '2004-12-01 00:07:21.952693');
+
 
 insert into project_like(project_like_id, member_id, project_id) values(1, 1, 13);

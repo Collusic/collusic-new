@@ -137,10 +137,10 @@ public class TrackAcceptanceTest extends AbstractAcceptanceTest {
     @Test
     @DisplayName("트랙 삭제 테스트 - 정상적인 요청의 경우 OK(200)으로 응답 + 프로젝트의 루트 트랙인 경우 프로젝트도 삭제되어야 함")
     void testDeletingTrack2() {
-        ResponseEntity<Void> responseForDeleting = template().exchange("/projects/5/tracks/15", HttpMethod.DELETE, requestEntityWithToken(null), Void.class);
+        ResponseEntity<Void> responseForDeleting = template().exchange("/projects/11/tracks/18", HttpMethod.DELETE, requestEntityWithToken(null), Void.class);
         assertThat(responseForDeleting.getStatusCode()).isEqualTo(HttpStatus.OK);
 
-        ResponseEntity<ProjectResponseDto> responseForCheckingDeleted = template().getForEntity("/projects/5", ProjectResponseDto.class);
+        ResponseEntity<ProjectResponseDto> responseForCheckingDeleted = template().getForEntity("/projects/11", ProjectResponseDto.class);
         assertThat(responseForCheckingDeleted.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
 
