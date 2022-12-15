@@ -3,12 +3,12 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { isSignInState } from "model/signInModel";
-import { signUpState } from "../model/signUpModel";
+import { signUpState } from "model/signUpModel";
 
-import { SignUp } from "../components/blocks/SignUp";
-import { Modal } from "../components/atoms/Modal";
+import { SignUp } from "components/blocks/SignUp";
+import { Modal } from "components/atoms/Modal";
 
-import { API } from "../utils/axios";
+import { API } from "api/axios";
 import { validateLetter, validateLength } from "../utils/validation";
 
 type MemberData = {

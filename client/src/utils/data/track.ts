@@ -1,3 +1,5 @@
+import { Track } from "types/projectType";
+
 export const SelectedTrackSrc = {
   피아노: `${process.env.PUBLIC_URL}/assets/track/selected/piano.svg`,
   드럼: `${process.env.PUBLIC_URL}/assets/track/selected/drum.svg`,
@@ -9,6 +11,7 @@ export const SelectedTrackSrc = {
   리코더: `${process.env.PUBLIC_URL}/assets/track/selected/recorder.svg`,
   마라카스: `${process.env.PUBLIC_URL}/assets/track/selected/maracas.svg`,
   ETC: "",
+  "": "",
 };
 
 export const UnselectedTrackSrc = {
@@ -22,4 +25,18 @@ export const UnselectedTrackSrc = {
   리코더: `${process.env.PUBLIC_URL}/assets/track/unselected/recorder.svg`,
   마라카스: `${process.env.PUBLIC_URL}/assets/track/unselected/maracas.svg`,
   ETC: "",
+  "": "",
 };
+
+export const trackList: Track[] = [
+  "피아노",
+  "드럼",
+  "보컬",
+  "박수",
+  "어쿠스틱 기타",
+  "일렉 기타",
+  "바이올린",
+  "리코더",
+  "마라카스",
+  "ETC",
+];

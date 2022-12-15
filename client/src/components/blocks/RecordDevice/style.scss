@@ -1,24 +1,39 @@
 @import "utils/style/color";
 @import "utils/style/size";
 
+#record-device {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  padding-top: 3rem;
+  white-space: nowrap;
+}
+
 .selected-device {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 25rem;
+  position: relative;
   height: 40px;
+  width: 90%;
   padding: 4px 16px;
   border-radius: 24px;
   background-color: #555;
   color: $Font_Main;
 
-  &>button {
+  span {
+    padding: 16px;
+    font-size: 1rem;
+  }
+
+  & > button {
     background-color: rgba(0, 0, 0, 0);
   }
 }
 
 .device-list {
-  width: 25rem;
+  width: 90%;
   height: 128px;
   margin-top: 8px;
   padding: 8px 16px;
@@ -26,6 +41,7 @@
   border-radius: 20px;
   background-color: #555;
   color: $Font_Main;
+  z-index: 999;
 
   & .scroll-box {
     height: 100%;
@@ -52,7 +68,7 @@
 }
 
 .hidden-device-list {
-  visibility: hidden;
+  display: none;
 }
 
 .rotate-button {

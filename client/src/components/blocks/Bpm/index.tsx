@@ -6,10 +6,10 @@ import "./style.scss";
 
 interface BpmProps {
   bpmState: number;
-  inputHandler: FormEventHandler;
+  onBpmInput: FormEventHandler;
 }
 
-function Bpm({ bpmState, inputHandler }: BpmProps) {
+function Bpm({ bpmState, onBpmInput }: BpmProps) {
   const [bpm, setBpm] = useState(bpmState || 0);
   const sliderRef = useRef<HTMLInputElement>(null);
   const sliderValueRef = useRef<HTMLOutputElement>(null);
@@ -17,10 +17,10 @@ function Bpm({ bpmState, inputHandler }: BpmProps) {
 
   // todo: 현재 bpm 알려주는 span 태그 클릭 시 sliderHandle이 동작되지 않는 에러
   // todo: 진행된 bpm 상태바 클릭 시 작동 안되는 에러
-  
-  const formHandler = (e: FormEvent) => {
+
+  const handleForm = (e: FormEvent) => {
     setBpm(Number((e.target as HTMLInputElement).value));
-    inputHandler(e);
+    onBpmInput(e);
   };
 
   useEffect(() => {
@@ -55,7 +55,7 @@ function Bpm({ bpmState, inputHandler }: BpmProps) {
           max="240"
           step="1"
           name="bpm"
-          onInput={formHandler}
+          onInput={handleForm}
           ref={sliderRef}
         />
         <div className="bpm-fill" ref={bpmFillRef} />

@@ -1,7 +1,7 @@
 import { atom, selector } from "recoil";
 import { ContributeProject } from "../types/contributeProjectType";
 import { User } from "../types/userType";
-import { TEST_API } from "../utils/axios";
+import { TEST_API } from "../api/axios";
 
 const detailRequestProjectIdState = atom({
   key: "detailRequestProjectIdState",

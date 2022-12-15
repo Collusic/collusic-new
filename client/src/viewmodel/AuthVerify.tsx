@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 
 import { useLocation } from "react-router-dom";
-import { API } from "../utils/axios";
+import { API } from "../api/axios";
 import { isSignInState } from "../model/signInModel";
 
 export default function AuthVerify() {

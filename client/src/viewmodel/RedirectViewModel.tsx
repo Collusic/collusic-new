@@ -3,9 +3,9 @@ import { useSetRecoilState } from "recoil";
 import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import { AxiosResponse } from "axios";
 
-import { API } from "../utils/axios";
-import { modalOpenState, isSignInState } from "../model/signInModel";
-import { signUpState } from "../model/signUpModel";
+import { API } from "api/axios";
+import { modalOpenState, isSignInState } from "model/signInModel";
+import { signUpState } from "model/signUpModel";
 
 export function RedirectViewModel() {
   const setModalOpenState = useSetRecoilState(modalOpenState);

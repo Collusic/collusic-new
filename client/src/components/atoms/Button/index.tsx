@@ -7,13 +7,13 @@ type ColorType = "green" | "white" | "text" | "line";
 
 interface ButtonProps {
   type: ColorType;
-  isSelected: boolean;
+  isSelected?: boolean;
   onBtnClick: MouseEventHandler;
   width?: string;
   marginLeft?: string;
   marginTop?: string;
   svgSrc?: string | null;
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 const defaultProps = {
@@ -22,6 +22,7 @@ const defaultProps = {
   marginLeft: "0",
   marginTop: "0",
   svgSrc: null,
+  isSelected: true,
 };
 
 function Button({ type, isSelected, onBtnClick, svgSrc, width, marginLeft, marginTop, children }: ButtonProps) {

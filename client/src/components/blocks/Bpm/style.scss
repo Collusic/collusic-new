@@ -3,6 +3,7 @@
 #bpm {
   width: 100%;
   height: 6.5rem;
+  padding-top: 3rem;
 }
 
 .slide-container {
@@ -10,7 +11,7 @@
   height: 100%;
   position: relative;
 
-  &>.slider {
+  & > .slider {
     -webkit-appearance: none;
     width: 95%;
     height: 15px;
@@ -22,7 +23,7 @@
     outline: none;
   }
 
-  &>.slider::-webkit-slider-thumb {
+  & > .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
     width: 40px;
@@ -33,7 +34,7 @@
     z-index: 2;
   }
 
-  &>.bpm-fill {
+  & > .bpm-fill {
     -webkit-appearance: none;
     height: 15px;
     margin: 0 20px;
@@ -44,7 +45,7 @@
     outline: none;
   }
 
-  &>#output {
+  & > #output {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -54,11 +55,12 @@
     top: 1.2rem;
     font-size: $FONT_SMALL;
     font-weight: bold;
+    color: black;
     cursor: pointer;
     z-index: 999;
   }
 
-  &>.slider-bottom {
+  & > .slider-bottom {
     display: flex;
     justify-content: space-between;
     align-items: center;

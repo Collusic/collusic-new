@@ -1,12 +1,8 @@
-import React, { ClassType, useRef } from "react";
-import { SetterOrUpdater, useRecoilState } from "recoil";
+import React from "react";
+import { useRecoilState } from "recoil";
 import { onChangeMeldoyFile } from "../utils/eventHandler";
 
-import {
-  requestFieldState,
-  requestGenreState,
-  requestMoodState,
-} from "../model/createRequestProjectModel";
+import { requestFieldState, requestGenreState, requestMoodState } from "../model/createRequestProjectModel";
 import { genres, fields, moods } from "../utils/data/state";
 import { CreateTitleView } from "../view/CreateTitleView";
 import { CreateContentView } from "../view/CreateContentView";
@@ -16,7 +12,6 @@ import { CreateMoodView } from "../view/CreateMoodView";
 import { CreateMelodyView } from "../view/CreateMelodyView";
 import { CreateLyricView } from "../view/CreateLyricView";
 
-import { TEST_API } from "../utils/axios";
 import axios from "axios";
 
 export const CreateRequestViewModel: React.FC = () => {
@@ -84,8 +79,7 @@ export const CreateRequestViewModel: React.FC = () => {
 
     axios
       .create({
-        baseURL:
-          "http://ec2-13-124-123-6.ap-northeast-2.compute.amazonaws.com:8080/",
+        baseURL: "http://ec2-13-124-123-6.ap-northeast-2.compute.amazonaws.com:8080/",
         headers: {
           "Content-Type": "multipart/form-data",
           "X-Custom-Header": "foobar",
@@ -98,24 +92,13 @@ export const CreateRequestViewModel: React.FC = () => {
 
   return (
     <React.Fragment>
-      <form
-        method="post"
-        onSubmit={onSubmitHandler}
-        encType="multipart/form-data"
-      >
+      <form method="post" onSubmit={onSubmitHandler} encType="multipart/form-data">
         <CreateTitleView />
         <CreateContentView createType={createType}></CreateContentView>
         <CreateMelodyView onChangeFiles={onChangeMeldoyFile} />
         <CreateLyricView />
-        <CreateFieldView
-          createType={createType}
-          fields={fields}
-          onClickFieldHandler={onClickFieldHandler}
-        />
-        <CreateGenreView
-          genres={genres}
-          onClickGenreHandler={onClickGenreHandler}
-        />
+        <CreateFieldView createType={createType} fields={fields} onClickFieldHandler={onClickFieldHandler} />
+        <CreateGenreView genres={genres} onClickGenreHandler={onClickGenreHandler} />
         <CreateMoodView moods={moods} onClickMoodHandler={onClickMoodHandler} />
         <button className="submit-btn" type="submit">
           {createType.description}하기

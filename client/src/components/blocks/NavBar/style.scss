@@ -1,53 +1,63 @@
-@import url('https://fonts.googleapis.com/css2?family=Krona+One&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Krona+One&display=swap");
 @import "utils/style/size";
+@import "utils/style/color";
 
 header {
+  display: flex;
+  align-items: center;
   position: fixed;
-  width: 96vw;
-  padding: 0 2vw;
-  
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 5rem;
+  background-color: $Color_BG_Main; // 뒷 배경을 부모와 같게 맞춰줌
+  font-family: "NotoSansKR", "sans-serif";
+  font-size: 20px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.6;
+  letter-spacing: -1px;
+  text-align: left;
+  color: #fff;
+  z-index: 999;
+
   .navbar {
     display: flex;
-    width: 100%;
-    height: 100px;
-    font-family: 'Krona One', sans-serif;
-  
-    .logo {
-      display: inline-block;
-      color: #ff8900;
-      font-size: 1.8rem;
-      font-weight: lighter;
+    justify-content: space-between;
+    align-items: center;
+    width: calc(100% - 12rem);
+    padding: 0 6rem;
+    a > img {
+      width: 9rem;
     }
-  
-    a {
-      text-decoration: none;
-      color: black;
-      cursor: pointer;
-    }
-  
-    nav {
-      margin-left: auto;
-  
-      ul {
-        display: flex;
-        list-style: none;
-      }
-  
-      li {
-        padding: 0 15px;
-      }
-  
+
+    nav > ul {
+      display: flex;
+      list-style: none;
+
       .signin {
         display: flex;
         justify-content: center;
-  
-        .signin-btn {
-          background-color: #fff;
-          font-size: $MEDIUM_LARGE;
+
+        button {
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          appearance: none;
+          background-color: transparent; // 뒷 배경을 부모와 같게 맞춰줌
+
+          // button type 속성 때문에 font 관련 css가 안먹힘
+          font-family: "NotoSansKR", "sans-serif";
+          font-size: 1rem;
+          font-weight: bold;
+          font-stretch: normal;
+          font-style: normal;
+          line-height: 1.6;
+          letter-spacing: -1px;
+          text-align: left;
+          color: #fff;
         }
       }
-      
     }
   }
-
 }

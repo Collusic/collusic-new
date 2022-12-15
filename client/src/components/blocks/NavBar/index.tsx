@@ -1,15 +1,16 @@
 import React from "react";
 import { useRecoilState } from "recoil";
 
-import { API } from "utils/axios";
-import { Modal } from "../../atoms/Modal";
-import { modalOpenState, isSignInState } from "../../../model/signInModel";
-import { SignInViewModel } from "../../../viewmodel/SignInViewModel";
-
+import { Modal } from "components/atoms/Modal";
+import { modalOpenState, isSignInState } from "model/signInModel";
+import { SignInViewModel } from "viewmodel/SignInViewModel";
+import { API } from "api/axios";
 import "./style.scss";
 
 export function NavBar() {
   const [isModalOpen, setIsModalOpen] = useRecoilState(modalOpenState);
+  const LogoImgUrl = `${process.env.PUBLIC_URL}/assets/logo/logo@2x.png`;
+  const SignInImgUrl = `${process.env.PUBLIC_URL}/assets/signin/logo@2x.png`;
   const [isSignIn, setIsSignIn] = useRecoilState(isSignInState);
 
   const handleLoginButtonClick = () => {
@@ -25,18 +26,11 @@ export function NavBar() {
   return (
     <header>
       <div className="navbar">
-        <h1>
-          <a className="logo" href="/">
-            Collusic
-          </a>
-        </h1>
+        <a href="/">
+          <img src={LogoImgUrl} alt="" />
+        </a>
         <nav>
           <ul>
-            <li>
-              <a href=".">
-                <img src="../../../../public" alt="alarm" />
-              </a>
-            </li>
             <li className="signin">
               <button className="signin-btn" type="button" onClick={handleLoginButtonClick}>
                 {isSignIn ? "로그아웃" : "로그인/회원가입"}
@@ -47,7 +41,7 @@ export function NavBar() {
       </div>
       {!isSignIn && isModalOpen ? (
         <Modal showModal={isModalOpen} setShowModal={setIsModalOpen}>
-          <img width="100%" src="../../assets/signin/logo@2x.png" alt="logo" />
+          <img width="100%" src={SignInImgUrl} alt="logo" />
           <SignInViewModel />
         </Modal>
       ) : null}
