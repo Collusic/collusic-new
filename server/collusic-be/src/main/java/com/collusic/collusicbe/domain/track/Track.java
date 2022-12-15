@@ -65,7 +65,7 @@ public class Track extends BaseTimeEntity {
         this.project = project;
     }
 
-    public boolean hasSameCreator(Long memberId) {
-        return creator.getId().equals(memberId);
+    public boolean hasSameCreator(Member member) {
+        return creator.isSameMember(member);
     }
 }
