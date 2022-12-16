@@ -1,0 +1,14 @@
+#track-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: solid 2px #242424;
+  border-radius: 24px;
+  background-color: #fff;
+
+  img {
+    width: 1.5rem;
+  }
+}
