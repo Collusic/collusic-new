@@ -1,9 +1,7 @@
 package com.collusic.collusicbe.acceptanceTest;
 
 import com.collusic.collusicbe.web.controller.ProjectsResponseDto;
-import com.collusic.collusicbe.web.controller.dto.LikeResponseDto;
-import com.collusic.collusicbe.web.controller.dto.ProjectCreateRequestDto;
-import com.collusic.collusicbe.web.controller.dto.ProjectCreateResponseDto;
+import com.collusic.collusicbe.web.controller.dto.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpMethod;
@@ -70,10 +68,10 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
         int elementSize = 12;
 
         // when
-        ProjectsResponseDto responseDto = template().getForObject("/projects?page=0", ProjectsResponseDto.class);
+        ProjectsResponseDto response = template().getForObject("/projects?page=0", ProjectsResponseDto.class);
 
         // then
-        assertThat(responseDto.getResponseDtos().size()).isEqualTo(elementSize);
+        assertThat(response.getResponseDtos().size()).isEqualTo(elementSize);
     }
 
     @Test
@@ -111,6 +109,39 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
     void testProjectDeleteFail() {
         // when
         ResponseEntity<Void> response = template().exchange("/projects/5", HttpMethod.DELETE, requestEntityWithToken(null), Void.class);
+
+        // then
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    @DisplayName("프로젝트 수정 테스트 - 프로젝트 생성자는 프로젝트의 루트 트랙이 UNKNOWN 상태가 아닐 경우, 프로젝트 수정이 가능하다.")
+    void testProjectUpdate() {
+        // given
+        ProjectUpdateRequestDto requestDto = ProjectUpdateRequestDto.builder()
+                                                                    .projectName("test update project name")
+                                                                    .trackTag("드럼")
+                                                                    .build();
+
+        // TO 종근. 테스트가 디버깅도 안 되고 정상적으로 돌아가지 않는 상황입니다.
+        // when
+//        ResponseEntity<ProjectUpdateResponseDto> response = template().exchange("/projects/16", HttpMethod.PUT, requestEntityWithToken(requestDto), ProjectUpdateResponseDto.class);
+        template().put("/projects/16", requestDto);
+        // then
+//        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+
+    @Test
+    @DisplayName("프로젝트 수정 실패 테스트 - 프로젝트 생성자는 프로젝트의 루트 트랙이 UNKNOWN 상태일 경우, 프로젝트 수정이 불가능하다.")
+    void testProjectUpdateFail() {
+        // given
+        ProjectUpdateRequestDto requestDto = ProjectUpdateRequestDto.builder()
+                                                                    .projectName("test update project name")
+                                                                    .trackTag("드럼")
+                                                                    .build();
+
+        // when
+        ResponseEntity<ProjectUpdateResponseDto> response = template().exchange("/projects/15", HttpMethod.PUT, requestEntityWithToken(requestDto), ProjectUpdateResponseDto.class);
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);

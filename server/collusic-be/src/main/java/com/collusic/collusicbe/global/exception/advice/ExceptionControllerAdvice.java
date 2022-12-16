@@ -73,4 +73,10 @@ public class ExceptionControllerAdvice {
     public Object cannotDeleteExceptionHandler(Exception e) {
         return e.getMessage();
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(CannotUpdateException.class)
+    public Object cannotUpdateExceptionHandler(Exception e) {
+        return e.getMessage();
+    }
 }

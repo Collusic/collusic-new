@@ -1,7 +1,9 @@
 package com.collusic.collusicbe.domain.project;
 
 import com.collusic.collusicbe.domain.BaseTimeEntity;
+import com.collusic.collusicbe.domain.member.Member;
 import com.collusic.collusicbe.domain.track.Track;
+import com.collusic.collusicbe.domain.track.TrackTag;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -114,12 +116,17 @@ public class Project extends BaseTimeEntity {
         getLikes().remove(projectLike);
     }
 
-    public boolean haveOnlyOwnTracks(Long memberId) {
+    public boolean haveOnlyOwnTracks(Member member) {
         for (Track track : tracks) {
-            if (!track.hasSameCreator(memberId)) {
+            if (!track.hasSameCreator(member)) {
                 return false;
             }
         }
         return true;
+    }
+
+    public void update(String projectName, TrackTag trackTag) {
+        this.projectName = projectName;
+        this.tracks.get(0).changeTrackInfo(projectName, trackTag);
     }
 }

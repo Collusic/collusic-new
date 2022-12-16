@@ -8,10 +8,12 @@ import com.collusic.collusicbe.domain.project.ProjectRepository;
 import com.collusic.collusicbe.domain.track.Track;
 import com.collusic.collusicbe.domain.track.TrackRepository;
 import com.collusic.collusicbe.global.exception.CannotDeleteException;
+import com.collusic.collusicbe.global.exception.CannotUpdateException;
 import com.collusic.collusicbe.web.controller.ProjectInventoryResponseDto;
 import com.collusic.collusicbe.web.controller.ProjectsResponseDto;
 import com.collusic.collusicbe.web.controller.dto.LikeResponseDto;
 import com.collusic.collusicbe.web.controller.dto.ProjectCreateRequestDto;
+import com.collusic.collusicbe.web.controller.dto.ProjectUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -101,16 +103,35 @@ public class ProjectService {
         return new LikeResponseDto(likeRepository.countByProjectIdAndMemberId(projectId, member.getId()).intValue(), true);
     }
 
-    public void deleteProject(Long projectId, Long memberId) {
+    @Transactional
+    public void deleteProject(Long projectId, Member member) {
         Project project = projectRepository.findById(projectId)
                                            .orElseThrow(NoSuchElementException::new);
 
-        if (!project.haveOnlyOwnTracks(memberId)) {
+        // TODO : 프로젝트 생성자가 사용자와 같은지 확인하기
+
+        if (!project.haveOnlyOwnTracks(member)) {
             throw new CannotDeleteException("타인이 생성한 트랙이 존재하는 경우, 프로젝트를 삭제할 수 없습니다.");
         }
 
         project.getTracks().forEach(trackRepository::delete);
 
         projectRepository.delete(project);
+    }
+
+    @Transactional
+    public Project updateProject(Long projectId, Member member, ProjectUpdateRequestDto requestDto) {
+        Project project = projectRepository.findById(projectId)
+                                           .orElseThrow(NoSuchElementException::new);
+
+        Track rootTrack = project.getTracks().get(0);
+
+        if (!rootTrack.getCreator().isSameMember(member)) {
+            throw new CannotUpdateException("프로젝트 수정이 불가능합니다.");
+        }
+
+        project.update(requestDto.getProjectName(), requestDto.getTrackTag());
+
+        return project;
     }
 }
