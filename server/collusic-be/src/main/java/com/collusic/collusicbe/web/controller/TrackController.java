@@ -13,7 +13,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.net.URI;
 
 @RestController
@@ -24,9 +26,13 @@ public class TrackController {
     private final ProjectService projectService;
 
     @PostMapping("/projects/{projectId}/tracks")
-    public ResponseEntity<TrackCreateResponseDto> createTrack(@LoginMember Member member, @PathVariable Long projectId, @Validated @RequestBody final TrackCreateRequestDto requestDto) {
+    public ResponseEntity<TrackCreateResponseDto> createTrack(
+            @LoginMember Member member,
+            @PathVariable Long projectId,
+            @RequestPart(value = "audioFile", required = false) MultipartFile audioFile,
+            @Validated @RequestPart(value = "trackCreateRequest") TrackCreateRequestDto requestDto) throws IOException {
         Project project = projectService.findById(projectId);
-        Track track = trackService.create(member, project, requestDto);
+        Track track = trackService.create(member, project, requestDto, audioFile);
 
         return ResponseEntity.created(URI.create("/projects/" + projectId + "/tracks/" + track.getId())).body(new TrackCreateResponseDto(track));
     }

@@ -4,13 +4,17 @@ import com.collusic.collusicbe.domain.member.Member;
 import com.collusic.collusicbe.domain.project.Project;
 import com.collusic.collusicbe.domain.project.ProjectRepository;
 import com.collusic.collusicbe.global.exception.ForbiddenException;
+import com.collusic.collusicbe.service.S3Service;
 import com.collusic.collusicbe.service.TrackService;
 import com.collusic.collusicbe.web.controller.dto.TrackCreateRequestDto;
 import com.collusic.collusicbe.web.controller.dto.TrackUpdateRequestDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +29,7 @@ public class TrackServiceTest {
     private TrackService trackService;
     private TrackRepository trackRepository;
     private ProjectRepository projectRepository;
+    private S3Service s3Service;
 
     private Member testMember;
     private Project testProject;
@@ -34,7 +39,8 @@ public class TrackServiceTest {
     void setUp() {
         trackRepository = mock(TrackRepository.class);
         projectRepository = mock(ProjectRepository.class);
-        trackService = new TrackService(projectRepository, trackRepository);
+        s3Service = mock(S3Service.class);
+        trackService = new TrackService(projectRepository, trackRepository, s3Service);
 
         testMember = Member.builder()
                            .id(1L)
@@ -48,13 +54,14 @@ public class TrackServiceTest {
                          .creator(testMember)
                          .project(testProject)
                          .trackName("test track name")
+                         .fileUrl("test_audio_url")
                          .trackTag(TrackTag.PIANO)
                          .build();
     }
 
     @Test
     @DisplayName("트랙 생성 테스트 - 정상적인 생성")
-    void testCreateTrack() {
+    void testCreateTrack() throws IOException {
         // given
         TrackCreateRequestDto requestDto = TrackCreateRequestDto.builder()
                                                                 .trackName("test track name")
@@ -63,13 +70,16 @@ public class TrackServiceTest {
 
         // when
         when(trackRepository.save(any(Track.class))).thenReturn(testTrack);
-        Track savedTrack = trackService.create(testMember, testProject, requestDto);
+        when(s3Service.uploadAudioFile(any(MultipartFile.class))).thenReturn("test_audio_url");
+
+        Track savedTrack = trackService.create(testMember, testProject, requestDto, new MockMultipartFile("test", new byte[]{}));
 
         //then
         assertThat(savedTrack.getCreator().getNickname()).isEqualTo(testMember.getNickname());
         assertThat(savedTrack.getProject().getId()).isEqualTo(testProject.getId());
         assertThat(savedTrack.getTrackName()).isEqualTo(testTrack.getTrackName());
         assertThat(savedTrack.getTrackTag()).isEqualTo(testTrack.getTrackTag());
+        assertThat(savedTrack.getFileUrl()).isEqualTo("test_audio_url");
     }
 
     @Test
@@ -89,7 +99,7 @@ public class TrackServiceTest {
         }
 
         // then
-        assertThrows(IllegalStateException.class, () -> trackService.create(testMember, projectWithFullTrack, requestDto));
+        assertThrows(IllegalStateException.class, () -> trackService.create(testMember, projectWithFullTrack, requestDto, new MockMultipartFile("test", new byte[]{})));
     }
 
     @Test

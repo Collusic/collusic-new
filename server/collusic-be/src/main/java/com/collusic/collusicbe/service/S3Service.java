@@ -25,6 +25,7 @@ public class S3Service {
 
     private static final String IMAGE_DIR = "profiles";
     private static final String RESIZED_IMAGE_DIR = "resized-profiles";
+    private static final String TRACK_DIR = "tracks";
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
@@ -114,5 +115,21 @@ public class S3Service {
             return path + RESIZED_IMAGE_DIR;
         }
         return path + IMAGE_DIR;
+    }
+
+    public String uploadAudioFile(MultipartFile audioFile) throws IOException {
+        StringBuilder path = new StringBuilder();
+        path.append(TRACK_DIR)
+            .append("/")
+            .append(audioFile.getOriginalFilename());
+
+        ObjectMetadata objectMetadata = new ObjectMetadata();
+        objectMetadata.setContentType(audioFile.getContentType());
+        objectMetadata.setContentLength(audioFile.getSize());
+
+        s3Client.putObject(new PutObjectRequest(bucket, path.toString(), audioFile.getInputStream(), objectMetadata)
+                .withCannedAcl(CannedAccessControlList.PublicRead));
+
+        return cloudFrontDomain + path;
     }
 }
