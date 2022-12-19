@@ -146,8 +146,15 @@ public class TrackAcceptanceTest extends AbstractAcceptanceTest {
 
     @Test
     @DisplayName("트랙 삭제 테스트 - 현재 사용자가 등록하지 않은 트랙을 삭제 요청하는 경우 FORBIDDEN(403)으로 응답")
-    void testBadRequestDeletingTrack() {
+    void testForbiddenDeletingTrack() {
         ResponseEntity<Void> response = template().exchange("/projects/4/tracks/14", HttpMethod.DELETE, requestEntityWithToken(null), Void.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
+    }
+
+    @Test
+    @DisplayName("트랙 삭제 테스트 - 현재 사용자가 삭제된 트랙 삭제를 요청하는 경우 BAD_REQUEST(400)으로 응답")
+    void testBadRequestDeletingTrack() {
+        ResponseEntity<Void> response = template().exchange("/projects/6/tracks/23", HttpMethod.DELETE, requestEntityWithToken(null), Void.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 }

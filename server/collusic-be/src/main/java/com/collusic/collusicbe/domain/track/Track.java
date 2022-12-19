@@ -68,4 +68,12 @@ public class Track extends BaseTimeEntity {
     public boolean hasSameCreator(Member member) {
         return creator.isSameMember(member);
     }
+
+    public void delete() {
+        this.creator = null;
+    }
+
+    public boolean isDeleted() {
+        return creator == null;
+    }
 }

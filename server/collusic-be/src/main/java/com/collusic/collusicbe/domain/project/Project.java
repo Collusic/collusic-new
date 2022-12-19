@@ -4,6 +4,7 @@ import com.collusic.collusicbe.domain.BaseTimeEntity;
 import com.collusic.collusicbe.domain.member.Member;
 import com.collusic.collusicbe.domain.track.Track;
 import com.collusic.collusicbe.domain.track.TrackTag;
+import com.collusic.collusicbe.global.exception.CannotDeleteException;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -116,17 +117,16 @@ public class Project extends BaseTimeEntity {
         getLikes().remove(projectLike);
     }
 
-    public boolean haveOnlyOwnTracks(Member member) {
-        for (Track track : tracks) {
-            if (!track.hasSameCreator(member)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     public void update(String projectName, TrackTag trackTag) {
         this.projectName = projectName;
         this.tracks.get(0).changeTrackInfo(projectName, trackTag);
+    }
+
+    public void checkDeletable(Member member) {
+        for (Track track : tracks) {
+            if (!(track.isDeleted() || track.hasSameCreator((member)))) {
+                throw new CannotDeleteException("다른 사용자의 트랙이 있는 경우, 프로젝트를 삭제할 수 없습니다.");
+            }
+        }
     }
 }

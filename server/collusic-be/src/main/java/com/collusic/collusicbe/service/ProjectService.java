@@ -7,8 +7,8 @@ import com.collusic.collusicbe.domain.project.ProjectLike;
 import com.collusic.collusicbe.domain.project.ProjectRepository;
 import com.collusic.collusicbe.domain.track.Track;
 import com.collusic.collusicbe.domain.track.TrackRepository;
-import com.collusic.collusicbe.global.exception.CannotDeleteException;
 import com.collusic.collusicbe.global.exception.CannotUpdateException;
+import com.collusic.collusicbe.global.exception.ForbiddenException;
 import com.collusic.collusicbe.web.controller.ProjectInventoryResponseDto;
 import com.collusic.collusicbe.web.controller.ProjectsResponseDto;
 import com.collusic.collusicbe.web.controller.dto.LikeResponseDto;
@@ -124,15 +124,7 @@ public class ProjectService {
         Project project = projectRepository.findById(projectId)
                                            .orElseThrow(NoSuchElementException::new);
 
-        Track rootTrack = project.getTracks().get(0);
-
-        if (!rootTrack.getCreator().isSameMember(member)) {
-            throw new CannotDeleteException("타인 생성한 프로젝트를 삭제할 수 없습니다.");
-        }
-
-        if (!project.haveOnlyOwnTracks(member)) {
-            throw new CannotDeleteException("타인이 생성한 트랙이 존재하는 경우, 프로젝트를 삭제할 수 없습니다.");
-        }
+        project.checkDeletable(member);
 
         project.getTracks().forEach(trackRepository::delete);
 
@@ -146,8 +138,12 @@ public class ProjectService {
 
         Track rootTrack = project.getTracks().get(0);
 
-        if (!rootTrack.getCreator().isSameMember(member)) {
-            throw new CannotUpdateException("프로젝트 수정이 불가능합니다.");
+        if (rootTrack.isDeleted()) {
+            throw new CannotUpdateException("이미 삭제된 데이터입니다.");
+        }
+
+        if (!rootTrack.hasSameCreator(member)) {
+            throw new ForbiddenException("프로젝트 수정이 불가능합니다.");
         }
 
         project.update(requestDto.getProjectName(), requestDto.getTrackTag());
