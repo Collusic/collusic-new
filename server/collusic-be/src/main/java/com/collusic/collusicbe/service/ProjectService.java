@@ -69,7 +69,7 @@ public class ProjectService {
                                                             .map(project -> ProjectInventoryResponseDto.builder()
                                                                                                        .projectName(project.getProjectName())
                                                                                                        .trackTags(project.collectTrackTags())
-                                                                                                       .likeCount(project.getLikes().size()) // TODO : 좋아요 기능 반영 시 수정할 것!
+                                                                                                       .likeCount(likeRepository.countByProjectId(project.getId()).intValue())
                                                                                                        .build())
                                                             .collect(Collectors.toList());
 
@@ -90,7 +90,7 @@ public class ProjectService {
         if (like.isPresent()) {
             project.deleteLike(like.get());
             likeRepository.delete(like.get());
-            return new LikeResponseDto(likeRepository.countByProjectIdAndMemberId(projectId, member.getId()).intValue(), false);
+            return new LikeResponseDto(likeRepository.countByProjectId(projectId).intValue(), false);
         }
 
         ProjectLike projectLike = ProjectLike.builder()
@@ -100,7 +100,7 @@ public class ProjectService {
 
         likeRepository.save(projectLike);
 
-        return new LikeResponseDto(likeRepository.countByProjectIdAndMemberId(projectId, member.getId()).intValue(), true);
+        return new LikeResponseDto(likeRepository.countByProjectId(projectId).intValue(), true);
     }
 
     @Transactional
