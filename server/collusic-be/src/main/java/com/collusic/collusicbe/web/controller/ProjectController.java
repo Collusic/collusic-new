@@ -45,7 +45,7 @@ public class ProjectController {
     }
 
     @GetMapping("/projects")
-    public ResponseEntity<ProjectsResponseDto> readProjects(@RequestParam(name = "size", defaultValue = "16") int size, @RequestParam(name = "cursorId", required = false) Long cursorId, @Visitor Member member) {
+    public ResponseEntity<ProjectsResponseDto> readProjects(@RequestParam(name = "size", defaultValue = "24") int size, @RequestParam(name = "cursorId", required = false) Long cursorId, @Visitor Member member) {
         ProjectsResponseDto responseDto = projectService.getProjects(size, cursorId, member);
         return ResponseEntity.ok().body(responseDto);
     }

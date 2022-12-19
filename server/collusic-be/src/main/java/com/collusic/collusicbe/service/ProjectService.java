@@ -80,7 +80,7 @@ public class ProjectService {
 
         ProjectsResponseDto responseDto = ProjectsResponseDto.builder()
                                                              .responseDtos(projectPreviews)
-                                                             .projectCount(projects.getNumberOfElements())
+                                                             .projectCount(projectPreviews.size())
                                                              .hasNext(hasNext)
                                                              .build();
         return responseDto;
