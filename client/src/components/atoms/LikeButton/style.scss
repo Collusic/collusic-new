@@ -1,0 +1,26 @@
+#like-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 4rem;
+  height:1.8rem;
+  padding: 2px 8px 2px 4px;
+  border-radius: 17px;
+  border: solid 1px #fff;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: transparent;
+
+  img {
+    width: 2rem;
+  }
+
+  span {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 2.3;
+    letter-spacing: -0.7px;
+    color: #fff;
+  }
+}
