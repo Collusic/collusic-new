@@ -1,6 +1,7 @@
 package com.collusic.collusicbe.util;
 
 import javax.servlet.http.HttpServletRequest;
+
 public class ParsingUtil {
 
     public static String getRemoteAddress(HttpServletRequest request) {

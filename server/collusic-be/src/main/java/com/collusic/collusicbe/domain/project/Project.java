@@ -25,30 +25,24 @@ import java.util.stream.Collectors;
 @Getter
 public class Project extends BaseTimeEntity {
 
+    private static final int MAX_TRACK_CAPACITY = 10;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PROJECT_ID")
     private Long id;
-
     @Size(min = 1, max = 20)
     @Column(length = 20, nullable = false)
     private String projectName;
-
     @Column(nullable = false)
     @Min(30)
     @Max(240)
     private int bpm;
-
     @Column(nullable = false)
     private String fileUrl;
-
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<Track> tracks = new ArrayList<>();
-
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProjectLike> likes = new ArrayList<>();
-
-    private static final int MAX_TRACK_CAPACITY = 10;
 
     @Builder
     public Project(Long id, String projectName, int bpm, String fileUrl) {

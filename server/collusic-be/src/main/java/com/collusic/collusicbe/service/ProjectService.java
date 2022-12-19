@@ -68,14 +68,14 @@ public class ProjectService {
 
         if (member == null) {
             collect = projects.getContent().stream()
-                                                                .map(project -> ProjectInventoryResponseDto.builder()
-                                                                                                           .projectId(project.getId())
-                                                                                                           .projectName(project.getProjectName())
-                                                                                                           .trackTags(project.collectTrackTags())
-                                                                                                           .likeCount(likeRepository.countByProjectId(project.getId()).intValue())
-                                                                                                           .isLiked(false)
-                                                                                                           .build())
-                                                                .collect(Collectors.toList());
+                              .map(project -> ProjectInventoryResponseDto.builder()
+                                                                         .projectId(project.getId())
+                                                                         .projectName(project.getProjectName())
+                                                                         .trackTags(project.collectTrackTags())
+                                                                         .likeCount(likeRepository.countByProjectId(project.getId()).intValue())
+                                                                         .isLiked(false)
+                                                                         .build())
+                              .collect(Collectors.toList());
         } else {
             collect = projects.getContent().stream()
                               .map(project -> ProjectInventoryResponseDto.builder()

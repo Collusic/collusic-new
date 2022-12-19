@@ -5,7 +5,6 @@ import com.collusic.collusicbe.domain.member.MemberRepository;
 import com.collusic.collusicbe.global.exception.ParameterEmptyException;
 import com.collusic.collusicbe.util.JWTUtil;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.engine.query.ParameterRecognitionException;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
@@ -15,7 +14,6 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Component

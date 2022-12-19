@@ -32,7 +32,7 @@ public class OAuth2Controller {
     @GetMapping("/oauth2/login/{provider}")
     public ResponseEntity<OAuth2LoginResponseDto> loginToSns(@PathVariable String provider, @RequestParam Map<String, Object> authCode, HttpServletRequest request, HttpServletResponse response) {
         OAuth2ClientService oAuth2ClientService = oAuth2ProviderClientManager.getClientService(provider);
-           OAuth2Response oAuth2Response = oAuth2ClientService.requestLogin(authCode);
+        OAuth2Response oAuth2Response = oAuth2ClientService.requestLogin(authCode);
         String email = (String) oAuth2Response.getAttributes().get("email");
         String authId = (String) oAuth2Response.getAttributes().get("sub");
         String profileImageUrl = (String) oAuth2Response.getAttributes().get("picture");
