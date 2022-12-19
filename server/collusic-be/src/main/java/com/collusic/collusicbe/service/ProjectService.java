@@ -124,7 +124,11 @@ public class ProjectService {
         Project project = projectRepository.findById(projectId)
                                            .orElseThrow(NoSuchElementException::new);
 
-        // TODO : 프로젝트 생성자가 사용자와 같은지 확인하기
+        Track rootTrack = project.getTracks().get(0);
+
+        if (!rootTrack.getCreator().isSameMember(member)) {
+            throw new CannotDeleteException("타인 생성한 프로젝트를 삭제할 수 없습니다.");
+        }
 
         if (!project.haveOnlyOwnTracks(member)) {
             throw new CannotDeleteException("타인이 생성한 트랙이 존재하는 경우, 프로젝트를 삭제할 수 없습니다.");
