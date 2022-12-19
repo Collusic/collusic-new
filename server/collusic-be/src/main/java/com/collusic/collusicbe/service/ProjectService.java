@@ -45,7 +45,7 @@ public class ProjectService {
                                  .fileUrl("empty")
                                  .build();
 
-        Project save = projectRepository.save(project);
+        Project savedProject = projectRepository.save(project);
 
         Track track = Track.builder()
                            .trackName(project.getProjectName())
@@ -59,11 +59,11 @@ public class ProjectService {
 
         trackRepository.save(track);
 
-        return save;
+        return savedProject;
     }
 
     public ProjectsResponseDto getProjects(Pageable pageable, Member member) {
-        Slice<Project> projects = projectRepository.findAllByOrderByCreatedDate(pageable); // TODO : 프로젝트 정렬 쿼리 복잡하기 때문에 트랙 생성 시마다 프로젝트 수정 일자를 업데이트 시켜주고 프로젝트 수정 일자 기준 정렬로 바꾸기
+        Slice<Project> projects = projectRepository.findAllByOrderByModifiedDate(pageable);
 
         List<ProjectInventoryResponseDto> collect;
 

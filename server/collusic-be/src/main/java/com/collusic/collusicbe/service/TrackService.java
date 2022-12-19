@@ -24,6 +24,7 @@ public class TrackService {
         if (project.isTrackFull()) {
             throw new IllegalStateException();
         }
+
         Track track = Track.builder()
                            .creator(member)
                            .project(project)
@@ -31,7 +32,14 @@ public class TrackService {
                            .trackTag(trackData.getTrackTag())
                            .orderInProject(project.getNextTrackOrder())
                            .build();
-        return trackRepository.save(track);
+
+        Track savedTrack = trackRepository.save(track);
+
+        project.updateModifiedDate(savedTrack.getCreatedDate());
+
+        projectRepository.save(project);
+
+        return savedTrack;
     }
 
     public Track update(Member member, long trackId, TrackUpdateRequestDto trackData) {

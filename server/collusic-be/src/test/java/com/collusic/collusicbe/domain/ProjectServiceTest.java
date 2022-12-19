@@ -103,7 +103,7 @@ public class ProjectServiceTest {
         Slice<Project> slice = new SliceImpl<>(projects, pageable, false);
 
         // when
-        when(projectRepository.findAllByOrderByCreatedDate(any(Pageable.class))).thenReturn(slice);
+        when(projectRepository.findAllByOrderByModifiedDate(any(Pageable.class))).thenReturn(slice);
         when(likeRepository.countByProjectId(any(Long.class))).thenReturn(0L);
         when(likeRepository.existsByMemberAndProject(any(Member.class), any(Project.class))).thenReturn(false);
         ProjectsResponseDto responseDto = projectService.getProjects(pageable, testMember);
