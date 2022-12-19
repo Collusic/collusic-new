@@ -60,7 +60,7 @@ public class ContributeProject extends BaseTimeEntity {
     }
 
     public boolean isAdopted() {
-        if(this.adoptFlag == true) {
+        if (this.adoptFlag == true) {
             return true;
         }
         return false;

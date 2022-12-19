@@ -1,11 +1,10 @@
 package com.collusic.collusicbe.acceptanceTest;
 
 import com.collusic.collusicbe.web.controller.ProjectsResponseDto;
-import com.collusic.collusicbe.web.controller.dto.LikeResponseDto;
-import com.collusic.collusicbe.web.controller.dto.ProjectCreateRequestDto;
-import com.collusic.collusicbe.web.controller.dto.ProjectCreateResponseDto;
+import com.collusic.collusicbe.web.controller.dto.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -69,10 +68,10 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
         int elementSize = 12;
 
         // when
-        ProjectsResponseDto responseDto = template().getForObject("/projects?page=0", ProjectsResponseDto.class);
+        ProjectsResponseDto response = template().getForObject("/projects?page=0", ProjectsResponseDto.class);
 
         // then
-        assertThat(responseDto.getResponseDtos().size()).isEqualTo(elementSize);
+        assertThat(response.getResponseDtos().size()).isEqualTo(elementSize);
     }
 
     @Test
@@ -82,7 +81,7 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
         ResponseEntity<LikeResponseDto> response = template().postForEntity("/projects/2/like", requestEntityWithToken(null), LikeResponseDto.class);
 
         // then
-        assertThat(response.getBody().getIsColor()).isTrue();
+        assertThat(response.getBody().getIsLiked()).isTrue();
     }
 
     @Test
@@ -92,6 +91,59 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
         ResponseEntity<LikeResponseDto> response = template().postForEntity("/projects/13/like", requestEntityWithToken(null), LikeResponseDto.class);
 
         // then
-        assertThat(response.getBody().getIsColor()).isFalse();
+        assertThat(response.getBody().getIsLiked()).isFalse();
     }
+
+    @Test
+    @DisplayName("프로젝트 삭제 테스트 - 프로젝트에 본인이 등록한 트랙만 존재하는 경우, 프로젝트를 완전히 삭제할 수 있다.")
+    void testProjectDelete() {
+        // when
+        ResponseEntity<Void> response = template().exchange("/projects/10", HttpMethod.DELETE, requestEntityWithToken(null), Void.class);
+
+        // then
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+    }
+
+    @Test
+    @DisplayName("프로젝트 삭제 실패 테스트 - 프로젝트에 타인이 생성한 트랙이 존재하는 경우, 프로젝트를 삭제할 수 없다.")
+    void testProjectDeleteFail() {
+        // when
+        ResponseEntity<Void> response = template().exchange("/projects/5", HttpMethod.DELETE, requestEntityWithToken(null), Void.class);
+
+        // then
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    @DisplayName("프로젝트 수정 테스트 - 프로젝트 생성자는 프로젝트의 루트 트랙이 UNKNOWN 상태가 아닐 경우, 프로젝트 수정이 가능하다.")
+    void testProjectUpdate() {
+        // given
+        ProjectUpdateRequestDto requestDto = ProjectUpdateRequestDto.builder()
+                                                                    .projectName("update project name")
+                                                                    .trackTag("드럼")
+                                                                    .build();
+
+
+        // when
+        ResponseEntity<ProjectUpdateResponseDto> response = template().exchange("/projects/16", HttpMethod.PUT, requestEntityWithToken(requestDto), ProjectUpdateResponseDto.class);
+
+        // then
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+
+//    @Test
+//    @DisplayName("프로젝트 수정 실패 테스트 - 프로젝트 생성자는 트랙이 이미 삭제된 경우, 프로젝트 수정이 불가능하다.")
+//    void testProjectUpdateFail() {
+//        // given
+//        ProjectUpdateRequestDto requestDto = ProjectUpdateRequestDto.builder()
+//                                                                    .projectName("update project name")
+//                                                                    .trackTag("드럼")
+//                                                                    .build();
+//
+//        // when
+//        ResponseEntity<ProjectUpdateResponseDto> response = template().exchange("/projects/15", HttpMethod.PUT, requestEntityWithToken(requestDto), ProjectUpdateResponseDto.class);
+//
+//        // then
+//        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+//    }
 }

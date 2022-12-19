@@ -4,26 +4,25 @@ import com.collusic.collusicbe.domain.track.TrackTag;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Getter
-@Setter
 @NoArgsConstructor
-public class TrackCreateRequestDto {
+public class ProjectUpdateRequestDto {
 
     @NotBlank
-    @Size(min = 1, max = 20, message = "트랙 명은 1자 이상 20자 이내로 한다.")
-    private String trackName;
+    @Size(min = 1, max = 20, message = "프로젝트 명은 1자 이상 20자 이내로 한다.")
+    private String projectName;
+
     @NotNull
     private TrackTag trackTag;
 
     @Builder
-    public TrackCreateRequestDto(String trackName, String trackTag) {
-        this.trackName = trackName;
+    public ProjectUpdateRequestDto(String projectName, String trackTag) {
+        this.projectName = projectName;
         this.trackTag = TrackTag.valueOfLabel(trackTag);
     }
 }

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 @FeignClient(name = "GoogleProfileClient", url = "https://www.googleapis.com")
 public interface GoogleProfileClient {
 
-    @GetMapping(value ="/oauth2/v3/userinfo", consumes = "application/json")
+    @GetMapping(value = "/oauth2/v3/userinfo", consumes = "application/json")
     GoogleProfileResponse requestGoogleProfile(
             @RequestHeader("Authorization") String accessToken
     );

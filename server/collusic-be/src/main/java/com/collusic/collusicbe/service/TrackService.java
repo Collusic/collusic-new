@@ -5,6 +5,8 @@ import com.collusic.collusicbe.domain.project.Project;
 import com.collusic.collusicbe.domain.project.ProjectRepository;
 import com.collusic.collusicbe.domain.track.Track;
 import com.collusic.collusicbe.domain.track.TrackRepository;
+import com.collusic.collusicbe.global.exception.CannotDeleteException;
+import com.collusic.collusicbe.global.exception.CannotUpdateException;
 import com.collusic.collusicbe.global.exception.ForbiddenException;
 import com.collusic.collusicbe.web.controller.dto.TrackCreateRequestDto;
 import com.collusic.collusicbe.web.controller.dto.TrackUpdateRequestDto;
@@ -24,6 +26,7 @@ public class TrackService {
         if (project.isTrackFull()) {
             throw new IllegalStateException();
         }
+
         Track track = Track.builder()
                            .creator(member)
                            .project(project)
@@ -31,15 +34,26 @@ public class TrackService {
                            .trackTag(trackData.getTrackTag())
                            .orderInProject(project.getNextTrackOrder())
                            .build();
-        return trackRepository.save(track);
+
+        Track savedTrack = trackRepository.save(track);
+
+        project.updateModifiedDate(savedTrack.getCreatedDate());
+
+        projectRepository.save(project);
+
+        return savedTrack;
     }
 
     public Track update(Member member, long trackId, TrackUpdateRequestDto trackData) {
         Track track = trackRepository.findById(trackId)
                                      .orElseThrow(NoSuchElementException::new);
 
-        if (!member.isSameMember(track.getCreator())) {
-            throw new IllegalArgumentException();
+        if (track.isDeleted()) {
+            throw new CannotUpdateException("이미 삭제한 트랙입니다.");
+        }
+
+        if (!track.hasSameCreator(member)) {
+            throw new CannotUpdateException("타인이 생성한 트랙인 경우, 트랙을 수정할 수 없습니다.");
         }
 
         track.changeTrackInfo(trackData.getTrackName(), trackData.getTrackTag());
@@ -50,8 +64,12 @@ public class TrackService {
     public void delete(Member member, Project project, long id) {
         Track track = project.getTrack(id);
 
-        if (!member.isSameMember(track.getCreator())) {
-            throw new ForbiddenException();
+        if (track.isDeleted()) {
+            throw new CannotDeleteException("이미 삭제한 트랙입니다.");
+        }
+
+        if (!track.hasSameCreator(member)) {
+            throw new ForbiddenException("타인이 생성한 트랙인 경우, 트랙을 삭제할 수 없습니다.");
         }
 
         if (project.getTracks().size() == 1) {
@@ -59,7 +77,7 @@ public class TrackService {
             return;
         }
 
-        project.removeTrack(track.getId());
-        trackRepository.delete(track);
+        track.delete();
+        trackRepository.save(track);
     }
 }

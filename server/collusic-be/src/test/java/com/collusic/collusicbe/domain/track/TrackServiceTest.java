@@ -3,6 +3,7 @@ package com.collusic.collusicbe.domain.track;
 import com.collusic.collusicbe.domain.member.Member;
 import com.collusic.collusicbe.domain.project.Project;
 import com.collusic.collusicbe.domain.project.ProjectRepository;
+import com.collusic.collusicbe.global.exception.CannotUpdateException;
 import com.collusic.collusicbe.global.exception.ForbiddenException;
 import com.collusic.collusicbe.service.TrackService;
 import com.collusic.collusicbe.web.controller.dto.TrackCreateRequestDto;
@@ -139,7 +140,7 @@ public class TrackServiceTest {
         when(trackRepository.save(any(Track.class))).thenReturn(updatedTrack);
 
         //then
-        assertThrows(IllegalArgumentException.class, () -> trackService.update(anotherMember, 1l, requestDto));
+        assertThrows(CannotUpdateException.class, () -> trackService.update(anotherMember, 1l, requestDto));
     }
 
     @Test
@@ -153,17 +154,16 @@ public class TrackServiceTest {
 
         projectWithTracks.addTrack(testTrack);
 
-        when(trackRepository.findById(any(Long.class))).thenReturn(Optional.of(testTrack));
-        doNothing().when(trackRepository).delete(any(Track.class));
-
         List<Track> tracksFromProject = projectWithTracks.getTracks();
         assertThat(tracksFromProject.size()).isEqualTo(6);
 
+        doNothing().when(projectRepository).delete(testProject);
+        when(trackRepository.save(any(Track.class))).thenReturn(testTrack);
+
         trackService.delete(testMember, projectWithTracks, 1L);
 
-        verify(trackRepository, times(1)).delete(any(Track.class));
-        assertThat(tracksFromProject.size()).isEqualTo(5);
-        assertThat(tracksFromProject.stream().filter(t -> t.getId().equals(testTrack.getId())).count()).isEqualTo(0);
+        assertThat(tracksFromProject.size()).isEqualTo(6);
+        assertThat(tracksFromProject.stream().filter(t -> t.getId().equals(testTrack.getId())).findFirst().get().getCreator()).isNull();
 
         for (int i = 0; i < tracksFromProject.size(); i++) {
             assertThat(tracksFromProject.get(i).getOrderInProject() == i).isTrue();
@@ -176,9 +176,8 @@ public class TrackServiceTest {
         testProject.addTrack(testTrack);
 
         Member anotherMember = Member.builder().id(2L).nickname("anotherMember").build();
-
-        when(trackRepository.findById(any(Long.class))).thenReturn(Optional.of(testTrack));
-        doThrow(IllegalStateException.class).when(trackRepository).delete(any(Track.class));
+        doNothing().when(projectRepository).delete(testProject);
+        when(trackRepository.save(any(Track.class))).thenReturn(testTrack);
 
         assertThrows(ForbiddenException.class, () -> trackService.delete(anotherMember, testProject, 1L));
     }

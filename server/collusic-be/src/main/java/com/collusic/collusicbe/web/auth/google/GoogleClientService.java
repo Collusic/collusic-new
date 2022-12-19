@@ -17,22 +17,16 @@ import java.util.stream.Collectors;
 public class GoogleClientService implements OAuth2ClientService {
 
     private static final String CONTENT_TYPE = MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=utf-8";
-
+    private final GoogleProfileClient googleProfileClient;
+    private final GoogleAccessTokenClient googleAccessTokenClient;
     @Value("${oauth2.client.google.client-id}")
     private String clientId;
-
     @Value("${oauth2.client.google.client-secret}")
     private String clientSecret;
-
     @Value("${oauth2.client.google.redirect-uri}")
     private String redirectUri;
-
     @Value("${oauth2.client.google.authorization-grant-type}")
     private String grantType;
-
-    private final GoogleProfileClient googleProfileClient;
-
-    private final GoogleAccessTokenClient googleAccessTokenClient;
 
     @Override
     public OAuth2Response requestLogin(Map<String, Object> authCode) {
@@ -45,8 +39,8 @@ public class GoogleClientService implements OAuth2ClientService {
         body.put("client_secret", clientSecret);
 
         String parameterString = body.entrySet().stream()
-                                       .map(x -> x.getKey() + "=" + x.getValue())
-                                       .collect(Collectors.joining("&"));
+                                     .map(x -> x.getKey() + "=" + x.getValue())
+                                     .collect(Collectors.joining("&"));
 
         GoogleTokenResponse googleTokenResponse = googleAccessTokenClient.requestGoogleAccessToken(CONTENT_TYPE, parameterString);
         return googleProfileClient.requestGoogleProfile("Bearer " + googleTokenResponse.getAccessToken());
