@@ -30,7 +30,7 @@ function TrackTag({ onTrackClick, selectedTrack, tracks }: TrackTagProps) {
             type="line"
             isSelected={selectedTrack === track}
             onBtnClick={onTrackClick}
-            svgSrc={track === "ETC" ? undefined : getTrackSrc(selectedTrack === track, track)}
+            imgSrc={track === "ETC" ? undefined : getTrackSrc(selectedTrack === track, track)}
             marginLeft="8px"
             marginTop="10px"
           >
