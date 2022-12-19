@@ -10,6 +10,7 @@ import com.collusic.collusicbe.web.controller.dto.TrackCreateRequestDto;
 import com.collusic.collusicbe.web.controller.dto.TrackUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,7 +25,7 @@ public class TrackService {
     private final TrackRepository trackRepository;
     private final S3Service s3Service;
 
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED)
     public Track create(Member member, Project project, TrackCreateRequestDto trackData, MultipartFile audioFile) throws IOException {
         if (project.isTrackFull()) {
             throw new IllegalStateException();

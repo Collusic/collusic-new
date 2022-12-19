@@ -13,7 +13,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.net.URI;
 
 @RestController
@@ -30,8 +32,11 @@ public class ProjectController {
     }
 
     @PostMapping("/projects")
-    public ResponseEntity<ProjectCreateResponseDto> createProject(@LoginMember Member member, @Validated @RequestBody ProjectCreateRequestDto requestDto) {
-        Project project = projectService.createProject(member, requestDto);
+    public ResponseEntity<ProjectCreateResponseDto> createProject(
+            @LoginMember Member member,
+            @RequestPart(value = "audioFile") MultipartFile audioFile,
+            @Validated @RequestPart(value = "projectCreateRequest") ProjectCreateRequestDto requestDto) throws IOException {
+        Project project = projectService.createProject(member, requestDto, audioFile);
         return ResponseEntity.created(URI.create("/projects/" + project.getId())).body(new ProjectCreateResponseDto(project));
     }
 

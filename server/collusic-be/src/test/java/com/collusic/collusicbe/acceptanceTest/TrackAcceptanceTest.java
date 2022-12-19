@@ -8,13 +8,11 @@ import com.collusic.collusicbe.web.controller.dto.TrackUpdateRequestDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.*;
-import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -160,25 +158,5 @@ public class TrackAcceptanceTest extends AbstractAcceptanceTest {
     void testBadRequestDeletingTrack() {
         ResponseEntity<Void> response = template().exchange("/projects/4/tracks/14", HttpMethod.DELETE, requestEntityWithToken(null), Void.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
-    }
-
-    private HttpEntity<MultiValueMap<String, Object>> trackCreateRequestEntity(TrackCreateRequestDto dto) throws IOException {
-        MockMultipartFile multipartFile = new MockMultipartFile(
-                "audioFile",
-                "schoolbell.mp3",
-                MediaType.IMAGE_JPEG_VALUE,
-                new FileInputStream("src/test/resources/assets/schoolbell.mp3"));
-
-        MultiValueMap<String, Object> multiValueMap = new LinkedMultiValueMap<>();
-        multiValueMap.add("audioFile", multipartFile.getResource());
-
-        multiValueMap.add("trackCreateRequest", dto);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(testToken());
-        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-
-
-        return new HttpEntity<>(multiValueMap, headers);
     }
 }
