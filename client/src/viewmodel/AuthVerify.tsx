@@ -10,9 +10,11 @@ export default function AuthVerify() {
   const location = useLocation();
 
   useEffect(() => {
+    const { pathname } = location;
+    const passingPaths = ["/"];
     const isAuthorized = () => !!API.defaults.headers.common.Authorization;
 
-    if (isAuthorized()) {
+    if (passingPaths.includes(pathname) || isAuthorized()) {
       return;
     }
 
