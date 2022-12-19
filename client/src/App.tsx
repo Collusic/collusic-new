@@ -18,9 +18,9 @@ function App() {
         <Route path="/signin" element={<SignInViewModel />} />
         <Route path="/signup" element={<SignUpViewModel />} />
         <Route path="/auth/redirect/:snsType" element={<RedirectViewModel />} />
-        <Route path="/" element={<StartPageView />} />
         <Route path="/projectlist" element={<ProjectListView />} />
-        <Route path="/createproject" element={<CreateProject />} />
+        <Route path="/createproject" element={<CreateProjectPage />} />
+        <Route path="/" element={<ProjectListPage />} />
       </Routes>
       <AuthVerify />
     </BrowserRouter>
