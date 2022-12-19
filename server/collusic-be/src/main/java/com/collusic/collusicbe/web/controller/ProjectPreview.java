@@ -1,5 +1,6 @@
 package com.collusic.collusicbe.web.controller;
 
+import com.collusic.collusicbe.web.controller.dto.TrackPreview;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,18 +9,18 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor
-public class ProjectInventoryResponseDto {
+public class ProjectPreview {
     private Long projectId;
     private String projectName;
-    private List<String> trackTags;
+    private List<TrackPreview> trackPreviews;
     private int likeCount;
     private boolean isLiked;
 
     @Builder
-    public ProjectInventoryResponseDto(Long projectId, String projectName, List<String> trackTags, int likeCount, boolean isLiked) {
+    public ProjectPreview(Long projectId, String projectName, List<TrackPreview> trackPreviews, int likeCount, boolean isLiked) {
         this.projectId = projectId;
         this.projectName = projectName;
-        this.trackTags = trackTags;
+        this.trackPreviews = trackPreviews;
         this.likeCount = likeCount;
         this.isLiked = isLiked;
     }

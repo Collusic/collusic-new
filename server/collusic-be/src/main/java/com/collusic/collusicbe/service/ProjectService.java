@@ -8,17 +8,19 @@ import com.collusic.collusicbe.domain.project.ProjectRepository;
 import com.collusic.collusicbe.domain.track.Track;
 import com.collusic.collusicbe.domain.track.TrackRepository;
 import com.collusic.collusicbe.global.exception.ForbiddenException;
-import com.collusic.collusicbe.web.controller.ProjectInventoryResponseDto;
+import com.collusic.collusicbe.web.controller.ProjectPreview;
 import com.collusic.collusicbe.web.controller.ProjectsResponseDto;
 import com.collusic.collusicbe.web.controller.dto.LikeResponseDto;
 import com.collusic.collusicbe.web.controller.dto.ProjectCreateRequestDto;
 import com.collusic.collusicbe.web.controller.dto.ProjectUpdateRequestDto;
+import com.collusic.collusicbe.web.controller.dto.TrackPreview;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -64,32 +66,16 @@ public class ProjectService {
     public ProjectsResponseDto getProjects(Pageable pageable, Member member) {
         Slice<Project> projects = projectRepository.findAllByOrderByModifiedDate(pageable);
 
-        List<ProjectInventoryResponseDto> collect;
+        List<ProjectPreview> projectPreviews;
 
         if (member == null) {
-            collect = projects.getContent().stream()
-                              .map(project -> ProjectInventoryResponseDto.builder()
-                                                                         .projectId(project.getId())
-                                                                         .projectName(project.getProjectName())
-                                                                         .trackTags(project.collectTrackTags())
-                                                                         .likeCount(likeRepository.countByProjectId(project.getId()).intValue())
-                                                                         .isLiked(false)
-                                                                         .build())
-                              .collect(Collectors.toList());
+            projectPreviews = makeProjectPreviews(projects.getContent(), member);
         } else {
-            collect = projects.getContent().stream()
-                              .map(project -> ProjectInventoryResponseDto.builder()
-                                                                         .projectId(project.getId())
-                                                                         .projectName(project.getProjectName())
-                                                                         .trackTags(project.collectTrackTags())
-                                                                         .likeCount(likeRepository.countByProjectId(project.getId()).intValue())
-                                                                         .isLiked(likeRepository.existsByMemberAndProject(member, project))
-                                                                         .build())
-                              .collect(Collectors.toList());
+            projectPreviews = makeProjectPreviews(projects.getContent(), member);
         }
 
         ProjectsResponseDto responseDto = ProjectsResponseDto.builder()
-                                                             .responseDtos(collect)
+                                                             .responseDtos(projectPreviews)
                                                              .projectCount(projects.getNumberOfElements())
                                                              .hasNext(projects.hasNext())
                                                              .build();
@@ -144,5 +130,29 @@ public class ProjectService {
         project.update(requestDto.getProjectName(), requestDto.getTrackTag());
 
         return project;
+    }
+
+    private List<ProjectPreview> makeProjectPreviews(List<Project> projects, Member member) {
+        List<ProjectPreview> projectPreviews = new ArrayList<>();
+
+        for (Project project : projects) {
+            List<TrackPreview> trackPreviews = project.getTracks().stream()
+                                                      .map(track -> TrackPreview.builder()
+                                                                                .trackId(track.getId())
+                                                                                .trackTag(track.getTrackTag().getLabel())
+                                                                                .fileUrl("fileUrl")
+                                                                                .build())
+                                                      .collect(Collectors.toList());
+
+            projectPreviews.add(ProjectPreview.builder()
+                                              .projectId(project.getId())
+                                              .projectName(project.getProjectName())
+                                              .trackPreviews(trackPreviews)
+                                              .likeCount(likeRepository.countByProjectId(project.getId()).intValue())
+                                              .isLiked(likeRepository.existsByMemberAndProject(member, project))
+                                              .build());
+        }
+
+        return projectPreviews;
     }
 }
