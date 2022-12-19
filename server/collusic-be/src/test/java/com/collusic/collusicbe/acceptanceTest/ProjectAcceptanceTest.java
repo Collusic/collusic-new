@@ -132,7 +132,7 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
     }
 
 //    @Test
-//    @DisplayName("프로젝트 수정 실패 테스트 - 프로젝트 생성자는 프로젝트의 루트 트랙이 UNKNOWN 상태일 경우, 프로젝트 수정이 불가능하다.")
+//    @DisplayName("프로젝트 수정 실패 테스트 - 프로젝트 생성자는 트랙이 이미 삭제된 경우, 프로젝트 수정이 불가능하다.")
 //    void testProjectUpdateFail() {
 //        // given
 //        ProjectUpdateRequestDto requestDto = ProjectUpdateRequestDto.builder()

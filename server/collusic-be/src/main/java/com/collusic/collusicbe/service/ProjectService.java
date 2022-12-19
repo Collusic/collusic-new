@@ -7,7 +7,6 @@ import com.collusic.collusicbe.domain.project.ProjectLike;
 import com.collusic.collusicbe.domain.project.ProjectRepository;
 import com.collusic.collusicbe.domain.track.Track;
 import com.collusic.collusicbe.domain.track.TrackRepository;
-import com.collusic.collusicbe.global.exception.CannotUpdateException;
 import com.collusic.collusicbe.global.exception.ForbiddenException;
 import com.collusic.collusicbe.web.controller.ProjectInventoryResponseDto;
 import com.collusic.collusicbe.web.controller.ProjectsResponseDto;
@@ -138,11 +137,7 @@ public class ProjectService {
 
         Track rootTrack = project.getTracks().get(0);
 
-        if (rootTrack.isDeleted()) {
-            throw new CannotUpdateException("이미 삭제된 데이터입니다.");
-        }
-
-        if (!rootTrack.hasSameCreator(member)) {
+        if (rootTrack.isDeleted() || !rootTrack.hasSameCreator(member)) {
             throw new ForbiddenException("프로젝트 수정이 불가능합니다.");
         }
 
