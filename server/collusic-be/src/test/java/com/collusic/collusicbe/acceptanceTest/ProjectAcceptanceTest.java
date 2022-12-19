@@ -131,19 +131,19 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
-    @Test
-    @DisplayName("프로젝트 수정 실패 테스트 - 프로젝트 생성자는 프로젝트의 루트 트랙이 UNKNOWN 상태일 경우, 프로젝트 수정이 불가능하다.")
-    void testProjectUpdateFail() {
-        // given
-        ProjectUpdateRequestDto requestDto = ProjectUpdateRequestDto.builder()
-                                                                    .projectName("update project name")
-                                                                    .trackTag("드럼")
-                                                                    .build();
-
-        // when
-        ResponseEntity<ProjectUpdateResponseDto> response = template().exchange("/projects/15", HttpMethod.PUT, requestEntityWithToken(requestDto), ProjectUpdateResponseDto.class);
-
-        // then
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-    }
+//    @Test
+//    @DisplayName("프로젝트 수정 실패 테스트 - 프로젝트 생성자는 프로젝트의 루트 트랙이 UNKNOWN 상태일 경우, 프로젝트 수정이 불가능하다.")
+//    void testProjectUpdateFail() {
+//        // given
+//        ProjectUpdateRequestDto requestDto = ProjectUpdateRequestDto.builder()
+//                                                                    .projectName("update project name")
+//                                                                    .trackTag("드럼")
+//                                                                    .build();
+//
+//        // when
+//        ResponseEntity<ProjectUpdateResponseDto> response = template().exchange("/projects/15", HttpMethod.PUT, requestEntityWithToken(requestDto), ProjectUpdateResponseDto.class);
+//
+//        // then
+//        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+//    }
 }
