@@ -14,7 +14,7 @@ module.exports = {
     "no-shadow": 0,
     "react/prop-types": 0,
     "react/jsx-filename-extension": [2, { extensions: [".js", ".jsx", ".ts", ".tsx"] }],
-    "no-unused-vars": null,
+    "no-unused-vars": 0,
     "jsx-a11y/no-noninteractive-element-interactions": 0,
   },
 };
