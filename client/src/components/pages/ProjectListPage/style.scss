@@ -1,0 +1,34 @@
+@import "utils/style/color";
+
+#project-list-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+
+  #banner {
+    width: 100%;
+  }
+
+  #create-project-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    right:20vw;
+    bottom: 20px;
+    width: 80px;
+    height: 80px;
+    padding: 20px;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.4);
+    background-color: $Color_Main;
+    z-index: 999;
+
+    img {
+      width: 40px;
+      height: 40px;
+    }
+  }
+}

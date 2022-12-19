@@ -12,3 +12,22 @@ export type Track =
   | "";
 
 export type MelodyLength = "4" | "8" | "16";
+
+interface TrackTag {
+  id: string;
+  name: Track;
+  src: string;
+}
+
+export interface ProjectItemProps {
+  projectName: string;
+  trackTags: TrackTag[];
+  likeCount: number;
+  isLiked: boolean;
+}
+
+export interface GetProjectPagination {
+  responseDtos: ProjectItemProps[];
+  number: number;
+  hasNext: boolean;
+}
