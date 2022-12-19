@@ -14,10 +14,10 @@ public class ProjectPreview {
     private String projectName;
     private List<TrackPreview> trackPreviews;
     private int likeCount;
-    private boolean isLiked;
+    private Boolean isLiked;
 
     @Builder
-    public ProjectPreview(Long projectId, String projectName, List<TrackPreview> trackPreviews, int likeCount, boolean isLiked) {
+    public ProjectPreview(Long projectId, String projectName, List<TrackPreview> trackPreviews, int likeCount, Boolean isLiked) {
         this.projectId = projectId;
         this.projectName = projectName;
         this.trackPreviews = trackPreviews;
