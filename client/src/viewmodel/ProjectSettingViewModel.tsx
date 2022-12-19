@@ -8,7 +8,7 @@ import { trackList } from "utils/data/track";
 import { Track } from "types/projectType";
 import { addProject } from "api/project";
 
-function ProjectViewModel() {
+function ProjectSettingViewModel() {
   const [bpm, setBpm] = useRecoilState(bpmState);
   const [projectName, setProjectName] = useRecoilState(projectNameState);
   const [selectedTrack, setSelectedTrack] = useRecoilState(selectedTrackState);
@@ -96,4 +96,4 @@ function ProjectViewModel() {
   );
 }
 
-export default ProjectViewModel;
+export default ProjectSettingViewModel;
