@@ -1,4 +1,5 @@
 package com.collusic.collusicbe.config.auth;
+
 import com.collusic.collusicbe.global.exception.jwt.ExpiredTokenException;
 import com.collusic.collusicbe.util.JWTUtil;
 import org.springframework.security.authentication.AuthenticationProvider;

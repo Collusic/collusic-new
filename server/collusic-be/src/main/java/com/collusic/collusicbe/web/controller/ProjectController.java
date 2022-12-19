@@ -1,12 +1,11 @@
 package com.collusic.collusicbe.web.controller;
 
 import com.collusic.collusicbe.config.auth.LoginMember;
+import com.collusic.collusicbe.config.auth.Visitor;
 import com.collusic.collusicbe.domain.member.Member;
 import com.collusic.collusicbe.domain.project.Project;
 import com.collusic.collusicbe.service.ProjectService;
-import com.collusic.collusicbe.web.controller.dto.LikeResponseDto;
-import com.collusic.collusicbe.web.controller.dto.ProjectCreateRequestDto;
-import com.collusic.collusicbe.web.controller.dto.ProjectCreateResponseDto;
+import com.collusic.collusicbe.web.controller.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -40,9 +39,21 @@ public class ProjectController {
         return ResponseEntity.created(URI.create("/projects/" + project.getId())).body(new ProjectCreateResponseDto(project));
     }
 
+    @PutMapping("/projects/{projectId}")
+    public ResponseEntity<ProjectUpdateResponseDto> updateProject(@PathVariable Long projectId, @LoginMember Member member, @Validated @RequestBody ProjectUpdateRequestDto requestDto) {
+        Project project = projectService.updateProject(projectId, member, requestDto);
+        return ResponseEntity.ok().body(new ProjectUpdateResponseDto(project));
+    }
+
+    @DeleteMapping("/projects/{projectId}")
+    public ResponseEntity<Void> deleteProject(@PathVariable Long projectId, @LoginMember Member member) {
+        projectService.deleteProject(projectId, member);
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping("/projects")
-    public ResponseEntity<ProjectsResponseDto> readProjects(@PageableDefault(size = 12) Pageable pageable) {
-        ProjectsResponseDto responseDto = projectService.getProjects(pageable);
+    public ResponseEntity<ProjectsResponseDto> readProjects(@PageableDefault(size = 12) Pageable pageable, @Visitor Member member) {
+        ProjectsResponseDto responseDto = projectService.getProjects(pageable, member);
         return ResponseEntity.ok().body(responseDto);
     }
 

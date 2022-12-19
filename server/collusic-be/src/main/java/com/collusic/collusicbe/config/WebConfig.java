@@ -1,6 +1,7 @@
 package com.collusic.collusicbe.config;
 
 import com.collusic.collusicbe.config.auth.LoginMemberArgumentResolver;
+import com.collusic.collusicbe.config.auth.VisitorArgumentResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -14,6 +15,7 @@ import java.util.List;
 public class WebConfig implements WebMvcConfigurer {
 
     private final LoginMemberArgumentResolver loginMemberArgumentResolver;
+    private final VisitorArgumentResolver visitorArgumentResolver;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -26,5 +28,6 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(loginMemberArgumentResolver);
+        resolvers.add(visitorArgumentResolver);
     }
 }

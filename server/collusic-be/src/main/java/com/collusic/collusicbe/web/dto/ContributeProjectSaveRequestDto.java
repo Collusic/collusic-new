@@ -23,12 +23,12 @@ public class ContributeProjectSaveRequestDto {
 
     public ContributeProject toEntity(RequestProject requestProject) {
         return ContributeProject.builder()
-                .requestProject(requestProject)
-                .field(fields.stream().map(field -> new ContributeProjectFieldEntity(field)).collect(Collectors.toList()))
-                .content(content)
-                .lyrics(lyrics)
-                .adoptFlag(false)
-                .uploadFilePath(uploadFilePath)
-                .build();
+                                .requestProject(requestProject)
+                                .field(fields.stream().map(field -> new ContributeProjectFieldEntity(field)).collect(Collectors.toList()))
+                                .content(content)
+                                .lyrics(lyrics)
+                                .adoptFlag(false)
+                                .uploadFilePath(uploadFilePath)
+                                .build();
     }
 }

@@ -13,6 +13,6 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Query("select p from Project p left join fetch p.tracks where p.id = :id")
     Optional<Project> findById(Long id);
 
-    Slice<Project> findAllByOrderByCreatedDate(Pageable pageable);
+    Slice<Project> findAllByOrderByModifiedDate(Pageable pageable);
 
 }

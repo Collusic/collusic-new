@@ -2,7 +2,6 @@ package com.collusic.collusicbe.config.auth;
 
 import com.collusic.collusicbe.domain.member.Member;
 import com.collusic.collusicbe.domain.member.MemberRepository;
-import com.collusic.collusicbe.global.exception.ParameterEmptyException;
 import com.collusic.collusicbe.util.JWTUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
@@ -17,18 +16,17 @@ import javax.persistence.EntityNotFoundException;
 
 @RequiredArgsConstructor
 @Component
-public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolver {
+public class VisitorArgumentResolver implements HandlerMethodArgumentResolver {
 
     private final static String BEARER_PREFIX = "Bearer ";
-    private final static String AUTHORIZATION_HEADER_NOT_FOUND = "Authorization 헤더의 토큰을 확인할 수 없습니다.";
 
     private final MemberRepository memberRepository;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        boolean isLoginMemberAnnotation = parameter.getParameterAnnotation(LoginMember.class) != null;
+        boolean isVisitorAnnotation = parameter.getParameterAnnotation(Visitor.class) != null;
         boolean isMemberClass = Member.class.equals(parameter.getParameterType());
-        return isLoginMemberAnnotation && isMemberClass;
+        return isVisitorAnnotation && isMemberClass;
     }
 
     @Override
@@ -36,10 +34,11 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
         String bearer = webRequest.getHeader(HttpHeaders.AUTHORIZATION);
 
         if (bearer == null || !bearer.startsWith(BEARER_PREFIX)) {
-            throw new ParameterEmptyException(AUTHORIZATION_HEADER_NOT_FOUND);
+            return null;
         }
 
         String token = bearer.substring(BEARER_PREFIX.length());
+
         String email = JWTUtil.getEmail(token);
         Member member = memberRepository.findByEmail(email).orElseThrow(EntityNotFoundException::new);
 

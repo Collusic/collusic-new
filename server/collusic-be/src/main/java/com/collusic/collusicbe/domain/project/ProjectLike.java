@@ -36,6 +36,7 @@ public class ProjectLike {
     public void setMember(Member member) {
         this.member = member;
     }
+
     public void setProject(Project project) {
         this.project = project;
     }

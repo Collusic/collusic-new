@@ -31,7 +31,7 @@ public class Track extends BaseTimeEntity {
     @JoinColumn(name = "CREATOR_ID")
     private Member creator;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "PROJECT_ID")
     private Project project;
 
@@ -67,5 +67,17 @@ public class Track extends BaseTimeEntity {
 
     public void setFileUrl(String fileUrl) {
         this.fileUrl = fileUrl;
+    }
+
+    public boolean hasSameCreator(Member member) {
+        return creator.isSameMember(member);
+    }
+
+    public void delete() {
+        this.creator = null;
+    }
+
+    public boolean isDeleted() {
+        return creator == null;
     }
 }

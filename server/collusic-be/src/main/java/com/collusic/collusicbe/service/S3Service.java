@@ -22,11 +22,10 @@ import java.util.Optional;
 @Service
 public class S3Service {
 
-    private final AmazonS3 s3Client;
-
     private static final String IMAGE_DIR = "profiles";
     private static final String RESIZED_IMAGE_DIR = "resized-profiles";
     private static final String TRACK_DIR = "tracks";
+    private final AmazonS3 s3Client;
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;

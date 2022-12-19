@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LikeResponseDto {
     private int likeCount;
-    private Boolean isColor;
+    private Boolean isLiked;
 
-    public LikeResponseDto(int likeCount, boolean isColor) {
+    public LikeResponseDto(int likeCount, boolean isLiked) {
         this.likeCount = likeCount;
-        this.isColor = isColor;
+        this.isLiked = isLiked;
     }
 }

@@ -1,6 +1,7 @@
 package com.collusic.collusicbe.domain;
 
 import com.collusic.collusicbe.domain.member.Member;
+import com.collusic.collusicbe.domain.project.LikeRepository;
 import com.collusic.collusicbe.domain.project.Project;
 import com.collusic.collusicbe.domain.project.ProjectRepository;
 import com.collusic.collusicbe.domain.track.Track;
@@ -46,6 +47,9 @@ public class ProjectServiceTest {
 
     @Mock
     private TrackService trackService;
+
+    @Mock
+    private LikeRepository likeRepository;
 
     private Member testMember;
     private Project testProject;
@@ -106,8 +110,10 @@ public class ProjectServiceTest {
         Slice<Project> slice = new SliceImpl<>(projects, pageable, false);
 
         // when
-        when(projectRepository.findAllByOrderByCreatedDate(any(Pageable.class))).thenReturn(slice);
-        ProjectsResponseDto responseDto = projectService.getProjects(pageable);
+        when(projectRepository.findAllByOrderByModifiedDate(any(Pageable.class))).thenReturn(slice);
+        when(likeRepository.countByProjectId(any(Long.class))).thenReturn(0L);
+        when(likeRepository.existsByMemberAndProject(any(Member.class), any(Project.class))).thenReturn(false);
+        ProjectsResponseDto responseDto = projectService.getProjects(pageable, testMember);
 
         // then
         assertThat(responseDto.getResponseDtos().size()).isEqualTo(1);
