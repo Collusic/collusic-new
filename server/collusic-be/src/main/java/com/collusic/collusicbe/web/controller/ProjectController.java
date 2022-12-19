@@ -44,12 +44,6 @@ public class ProjectController {
         return ResponseEntity.noContent().build();
     }
 
-//    @GetMapping("/projects")
-//    public ResponseEntity<ProjectsResponseDto> readProjects(@PageableDefault(size = 12) Pageable pageable, @Visitor Member member) {
-//        ProjectsResponseDto responseDto = projectService.getProjects(pageable, member);
-//        return ResponseEntity.ok().body(responseDto);
-//    }
-
     @GetMapping("/projects")
     public ResponseEntity<ProjectsResponseDto> readProjects(@RequestParam(name = "size", defaultValue = "16") int size, @RequestParam(name = "cursorId", required = false) Long cursorId, @Visitor Member member) {
         ProjectsResponseDto responseDto = projectService.getProjects(size, cursorId, member);
