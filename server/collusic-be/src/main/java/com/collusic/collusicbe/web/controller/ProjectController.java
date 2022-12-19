@@ -1,6 +1,7 @@
 package com.collusic.collusicbe.web.controller;
 
 import com.collusic.collusicbe.config.auth.LoginMember;
+import com.collusic.collusicbe.config.auth.Visitor;
 import com.collusic.collusicbe.domain.member.Member;
 import com.collusic.collusicbe.domain.project.Project;
 import com.collusic.collusicbe.service.ProjectService;
@@ -46,8 +47,8 @@ public class ProjectController {
     }
 
     @GetMapping("/projects")
-    public ResponseEntity<ProjectsResponseDto> readProjects(@PageableDefault(size = 12) Pageable pageable) {
-        ProjectsResponseDto responseDto = projectService.getProjects(pageable);
+    public ResponseEntity<ProjectsResponseDto> readProjects(@PageableDefault(size = 12) Pageable pageable, @Visitor Member member) {
+        ProjectsResponseDto responseDto = projectService.getProjects(pageable, member);
         return ResponseEntity.ok().body(responseDto);
     }
 

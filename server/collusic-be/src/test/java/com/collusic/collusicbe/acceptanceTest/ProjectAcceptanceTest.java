@@ -81,7 +81,7 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
         ResponseEntity<LikeResponseDto> response = template().postForEntity("/projects/2/like", requestEntityWithToken(null), LikeResponseDto.class);
 
         // then
-        assertThat(response.getBody().getIsColor()).isTrue();
+        assertThat(response.getBody().getIsLiked()).isTrue();
     }
 
     @Test
@@ -91,7 +91,7 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
         ResponseEntity<LikeResponseDto> response = template().postForEntity("/projects/13/like", requestEntityWithToken(null), LikeResponseDto.class);
 
         // then
-        assertThat(response.getBody().getIsColor()).isFalse();
+        assertThat(response.getBody().getIsLiked()).isFalse();
     }
 
     @Test
@@ -119,16 +119,16 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
     void testProjectUpdate() {
         // given
         ProjectUpdateRequestDto requestDto = ProjectUpdateRequestDto.builder()
-                                                                    .projectName("test update project name")
+                                                                    .projectName("update project name")
                                                                     .trackTag("드럼")
                                                                     .build();
 
-        // TO 종근. 테스트가 디버깅도 안 되고 정상적으로 돌아가지 않는 상황입니다.
+
         // when
-//        ResponseEntity<ProjectUpdateResponseDto> response = template().exchange("/projects/16", HttpMethod.PUT, requestEntityWithToken(requestDto), ProjectUpdateResponseDto.class);
-        template().put("/projects/16", requestDto);
+        ResponseEntity<ProjectUpdateResponseDto> response = template().exchange("/projects/16", HttpMethod.PUT, requestEntityWithToken(requestDto), ProjectUpdateResponseDto.class);
+
         // then
-//        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
     @Test
@@ -136,7 +136,7 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
     void testProjectUpdateFail() {
         // given
         ProjectUpdateRequestDto requestDto = ProjectUpdateRequestDto.builder()
-                                                                    .projectName("test update project name")
+                                                                    .projectName("update project name")
                                                                     .trackTag("드럼")
                                                                     .build();
 

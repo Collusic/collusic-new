@@ -10,13 +10,13 @@ import java.util.List;
 @NoArgsConstructor
 public class ProjectsResponseDto {
     private List<ProjectInventoryResponseDto> responseDtos;
-    private int number;
+    private int projectCount;
     private boolean hasNext;
 
     @Builder
-    public ProjectsResponseDto(List<ProjectInventoryResponseDto> responseDtos, int number, boolean hasNext) {
+    public ProjectsResponseDto(List<ProjectInventoryResponseDto> responseDtos, int projectCount, boolean hasNext) {
         this.responseDtos = responseDtos;
-        this.number = number;
+        this.projectCount = projectCount;
         this.hasNext = hasNext;
     }
 }

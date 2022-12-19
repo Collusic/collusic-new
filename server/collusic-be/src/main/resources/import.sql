@@ -17,10 +17,10 @@ insert into project (project_id, project_name, bpm, file_url, created_date, modi
 insert into project (project_id, project_name, bpm, file_url, created_date, modified_date) values (14, 'test project', 50, 'test_url', '2004-12-01 00:07:21.952693', '2004-12-01 00:07:21.952693');
 
 insert into project (project_id, project_name, bpm, file_url, created_date, modified_date) values (15, 'test project', 50, 'test_url', '2004-12-01 00:07:21.952693', '2004-12-01 00:07:21.952693');
-insert into track (track_id, creator_id, file_url, order_in_project, project_id, track_name, track_tag, created_date, modified_date) values (21, 2, 'test', 0, 1, 'test project', 'PIANO', '2004-12-01 00:07:21.952693', '2004-12-01 00:07:21.952693');
+insert into track (track_id, creator_id, file_url, order_in_project, project_id, track_name, track_tag, created_date, modified_date) values (21, 2, 'test', 0, 15, 'test project', 'PIANO', '2004-12-01 00:07:21.952693', '2004-12-01 00:07:21.952693');
 
 insert into project (project_id, project_name, bpm, file_url, created_date, modified_date) values (16, 'test project', 50, 'test_url', '2004-12-01 00:07:21.952693', '2004-12-01 00:07:21.952693');
-insert into track (track_id, creator_id, file_url, order_in_project, project_id, track_name, track_tag, created_date, modified_date) values (22, 2, 'test', 0, 2, 'test project', 'PIANO', '2004-12-01 00:07:21.952693', '2004-12-01 00:07:21.952693');
+insert into track (track_id, creator_id, file_url, order_in_project, project_id, track_name, track_tag, created_date, modified_date) values (22, 1, 'test', 0, 16, 'test project', 'PIANO', '2004-12-01 00:07:21.952693', '2004-12-01 00:07:21.952693');
 
 insert into track (track_id, creator_id, file_url, order_in_project, project_id, track_name, track_tag, created_date, modified_date) values (1, 1, 'test', 0, 2, 'test1', 'PIANO', '2002-12-02 00:07:21.952693', '2002-12-02 00:07:21.952693');
 insert into track (track_id, creator_id, file_url, order_in_project, project_id, track_name, track_tag, created_date, modified_date) values (2, 1, 'test', 1, 2, 'test1', 'PIANO', '2002-12-03 00:07:21.952693', '2002-12-03 00:07:21.952693');

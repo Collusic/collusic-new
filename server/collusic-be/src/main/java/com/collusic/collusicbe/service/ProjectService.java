@@ -62,20 +62,36 @@ public class ProjectService {
         return save;
     }
 
-    public ProjectsResponseDto getProjects(Pageable pageable) {
-        Slice<Project> projects = projectRepository.findAllByOrderByCreatedDate(pageable);
+    public ProjectsResponseDto getProjects(Pageable pageable, Member member) {
+        Slice<Project> projects = projectRepository.findAllByOrderByCreatedDate(pageable); // TODO : 프로젝트 정렬 쿼리 복잡하기 때문에 트랙 생성 시마다 프로젝트 수정 일자를 업데이트 시켜주고 프로젝트 수정 일자 기준 정렬로 바꾸기
 
-        List<ProjectInventoryResponseDto> collect = projects.getContent().stream()
-                                                            .map(project -> ProjectInventoryResponseDto.builder()
-                                                                                                       .projectName(project.getProjectName())
-                                                                                                       .trackTags(project.collectTrackTags())
-                                                                                                       .likeCount(likeRepository.countByProjectId(project.getId()).intValue())
-                                                                                                       .build())
-                                                            .collect(Collectors.toList());
+        List<ProjectInventoryResponseDto> collect;
+
+        if (member == null) {
+            collect = projects.getContent().stream()
+                                                                .map(project -> ProjectInventoryResponseDto.builder()
+                                                                                                           .projectId(project.getId())
+                                                                                                           .projectName(project.getProjectName())
+                                                                                                           .trackTags(project.collectTrackTags())
+                                                                                                           .likeCount(likeRepository.countByProjectId(project.getId()).intValue())
+                                                                                                           .isLiked(false)
+                                                                                                           .build())
+                                                                .collect(Collectors.toList());
+        } else {
+            collect = projects.getContent().stream()
+                              .map(project -> ProjectInventoryResponseDto.builder()
+                                                                         .projectId(project.getId())
+                                                                         .projectName(project.getProjectName())
+                                                                         .trackTags(project.collectTrackTags())
+                                                                         .likeCount(likeRepository.countByProjectId(project.getId()).intValue())
+                                                                         .isLiked(likeRepository.existsByMemberAndProject(member, project))
+                                                                         .build())
+                              .collect(Collectors.toList());
+        }
 
         ProjectsResponseDto responseDto = ProjectsResponseDto.builder()
                                                              .responseDtos(collect)
-                                                             .number(projects.getNumber())
+                                                             .projectCount(projects.getNumberOfElements())
                                                              .hasNext(projects.hasNext())
                                                              .build();
         return responseDto;
@@ -90,7 +106,7 @@ public class ProjectService {
         if (like.isPresent()) {
             project.deleteLike(like.get());
             likeRepository.delete(like.get());
-            return new LikeResponseDto(likeRepository.countByProjectId(projectId).intValue(), false);
+            return new LikeResponseDto(likeRepository.countByProjectId(projectId).intValue(), likeRepository.existsByMemberAndProject(member, project));
         }
 
         ProjectLike projectLike = ProjectLike.builder()
@@ -100,7 +116,7 @@ public class ProjectService {
 
         likeRepository.save(projectLike);
 
-        return new LikeResponseDto(likeRepository.countByProjectId(projectId).intValue(), true);
+        return new LikeResponseDto(likeRepository.countByProjectId(projectId).intValue(), likeRepository.existsByMemberAndProject(member, project));
     }
 
     @Transactional
