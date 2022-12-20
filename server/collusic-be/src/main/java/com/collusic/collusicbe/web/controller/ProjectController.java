@@ -7,8 +7,6 @@ import com.collusic.collusicbe.domain.project.Project;
 import com.collusic.collusicbe.service.ProjectService;
 import com.collusic.collusicbe.web.controller.dto.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -52,8 +50,8 @@ public class ProjectController {
     }
 
     @GetMapping("/projects")
-    public ResponseEntity<ProjectsResponseDto> readProjects(@PageableDefault(size = 12) Pageable pageable, @Visitor Member member) {
-        ProjectsResponseDto responseDto = projectService.getProjects(pageable, member);
+    public ResponseEntity<ProjectsResponseDto> readProjects(@RequestParam(name = "size", defaultValue = "24") int size, @RequestParam(name = "cursorId", required = false) Long cursorId, @Visitor Member member) {
+        ProjectsResponseDto responseDto = projectService.getProjects(size, cursorId, member);
         return ResponseEntity.ok().body(responseDto);
     }
 
