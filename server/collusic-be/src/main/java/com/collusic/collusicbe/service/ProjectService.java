@@ -15,7 +15,6 @@ import com.collusic.collusicbe.web.controller.dto.ProjectCreateRequestDto;
 import com.collusic.collusicbe.web.controller.dto.ProjectUpdateRequestDto;
 import com.collusic.collusicbe.web.controller.dto.TrackPreview;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -63,21 +62,26 @@ public class ProjectService {
         return savedProject;
     }
 
-    public ProjectsResponseDto getProjects(Pageable pageable, Member member) {
-        Slice<Project> projects = projectRepository.findAllByOrderByModifiedDate(pageable);
+    @Transactional(readOnly = true)
+    public ProjectsResponseDto getProjects(int size, Long cursorId, Member member) {
+        Slice<Project> projects;
 
-        List<ProjectPreview> projectPreviews;
-
-        if (member == null) {
-            projectPreviews = makeProjectPreviews(projects.getContent(), member);
+        if (cursorId == null) {
+            projects = projectRepository.findAllByOrderByModifiedDateFirstPage(size + 1);
         } else {
-            projectPreviews = makeProjectPreviews(projects.getContent(), member);
+            Project cursorProject = projectRepository.findById(cursorId)
+                                       .orElseThrow(NoSuchElementException::new);
+            projects = projectRepository.findAllByOrderByModifiedDate(size + 1, cursorId, cursorProject.getModifiedDate());
         }
+
+        List<ProjectPreview> projectPreviews = makeProjectPreviews(projects.getContent(), member, size);
+
+        boolean hasNext = projects.getSize() > size;
 
         ProjectsResponseDto responseDto = ProjectsResponseDto.builder()
                                                              .responseDtos(projectPreviews)
-                                                             .projectCount(projects.getNumberOfElements())
-                                                             .hasNext(projects.hasNext())
+                                                             .projectCount(projectPreviews.size())
+                                                             .hasNext(hasNext)
                                                              .build();
         return responseDto;
     }
@@ -132,10 +136,15 @@ public class ProjectService {
         return project;
     }
 
-    private List<ProjectPreview> makeProjectPreviews(List<Project> projects, Member member) {
+    private List<ProjectPreview> makeProjectPreviews(List<Project> projects, Member member, int size) {
         List<ProjectPreview> projectPreviews = new ArrayList<>();
 
         for (Project project : projects) {
+
+            if (projectPreviews.size() == size) {
+                continue;
+            }
+
             List<TrackPreview> trackPreviews = project.getTracks().stream()
                                                       .map(track -> TrackPreview.builder()
                                                                                 .trackId(track.getId())

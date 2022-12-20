@@ -62,13 +62,13 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
     }
 
     @Test
-    @DisplayName("프로젝트 목록 보기 테스트 - 등록된 사용자/방문자로서, 프로젝트에 대한 목록을 12개씩 확인할 수 있다.")
+    @DisplayName("프로젝트 목록 보기 테스트 - 등록된 사용자/방문자로서, 프로젝트에 대한 목록을 16개씩 확인할 수 있다.")
     void test12ProjectsShowingProjectList() {
         // given
-        int elementSize = 12;
+        int elementSize = 16;
 
         // when
-        ProjectsResponseDto response = template().getForObject("/projects?page=0", ProjectsResponseDto.class);
+        ProjectsResponseDto response = template().getForObject("/projects", ProjectsResponseDto.class);
 
         // then
         assertThat(response.getResponseDtos().size()).isEqualTo(elementSize);

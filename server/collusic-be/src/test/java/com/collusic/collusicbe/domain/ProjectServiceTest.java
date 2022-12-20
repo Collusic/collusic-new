@@ -22,8 +22,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -60,6 +62,9 @@ public class ProjectServiceTest {
                              .projectName("test project name")
                              .bpm(45)
                              .build();
+
+        testProject.setModifiedDate(LocalDateTime.now());
+
         testTrack = Track.builder()
                          .id(1L)
                          .creator(testMember)
@@ -103,10 +108,11 @@ public class ProjectServiceTest {
         Slice<Project> slice = new SliceImpl<>(projects, pageable, false);
 
         // when
-        when(projectRepository.findAllByOrderByModifiedDate(any(Pageable.class))).thenReturn(slice);
+        when(projectRepository.findById(any(Long.class))).thenReturn(Optional.of(testProject));
+        when(projectRepository.findAllByOrderByModifiedDate(any(int.class), any(Long.class), any(LocalDateTime.class))).thenReturn(slice);
         when(likeRepository.countByProjectId(any(Long.class))).thenReturn(0L);
         when(likeRepository.existsByMemberAndProject(any(Member.class), any(Project.class))).thenReturn(false);
-        ProjectsResponseDto responseDto = projectService.getProjects(pageable, testMember);
+        ProjectsResponseDto responseDto = projectService.getProjects(12, testProject.getId(), testMember);
 
         // then
         assertThat(responseDto.getResponseDtos().size()).isEqualTo(1);
