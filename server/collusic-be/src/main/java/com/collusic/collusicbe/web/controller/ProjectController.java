@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.net.URI;
 
 @RestController
@@ -27,7 +28,9 @@ public class ProjectController {
     }
 
     @PostMapping("/projects")
-    public ResponseEntity<ProjectCreateResponseDto> createProject(@LoginMember Member member, @Validated @RequestBody ProjectCreateRequestDto requestDto) {
+    public ResponseEntity<ProjectCreateResponseDto> createProject(
+            @LoginMember Member member,
+            @Validated @ModelAttribute ProjectCreateRequestDto requestDto) throws IOException {
         Project project = projectService.createProject(member, requestDto);
         return ResponseEntity.created(URI.create("/projects/" + project.getId())).body(new ProjectCreateResponseDto(project));
     }

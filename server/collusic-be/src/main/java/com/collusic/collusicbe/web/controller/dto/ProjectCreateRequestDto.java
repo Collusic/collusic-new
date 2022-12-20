@@ -4,10 +4,13 @@ import com.collusic.collusicbe.domain.track.TrackTag;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.*;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class ProjectCreateRequestDto {
 
@@ -22,10 +25,17 @@ public class ProjectCreateRequestDto {
     @NotNull
     private TrackTag trackTag;
 
+    private MultipartFile audioFile;
+
     @Builder
-    public ProjectCreateRequestDto(String projectName, int bpm, String trackTag) {
+    public ProjectCreateRequestDto(String projectName, int bpm, String trackTag, MultipartFile audioFile) {
         this.projectName = projectName;
         this.bpm = bpm;
+        this.trackTag = TrackTag.valueOfLabel(trackTag);
+        this.audioFile = audioFile;
+    }
+
+    public void setTrackTag(String trackTag) {
         this.trackTag = TrackTag.valueOfLabel(trackTag);
     }
 }

@@ -6,19 +6,17 @@ import com.collusic.collusicbe.domain.project.Project;
 import com.collusic.collusicbe.domain.project.ProjectLike;
 import com.collusic.collusicbe.domain.project.ProjectRepository;
 import com.collusic.collusicbe.domain.track.Track;
-import com.collusic.collusicbe.domain.track.TrackRepository;
 import com.collusic.collusicbe.global.exception.ForbiddenException;
 import com.collusic.collusicbe.web.controller.ProjectPreview;
 import com.collusic.collusicbe.web.controller.ProjectsResponseDto;
-import com.collusic.collusicbe.web.controller.dto.LikeResponseDto;
-import com.collusic.collusicbe.web.controller.dto.ProjectCreateRequestDto;
-import com.collusic.collusicbe.web.controller.dto.ProjectUpdateRequestDto;
-import com.collusic.collusicbe.web.controller.dto.TrackPreview;
+import com.collusic.collusicbe.web.controller.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -30,36 +28,26 @@ import java.util.stream.Collectors;
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
-    private final TrackRepository trackRepository;
     private final LikeRepository likeRepository;
+    private final TrackService trackService;
 
     public Project findById(Long id) {
         return projectRepository.findById(id).orElseThrow(NoSuchElementException::new);
     }
 
     @Transactional
-    public Project createProject(Member member, ProjectCreateRequestDto requestDto) {
+    public Project createProject(Member member, ProjectCreateRequestDto requestDto) throws IOException {
         Project project = Project.builder()
                                  .projectName(requestDto.getProjectName())
                                  .bpm(requestDto.getBpm())
                                  .fileUrl("empty")
                                  .build();
 
-        Project savedProject = projectRepository.save(project);
+        Project save = projectRepository.save(project);
+        Track track = trackService.create(member, project, new TrackCreateRequestDto(requestDto.getProjectName(), requestDto.getTrackTag().getLabel(), requestDto.getAudioFile()));
+        save.addTrack(track);
 
-        Track track = Track.builder()
-                           .trackName(project.getProjectName())
-                           .trackTag(requestDto.getTrackTag())
-                           .creator(member)
-                           .project(project)
-                           .orderInProject(project.getNextTrackOrder())
-                           .build();
-
-        project.addTrack(track);
-
-        trackRepository.save(track);
-
-        return savedProject;
+        return projectRepository.save(save);
     }
 
     @Transactional(readOnly = true)
@@ -112,10 +100,7 @@ public class ProjectService {
     public void deleteProject(Long projectId, Member member) {
         Project project = projectRepository.findById(projectId)
                                            .orElseThrow(NoSuchElementException::new);
-
         project.checkDeletable(member);
-
-        project.getTracks().forEach(trackRepository::delete);
 
         projectRepository.delete(project);
     }

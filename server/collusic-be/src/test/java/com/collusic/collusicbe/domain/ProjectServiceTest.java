@@ -5,11 +5,12 @@ import com.collusic.collusicbe.domain.project.LikeRepository;
 import com.collusic.collusicbe.domain.project.Project;
 import com.collusic.collusicbe.domain.project.ProjectRepository;
 import com.collusic.collusicbe.domain.track.Track;
-import com.collusic.collusicbe.domain.track.TrackRepository;
 import com.collusic.collusicbe.domain.track.TrackTag;
 import com.collusic.collusicbe.service.ProjectService;
+import com.collusic.collusicbe.service.TrackService;
 import com.collusic.collusicbe.web.controller.ProjectsResponseDto;
 import com.collusic.collusicbe.web.controller.dto.ProjectCreateRequestDto;
+import com.collusic.collusicbe.web.controller.dto.TrackCreateRequestDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +48,7 @@ public class ProjectServiceTest {
     private ProjectRepository projectRepository;
 
     @Mock
-    private TrackRepository trackRepository;
+    private TrackService trackService;
 
     @Mock
     private LikeRepository likeRepository;
@@ -78,17 +84,19 @@ public class ProjectServiceTest {
 
     @Test
     @DisplayName("프로젝트 생성 테스트 - 정상적인 생성")
-    void testCreateProject() {
+    void testCreateProject() throws IOException {
         // given
         ProjectCreateRequestDto requestDto = ProjectCreateRequestDto.builder()
                                                                     .projectName("test project name")
                                                                     .bpm(45)
                                                                     .trackTag("피아노")
+                                                                    .audioFile(makeMockMultipartFile())
                                                                     .build();
 
         // when
         when(projectRepository.save(any(Project.class))).thenReturn(testProject);
-        when(trackRepository.save(any(Track.class))).thenReturn(testTrack);
+        when(trackService.create(any(Member.class), any(Project.class), any(TrackCreateRequestDto.class))).thenReturn(testTrack);
+
         Project savedProject = projectService.createProject(testMember, requestDto);
 
         // then
@@ -117,5 +125,13 @@ public class ProjectServiceTest {
         // then
         assertThat(responseDto.getResponseDtos().size()).isEqualTo(1);
         assertThat(responseDto.isHasNext()).isFalse();
+    }
+
+    private MultipartFile makeMockMultipartFile() throws IOException {
+        return new MockMultipartFile(
+                "audioFile",
+                "schoolbell.mp3",
+                MediaType.IMAGE_JPEG_VALUE,
+                new FileInputStream("src/test/resources/assets/schoolbell.mp3"));
     }
 }

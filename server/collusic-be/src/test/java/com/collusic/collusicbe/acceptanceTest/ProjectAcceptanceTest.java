@@ -4,9 +4,14 @@ import com.collusic.collusicbe.web.controller.ProjectsResponseDto;
 import com.collusic.collusicbe.web.controller.dto.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.FileInputStream;
+import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -15,16 +20,17 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
 
     @Test
     @DisplayName("프로젝트 생성 테스트 - 정상적인 요청의 경우 CREATED(201)으로 응답")
-    void testCreatingProject() {
+    void testCreatingProject() throws IOException {
         // given
         ProjectCreateRequestDto requestDto = ProjectCreateRequestDto.builder()
-                .projectName("test project name")
-                .bpm(45)
-                .trackTag("피아노")
-                .build();
+                                                                    .projectName("test project name")
+                                                                    .bpm(45)
+                                                                    .trackTag("피아노")
+                                                                    .audioFile(getMockMultipartFile())
+                                                                    .build();
 
         // when
-        ResponseEntity<ProjectCreateResponseDto> response = template().postForEntity("/projects", requestEntityWithToken(requestDto), ProjectCreateResponseDto.class);
+        ResponseEntity<ProjectCreateResponseDto> response = template().postForEntity("/projects", projectCreateRequestEntity(requestDto, testToken()), ProjectCreateResponseDto.class);
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
@@ -32,16 +38,17 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
 
     @Test
     @DisplayName("프로젝트 생성 테스트 - 로그인하지 않은 사용자의 요청인 경우 UNAUTHORIZED(401)으로 응답")
-    void testUnauthorizedCreatingProject() {
+    void testUnauthorizedCreatingProject() throws IOException {
         // given
         ProjectCreateRequestDto requestDto = ProjectCreateRequestDto.builder()
                                                                     .projectName("test project name")
                                                                     .bpm(45)
                                                                     .trackTag("피아노")
+                                                                    .audioFile(getMockMultipartFile())
                                                                     .build();
 
         // when
-        ResponseEntity<ProjectCreateResponseDto> response = template().postForEntity("/projects", requestEntity(requestDto), ProjectCreateResponseDto.class);
+        ResponseEntity<ProjectCreateResponseDto> response = template().postForEntity("/projects", projectCreateRequestEntity(requestDto, null), ProjectCreateResponseDto.class);
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
@@ -49,13 +56,14 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
 
     @Test
     @DisplayName("프로젝트 생성 테스트 - 필수 데이터가 누락된 요청인 경우 BAD_REQUEST(400)으로 응답")
-    void testBadRequestCreatingProject() {
+    void testBadRequestCreatingProject() throws IOException {
         // given
         ProjectCreateRequestDto requestDto = ProjectCreateRequestDto.builder()
+                                                                    .trackTag("피아노")
+                                                                    .audioFile(getMockMultipartFile())
                                                                     .build();
-
         // when
-        ResponseEntity<ProjectCreateResponseDto> response = template().postForEntity("/projects", requestEntityWithToken(requestDto), ProjectCreateResponseDto.class);
+        ResponseEntity<ProjectCreateResponseDto> response = template().postForEntity("/projects", projectCreateRequestEntity(requestDto, testToken()), ProjectCreateResponseDto.class);
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -146,4 +154,28 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
 //        // then
 //        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
 //    }
+
+    private MultipartFile getMockMultipartFile() throws IOException {
+        return new MockMultipartFile(
+                "audioFile",
+                "schoolbell.mp3",
+                MediaType.IMAGE_JPEG_VALUE,
+                new FileInputStream("src/test/resources/assets/schoolbell.mp3"));
+    }
+
+    private HttpEntity<MultiValueMap<String, Object>> projectCreateRequestEntity(ProjectCreateRequestDto dto, String token) {
+        MultiValueMap<String, Object> multiValueMap = new LinkedMultiValueMap<>();
+        multiValueMap.add("projectName", dto.getProjectName());
+        multiValueMap.add("bpm", dto.getBpm());
+        multiValueMap.add("trackTag", dto.getTrackTag().getLabel());
+        multiValueMap.add("audioFile", dto.getAudioFile().getResource());
+
+        HttpHeaders headers = new HttpHeaders();
+        if (token != null) {
+            headers.setBearerAuth(token);
+        }
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+        return new HttpEntity<>(multiValueMap, headers);
+    }
 }

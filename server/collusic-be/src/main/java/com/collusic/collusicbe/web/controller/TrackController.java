@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.net.URI;
 
 @RestController
@@ -24,7 +25,10 @@ public class TrackController {
     private final ProjectService projectService;
 
     @PostMapping("/projects/{projectId}/tracks")
-    public ResponseEntity<TrackCreateResponseDto> createTrack(@LoginMember Member member, @PathVariable Long projectId, @Validated @RequestBody final TrackCreateRequestDto requestDto) {
+    public ResponseEntity<TrackCreateResponseDto> createTrack(
+            @LoginMember Member member,
+            @PathVariable Long projectId,
+            @Validated @ModelAttribute TrackCreateRequestDto requestDto) throws IOException {
         Project project = projectService.findById(projectId);
         Track track = trackService.create(member, project, requestDto);
 
