@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -21,9 +22,16 @@ public class TrackCreateRequestDto {
     @NotNull
     private TrackTag trackTag;
 
+    private MultipartFile audioFile;
+
     @Builder
-    public TrackCreateRequestDto(String trackName, String trackTag) {
+    public TrackCreateRequestDto(String trackName, String trackTag, MultipartFile audioFile) {
         this.trackName = trackName;
+        this.trackTag = TrackTag.valueOfLabel(trackTag);
+        this.audioFile = audioFile;
+    }
+
+    public void setTrackTag(String trackTag) {
         this.trackTag = TrackTag.valueOfLabel(trackTag);
     }
 }

@@ -28,7 +28,7 @@ public class TrackService {
     private final S3Service s3Service;
 
     @Transactional(propagation = Propagation.REQUIRED)
-    public Track create(Member member, Project project, TrackCreateRequestDto trackData, MultipartFile audioFile) throws IOException {
+    public Track create(Member member, Project project, TrackCreateRequestDto trackData) throws IOException {
         if (project.isTrackFull()) {
             throw new IllegalStateException();
         }
@@ -41,7 +41,7 @@ public class TrackService {
                            .orderInProject(project.getNextTrackOrder())
                            .build();
 
-        String fileUrl = s3Service.uploadAudioFile(audioFile);
+        String fileUrl = s3Service.uploadAudioFile(trackData.getAudioFile());
         track.setFileUrl(fileUrl);
 
         track = trackRepository.save(track);

@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.net.URI;
@@ -31,9 +30,8 @@ public class ProjectController {
     @PostMapping("/projects")
     public ResponseEntity<ProjectCreateResponseDto> createProject(
             @LoginMember Member member,
-            @RequestPart(value = "audioFile") MultipartFile audioFile,
-            @Validated @RequestPart(value = "projectCreateRequest") ProjectCreateRequestDto requestDto) throws IOException {
-        Project project = projectService.createProject(member, requestDto, audioFile);
+            @Validated @ModelAttribute ProjectCreateRequestDto requestDto) throws IOException {
+        Project project = projectService.createProject(member, requestDto);
         return ResponseEntity.created(URI.create("/projects/" + project.getId())).body(new ProjectCreateResponseDto(project));
     }
 

@@ -67,13 +67,14 @@ public class TrackServiceTest {
         TrackCreateRequestDto requestDto = TrackCreateRequestDto.builder()
                                                                 .trackName("test track name")
                                                                 .trackTag("피아노")
+                                                                .audioFile(new MockMultipartFile("test", new byte[]{}))
                                                                 .build();
 
         // when
         when(trackRepository.save(any(Track.class))).thenReturn(testTrack);
         when(s3Service.uploadAudioFile(any(MultipartFile.class))).thenReturn("test_audio_url");
 
-        Track savedTrack = trackService.create(testMember, testProject, requestDto, new MockMultipartFile("test", new byte[]{}));
+        Track savedTrack = trackService.create(testMember, testProject, requestDto);
 
         //then
         assertThat(savedTrack.getCreator().getNickname()).isEqualTo(testMember.getNickname());
@@ -90,6 +91,7 @@ public class TrackServiceTest {
         TrackCreateRequestDto requestDto = TrackCreateRequestDto.builder()
                                                                 .trackName("test track name")
                                                                 .trackTag("피아노")
+                                                                .audioFile(new MockMultipartFile("test", new byte[]{}))
                                                                 .build();
 
         // when
@@ -100,7 +102,7 @@ public class TrackServiceTest {
         }
 
         // then
-        assertThrows(IllegalStateException.class, () -> trackService.create(testMember, projectWithFullTrack, requestDto, new MockMultipartFile("test", new byte[]{})));
+        assertThrows(IllegalStateException.class, () -> trackService.create(testMember, projectWithFullTrack, requestDto));
     }
 
     @Test

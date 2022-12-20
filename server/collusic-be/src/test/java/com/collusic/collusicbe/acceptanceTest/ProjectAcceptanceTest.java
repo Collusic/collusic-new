@@ -8,6 +8,7 @@ import org.springframework.http.*;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -22,13 +23,14 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
     void testCreatingProject() throws IOException {
         // given
         ProjectCreateRequestDto requestDto = ProjectCreateRequestDto.builder()
-                .projectName("test project name")
-                .bpm(45)
-                .trackTag("피아노")
-                .build();
+                                                                    .projectName("test project name")
+                                                                    .bpm(45)
+                                                                    .trackTag("피아노")
+                                                                    .audioFile(getMockMultipartFile())
+                                                                    .build();
 
         // when
-        ResponseEntity<ProjectCreateResponseDto> response = template().postForEntity("/projects", trackCreateRequestEntity(requestDto), ProjectCreateResponseDto.class);
+        ResponseEntity<ProjectCreateResponseDto> response = template().postForEntity("/projects", projectCreateRequestEntity(requestDto, testToken()), ProjectCreateResponseDto.class);
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
@@ -42,24 +44,11 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
                                                                     .projectName("test project name")
                                                                     .bpm(45)
                                                                     .trackTag("피아노")
+                                                                    .audioFile(getMockMultipartFile())
                                                                     .build();
 
-        MockMultipartFile multipartFile = new MockMultipartFile(
-                "audioFile",
-                "schoolbell.mp3",
-                MediaType.IMAGE_JPEG_VALUE,
-                new FileInputStream("src/test/resources/assets/schoolbell.mp3"));
-
-        MultiValueMap<String, Object> multiValueMap = new LinkedMultiValueMap<>();
-        multiValueMap.add("audioFile", multipartFile.getResource());
-
-        multiValueMap.add("projectCreateRequest", requestDto);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-
         // when
-        ResponseEntity<ProjectCreateResponseDto> response = template().postForEntity("/projects", new HttpEntity<>(multiValueMap, headers), ProjectCreateResponseDto.class);
+        ResponseEntity<ProjectCreateResponseDto> response = template().postForEntity("/projects", projectCreateRequestEntity(requestDto, null), ProjectCreateResponseDto.class);
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
@@ -70,9 +59,11 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
     void testBadRequestCreatingProject() throws IOException {
         // given
         ProjectCreateRequestDto requestDto = ProjectCreateRequestDto.builder()
+                                                                    .trackTag("피아노")
+                                                                    .audioFile(getMockMultipartFile())
                                                                     .build();
         // when
-        ResponseEntity<ProjectCreateResponseDto> response = template().postForEntity("/projects", trackCreateRequestEntity(requestDto), ProjectCreateResponseDto.class);
+        ResponseEntity<ProjectCreateResponseDto> response = template().postForEntity("/projects", projectCreateRequestEntity(requestDto, testToken()), ProjectCreateResponseDto.class);
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -163,4 +154,28 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
 //        // then
 //        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
 //    }
+
+    private MultipartFile getMockMultipartFile() throws IOException {
+        return new MockMultipartFile(
+                "audioFile",
+                "schoolbell.mp3",
+                MediaType.IMAGE_JPEG_VALUE,
+                new FileInputStream("src/test/resources/assets/schoolbell.mp3"));
+    }
+
+    private HttpEntity<MultiValueMap<String, Object>> projectCreateRequestEntity(ProjectCreateRequestDto dto, String token) {
+        MultiValueMap<String, Object> multiValueMap = new LinkedMultiValueMap<>();
+        multiValueMap.add("projectName", dto.getProjectName());
+        multiValueMap.add("bpm", dto.getBpm());
+        multiValueMap.add("trackTag", dto.getTrackTag().getLabel());
+        multiValueMap.add("audioFile", dto.getAudioFile().getResource());
+
+        HttpHeaders headers = new HttpHeaders();
+        if (token != null) {
+            headers.setBearerAuth(token);
+        }
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+        return new HttpEntity<>(multiValueMap, headers);
+    }
 }

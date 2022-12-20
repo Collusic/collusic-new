@@ -90,13 +90,14 @@ public class ProjectServiceTest {
                                                                     .projectName("test project name")
                                                                     .bpm(45)
                                                                     .trackTag("피아노")
+                                                                    .audioFile(makeMockMultipartFile())
                                                                     .build();
 
         // when
         when(projectRepository.save(any(Project.class))).thenReturn(testProject);
-        when(trackService.create(any(Member.class), any(Project.class), any(TrackCreateRequestDto.class), any(MultipartFile.class))).thenReturn(testTrack);
+        when(trackService.create(any(Member.class), any(Project.class), any(TrackCreateRequestDto.class))).thenReturn(testTrack);
 
-        Project savedProject = projectService.createProject(testMember, requestDto, makeMockMultipartFile());
+        Project savedProject = projectService.createProject(testMember, requestDto);
 
         // then
         assertThat(savedProject.getProjectName()).isEqualTo(testProject.getProjectName());

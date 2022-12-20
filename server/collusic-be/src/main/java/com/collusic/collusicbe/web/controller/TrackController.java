@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.net.URI;
@@ -29,10 +28,9 @@ public class TrackController {
     public ResponseEntity<TrackCreateResponseDto> createTrack(
             @LoginMember Member member,
             @PathVariable Long projectId,
-            @RequestPart(value = "audioFile", required = false) MultipartFile audioFile,
-            @Validated @RequestPart(value = "trackCreateRequest") TrackCreateRequestDto requestDto) throws IOException {
+            @Validated @ModelAttribute TrackCreateRequestDto requestDto) throws IOException {
         Project project = projectService.findById(projectId);
-        Track track = trackService.create(member, project, requestDto, audioFile);
+        Track track = trackService.create(member, project, requestDto);
 
         return ResponseEntity.created(URI.create("/projects/" + projectId + "/tracks/" + track.getId())).body(new TrackCreateResponseDto(track));
     }

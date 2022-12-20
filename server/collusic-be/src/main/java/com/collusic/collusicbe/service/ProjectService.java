@@ -36,7 +36,7 @@ public class ProjectService {
     }
 
     @Transactional
-    public Project createProject(Member member, ProjectCreateRequestDto requestDto, MultipartFile audioFile) throws IOException {
+    public Project createProject(Member member, ProjectCreateRequestDto requestDto) throws IOException {
         Project project = Project.builder()
                                  .projectName(requestDto.getProjectName())
                                  .bpm(requestDto.getBpm())
@@ -44,7 +44,7 @@ public class ProjectService {
                                  .build();
 
         Project save = projectRepository.save(project);
-        Track track = trackService.create(member, project, new TrackCreateRequestDto(requestDto.getProjectName(), requestDto.getTrackTag().getLabel()), audioFile);
+        Track track = trackService.create(member, project, new TrackCreateRequestDto(requestDto.getProjectName(), requestDto.getTrackTag().getLabel(), requestDto.getAudioFile()));
         save.addTrack(track);
 
         return projectRepository.save(save);
