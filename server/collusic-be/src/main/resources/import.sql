@@ -46,12 +46,12 @@ insert into track (track_id, creator_id, file_url, order_in_project, project_id,
 insert into track (track_id, creator_id, file_url, order_in_project, project_id, track_name, track_tag, created_date, modified_date) values (20, 2, 'test', 10, 1, 'test1', 'PIANO', '2002-12-11 00:07:21.952693', '2002-12-11 00:07:21.952693');
 
 insert into project (project_id, project_name, bpm, file_url, created_date, modified_date) values (15, 'test project', 50, 'test_url', '2004-12-01 00:07:21.952693', '2004-12-01 00:07:21.952693');
-insert into track (track_id, creator_id, file_url, order_in_project, project_id, track_name, track_tag, created_date, modified_date) values (21, 2, 'test', 0, 15, 'test project', 'PIANO', '2004-12-01 00:07:21.952693', '2004-12-01 00:07:21.952693');
+insert into track (track_id, creator_id, file_url, order_in_project, project_id, track_name, track_tag, created_date, modified_date) values (21, null, 'test', 0, 15, 'test project', 'PIANO', '2004-12-01 00:07:21.952693', '2004-12-01 00:07:21.952693');
 
 insert into project (project_id, project_name, bpm, file_url, created_date, modified_date) values (16, 'test project', 50, 'test_url', '2004-12-01 00:07:21.952693', '2004-12-01 00:07:21.952693');
 insert into track (track_id, creator_id, file_url, order_in_project, project_id, track_name, track_tag, created_date, modified_date) values (22, 1, 'test', 0, 16, 'test project', 'PIANO', '2004-12-01 00:07:21.952693', '2004-12-01 00:07:21.952693');
 
-insert into track (track_id, file_url, order_in_project, project_id, track_name, track_tag, created_date, modified_date) values (23, 'test', 0, 6, 'test1', 'PIANO', '2002-12-07 00:07:21.952693', '2002-12-07 00:07:21.952693');
-
+insert into project (project_id, project_name, bpm, file_url, created_date, modified_date) values (17, 'test project', 50, 'test_url', '2005-12-01 00:07:21.952693', '2005-12-01 00:07:21.952693');
+insert into track (track_id, creator_id, file_url, order_in_project, project_id, track_name, track_tag, created_date, modified_date) values (23, 2, 'test', 0, 17, 'test project', 'PIANO', '2005-12-01 00:07:21.952693', '2005-12-01 00:07:21.952693');
 
 insert into project_like(project_like_id, member_id, project_id) values(1, 1, 13);

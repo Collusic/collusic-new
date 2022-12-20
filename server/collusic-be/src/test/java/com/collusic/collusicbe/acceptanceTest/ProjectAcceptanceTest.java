@@ -131,19 +131,35 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
-//    @Test
-//    @DisplayName("프로젝트 수정 실패 테스트 - 프로젝트 생성자는 트랙이 이미 삭제된 경우, 프로젝트 수정이 불가능하다.")
-//    void testProjectUpdateFail() {
-//        // given
-//        ProjectUpdateRequestDto requestDto = ProjectUpdateRequestDto.builder()
-//                                                                    .projectName("update project name")
-//                                                                    .trackTag("드럼")
-//                                                                    .build();
-//
-//        // when
-//        ResponseEntity<ProjectUpdateResponseDto> response = template().exchange("/projects/15", HttpMethod.PUT, requestEntityWithToken(requestDto), ProjectUpdateResponseDto.class);
-//
-//        // then
-//        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-//    }
+    @Test
+    @DisplayName("프로젝트 수정 실패 테스트 - 프로젝트 생성자는 트랙이 이미 삭제된 경우, 프로젝트 수정이 불가능하다.")
+    void testProjectUpdateFail() {
+        // given
+        ProjectUpdateRequestDto requestDto = ProjectUpdateRequestDto.builder()
+                                                                    .projectName("update project")
+                                                                    .trackTag("피아노")
+                                                                    .build();
+
+        // when
+        ResponseEntity<String> response = template().exchange("/projects/15", HttpMethod.PUT, requestEntityWithToken(requestDto), String.class);
+
+        // then
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
+    }
+
+    @Test
+    @DisplayName("프로젝트 수정 실패 테스트 - 루트 트랙 생성자와 사용자가 일치하지 않는 경우, 프로젝트 수정이 불가능하다.")
+    void testProjectUpdateFailWhenRootTrackUserMismatchUser() {
+        // given
+        ProjectUpdateRequestDto requestDto = ProjectUpdateRequestDto.builder()
+                                                                    .projectName("update project")
+                                                                    .trackTag("피아노")
+                                                                    .build();
+
+        // when
+        ResponseEntity<String> response = template().exchange("/projects/17", HttpMethod.PUT, requestEntityWithToken(requestDto), String.class);
+
+        // then
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
+    }
 }
