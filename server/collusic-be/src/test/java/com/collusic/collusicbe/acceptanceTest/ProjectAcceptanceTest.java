@@ -37,7 +37,7 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
     }
 
     @Test
-    @DisplayName("프로젝트 생성 테스트 - 로그인하지 않은 사용자의 요청인 경우 UNAUTHORIZED(401)으로 응답")
+    @DisplayName("프로젝트 생성 실패 테스트 - 로그인하지 않은 사용자의 요청인 경우 UNAUTHORIZED(401)으로 응답")
     void testUnauthorizedCreatingProject() throws IOException {
         // given
         ProjectCreateRequestDto requestDto = ProjectCreateRequestDto.builder()
@@ -55,7 +55,7 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
     }
 
     @Test
-    @DisplayName("프로젝트 생성 테스트 - 필수 데이터가 누락된 요청인 경우 BAD_REQUEST(400)으로 응답")
+    @DisplayName("프로젝트 생성 실패 테스트 - 필수 데이터가 누락된 요청인 경우 BAD_REQUEST(400)으로 응답")
     void testBadRequestCreatingProject() throws IOException {
         // given
         ProjectCreateRequestDto requestDto = ProjectCreateRequestDto.builder()
@@ -67,6 +67,60 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    @DisplayName("프로젝트 생성 실패 테스트 - 프로젝트 명이 21자일 경우 BAD_REQUEST(400)와 에러 메시지(프로젝트 명은 1자 이상 20자 이내로 한다)를 응답한다.")
+    void testBadRequestAndProjectNameErrorMessageCreatingProject() throws IOException {
+        // given
+        ProjectCreateRequestDto requestDto = ProjectCreateRequestDto.builder()
+                                                                    .projectName("project name length is over twenty")
+                                                                    .bpm(45)
+                                                                    .trackTag("피아노")
+                                                                    .audioFile(getMockMultipartFile())
+                                                                    .build();
+        // when
+        ResponseEntity<String> response = template().postForEntity("/projects", projectCreateRequestEntity(requestDto, testToken()), String.class);
+
+        // then
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(response.getBody()).contains("프로젝트 명은 1자 이상 20자 이내로 한다.");
+    }
+
+    @Test
+    @DisplayName("프로젝트 생성 실패 테스트 - 프로젝트 bpm이 29일 경우 BAD_REQUEST(400)와 에러 메시지(BPM의 범위는 30부터 240까지 설정할 수 있다)를 응답한다.")
+    void testBadRequestAndBpmUnderErrorMessageCreatingProject() throws IOException {
+        // given
+        ProjectCreateRequestDto requestDto = ProjectCreateRequestDto.builder()
+                                                                    .projectName("project name length is over twenty")
+                                                                    .bpm(29)
+                                                                    .trackTag("피아노")
+                                                                    .audioFile(getMockMultipartFile())
+                                                                    .build();
+        // when
+        ResponseEntity<String> response = template().postForEntity("/projects", projectCreateRequestEntity(requestDto, testToken()), String.class);
+
+        // then
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(response.getBody()).contains("BPM의 범위는 30부터 240까지 설정할 수 있다.");
+    }
+
+    @Test
+    @DisplayName("프로젝트 생성 실패 테스트 - 프로젝트 bpm이 241일 경우 BAD_REQUEST(400)와 에러 메시지(BPM의 범위는 30부터 240까지 설정할 수 있다)를 응답한다.")
+    void testBadRequestAndBpmOverErrorMessageCreatingProject() throws IOException {
+        // given
+        ProjectCreateRequestDto requestDto = ProjectCreateRequestDto.builder()
+                                                                    .projectName("project name length is over twenty")
+                                                                    .bpm(241)
+                                                                    .trackTag("피아노")
+                                                                    .audioFile(getMockMultipartFile())
+                                                                    .build();
+        // when
+        ResponseEntity<String> response = template().postForEntity("/projects", projectCreateRequestEntity(requestDto, testToken()), String.class);
+
+        // then
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(response.getBody()).contains("BPM의 범위는 30부터 240까지 설정할 수 있다.");
     }
 
     @Test
