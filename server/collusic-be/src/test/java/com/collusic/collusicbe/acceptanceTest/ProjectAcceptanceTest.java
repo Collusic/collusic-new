@@ -125,7 +125,7 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
 
     @Test
     @DisplayName("프로젝트 목록 보기 테스트 - 등록된 사용자/방문자로서, 프로젝트에 대한 목록을 24개씩 확인할 수 있다.")
-    void test12ProjectsShowingProjectList() {
+    void test24ProjectsShowingProjectList() {
         // given
         int elementSize = 24;
 
@@ -137,8 +137,8 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
     }
 
     @Test
-    @DisplayName("프로젝트 좋아요 테스트 - 등록된 사용자로서, 나는 프로젝트에 대해 좋아요를 누를 수 있다.")
-    void testLikeAction() {
+    @DisplayName("프로젝트 좋아요 테스트 - 등록된 사용자로서, 나는 프로젝트에 대해 좋아요를 누르면 좋아요의 색깔이 true가 된다.")
+    void testLikeColorIsTrueWhenLike() {
         // when
         ResponseEntity<LikeResponseDto> response = template().postForEntity("/projects/2/like", requestEntityWithToken(null), LikeResponseDto.class);
 
@@ -147,13 +147,23 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
     }
 
     @Test
-    @DisplayName("프로젝트 좋아요 취소 테스트 - 등록된 사용자로서, 나는 좋아요를 취소할 수 있다.")
-    void testLikeActionCancel() {
+    @DisplayName("프로젝트 좋아요 취소 테스트 - 등록된 사용자로서, 나는 프로젝트에 대해 좋아요를 취소하면 좋아요의 색깔이 false가 된다.")
+    void testLikeColorIsFalseWhenLikeCancel() {
         // when
         ResponseEntity<LikeResponseDto> response = template().postForEntity("/projects/13/like", requestEntityWithToken(null), LikeResponseDto.class);
 
         // then
         assertThat(response.getBody().getIsLiked()).isFalse();
+    }
+
+    @Test
+    @DisplayName("프로젝트 좋아요 실패 테스트 - 로그인하지 않은 사용자의 좋아요 요청인 경우 UNAUTHORIZED(401)으로 응답")
+    void testUnAuthorizedWhenNotRegisteredUserLikeAction() {
+        // when
+        ResponseEntity<String> response = template().postForEntity("/projects/13/like", requestEntity(null), String.class);
+
+        // then
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
     }
 
     @Test
