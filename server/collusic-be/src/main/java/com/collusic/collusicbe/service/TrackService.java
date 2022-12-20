@@ -12,7 +12,11 @@ import com.collusic.collusicbe.web.controller.dto.TrackCreateRequestDto;
 import com.collusic.collusicbe.web.controller.dto.TrackUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.NoSuchElementException;
 
 @Service
@@ -21,8 +25,10 @@ public class TrackService {
 
     private final ProjectRepository projectRepository;
     private final TrackRepository trackRepository;
+    private final S3Service s3Service;
 
-    public Track create(Member member, Project project, TrackCreateRequestDto trackData) {
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Track create(Member member, Project project, TrackCreateRequestDto trackData) throws IOException {
         if (project.isTrackFull()) {
             throw new IllegalStateException();
         }
@@ -35,13 +41,14 @@ public class TrackService {
                            .orderInProject(project.getNextTrackOrder())
                            .build();
 
-        Track savedTrack = trackRepository.save(track);
+        String fileUrl = s3Service.uploadAudioFile(trackData.getAudioFile());
+        track.setFileUrl(fileUrl);
 
-        project.updateModifiedDate(savedTrack.getCreatedDate());
-
+        track = trackRepository.save(track);
+        project.updateModifiedDate(track.getCreatedDate());
         projectRepository.save(project);
 
-        return savedTrack;
+        return track;
     }
 
     public Track update(Member member, long trackId, TrackUpdateRequestDto trackData) {

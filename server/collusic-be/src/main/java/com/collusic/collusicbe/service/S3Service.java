@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Slf4j
@@ -23,7 +24,9 @@ public class S3Service {
 
     private static final String IMAGE_DIR = "profiles";
     private static final String RESIZED_IMAGE_DIR = "resized-profiles";
+    private static final String TRACK_DIR = "tracks";
     private final AmazonS3 s3Client;
+
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
@@ -112,5 +115,23 @@ public class S3Service {
             return path + RESIZED_IMAGE_DIR;
         }
         return path + IMAGE_DIR;
+    }
+
+    public String uploadAudioFile(MultipartFile audioFile) throws IOException {
+        StringBuilder path = new StringBuilder();
+        path.append(TRACK_DIR)
+            .append("/")
+            .append(LocalDateTime.now())
+            .append("-")
+            .append(audioFile.getOriginalFilename());
+
+        ObjectMetadata objectMetadata = new ObjectMetadata();
+        objectMetadata.setContentType(audioFile.getContentType());
+        objectMetadata.setContentLength(audioFile.getSize());
+
+        s3Client.putObject(new PutObjectRequest(bucket, path.toString(), audioFile.getInputStream(), objectMetadata)
+                .withCannedAcl(CannedAccessControlList.PublicRead));
+
+        return cloudFrontDomain + path;
     }
 }

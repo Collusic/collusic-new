@@ -7,12 +7,11 @@ import com.collusic.collusicbe.domain.project.Project;
 import com.collusic.collusicbe.service.ProjectService;
 import com.collusic.collusicbe.web.controller.dto.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.net.URI;
 
 @RestController
@@ -29,7 +28,9 @@ public class ProjectController {
     }
 
     @PostMapping("/projects")
-    public ResponseEntity<ProjectCreateResponseDto> createProject(@LoginMember Member member, @Validated @RequestBody ProjectCreateRequestDto requestDto) {
+    public ResponseEntity<ProjectCreateResponseDto> createProject(
+            @LoginMember Member member,
+            @Validated @ModelAttribute ProjectCreateRequestDto requestDto) throws IOException {
         Project project = projectService.createProject(member, requestDto);
         return ResponseEntity.created(URI.create("/projects/" + project.getId())).body(new ProjectCreateResponseDto(project));
     }
@@ -47,8 +48,8 @@ public class ProjectController {
     }
 
     @GetMapping("/projects")
-    public ResponseEntity<ProjectsResponseDto> readProjects(@PageableDefault(size = 12) Pageable pageable, @Visitor Member member) {
-        ProjectsResponseDto responseDto = projectService.getProjects(pageable, member);
+    public ResponseEntity<ProjectsResponseDto> readProjects(@RequestParam(name = "size", defaultValue = "24") int size, @RequestParam(name = "cursorId", required = false) Long cursorId, @Visitor Member member) {
+        ProjectsResponseDto responseDto = projectService.getProjects(size, cursorId, member);
         return ResponseEntity.ok().body(responseDto);
     }
 

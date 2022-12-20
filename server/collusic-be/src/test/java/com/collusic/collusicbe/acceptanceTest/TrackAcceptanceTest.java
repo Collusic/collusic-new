@@ -1,36 +1,45 @@
 package com.collusic.collusicbe.acceptanceTest;
 
-import com.collusic.collusicbe.domain.track.TrackRepository;
+import com.collusic.collusicbe.service.S3Service;
 import com.collusic.collusicbe.web.controller.dto.ProjectResponseDto;
 import com.collusic.collusicbe.web.controller.dto.TrackCreateRequestDto;
 import com.collusic.collusicbe.web.controller.dto.TrackCreateResponseDto;
 import com.collusic.collusicbe.web.controller.dto.TrackUpdateRequestDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.*;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.FileInputStream;
+import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 @DisplayName("Track Acceptance Test")
 public class TrackAcceptanceTest extends AbstractAcceptanceTest {
 
-    @Autowired
-    private TrackRepository trackRepository;
+    @MockBean
+    private S3Service s3Service;
 
     @Test
     @DisplayName("트랙 생성 테스트 - 정상적인 요청의 경우 CREATED(201)으로 응답")
-    void testCreatingTrack() {
+    void testCreatingTrack() throws IOException {
         // given
-        TrackCreateRequestDto requestDto = TrackCreateRequestDto.builder()
-                                                                .trackName("test track name")
-                                                                .trackTag("피아노")
-                                                                .build();
+        TrackCreateRequestDto trackCreateRequestDto = TrackCreateRequestDto.builder()
+                                                                           .trackName("test track name")
+                                                                           .trackTag("피아노")
+                                                                           .audioFile(getMockMultipartFile())
+                                                                           .build();
 
         // when
-        ResponseEntity<TrackCreateResponseDto> response = template().postForEntity("/projects/1/tracks", requestEntityWithToken(requestDto), TrackCreateResponseDto.class);
+        when(s3Service.uploadAudioFile(any(MultipartFile.class))).thenReturn("test_audio_url");
+        ResponseEntity<String> response = template().postForEntity("/projects/1/tracks", trackCreateRequestEntity(trackCreateRequestDto, testToken()), String.class);
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
@@ -38,15 +47,16 @@ public class TrackAcceptanceTest extends AbstractAcceptanceTest {
 
     @Test
     @DisplayName("트랙 생성 테스트 - 로그인하지 않은 사용자의 요청인 경우 UNAUTHORIZED(401)으로 응답")
-    void testUnauthorizedCreatingTrack() {
+    void testUnauthorizedCreatingTrack() throws IOException {
         // given
         TrackCreateRequestDto requestDto = TrackCreateRequestDto.builder()
                                                                 .trackName("test track name")
                                                                 .trackTag("피아노")
+                                                                .audioFile(getMockMultipartFile())
                                                                 .build();
 
         // when
-        ResponseEntity<TrackCreateResponseDto> response = template().postForEntity("/projects/1/tracks", requestEntity(requestDto), TrackCreateResponseDto.class);
+        ResponseEntity<TrackCreateResponseDto> response = template().postForEntity("/projects/1/tracks", trackCreateRequestEntity(requestDto, null), TrackCreateResponseDto.class);
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
@@ -54,13 +64,17 @@ public class TrackAcceptanceTest extends AbstractAcceptanceTest {
 
     @Test
     @DisplayName("트랙 생성 테스트 - 필수 데이터가 누락된 요청인 경우 BAD_REQUEST(400)으로 응답")
-    void testBadRequestCreatingTrack() {
+    void testBadRequestCreatingTrack() throws IOException {
         // given
         TrackCreateRequestDto emptyDto = TrackCreateRequestDto.builder()
+                                                              .trackName(null)
+                                                              .trackTag("피아노")
+                                                              .audioFile(getMockMultipartFile())
                                                               .build();
 
         // when
-        ResponseEntity<TrackCreateResponseDto> response = template().postForEntity("/projects/1/tracks", requestEntityWithToken(emptyDto), TrackCreateResponseDto.class);
+        when(s3Service.uploadAudioFile(any(MultipartFile.class))).thenReturn("test_audio_url");
+        ResponseEntity<TrackCreateResponseDto> response = template().postForEntity("/projects/1/tracks", trackCreateRequestEntity(emptyDto, testToken()), TrackCreateResponseDto.class);
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -68,14 +82,16 @@ public class TrackAcceptanceTest extends AbstractAcceptanceTest {
 
     @Test
     @DisplayName("트랙 생성 테스트 - 프로젝트에 더이상 트랙을 등록할 수 없을 때의 요청의 경우 BAD_REQUEST(400)으로 응답")
-    void testForbiddenCreatingTrack() {
+    void testForbiddenCreatingTrack() throws IOException {
         // given
         TrackCreateRequestDto requestDto = TrackCreateRequestDto.builder()
                                                                 .trackName("test track name")
                                                                 .trackTag("피아노")
+                                                                .audioFile(getMockMultipartFile())
                                                                 .build();
         // when
-        ResponseEntity<TrackCreateResponseDto> response = template().postForEntity("/projects/2/tracks", requestEntityWithToken(requestDto), TrackCreateResponseDto.class);
+        when(s3Service.uploadAudioFile(any(MultipartFile.class))).thenReturn("test_audio_url");
+        ResponseEntity<TrackCreateResponseDto> response = template().postForEntity("/projects/2/tracks", trackCreateRequestEntity(requestDto, testToken()), TrackCreateResponseDto.class);
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -156,5 +172,28 @@ public class TrackAcceptanceTest extends AbstractAcceptanceTest {
     void testBadRequestDeletingTrack() {
         ResponseEntity<Void> response = template().exchange("/projects/15/tracks/21", HttpMethod.DELETE, requestEntityWithToken(null), Void.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    private MultipartFile getMockMultipartFile() throws IOException {
+        return new MockMultipartFile(
+                "audioFile",
+                "schoolbell.mp3",
+                MediaType.IMAGE_JPEG_VALUE,
+                new FileInputStream("src/test/resources/assets/schoolbell.mp3"));
+    }
+
+    private HttpEntity<MultiValueMap<String, Object>> trackCreateRequestEntity(TrackCreateRequestDto dto, String token) {
+        MultiValueMap<String, Object> multiValueMap = new LinkedMultiValueMap<>();
+        multiValueMap.add("trackName", dto.getTrackName());
+        multiValueMap.add("trackTag", dto.getTrackTag().getLabel());
+        multiValueMap.add("audioFile", dto.getAudioFile().getResource());
+
+        HttpHeaders headers = new HttpHeaders();
+        if (token != null) {
+            headers.setBearerAuth(token);
+        }
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+        return new HttpEntity<>(multiValueMap, headers);
     }
 }

@@ -6,20 +6,17 @@ import com.collusic.collusicbe.domain.project.Project;
 import com.collusic.collusicbe.domain.project.ProjectLike;
 import com.collusic.collusicbe.domain.project.ProjectRepository;
 import com.collusic.collusicbe.domain.track.Track;
-import com.collusic.collusicbe.domain.track.TrackRepository;
 import com.collusic.collusicbe.global.exception.ForbiddenException;
 import com.collusic.collusicbe.web.controller.ProjectPreview;
 import com.collusic.collusicbe.web.controller.ProjectsResponseDto;
-import com.collusic.collusicbe.web.controller.dto.LikeResponseDto;
-import com.collusic.collusicbe.web.controller.dto.ProjectCreateRequestDto;
-import com.collusic.collusicbe.web.controller.dto.ProjectUpdateRequestDto;
-import com.collusic.collusicbe.web.controller.dto.TrackPreview;
+import com.collusic.collusicbe.web.controller.dto.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -31,53 +28,48 @@ import java.util.stream.Collectors;
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
-    private final TrackRepository trackRepository;
     private final LikeRepository likeRepository;
+    private final TrackService trackService;
 
     public Project findById(Long id) {
         return projectRepository.findById(id).orElseThrow(NoSuchElementException::new);
     }
 
     @Transactional
-    public Project createProject(Member member, ProjectCreateRequestDto requestDto) {
+    public Project createProject(Member member, ProjectCreateRequestDto requestDto) throws IOException {
         Project project = Project.builder()
                                  .projectName(requestDto.getProjectName())
                                  .bpm(requestDto.getBpm())
                                  .fileUrl("empty")
                                  .build();
 
-        Project savedProject = projectRepository.save(project);
+        Project save = projectRepository.save(project);
+        Track track = trackService.create(member, project, new TrackCreateRequestDto(requestDto.getProjectName(), requestDto.getTrackTag().getLabel(), requestDto.getAudioFile()));
+        save.addTrack(track);
 
-        Track track = Track.builder()
-                           .trackName(project.getProjectName())
-                           .trackTag(requestDto.getTrackTag())
-                           .creator(member)
-                           .project(project)
-                           .orderInProject(project.getNextTrackOrder())
-                           .build();
-
-        project.addTrack(track);
-
-        trackRepository.save(track);
-
-        return savedProject;
+        return projectRepository.save(save);
     }
 
-    public ProjectsResponseDto getProjects(Pageable pageable, Member member) {
-        Slice<Project> projects = projectRepository.findAllByOrderByModifiedDate(pageable);
+    @Transactional(readOnly = true)
+    public ProjectsResponseDto getProjects(int size, Long cursorId, Member member) {
+        Slice<Project> projects;
 
-        List<ProjectPreview> projectPreviews;
-
-        if (member == null) {
-            projectPreviews = makeProjectPreviews(projects.getContent(), member);
+        if (cursorId == null) {
+            projects = projectRepository.findAllByOrderByModifiedDateFirstPage(size + 1);
         } else {
-            projectPreviews = makeProjectPreviews(projects.getContent(), member);
+            Project cursorProject = projectRepository.findById(cursorId)
+                                       .orElseThrow(NoSuchElementException::new);
+            projects = projectRepository.findAllByOrderByModifiedDate(size + 1, cursorId, cursorProject.getModifiedDate());
         }
+
+        List<ProjectPreview> projectPreviews = makeProjectPreviews(projects.getContent(), member, size);
+
+        boolean hasNext = projects.getSize() > size;
 
         ProjectsResponseDto responseDto = ProjectsResponseDto.builder()
                                                              .responseDtos(projectPreviews)
-                                                             .projectCount(projects.getNumberOfElements())
-                                                             .hasNext(projects.hasNext())
+                                                             .projectCount(projectPreviews.size())
+                                                             .hasNext(hasNext)
                                                              .build();
         return responseDto;
     }
@@ -108,10 +100,7 @@ public class ProjectService {
     public void deleteProject(Long projectId, Member member) {
         Project project = projectRepository.findById(projectId)
                                            .orElseThrow(NoSuchElementException::new);
-
         project.checkDeletable(member);
-
-        project.getTracks().forEach(trackRepository::delete);
 
         projectRepository.delete(project);
     }
@@ -132,10 +121,15 @@ public class ProjectService {
         return project;
     }
 
-    private List<ProjectPreview> makeProjectPreviews(List<Project> projects, Member member) {
+    private List<ProjectPreview> makeProjectPreviews(List<Project> projects, Member member, int size) {
         List<ProjectPreview> projectPreviews = new ArrayList<>();
 
         for (Project project : projects) {
+
+            if (projectPreviews.size() == size) {
+                continue;
+            }
+
             List<TrackPreview> trackPreviews = project.getTracks().stream()
                                                       .map(track -> TrackPreview.builder()
                                                                                 .trackId(track.getId())

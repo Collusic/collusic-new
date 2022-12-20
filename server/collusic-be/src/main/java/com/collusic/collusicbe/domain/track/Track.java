@@ -31,7 +31,7 @@ public class Track extends BaseTimeEntity {
     @JoinColumn(name = "CREATOR_ID")
     private Member creator;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "PROJECT_ID")
     private Project project;
 
@@ -42,14 +42,14 @@ public class Track extends BaseTimeEntity {
     private int orderInProject;
 
     @Builder
-    public Track(Long id, String trackName, TrackTag trackTag, Member creator, Project project, int orderInProject) {
+    public Track(Long id, String trackName, TrackTag trackTag, Member creator, Project project, int orderInProject, String fileUrl) {
         this.id = id;
         this.trackName = trackName;
         this.trackTag = trackTag;
         this.creator = creator;
         this.project = project;
         this.orderInProject = orderInProject;
-        this.fileUrl = "empty"; // TODO : 음원 파일 데이터 시 추가 처리할 것
+        this.fileUrl = fileUrl;
     }
 
     public void changeTrackInfo(String trackName, TrackTag trackTag) {
@@ -63,6 +63,10 @@ public class Track extends BaseTimeEntity {
 
     public void setProject(Project project) {
         this.project = project;
+    }
+
+    public void setFileUrl(String fileUrl) {
+        this.fileUrl = fileUrl;
     }
 
     public boolean hasSameCreator(Member member) {
