@@ -124,17 +124,16 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
     }
 
     @Test
-    @DisplayName("프로젝트 목록 보기 테스트 - 등록된 사용자/방문자로서, OK(200) 응답과 프로젝트에 대한 목록을 24개씩 확인할 수 있다.")
+    @DisplayName("프로젝트 목록 보기 테스트 - 등록된 사용자/방문자로서, 프로젝트에 대한 목록을 24개씩 확인할 수 있다.")
     void test24ProjectsShowingProjectList() {
         // given
         int elementSize = 24;
 
         // when
-        ResponseEntity<ProjectsResponseDto> response = template().getForEntity("/projects", ProjectsResponseDto.class);
+        ProjectsResponseDto response = template().getForObject("/projects", ProjectsResponseDto.class);
 
         // then
-        assertThat(response.getBody().getResponseDtos().size()).isEqualTo(elementSize);
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getResponseDtos().size()).isEqualTo(elementSize);
     }
 
     @Test
@@ -235,17 +234,6 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
-    }
-
-    @Test
-    @DisplayName("프로젝트 상세 정보 조회 - 등록된 사용자/방문자로서, 프로젝트에 대한 정보(프로젝트명, bpm, 좋아요 개수, 좋아요 여부, 트랙 정보)를 볼 수 있다.")
-    void testProjectDetailInfoShow() {
-        // when
-        ResponseEntity<ProjectResponseDto> response = template().getForEntity("/projects/2", ProjectResponseDto.class);
-
-        // then
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody().getProjectId()).isEqualTo(2);
     }
 
     private MultipartFile getMockMultipartFile() throws IOException {

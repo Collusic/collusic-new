@@ -1,4 +1,4 @@
-package com.collusic.collusicbe.domain;
+package com.collusic.collusicbe.domain.project;
 
 import com.collusic.collusicbe.domain.member.Member;
 import com.collusic.collusicbe.domain.project.LikeRepository;

@@ -170,7 +170,7 @@ public class TrackAcceptanceTest extends AbstractAcceptanceTest {
     @Test
     @DisplayName("트랙 삭제 테스트 - 현재 사용자가 삭제된 트랙 삭제를 요청하는 경우 BAD_REQUEST(400)으로 응답")
     void testBadRequestDeletingTrack() {
-        ResponseEntity<Void> response = template().exchange("/projects/6/tracks/23", HttpMethod.DELETE, requestEntityWithToken(null), Void.class);
+        ResponseEntity<Void> response = template().exchange("/projects/15/tracks/21", HttpMethod.DELETE, requestEntityWithToken(null), Void.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
