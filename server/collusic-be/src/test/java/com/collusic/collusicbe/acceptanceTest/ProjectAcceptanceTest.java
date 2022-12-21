@@ -180,10 +180,11 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
     @DisplayName("프로젝트 삭제 실패 테스트 - 프로젝트에 타인이 생성한 트랙이 존재하는 경우, 프로젝트를 삭제할 수 없다.")
     void testProjectDeleteFail() {
         // when
-        ResponseEntity<Void> response = template().exchange("/projects/5", HttpMethod.DELETE, requestEntityWithToken(null), Void.class);
+        ResponseEntity<String> response = template().exchange("/projects/5", HttpMethod.DELETE, requestEntityWithToken(null), String.class);
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(response.getBody()).contains("다른 사용자의 트랙이 있는 경우, 프로젝트를 삭제할 수 없습니다.");
     }
 
     @Test
