@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,29 +33,6 @@ public class ProjectService {
 
     public Project findById(Long id) {
         return projectRepository.findById(id).orElseThrow(NoSuchElementException::new);
-    }
-
-    public ProjectResponseDto getProject(Long id, Member member) {
-        Project project = projectRepository.findById(id)
-                                           .orElseThrow(NoSuchElementException::new);
-
-        List<TrackResponseDto> tracks = project.getTracks().stream()
-                                               .map(track -> TrackResponseDto.builder()
-                                                                             .member(track.getCreator())
-                                                                             .track(track)
-                                                                             .build())
-                                               .collect(Collectors.toList());
-
-        ProjectResponseDto projectResponseDto = ProjectResponseDto.builder()
-                                                     .projectId(project.getId())
-                                                     .projectName(project.getProjectName())
-                                                     .bpm(project.getBpm())
-                                                     .tracks(tracks)
-                                                     .likeCount(likeRepository.countByProjectId(project.getId()).intValue())
-                                                     .isLiked(likeRepository.existsByMemberAndProject(member, project))
-                                                     .build();
-
-        return projectResponseDto;
     }
 
     @Transactional
@@ -80,7 +58,7 @@ public class ProjectService {
             projects = projectRepository.findAllByOrderByModifiedDateFirstPage(size + 1);
         } else {
             Project cursorProject = projectRepository.findById(cursorId)
-                                                     .orElseThrow(NoSuchElementException::new);
+                                       .orElseThrow(NoSuchElementException::new);
             projects = projectRepository.findAllByOrderByModifiedDate(size + 1, cursorId, cursorProject.getModifiedDate());
         }
 
