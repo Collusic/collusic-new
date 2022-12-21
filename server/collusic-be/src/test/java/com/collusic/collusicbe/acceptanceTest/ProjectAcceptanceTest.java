@@ -37,7 +37,7 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
     }
 
     @Test
-    @DisplayName("프로젝트 생성 테스트 - 로그인하지 않은 사용자의 요청인 경우 UNAUTHORIZED(401)으로 응답")
+    @DisplayName("프로젝트 생성 실패 테스트 - 로그인하지 않은 사용자의 요청인 경우 UNAUTHORIZED(401)으로 응답")
     void testUnauthorizedCreatingProject() throws IOException {
         // given
         ProjectCreateRequestDto requestDto = ProjectCreateRequestDto.builder()
@@ -55,7 +55,7 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
     }
 
     @Test
-    @DisplayName("프로젝트 생성 테스트 - 필수 데이터가 누락된 요청인 경우 BAD_REQUEST(400)으로 응답")
+    @DisplayName("프로젝트 생성 실패 테스트 - 필수 데이터가 누락된 요청인 경우 BAD_REQUEST(400)으로 응답")
     void testBadRequestCreatingProject() throws IOException {
         // given
         ProjectCreateRequestDto requestDto = ProjectCreateRequestDto.builder()
@@ -70,21 +70,76 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
     }
 
     @Test
-    @DisplayName("프로젝트 목록 보기 테스트 - 등록된 사용자/방문자로서, 프로젝트에 대한 목록을 16개씩 확인할 수 있다.")
-    void test12ProjectsShowingProjectList() {
+    @DisplayName("프로젝트 생성 실패 테스트 - 프로젝트 명이 21자일 경우 BAD_REQUEST(400)와 에러 메시지(프로젝트 명은 1자 이상 20자 이내로 한다)를 응답한다.")
+    void testBadRequestAndProjectNameErrorMessageCreatingProject() throws IOException {
         // given
-        int elementSize = 16;
-
+        ProjectCreateRequestDto requestDto = ProjectCreateRequestDto.builder()
+                                                                    .projectName("project name length is over twenty")
+                                                                    .bpm(45)
+                                                                    .trackTag("피아노")
+                                                                    .audioFile(getMockMultipartFile())
+                                                                    .build();
         // when
-        ProjectsResponseDto response = template().getForObject("/projects", ProjectsResponseDto.class);
+        ResponseEntity<String> response = template().postForEntity("/projects", projectCreateRequestEntity(requestDto, testToken()), String.class);
 
         // then
-        assertThat(response.getResponseDtos().size()).isEqualTo(elementSize);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(response.getBody()).contains("프로젝트 명은 1자 이상 20자 이내로 한다.");
     }
 
     @Test
-    @DisplayName("프로젝트 좋아요 테스트 - 등록된 사용자로서, 나는 프로젝트에 대해 좋아요를 누를 수 있다.")
-    void testLikeAction() {
+    @DisplayName("프로젝트 생성 실패 테스트 - 프로젝트 bpm이 29일 경우 BAD_REQUEST(400)와 에러 메시지(BPM의 범위는 30부터 240까지 설정할 수 있다)를 응답한다.")
+    void testBadRequestAndBpmUnderErrorMessageCreatingProject() throws IOException {
+        // given
+        ProjectCreateRequestDto requestDto = ProjectCreateRequestDto.builder()
+                                                                    .projectName("project name length is over twenty")
+                                                                    .bpm(29)
+                                                                    .trackTag("피아노")
+                                                                    .audioFile(getMockMultipartFile())
+                                                                    .build();
+        // when
+        ResponseEntity<String> response = template().postForEntity("/projects", projectCreateRequestEntity(requestDto, testToken()), String.class);
+
+        // then
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(response.getBody()).contains("BPM의 범위는 30부터 240까지 설정할 수 있다.");
+    }
+
+    @Test
+    @DisplayName("프로젝트 생성 실패 테스트 - 프로젝트 bpm이 241일 경우 BAD_REQUEST(400)와 에러 메시지(BPM의 범위는 30부터 240까지 설정할 수 있다)를 응답한다.")
+    void testBadRequestAndBpmOverErrorMessageCreatingProject() throws IOException {
+        // given
+        ProjectCreateRequestDto requestDto = ProjectCreateRequestDto.builder()
+                                                                    .projectName("project name length is over twenty")
+                                                                    .bpm(241)
+                                                                    .trackTag("피아노")
+                                                                    .audioFile(getMockMultipartFile())
+                                                                    .build();
+        // when
+        ResponseEntity<String> response = template().postForEntity("/projects", projectCreateRequestEntity(requestDto, testToken()), String.class);
+
+        // then
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(response.getBody()).contains("BPM의 범위는 30부터 240까지 설정할 수 있다.");
+    }
+
+    @Test
+    @DisplayName("프로젝트 목록 보기 테스트 - 등록된 사용자/방문자로서, OK(200) 응답과 프로젝트에 대한 목록을 24개씩 확인할 수 있다.")
+    void test24ProjectsShowingProjectList() {
+        // given
+        int elementSize = 24;
+
+        // when
+        ResponseEntity<ProjectsResponseDto> response = template().getForEntity("/projects", ProjectsResponseDto.class);
+
+        // then
+        assertThat(response.getBody().getResponseDtos().size()).isEqualTo(elementSize);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+
+    @Test
+    @DisplayName("프로젝트 좋아요 테스트 - 등록된 사용자로서, 나는 프로젝트에 대해 좋아요를 누르면 좋아요의 색깔이 true가 된다.")
+    void testLikeColorIsTrueWhenLike() {
         // when
         ResponseEntity<LikeResponseDto> response = template().postForEntity("/projects/2/like", requestEntityWithToken(null), LikeResponseDto.class);
 
@@ -93,13 +148,23 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
     }
 
     @Test
-    @DisplayName("프로젝트 좋아요 취소 테스트 - 등록된 사용자로서, 나는 좋아요를 취소할 수 있다.")
-    void testLikeActionCancel() {
+    @DisplayName("프로젝트 좋아요 취소 테스트 - 등록된 사용자로서, 나는 프로젝트에 대해 좋아요를 취소하면 좋아요의 색깔이 false가 된다.")
+    void testLikeColorIsFalseWhenLikeCancel() {
         // when
         ResponseEntity<LikeResponseDto> response = template().postForEntity("/projects/13/like", requestEntityWithToken(null), LikeResponseDto.class);
 
         // then
         assertThat(response.getBody().getIsLiked()).isFalse();
+    }
+
+    @Test
+    @DisplayName("프로젝트 좋아요 실패 테스트 - 로그인하지 않은 사용자의 좋아요 요청인 경우 UNAUTHORIZED(401)으로 응답")
+    void testUnAuthorizedWhenNotRegisteredUserLikeAction() {
+        // when
+        ResponseEntity<String> response = template().postForEntity("/projects/13/like", requestEntity(null), String.class);
+
+        // then
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
     }
 
     @Test
@@ -116,10 +181,11 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
     @DisplayName("프로젝트 삭제 실패 테스트 - 프로젝트에 타인이 생성한 트랙이 존재하는 경우, 프로젝트를 삭제할 수 없다.")
     void testProjectDeleteFail() {
         // when
-        ResponseEntity<Void> response = template().exchange("/projects/5", HttpMethod.DELETE, requestEntityWithToken(null), Void.class);
+        ResponseEntity<String> response = template().exchange("/projects/5", HttpMethod.DELETE, requestEntityWithToken(null), String.class);
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(response.getBody()).contains("다른 사용자의 트랙이 있는 경우, 프로젝트를 삭제할 수 없습니다.");
     }
 
     @Test
@@ -139,21 +205,48 @@ public class ProjectAcceptanceTest extends AbstractAcceptanceTest {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
-//    @Test
-//    @DisplayName("프로젝트 수정 실패 테스트 - 프로젝트 생성자는 트랙이 이미 삭제된 경우, 프로젝트 수정이 불가능하다.")
-//    void testProjectUpdateFail() {
-//        // given
-//        ProjectUpdateRequestDto requestDto = ProjectUpdateRequestDto.builder()
-//                                                                    .projectName("update project name")
-//                                                                    .trackTag("드럼")
-//                                                                    .build();
-//
-//        // when
-//        ResponseEntity<ProjectUpdateResponseDto> response = template().exchange("/projects/15", HttpMethod.PUT, requestEntityWithToken(requestDto), ProjectUpdateResponseDto.class);
-//
-//        // then
-//        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-//    }
+    @Test
+    @DisplayName("프로젝트 수정 실패 테스트 - 프로젝트 생성자는 트랙이 이미 삭제된 경우, 프로젝트 수정이 불가능하다.")
+    void testProjectUpdateFail() {
+        // given
+        ProjectUpdateRequestDto requestDto = ProjectUpdateRequestDto.builder()
+                                                                    .projectName("update project")
+                                                                    .trackTag("피아노")
+                                                                    .build();
+
+        // when
+        ResponseEntity<String> response = template().exchange("/projects/15", HttpMethod.PUT, requestEntityWithToken(requestDto), String.class);
+
+        // then
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
+    }
+
+    @Test
+    @DisplayName("프로젝트 수정 실패 테스트 - 루트 트랙 생성자와 사용자가 일치하지 않는 경우, 프로젝트 수정이 불가능하다.")
+    void testProjectUpdateFailWhenRootTrackUserMismatchUser() {
+        // given
+        ProjectUpdateRequestDto requestDto = ProjectUpdateRequestDto.builder()
+                                                                    .projectName("update project")
+                                                                    .trackTag("피아노")
+                                                                    .build();
+
+        // when
+        ResponseEntity<String> response = template().exchange("/projects/17", HttpMethod.PUT, requestEntityWithToken(requestDto), String.class);
+
+        // then
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
+    }
+
+    @Test
+    @DisplayName("프로젝트 상세 정보 조회 - 등록된 사용자/방문자로서, 프로젝트에 대한 정보(프로젝트명, bpm, 좋아요 개수, 좋아요 여부, 트랙 정보)를 볼 수 있다.")
+    void testProjectDetailInfoShow() {
+        // when
+        ResponseEntity<ProjectResponseDto> response = template().getForEntity("/projects/2", ProjectResponseDto.class);
+
+        // then
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody().getProjectId()).isEqualTo(2);
+    }
 
     private MultipartFile getMockMultipartFile() throws IOException {
         return new MockMultipartFile(

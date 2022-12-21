@@ -21,10 +21,9 @@ public class ProjectController {
     private final ProjectService projectService;
 
     @GetMapping("/projects/{projectId}")
-    public ResponseEntity<Void> readProject(@PathVariable Long projectId) {
-        Project project = projectService.findById(projectId);
-
-        return ResponseEntity.ok(null); // TODO: project resposne dto 클래스 추가하여 반영할 것
+    public ResponseEntity<ProjectResponseDto> readProject(@PathVariable Long projectId, @Visitor Member member) {
+        ProjectResponseDto responseDto = projectService.getProject(projectId, member);
+        return ResponseEntity.ok().body(responseDto);
     }
 
     @PostMapping("/projects")
