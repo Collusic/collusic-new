@@ -6,6 +6,7 @@ import com.collusic.collusicbe.domain.track.TrackTag;
 import com.collusic.collusicbe.service.ProjectService;
 import com.collusic.collusicbe.service.TrackService;
 import com.collusic.collusicbe.web.controller.ProjectsResponseDto;
+import com.collusic.collusicbe.web.controller.dto.LikeResponseDto;
 import com.collusic.collusicbe.web.controller.dto.ProjectCreateRequestDto;
 import com.collusic.collusicbe.web.controller.dto.TrackCreateRequestDto;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,7 +33,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @DisplayName("ProjectService Unit Test")
 @ExtendWith(MockitoExtension.class)
@@ -141,6 +142,51 @@ public class ProjectServiceTest {
         // then
         assertThat(responseDto.getResponseDtos().size()).isEqualTo(1);
         assertThat(responseDto.isHasNext()).isFalse();
+    }
+
+    @Test
+    @DisplayName("프로젝트 좋아요 기능 테스트 - 프로젝트 좋아요를 누르면 좋아요 개수 1개와 좋아요 여부 true를 반환한다.")
+    void testLikeAction() {
+        // given
+        ProjectLike testProjectLike = ProjectLike.builder()
+                                       .member(testMember)
+                                       .project(testProject)
+                                       .build();
+
+        // when
+        when(projectRepository.findById(testProject.getId())).thenReturn(Optional.of(testProject));
+        when(likeRepository.findLikesByProjectIdAndMemberId(testProject.getId(), testMember.getId())).thenReturn(Optional.empty());
+        when(likeRepository.countByProjectId(testProject.getId())).thenReturn(1L);
+        when(likeRepository.existsByMemberAndProject(testMember, testProject)).thenReturn(true);
+
+        LikeResponseDto responseDto = projectService.likeProject(testProject.getId(), testMember);
+
+        // then
+        assertThat(responseDto.getLikeCount()).isEqualTo(1);
+        assertThat(responseDto.getIsLiked()).isTrue();
+    }
+
+    @Test
+    @DisplayName("프로젝트 좋아요 기능 취소 테스트 - 프로젝트 좋아요 취소를 누르면 좋아요 개수 0개와 좋아요 여부 false를 반환한다.")
+    void testLikeActionCancel() {
+        // given
+        ProjectLike testProjectLike = ProjectLike.builder()
+                                                 .member(testMember)
+                                                 .project(testProject)
+                                                 .build();
+
+        // when
+        when(projectRepository.findById(testProject.getId())).thenReturn(Optional.of(testProject));
+        when(likeRepository.findLikesByProjectIdAndMemberId(testProject.getId(), testMember.getId())).thenReturn(Optional.of(testProjectLike));
+        doNothing().when(likeRepository).delete(testProjectLike);
+        when(likeRepository.countByProjectId(testProject.getId())).thenReturn(0L);
+        when(likeRepository.existsByMemberAndProject(testMember, testProject)).thenReturn(false);
+
+        LikeResponseDto responseDto = projectService.likeProject(testProject.getId(), testMember);
+
+        // then
+        assertThat(responseDto.getLikeCount()).isEqualTo(0);
+        assertThat(responseDto.getIsLiked()).isFalse();
     }
 
     private MultipartFile makeMockMultipartFile() throws IOException {
