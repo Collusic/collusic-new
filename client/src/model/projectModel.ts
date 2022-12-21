@@ -43,15 +43,15 @@ export const isStartedRecordingState = atom({
   key: "IsStartedRecordingState",
   default: false,
 });
-export const pageState = atom({
-  key: "pageState",
+export const lastProjectId = atom({
+  key: "lastProjectIdState",
   default: 1,
 });
 // 프로젝트 목록
 export const getProjectListSelector = selector<GetProjectPagination>({
   key: "getPrjectListSelector",
   get: async ({ get }) => {
-    const page = get(pageState);
+    const page = get(lastProjectId);
     const data = await getProjectList({ page });
 
     return data;

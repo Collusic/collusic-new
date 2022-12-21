@@ -4,7 +4,7 @@ import "./style.scss";
 
 interface PreviewButtonProps {
   isPlaying: boolean;
-  onClickPreview: (e: MouseEvent) => {};
+  onClickPreview(e: MouseEvent): void;
 }
 function PreviewButton({ isPlaying, onClickPreview }: PreviewButtonProps) {
   return (

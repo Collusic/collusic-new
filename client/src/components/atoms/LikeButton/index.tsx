@@ -5,7 +5,7 @@ import "./style.scss";
 interface LikeButtonProps {
   isLiked: boolean;
   likeCount: number;
-  onClickLikeBtn: () => {};
+  onClickLikeBtn(): void;
 }
 
 function LikeButton({ isLiked, likeCount, onClickLikeBtn }: LikeButtonProps) {
