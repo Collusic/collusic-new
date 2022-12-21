@@ -8,10 +8,7 @@ import com.collusic.collusicbe.global.exception.ForbiddenException;
 import com.collusic.collusicbe.service.ProjectService;
 import com.collusic.collusicbe.service.TrackService;
 import com.collusic.collusicbe.web.controller.ProjectsResponseDto;
-import com.collusic.collusicbe.web.controller.dto.LikeResponseDto;
-import com.collusic.collusicbe.web.controller.dto.ProjectCreateRequestDto;
-import com.collusic.collusicbe.web.controller.dto.ProjectUpdateRequestDto;
-import com.collusic.collusicbe.web.controller.dto.TrackCreateRequestDto;
+import com.collusic.collusicbe.web.controller.dto.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -263,6 +260,24 @@ public class ProjectServiceTest {
         // then
         assertThatThrownBy(() -> projectService.updateProject(testProject.getId(), testMember2, updateProjectDto))
                 .isInstanceOf(ForbiddenException.class);
+    }
+
+    @Test
+    @DisplayName("프로젝트 상세 정보 보기 테스트 - 프로젝트 상세 정보(프로젝트 ID, 프로젝트명, bpm, 트랙 1개, 좋아요 개수 1개, 좋아요 여부 false)를 확인할 수 있다.")
+    void testProjectDetailInfoShow() {
+        // when
+        when(projectRepository.findById(testProject.getId())).thenReturn(Optional.of(testProject));
+        when(likeRepository.countByProjectId(testProject.getId())).thenReturn(0L);
+        when(likeRepository.existsByMemberAndProject(testMember, testProject)).thenReturn(false);
+
+        ProjectResponseDto responseDto = projectService.getProject(testProject.getId(), testMember);
+
+        // then
+        assertThat(responseDto.getProjectId()).isEqualTo(testProject.getId());
+        assertThat(responseDto.getProjectName()).isEqualTo(testProject.getProjectName());
+        assertThat(responseDto.getTracks().size()).isEqualTo(testProject.getTracks().size());
+        assertThat(responseDto.getLikeCount()).isEqualTo(0);
+        assertThat(responseDto.getIsLiked()).isFalse();
     }
 
     private MultipartFile makeMockMultipartFile() throws IOException {
