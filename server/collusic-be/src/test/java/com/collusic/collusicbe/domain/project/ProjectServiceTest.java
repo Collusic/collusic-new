@@ -3,11 +3,14 @@ package com.collusic.collusicbe.domain.project;
 import com.collusic.collusicbe.domain.member.Member;
 import com.collusic.collusicbe.domain.track.Track;
 import com.collusic.collusicbe.domain.track.TrackTag;
+import com.collusic.collusicbe.global.exception.CannotDeleteException;
+import com.collusic.collusicbe.global.exception.ForbiddenException;
 import com.collusic.collusicbe.service.ProjectService;
 import com.collusic.collusicbe.service.TrackService;
 import com.collusic.collusicbe.web.controller.ProjectsResponseDto;
 import com.collusic.collusicbe.web.controller.dto.LikeResponseDto;
 import com.collusic.collusicbe.web.controller.dto.ProjectCreateRequestDto;
+import com.collusic.collusicbe.web.controller.dto.ProjectUpdateRequestDto;
 import com.collusic.collusicbe.web.controller.dto.TrackCreateRequestDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -31,6 +34,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
@@ -147,12 +151,6 @@ public class ProjectServiceTest {
     @Test
     @DisplayName("프로젝트 좋아요 기능 테스트 - 프로젝트 좋아요를 누르면 좋아요 개수 1개와 좋아요 여부 true를 반환한다.")
     void testLikeAction() {
-        // given
-        ProjectLike testProjectLike = ProjectLike.builder()
-                                       .member(testMember)
-                                       .project(testProject)
-                                       .build();
-
         // when
         when(projectRepository.findById(testProject.getId())).thenReturn(Optional.of(testProject));
         when(likeRepository.findLikesByProjectIdAndMemberId(testProject.getId(), testMember.getId())).thenReturn(Optional.empty());
@@ -187,6 +185,84 @@ public class ProjectServiceTest {
         // then
         assertThat(responseDto.getLikeCount()).isEqualTo(0);
         assertThat(responseDto.getIsLiked()).isFalse();
+    }
+
+    @Test
+    @DisplayName("프로젝트 삭제 테스트 - 프로젝트 삭제 성공")
+    void testProjectDelete() {
+        // when
+        when(projectRepository.findById(testProject.getId())).thenReturn(Optional.of(testProject));
+        doNothing().when(projectRepository).delete(testProject);
+
+        projectService.deleteProject(testProject.getId(), testMember);
+
+        // then
+        verify(projectRepository, times(1)).delete(testProject);
+    }
+
+    @Test
+    @DisplayName("프로젝트 삭제 실패 테스트 - 트랙 생성자가 null이 아니면서 트랙 생성자와 삭제하는 사람이 같지 않은 경우 프로젝트를 삭제할 수 없고 예외(CannotDeleteException)를 반환한다.")
+    void testProjectDeleteFail() {
+        Member testMember2 = Member.builder()
+                                   .id(2L)
+                                   .nickname("testMember")
+                                   .build();
+        // given
+        testProject.addTrack(Track.builder()
+                                  .id(2L)
+                                  .trackName("test track2")
+                                  .creator(testMember2)
+                                  .project(testProject)
+                                  .trackName("test track name")
+                                  .trackTag(TrackTag.PIANO)
+                                  .build());
+
+        // when
+        when(projectRepository.findById(testProject.getId())).thenReturn(Optional.of(testProject));
+
+        // then
+        assertThatThrownBy(() -> projectService.deleteProject(testProject.getId(), testMember))
+                .isInstanceOf(CannotDeleteException.class);
+    }
+
+    @Test
+    @DisplayName("프로젝트 수정 테스트 - 루트 트랙의 생성자와 프로젝트 수정자가 일치할 경우 프로젝트명과 트랙 태그 수정이 가능하다.")
+    void testProjectUpdate() {
+        // given
+        ProjectUpdateRequestDto updateProjectDto = ProjectUpdateRequestDto.builder()
+                                                                          .projectName("update project")
+                                                                          .trackTag("드럼")
+                                                                          .build();
+
+        // when
+        when(projectRepository.findById(testProject.getId())).thenReturn(Optional.of(testProject));
+        Project updateProject = projectService.updateProject(testProject.getId(), testMember, updateProjectDto);
+
+        // then
+        assertThat(updateProject.getProjectName()).isEqualTo(updateProjectDto.getProjectName());
+        assertThat(updateProject.getTracks().get(0).getTrackTag()).isEqualTo(updateProjectDto.getTrackTag());
+    }
+
+    @Test
+    @DisplayName("프로젝트 수정 실패 테스트 - 루트 트랙의 생성자와 프로젝트 수정자가 일치하지 않을 경우 프로젝트명과 트랙 태그 수정이 불가능하고 예외(ForbiddenException)를 반환한다.")
+    void testProjectUpdateFail() {
+        // given
+        ProjectUpdateRequestDto updateProjectDto = ProjectUpdateRequestDto.builder()
+                                                                          .projectName("update project")
+                                                                          .trackTag("드럼")
+                                                                          .build();
+
+        Member testMember2 = Member.builder()
+                                   .id(2L)
+                                   .nickname("testMember")
+                                   .build();
+
+        // when
+        when(projectRepository.findById(testProject.getId())).thenReturn(Optional.of(testProject));
+
+        // then
+        assertThatThrownBy(() -> projectService.updateProject(testProject.getId(), testMember2, updateProjectDto))
+                .isInstanceOf(ForbiddenException.class);
     }
 
     private MultipartFile makeMockMultipartFile() throws IOException {
