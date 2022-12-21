@@ -11,22 +11,23 @@ const Template: ComponentStory<typeof ProjectItem> = (args) => <ProjectItem {...
 
 export const Default = Template.bind({});
 Default.args = {
+  projectId: 0,
   projectName: "hello",
-  trackTags: [
+  trackPreviews: [
     {
-      id: "dfklsj",
-      name: "피아노",
-      src: "sdjfiosejfs.mp3",
+      trackId: 0,
+      trackTag: "피아노",
+      fileUrl: "sdjfiosejfs.mp3",
     },
     {
-      id: "dfadafs",
-      name: "마라카스",
-      src: "sdjfiosejfs.mp3",
+      trackId: 1,
+      trackTag: "마라카스",
+      fileUrl: "sdjfiosejfs.mp3",
     },
     {
-      id: "sdfsasdfa",
-      name: "보컬",
-      src: "sdjfiosejfs.mp3",
+      trackId: 2,
+      trackTag: "보컬",
+      fileUrl: "sdjfiosejfs.mp3",
     },
   ],
   likeCount: 10,

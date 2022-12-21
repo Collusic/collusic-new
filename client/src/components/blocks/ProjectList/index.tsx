@@ -16,8 +16,9 @@ function ProjectList({ projectList, onClickPreview, onClickLikeBtn }: ProjectLis
       {!!projectList.length ? (
         projectList.map((project) => (
           <ProjectItem
+            key={project.projectId}
             projectName={project.projectName}
-            trackTags={project.trackTags}
+            trackPreviews={project.trackPreviews}
             likeCount={project.likeCount}
             isLiked={project.isLiked}
             onClickPreview={onClickPreview}

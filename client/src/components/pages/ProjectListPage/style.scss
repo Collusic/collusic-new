@@ -17,15 +17,19 @@
     justify-content: center;
     align-items: center;
     position: fixed;
-    right:20vw;
+    right:6rem;
     bottom: 20px;
-    width: 80px;
-    height: 80px;
+    width: 4rem;
+    height: 4rem;
     padding: 20px;
     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.4);
     background-color: $Color_Main;
+    border-radius: 96px;
     z-index: 999;
 
+    &:hover {
+      background-color: #85bf00;
+    }
     img {
       width: 40px;
       height: 40px;

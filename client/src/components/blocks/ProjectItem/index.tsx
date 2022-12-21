@@ -13,7 +13,7 @@ interface ClickEventProps {
 
 function ProjectItem({
   projectName,
-  trackTags,
+  trackPreviews,
   likeCount,
   isLiked,
   onClickPreview,
@@ -23,11 +23,11 @@ function ProjectItem({
     <div className="project-item">
       <div className="title">{projectName}</div>
       <div className="track-list">
-        {!!trackTags.length &&
-          trackTags.map((track, idx) => (
+        {!!trackPreviews.length &&
+          trackPreviews.map((track, idx) => (
             <TrackIcon
-              track={track.name}
-              key={track.id}
+              track={track.trackTag}
+              key={track.trackId}
               style={{ position: "relative", right: `${idx * 6}px`, zIndex: idx + 1 }}
             />
           ))}
