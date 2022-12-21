@@ -25,4 +25,5 @@ public class ProjectUpdateRequestDto {
         this.projectName = projectName;
         this.trackTag = TrackTag.valueOfLabel(trackTag);
     }
+
 }
