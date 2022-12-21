@@ -1,9 +1,9 @@
 import React, { Suspense } from "react";
+import { useNavigate } from "react-router-dom";
 import Loading from "react-loading";
 
 import ProjectListViewModel from "viewmodel/ProjectListViewModel";
 import "./style.scss";
-import { useNavigate } from "react-router-dom";
 
 function ProjectListPage() {
   const navigate = useNavigate();
