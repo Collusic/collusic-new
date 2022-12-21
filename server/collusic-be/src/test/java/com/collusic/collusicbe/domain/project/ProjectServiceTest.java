@@ -1,9 +1,6 @@
 package com.collusic.collusicbe.domain.project;
 
 import com.collusic.collusicbe.domain.member.Member;
-import com.collusic.collusicbe.domain.project.LikeRepository;
-import com.collusic.collusicbe.domain.project.Project;
-import com.collusic.collusicbe.domain.project.ProjectRepository;
 import com.collusic.collusicbe.domain.track.Track;
 import com.collusic.collusicbe.domain.track.TrackTag;
 import com.collusic.collusicbe.service.ProjectService;
@@ -20,8 +17,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.SliceImpl;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,11 +25,13 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 @DisplayName("ProjectService Unit Test")
@@ -83,7 +80,7 @@ public class ProjectServiceTest {
     }
 
     @Test
-    @DisplayName("프로젝트 생성 테스트 - 정상적인 생성")
+    @DisplayName("프로젝트 생성 테스트 - 프로젝트가 정상적으로 생성되면 프로젝트 이름, bpm, 트랙 정보를 반환한다.")
     void testCreateProject() throws IOException {
         // given
         ProjectCreateRequestDto requestDto = ProjectCreateRequestDto.builder()
@@ -106,21 +103,40 @@ public class ProjectServiceTest {
     }
 
     @Test
-    @DisplayName("프로젝트 목록 보기 테스트 - 프로젝트가 1개 존재할 경우 첫 페이지의 프로젝트 개수는 1개이고, 다음 페이지 '없음' 상태를 반환한다.")
-    void testProjectPagination() {
+    @DisplayName("프로젝트 목록 보기 테스트 - 25개의 프로젝트가 있을 때 첫 페이지를 요청할 경우 프로젝트 개수 24개와 다음 페이지 존재 여부 true를 반환한다.")
+    void testProjectPaginationFirstPage() {
         // given
-        List<Project> projects = new ArrayList<>();
-        projects.add(testProject);
-        Pageable pageable = (Pageable) PageRequest.of(0, 12);
-
-        Slice<Project> slice = new SliceImpl<>(projects, pageable, false);
+        List<Project> projects = projectsOf25();
+        int size = 24;
+        Pageable pageable = (Pageable) PageRequest.of(0, size);
 
         // when
-        when(projectRepository.findById(any(Long.class))).thenReturn(Optional.of(testProject));
-        when(projectRepository.findAllByOrderByModifiedDate(any(int.class), any(Long.class), any(LocalDateTime.class))).thenReturn(slice);
+        when(projectRepository.findAllByOrderByModifiedDateFirstPage(pageable.getPageSize() + 1)).thenReturn(projects);
         when(likeRepository.countByProjectId(any(Long.class))).thenReturn(0L);
-        when(likeRepository.existsByMemberAndProject(any(Member.class), any(Project.class))).thenReturn(false);
-        ProjectsResponseDto responseDto = projectService.getProjects(12, testProject.getId(), testMember);
+        when(likeRepository.existsByMemberAndProject(eq(null), any(Project.class))).thenReturn(false);
+
+        ProjectsResponseDto responseDto = projectService.getProjects(size, null, null);
+
+        // then
+        assertThat(responseDto.getResponseDtos().size()).isEqualTo(size);
+        assertThat(responseDto.isHasNext()).isTrue();
+    }
+
+    @Test
+    @DisplayName("프로젝트 목록 보기 테스트 - 25개의 프로젝트가 있을 때 두 번째 페이지를 요청할 경우 프로젝트 개수 1개와 다음 페이지 존재 여부 false를 반환한다.")
+    void testProjectPaginationSecondPage() {
+        // given
+        List<Project> projects = projectsOf25();
+        int size = 24;
+        Pageable pageable = (Pageable) PageRequest.of(1, size);
+
+        // when
+        when(projectRepository.findById(53L)).thenReturn(Optional.of(projects.get(22)));
+        when(projectRepository.findAllByOrderByModifiedDate(eq(pageable.getPageSize() + 1), eq(53L), any(LocalDateTime.class))).thenReturn(lastProjectOfprojectsOf25());
+        when(likeRepository.countByProjectId(any(Long.class))).thenReturn(0L);
+        when(likeRepository.existsByMemberAndProject(eq(null), any(Project.class))).thenReturn(true);
+
+        ProjectsResponseDto responseDto = projectService.getProjects(size, 53L, null);
 
         // then
         assertThat(responseDto.getResponseDtos().size()).isEqualTo(1);
@@ -133,5 +149,50 @@ public class ProjectServiceTest {
                 "schoolbell.mp3",
                 MediaType.IMAGE_JPEG_VALUE,
                 new FileInputStream("src/test/resources/assets/schoolbell.mp3"));
+    }
+
+    private List<Project> projectsOf25() {
+        List<Project> projects = new ArrayList<>();
+
+        for (int i = 30; i < 55; i++) {
+            Project project = Project.builder()
+                                     .id(Long.valueOf(i))
+                                     .projectName("test project" + i)
+                                     .bpm(i)
+                                     .build();
+            project.setModifiedDate(LocalDateTime.of(2022, 12, 19, 1, 0));
+
+            project.addTrack(Track.builder()
+                                  .id(Long.valueOf(i))
+                                  .creator(testMember)
+                                  .project(project)
+                                  .trackName("test track" + i)
+                                  .trackTag(TrackTag.PIANO)
+                                  .build());
+
+            projects.add(project);
+        }
+
+        return projects;
+    }
+
+    private List<Project> lastProjectOfprojectsOf25() {
+        Project project = Project.builder()
+                                 .id(54L)
+                                 .projectName("test project" + 54)
+                                 .bpm(54)
+                                 .build();
+
+        project.setModifiedDate(LocalDateTime.now());
+
+        project.addTrack(Track.builder()
+                              .id(54L)
+                              .creator(testMember)
+                              .project(project)
+                              .trackName("test track" + 54)
+                              .trackTag(TrackTag.PIANO)
+                              .build());
+
+        return Arrays.asList(project);
     }
 }
