@@ -1,25 +1,56 @@
-import React from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import React, { useEffect, useRef, useState } from "react";
+import { useRecoilState } from "recoil";
 
-import { getProjectListSelector, lastProjectId } from "../model/projectModel";
-import ProjectList from "../components/blocks/ProjectList";
+import { projectListState } from "model/projectModel";
+import ProjectList from "components/blocks/ProjectList";
+import { getProjectList } from "api/project";
 
 function ProjectListViewModel() {
-  const setLastProjectId = useSetRecoilState(lastProjectId);
-  const getProjectList = useRecoilValue(getProjectListSelector);
+  const [projectList, setProjectList] = useRecoilState(projectListState);
+  const [hasNext, setHasNext] = useState(false);
+  const observationTarget = useRef<HTMLDivElement>(null);
+  const isFirstPage = useRef(true);
+  const lastProjectId = useRef(0);
 
-  const projectList = getProjectList.responseDtos;
-  const { hasNext } = getProjectList;
+  const observer = useRef(
+    new IntersectionObserver(
+      async ([entry]) => {
+        if (entry.isIntersecting) {
+          const getNextProjectList = await getProjectList({
+            ...(!!lastProjectId.current
+              ? {
+                  cursorId: lastProjectId.current,
+                }
+              : {}),
+          });
+          const nextProjectList = getNextProjectList.responseDtos;
+          setHasNext(getNextProjectList.hasNext);
+          setProjectList((prev) => [...prev, ...nextProjectList]);
+        }
+      },
+      { threshold: 1 },
+    ),
+  );
 
-  if (hasNext) {
-    const lastProjectId = projectList[projectList.length - 1].projectId;
+  const currentTarget = observationTarget;
+  const currentObserver = observer.current!;
 
-    setLastProjectId(lastProjectId!);
-  }
+  useEffect(() => {
+    if (currentTarget.current && isFirstPage.current) {
+      currentObserver.observe(currentTarget.current!);
+    }
+  }, []);
 
-  // TODO: 무한 스크롤 동작 구현
+  useEffect(() => {
+    if (isFirstPage.current) isFirstPage.current = false;
+    else if (hasNext) {
+      lastProjectId.current = projectList[projectList.length - 1].projectId!;
+    } else if (!hasNext) {
+      currentObserver.unobserve(currentTarget.current!);
+    }
+  }, [projectList]);
 
-  return <ProjectList projectList={projectList} />;
+  return <ProjectList projectList={projectList} currentRef={observationTarget} />;
 }
 
 export default ProjectListViewModel;
