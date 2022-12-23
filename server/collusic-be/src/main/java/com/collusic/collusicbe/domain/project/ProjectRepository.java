@@ -16,8 +16,8 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     Optional<Project> findById(Long id);
 
     @Query(value = "select * from Project p where (p.modified_date = :modifiedDate and p.project_id < :cursorId) or (p.modified_date < :modifiedDate and p.project_id != :cursorId) order by p.modified_date desc, p.project_id desc limit :numberOfElement", nativeQuery = true)
-    Slice<Project> findAllByOrderByModifiedDate(int numberOfElement, Long cursorId, LocalDateTime modifiedDate);
+    List<Project> findAllByOrderByModifiedDate(int numberOfElement, Long cursorId, LocalDateTime modifiedDate);
 
     @Query(value = "select * from Project p order by p.modified_date desc, p.project_id desc limit :numberOfElement", nativeQuery = true)
-    Slice<Project> findAllByOrderByModifiedDateFirstPage(int numberOfElement);
+    List<Project> findAllByOrderByModifiedDateFirstPage(int numberOfElement);
 }

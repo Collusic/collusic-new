@@ -74,7 +74,7 @@ public class ProjectService {
 
     @Transactional(readOnly = true)
     public ProjectsResponseDto getProjects(int size, Long cursorId, Member member) {
-        Slice<Project> projects;
+        List<Project> projects;
 
         if (cursorId == null) {
             projects = projectRepository.findAllByOrderByModifiedDateFirstPage(size + 1);
@@ -84,9 +84,9 @@ public class ProjectService {
             projects = projectRepository.findAllByOrderByModifiedDate(size + 1, cursorId, cursorProject.getModifiedDate());
         }
 
-        List<ProjectPreview> projectPreviews = makeProjectPreviews(projects.getContent(), member, size);
+        List<ProjectPreview> projectPreviews = makeProjectPreviews(projects, member, size);
 
-        boolean hasNext = projects.getSize() > size;
+        boolean hasNext = projects.size() > size;
 
         ProjectsResponseDto responseDto = ProjectsResponseDto.builder()
                                                              .responseDtos(projectPreviews)
