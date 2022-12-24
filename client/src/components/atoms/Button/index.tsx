@@ -12,7 +12,7 @@ interface ButtonProps {
   width?: string;
   marginLeft?: string;
   marginTop?: string;
-  svgSrc?: string | null;
+  imgSrc?: string | null;
   children?: ReactNode;
 }
 
@@ -21,11 +21,11 @@ const defaultProps = {
   width: "fit-content",
   marginLeft: "0",
   marginTop: "0",
-  svgSrc: null,
   isSelected: true,
+  children: null,
 };
 
-function Button({ type, isSelected, onBtnClick, svgSrc, width, marginLeft, marginTop, children }: ButtonProps) {
+function Button({ type, isSelected, onBtnClick, imgSrc, width, marginLeft, marginTop, children }: ButtonProps) {
   return (
     <button
       id="button"
@@ -38,7 +38,7 @@ function Button({ type, isSelected, onBtnClick, svgSrc, width, marginLeft, margi
         marginTop,
       }}
     >
-      {svgSrc && <img src={svgSrc} alt={children as string} />}
+      {imgSrc && <img src={imgSrc} alt={children as string} />}
       {children}
     </button>
   );

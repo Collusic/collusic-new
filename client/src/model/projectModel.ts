@@ -1,6 +1,7 @@
-import { atom } from "recoil";
+import { atom, selector } from "recoil";
 
-import { MelodyLength, Track } from "types/projectType";
+import { GetProjectPagination, MelodyLength, Track } from "types/projectType";
+import { getProjectList } from "api/project";
 
 // 프로젝트 이름
 export const projectNameState = atom({
@@ -41,4 +42,18 @@ export const isEditableState = atom({
 export const isStartedRecordingState = atom({
   key: "IsStartedRecordingState",
   default: false,
+});
+export const pageState = atom({
+  key: "pageState",
+  default: 1,
+});
+// 프로젝트 목록
+export const getProjectListSelector = selector<GetProjectPagination>({
+  key: "getPrjectListSelector",
+  get: async ({ get }) => {
+    const page = get(pageState);
+    const data = await getProjectList({ page });
+
+    return data;
+  },
 });

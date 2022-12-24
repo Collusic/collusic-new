@@ -15,3 +15,18 @@ export const addProject = async (params: {}) => {
   }
   return false;
 };
+
+export const getProjectList = async (params: {}) => {
+  const url = "/projects";
+  const res = await LOCAL_API.post(url, params);
+
+  try {
+    if (res.status === 200) {
+      return res.data;
+    }
+  } catch (err) {
+    console.log(err);
+    alert("프로젝트를 불러오는데 실패했습니다. 새로고침 해주세요.");
+  }
+  return false;
+};
