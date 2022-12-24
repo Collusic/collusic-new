@@ -16,18 +16,11 @@ function ProjectItemViewModel({ projectId, projectName, trackPreviews, likeCount
 
   const previewAction = (ref: RefObject<HTMLMediaElement>, action: string) => {
     return new Promise(() => {
-      if (action === "play") {
-        try {
-          ref.current!.play();
-        } catch (err) {
-          alert("미리듣기가 재생되지 않습니다. 잠시후 다시 시도해주세요.");
-        }
-      } else if (action === "pause") {
-        try {
-          ref.current!.pause();
-        } catch (err) {
-          alert("미리듣기가 재생되지 않습니다. 잠시후 다시 시도해주세요.");
-        }
+      try {
+        if (action === "play") ref.current!.play();
+        else ref.current!.pause();
+      } catch (err) {
+        alert(`미리듣기가 ${action === "play" ? "재생" : "일시정지"}되지 않습니다. 잠시후 다시 시도해주세요.`);
       }
     });
   };
