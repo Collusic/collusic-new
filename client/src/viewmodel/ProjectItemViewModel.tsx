@@ -1,4 +1,4 @@
-import React, { MouseEvent, useState } from "react";
+import React, { RefObject, useRef, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 
 import { ProjectItemProps } from "types/projectType";
@@ -8,14 +8,45 @@ import { isSignInState, modalOpenState } from "model/signInModel";
 
 function ProjectItemViewModel({ projectId, projectName, trackPreviews, likeCount, isLiked }: ProjectItemProps) {
   const [isLikedState, setIsLikedState] = useState(isLiked);
-  const [likeCountState, setLikeCountState] = useState(likeCount);
+  const [likeCountState, setLikeCountState] = useState<number>(likeCount);
+  const [isPlaying, setIsPlaying] = useState(false);
   const setModalOpen = useSetRecoilState(modalOpenState);
   const isSignIn = useRecoilValue(isSignInState);
+  const previewPlayerRefs = trackPreviews.map(() => useRef<HTMLMediaElement>(null));
 
-  // TODO: 미리듣기 재생 시 동작 구현
-  const handleClickPreview = (e: MouseEvent) => {
-    console.log(e);
+  const previewAction = (ref: RefObject<HTMLMediaElement>, action: string) => {
+    return new Promise(() => {
+      if (action === "play") {
+        try {
+          ref.current!.play();
+        } catch (err) {
+          alert("미리듣기가 재생되지 않습니다. 잠시후 다시 시도해주세요.");
+        }
+      } else if (action === "pause") {
+        try {
+          ref.current!.pause();
+        } catch (err) {
+          alert("미리듣기가 재생되지 않습니다. 잠시후 다시 시도해주세요.");
+        }
+      }
+    });
   };
+
+  const previewsAction = async (action: string) => {
+    const taskPromises = previewPlayerRefs.map((ref) => previewAction(ref, action));
+    await Promise.all(taskPromises);
+  };
+
+  const handleClickPreview = async () => {
+    if (!!previewPlayerRefs.find((ref) => ref.current!.paused)) {
+      setIsPlaying(true);
+      await previewsAction("play");
+    } else {
+      setIsPlaying(false);
+      await previewsAction("pause");
+    }
+  };
+
   const handleClickLikeBtn = async () => {
     if (isSignIn) {
       if (isLikedState) {
@@ -35,11 +66,13 @@ function ProjectItemViewModel({ projectId, projectName, trackPreviews, likeCount
   return (
     <ProjectItem
       isLiked={isLikedState}
+      isPlaying={isPlaying}
       likeCount={likeCountState}
       projectName={projectName}
       trackPreviews={trackPreviews}
       onClickPreview={handleClickPreview}
       onClickLikeBtn={handleClickLikeBtn}
+      currentRefs={previewPlayerRefs}
     />
   );
 }
