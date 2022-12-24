@@ -18,5 +18,6 @@ module.exports = {
     "jsx-a11y/no-noninteractive-element-interactions": 0,
     "no-extra-boolean-cast": 0,
     "react/no-array-index-key": 1,
+    "jsx-a11y/media-has-caption": 0,
   },
 };
