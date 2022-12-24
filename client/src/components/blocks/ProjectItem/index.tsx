@@ -3,13 +3,8 @@ import React from "react";
 import TrackIcon from "components/atoms/TrackIcon";
 import PreviewButton from "components/atoms/PreviewButton";
 import LikeButton from "components/atoms/LikeButton";
-import { ProjectItemProps } from "types/projectType";
+import { ClickProjectItemEvent, ProjectItemProps } from "types/projectType";
 import "./style.scss";
-
-interface ClickEventProps {
-  onClickPreview: () => {};
-  onClickLikeBtn: () => {};
-}
 
 function ProjectItem({
   projectName,
@@ -18,7 +13,7 @@ function ProjectItem({
   isLiked,
   onClickPreview,
   onClickLikeBtn,
-}: ProjectItemProps & ClickEventProps) {
+}: ProjectItemProps & ClickProjectItemEvent) {
   return (
     <div className="project-item">
       <div className="title">{projectName}</div>

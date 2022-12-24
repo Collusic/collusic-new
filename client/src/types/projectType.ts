@@ -1,3 +1,5 @@
+import { MouseEvent } from "react";
+
 export type Track =
   | "피아노"
   | "드럼"
@@ -31,4 +33,9 @@ export interface GetProjectPagination {
   hasNext: boolean;
   projectCount: number;
   responseDtos: ProjectItemProps[];
+}
+
+export interface ClickProjectItemEvent {
+  onClickPreview(e: MouseEvent): void;
+  onClickLikeBtn(): void;
 }

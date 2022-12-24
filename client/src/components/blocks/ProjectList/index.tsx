@@ -1,28 +1,25 @@
 import React from "react";
 
-import ProjectItem from "components/blocks/ProjectItem";
 import { ProjectItemProps } from "types/projectType";
 import "./style.scss";
+import ProjectItemViewModel from "../../../viewmodel/ProjectItemViewModel";
 
 interface ProjectListProps {
   projectList: ProjectItemProps[];
-  onClickPreview: () => {};
-  onClickLikeBtn: () => {};
 }
 
-function ProjectList({ projectList, onClickPreview, onClickLikeBtn }: ProjectListProps) {
+function ProjectList({ projectList }: ProjectListProps) {
   return (
     <div id="project-list">
       {!!projectList.length ? (
         projectList.map((project) => (
-          <ProjectItem
+          <ProjectItemViewModel
             key={project.projectId}
+            projectId={project.projectId}
             projectName={project.projectName}
             trackPreviews={project.trackPreviews}
             likeCount={project.likeCount}
             isLiked={project.isLiked}
-            onClickPreview={onClickPreview}
-            onClickLikeBtn={onClickLikeBtn}
           />
         ))
       ) : (
