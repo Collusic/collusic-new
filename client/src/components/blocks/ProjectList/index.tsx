@@ -1,14 +1,16 @@
-import React from "react";
+import React, { RefObject } from "react";
 
 import { ProjectItemProps } from "types/projectType";
+import ProjectItemViewModel from "viewmodel/ProjectItemViewModel";
+import ObservationTarget from "components/atoms/ObservationTarget";
 import "./style.scss";
-import ProjectItemViewModel from "../../../viewmodel/ProjectItemViewModel";
 
 interface ProjectListProps {
   projectList: ProjectItemProps[];
+  currentRef: RefObject<HTMLDivElement>;
 }
 
-function ProjectList({ projectList }: ProjectListProps) {
+function ProjectList({ projectList, currentRef }: ProjectListProps) {
   return (
     <div id="project-list">
       {!!projectList.length ? (
@@ -25,6 +27,7 @@ function ProjectList({ projectList }: ProjectListProps) {
       ) : (
         <div>프로젝트가 존재하지 않습니다.</div>
       )}
+      <ObservationTarget currentRef={currentRef} />
     </div>
   );
 }
