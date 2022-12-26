@@ -9,18 +9,20 @@ import { RedirectViewModel } from "viewmodel/RedirectViewModel";
 import { ProjectListView } from "view/ProjectListView";
 import CreateProjectPage from "components/pages/CreateProjectPage";
 import ProjectListPage from "components/pages/ProjectListPage";
+import DetailProjectPage from "components/pages/DetailProjectPage";
 
 function App() {
   return (
     <BrowserRouter>
       <NavBar />
       <Routes>
+        <Route path="/" element={<ProjectListPage />} />
+        <Route path="/createproject" element={<CreateProjectPage />} />
+        <Route path="/detailproject/*" element={<DetailProjectPage />} />
         <Route path="/signin" element={<SignInViewModel />} />
         <Route path="/signup" element={<SignUpViewModel />} />
         <Route path="/auth/redirect/:snsType" element={<RedirectViewModel />} />
         <Route path="/projectlist" element={<ProjectListView />} />
-        <Route path="/createproject" element={<CreateProjectPage />} />
-        <Route path="/" element={<ProjectListPage />} />
       </Routes>
       <AuthVerify />
     </BrowserRouter>
