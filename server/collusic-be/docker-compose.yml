@@ -1,6 +1,27 @@
 version: '3'
 
 services:
+  nginx:
+    image: nginx
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/log:/var/log/nginx
+      - ./www:/var/www/html
+    ports:
+      - 80:80
+    depends_on:
+      - app
+  certbot:
+    depends_on:
+      - nginx
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - ./certbot/etc:/etc/letsencrypt
+      - ./certbot/var:/var/lib/letsencrypt
+      - ./www:/var/www/html
+    command: certonly --webroot --webroot-path=/var/www/html --email sunghyuk1609@gmail.com --agree-tos --no-eff-email --force-renewal -d api.collusic.com
+
   redis:
     image: redis
     container_name: redis

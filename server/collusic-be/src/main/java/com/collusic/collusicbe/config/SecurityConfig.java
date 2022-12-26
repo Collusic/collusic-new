@@ -41,6 +41,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                                      .antMatchers("/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs").permitAll()
                                                      .antMatchers(HttpMethod.GET, "/projects/**").permitAll()
                                                      .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                                                     .antMatchers(HttpMethod.GET,"/.well-known/acme-challenge/{token}").permitAll()
+                                                     .antMatchers(HttpMethod.POST,"/.well-known/acme-challenge/{token}").permitAll()
                                                      .anyRequest().authenticated())
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
                 .addFilterAt(new JWTAuthenticationFilter(authenticationManager(), tokenService), BasicAuthenticationFilter.class)
@@ -52,6 +54,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         CorsConfiguration configuration = new CorsConfiguration();
 
         configuration.addAllowedOrigin("http://localhost:3000");
+        configuration.addAllowedOrigin("http://www.collusic.com");
+        configuration.addAllowedOrigin("https://www.collusic.com");
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
         configuration.setAllowCredentials(true);
