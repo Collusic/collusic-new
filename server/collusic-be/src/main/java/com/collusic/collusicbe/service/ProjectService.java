@@ -11,7 +11,6 @@ import com.collusic.collusicbe.web.controller.ProjectPreview;
 import com.collusic.collusicbe.web.controller.ProjectsResponseDto;
 import com.collusic.collusicbe.web.controller.dto.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,13 +45,13 @@ public class ProjectService {
                                                .collect(Collectors.toList());
 
         ProjectResponseDto projectResponseDto = ProjectResponseDto.builder()
-                                                     .projectId(project.getId())
-                                                     .projectName(project.getProjectName())
-                                                     .bpm(project.getBpm())
-                                                     .tracks(tracks)
-                                                     .likeCount(likeRepository.countByProjectId(project.getId()).intValue())
-                                                     .isLiked(likeRepository.existsByMemberAndProject(member, project))
-                                                     .build();
+                                                                  .projectId(project.getId())
+                                                                  .projectName(project.getProjectName())
+                                                                  .bpm(project.getBpm())
+                                                                  .tracks(tracks)
+                                                                  .likeCount(likeRepository.countByProjectId(project.getId()).intValue())
+                                                                  .isLiked(likeRepository.existsByMemberAndProject(member, project))
+                                                                  .build();
 
         return projectResponseDto;
     }
@@ -156,7 +155,7 @@ public class ProjectService {
                                                       .map(track -> TrackPreview.builder()
                                                                                 .trackId(track.getId())
                                                                                 .trackTag(track.getTrackTag().getLabel())
-                                                                                .fileUrl("fileUrl")
+                                                                                .fileUrl(track.getFileUrl())
                                                                                 .build())
                                                       .collect(Collectors.toList());
 
