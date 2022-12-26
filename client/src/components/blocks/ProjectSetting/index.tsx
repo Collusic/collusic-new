@@ -2,7 +2,7 @@ import React, { FormEventHandler, MouseEventHandler } from "react";
 
 import { Track } from "types/projectType";
 import Button from "components/atoms/Button";
-import Bpm from "../Bpm";
+import Bpm from "components/blocks/BpmBar";
 import RecordDevice from "../RecordDevice";
 import TrackTag from "../TrackTag";
 import "./style.scss";
