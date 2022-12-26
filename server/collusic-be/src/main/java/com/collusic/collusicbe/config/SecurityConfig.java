@@ -41,6 +41,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                                      .antMatchers("/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs").permitAll()
                                                      .antMatchers(HttpMethod.GET, "/projects/**").permitAll()
                                                      .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                                                     .antMatchers(HttpMethod.GET,"http://api.collusic.com/.well-known/acme-challenge/{token}").permitAll()
+                                                     .antMatchers(HttpMethod.POST,"http://api.collusic.com/.well-known/acme-challenge/{token}").permitAll()
                                                      .anyRequest().authenticated())
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
                 .addFilterAt(new JWTAuthenticationFilter(authenticationManager(), tokenService), BasicAuthenticationFilter.class)
