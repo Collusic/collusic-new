@@ -1,4 +1,4 @@
-import { RefObject } from "react";
+import { MouseEvent, RefObject } from "react";
 
 export type Track =
   | "피아노"
@@ -37,6 +37,6 @@ export interface GetProjectPagination {
 }
 
 export interface ClickProjectItemEvent {
-  onClickPreview(): void;
-  onClickLikeBtn(): void;
+  onClickPreview(e: MouseEvent): void;
+  onClickLikeBtn(e: MouseEvent): void;
 }

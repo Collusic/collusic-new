@@ -1,11 +1,11 @@
-import React from "react";
+import React, { MouseEvent } from "react";
 
 import "./style.scss";
 
 interface LikeButtonProps {
   isLiked: boolean;
   likeCount: number;
-  onClickLikeBtn(): void;
+  onClickLikeBtn(e: MouseEvent): void;
 }
 
 function LikeButton({ isLiked, likeCount, onClickLikeBtn }: LikeButtonProps) {

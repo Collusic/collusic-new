@@ -11,7 +11,7 @@ export default function AuthVerify() {
 
   useEffect(() => {
     const { pathname } = location;
-    const passingPaths = ["/"];
+    const passingPaths = ["/", "/detailproject"];
     const isAuthorized = () => !!API.defaults.headers.common.Authorization;
 
     if (passingPaths.includes(pathname) || isAuthorized()) {
