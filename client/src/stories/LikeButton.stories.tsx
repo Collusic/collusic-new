@@ -17,3 +17,10 @@ Default.args = {
   isLiked: true,
   likeCount: 10,
 };
+
+export const Detail = Template.bind({});
+Detail.args = {
+  isLiked: true,
+  likeCount: 10,
+  useIn: "detail",
+};

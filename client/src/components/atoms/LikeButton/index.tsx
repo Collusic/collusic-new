@@ -1,16 +1,22 @@
 import React from "react";
+import classNames from "classnames";
 
 import "./style.scss";
 
 interface LikeButtonProps {
+  useIn?: string;
   isLiked: boolean;
   likeCount: number;
   onClickLikeBtn(): void;
 }
 
-function LikeButton({ isLiked, likeCount, onClickLikeBtn }: LikeButtonProps) {
+function LikeButton({ useIn, isLiked, likeCount, onClickLikeBtn }: LikeButtonProps) {
   return (
-    <button type="button" id="like-button" onClick={onClickLikeBtn}>
+    <button
+      type="button"
+      className={classNames("like-button", { "like-by-detail": useIn === "detail" })}
+      onClick={onClickLikeBtn}
+    >
       <img src={`${process.env.PUBLIC_URL}/assets/likeIcon/${isLiked ? "like.png" : "unlike.png"}`} alt="" />
       <span>{likeCount}</span>
     </button>
