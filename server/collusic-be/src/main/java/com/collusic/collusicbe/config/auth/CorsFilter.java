@@ -13,7 +13,7 @@ import java.io.IOException;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CorsFilter implements Filter {
 
-    private static String[] allowedOrigins = {"http://localhost:3000", "https://localhost:3000", "http://www.collusic.com", "https://www.collusic.com"};
+    private final String[] allowedOrigins = {"http://localhost:3000", "https://localhost:3000", "http://www.collusic.com", "https://www.collusic.com"};
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
