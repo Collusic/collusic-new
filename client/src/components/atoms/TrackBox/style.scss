@@ -1,0 +1,61 @@
+.track-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 24rem;
+  height: 6rem;
+  background-color: #242424;
+  border-radius: 20px;
+
+  .top-box {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 93%;
+    height: 45%;
+
+    img {
+      width: 32px;
+      height: 32px;
+      border-radius: 24px;
+    }
+
+    span {
+      padding-left: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      line-height: 2;
+      letter-spacing: -0.8px;
+      color: #999;
+    }
+  }
+
+  .bottom-box {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 90%;
+    height: 45%;
+
+    img {
+      width: 20px;
+      height: 20px;
+    }
+
+    .cross-bar {
+      width: 2px;
+      height: 16px;
+      margin: 0 8px;
+      background-color: #555;
+    }
+
+    span {
+      font-size: 1.1rem;
+      font-weight: 500;
+      line-height: 1.6;
+      letter-spacing: -1px;
+      color: #fff;
+    }
+  }
+}
