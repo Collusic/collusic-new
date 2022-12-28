@@ -13,6 +13,8 @@ import java.io.IOException;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CorsFilter implements Filter {
 
+    private static String[] allowedOrigins = {"http://localhost:3000", "https://localhost:3000", "http://www.collusic.com", "https://www.collusic.com"};
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -23,7 +25,15 @@ public class CorsFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
 
-        response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000, https://www.collusic.com");
+        String origin = request.getHeader("Origin");
+        if (origin != null) {
+            for (String allowedOrigin : allowedOrigins) {
+                if (allowedOrigin.equals(origin)) {
+                    response.setHeader("Access-Control-Allow-Origin", origin);
+                }
+            }
+        }
+
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Allow-Methods", "*");
         response.setHeader("Access-Control-Max-Age", "3600");
@@ -31,6 +41,7 @@ public class CorsFilter implements Filter {
                 "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Custom-Header");
 
         if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            response.setHeader("Access-Control-Allow-Origin", "*");
             response.setStatus(HttpServletResponse.SC_OK);
         } else {
             chain.doFilter(req, res);
