@@ -24,4 +24,8 @@ function LikeButton({ useIn, isLiked, likeCount, onClickLikeBtn }: LikeButtonPro
   );
 }
 
+LikeButton.defaultProps = {
+  useIn: "",
+};
+
 export default LikeButton;
