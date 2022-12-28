@@ -1,5 +1,6 @@
-import React from "react";
+import React, { MouseEvent } from "react";
 import classNames from "classnames";
+
 
 import "./style.scss";
 
@@ -7,7 +8,7 @@ interface LikeButtonProps {
   useIn?: string;
   isLiked: boolean;
   likeCount: number;
-  onClickLikeBtn(): void;
+  onClickLikeBtn(e: MouseEvent): void;
 }
 
 function LikeButton({ useIn, isLiked, likeCount, onClickLikeBtn }: LikeButtonProps) {

@@ -1,5 +1,6 @@
-import React, { RefObject, useRef, useState } from "react";
+import React, { MouseEvent, RefObject, useRef, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
+import { NavLink } from "react-router-dom";
 
 import { ProjectItemProps } from "types/projectType";
 import ProjectItem from "components/blocks/ProjectItem";
@@ -30,7 +31,8 @@ function ProjectItemViewModel({ projectId, projectName, trackPreviews, likeCount
     await Promise.all(taskPromises);
   };
 
-  const handleClickPreview = async () => {
+  const handleClickPreview = async (e: MouseEvent) => {
+    e.preventDefault();
     if (!!previewPlayerRefs.find((ref) => ref.current!.paused)) {
       setIsPlaying(true);
       await previewsAction("play");
@@ -40,7 +42,8 @@ function ProjectItemViewModel({ projectId, projectName, trackPreviews, likeCount
     }
   };
 
-  const handleClickLikeBtn = async () => {
+  const handleClickLikeBtn = async (e: MouseEvent) => {
+    e.preventDefault();
     if (isSignIn) {
       if (isLikedState) {
         setIsLikedState(false);
@@ -57,16 +60,19 @@ function ProjectItemViewModel({ projectId, projectName, trackPreviews, likeCount
   };
 
   return (
-    <ProjectItem
-      isLiked={isLikedState}
-      isPlaying={isPlaying}
-      likeCount={likeCountState}
-      projectName={projectName}
-      trackPreviews={trackPreviews}
-      onClickPreview={handleClickPreview}
-      onClickLikeBtn={handleClickLikeBtn}
-      currentRefs={previewPlayerRefs}
-    />
+    <NavLink to={`/detailproject?projectId=${projectId}`}>
+      <ProjectItem
+        projectId={projectId}
+        isLiked={isLikedState}
+        isPlaying={isPlaying}
+        likeCount={likeCountState}
+        projectName={projectName}
+        trackPreviews={trackPreviews}
+        onClickPreview={handleClickPreview}
+        onClickLikeBtn={handleClickLikeBtn}
+        currentRefs={previewPlayerRefs}
+      />
+    </NavLink>
   );
 }
 

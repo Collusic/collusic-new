@@ -1,10 +1,10 @@
-import React from "react";
+import React, { MouseEvent } from "react";
 
 import "./style.scss";
 
 export interface PreviewButtonProps {
   isPlaying: boolean;
-  onClickPreview(): void;
+  onClickPreview(e: MouseEvent): void;
 }
 function PreviewButton({ isPlaying, onClickPreview }: PreviewButtonProps) {
   return (

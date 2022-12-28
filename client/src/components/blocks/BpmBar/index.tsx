@@ -9,7 +9,7 @@ interface BpmProps {
   onBpmInput: FormEventHandler;
 }
 
-function Bpm({ bpmState, onBpmInput }: BpmProps) {
+function BpmBar({ bpmState, onBpmInput }: BpmProps) {
   const [bpm, setBpm] = useState(bpmState || 0);
   const sliderRef = useRef<HTMLInputElement>(null);
   const sliderValueRef = useRef<HTMLOutputElement>(null);
@@ -45,7 +45,7 @@ function Bpm({ bpmState, onBpmInput }: BpmProps) {
   }, [bpm]);
 
   return (
-    <div id="bpm">
+    <div id="bpm-bar">
       <Span>BPM</Span>
       <div className="slide-container">
         <input
@@ -71,4 +71,4 @@ function Bpm({ bpmState, onBpmInput }: BpmProps) {
   );
 }
 
-export default Bpm;
+export default BpmBar;

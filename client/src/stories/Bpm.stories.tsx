@@ -1,17 +1,16 @@
-import { ComponentStory } from "@storybook/react";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import Bpm from "components/blocks/Bpm";
+import Bpm from "components/atoms/Bpm";
 
 export default {
   title: "blocks/Bpm",
   component: Bpm,
-};
+  bpmState: { control: "number" },
+} as ComponentMeta<typeof Bpm>;
 
 const Template: ComponentStory<typeof Bpm> = (args) => <Bpm {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  onBpmInput: (e) => {
-    console.log((e.target as HTMLInputElement).value);
-  },
+  bpmState: 60,
 };
