@@ -3,17 +3,17 @@ oauth2:
     google:
       client-id: ENC(0s5K1UkxZcM1nplkYdyw3mQeO343yQj609Xeidbf16VqoZX/QZMspIzY7wznna73k8aowBczAIBfdmQtiBDQb/Hz6CNtBfc2m/QBEdNDLRWbyZz8Yee7Ew==)
       client-secret: ENC(wxSjaBM9/lKeZp3zhbWQ1lLzsM0WVQghTkqnQfWSyFrjxW+YfNRlGS8S95vfCjSM)
-      redirect-uri: https://www.collusic.com/auth/redirect/google
+      redirect-uri: http://www.collusic.com/auth/redirect/google
       authorization-grant-type: authorization_code
 
     kakao:
       client-id: ENC(MKr9X38UQKUmCpJqn93P50qPdMi9pbFVo8Jcm6dW9TK1+iBW9oVBW307lSPsyxRw)
       client-secret: ENC(tQoNotyZt238mkFFR8xNgCJR+qrIGfOdhVcOvO5tHiecHNgGCbJRxxqEcax30S1s)
-      redirect-uri: https://www.collusic.com/auth/redirect/kakao
+      redirect-uri: http://www.collusic.com/auth/redirect/kakao
       authorization-grant-type: authorization_code
 
     naver:
       client-id: ENC(A4dTMQgCPTeYzqRXRTLTOLnsJCg5R4Z+E+aHo4KL07Q=)
       client-secret: ENC(RFEDDenjyoJ3XvLptL86rBs6zYrpdaKu)
-      redirect-uri: https://www.collusic.com/auth/redirect/naver
+      redirect-uri: http://www.collusic.com/auth/redirect/naver
       authorization-grant-type: authorization_code
