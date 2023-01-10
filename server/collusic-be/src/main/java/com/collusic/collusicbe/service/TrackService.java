@@ -8,13 +8,12 @@ import com.collusic.collusicbe.domain.track.TrackRepository;
 import com.collusic.collusicbe.global.exception.CannotDeleteException;
 import com.collusic.collusicbe.global.exception.CannotUpdateException;
 import com.collusic.collusicbe.global.exception.ForbiddenException;
-import com.collusic.collusicbe.web.controller.dto.TrackCreateRequestDto;
-import com.collusic.collusicbe.web.controller.dto.TrackUpdateRequestDto;
+import com.collusic.collusicbe.web.controller.request.TrackCreateRequestDto;
+import com.collusic.collusicbe.web.controller.request.TrackUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.NoSuchElementException;

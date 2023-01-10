@@ -1,27 +1,20 @@
 package com.collusic.collusicbe.service;
 
 import com.collusic.collusicbe.global.exception.jwt.AbnormalAccessException;
-import com.collusic.collusicbe.util.JWTUtil;
-import com.collusic.collusicbe.web.controller.dto.TokenResponseDto;
+import com.collusic.collusicbe.global.util.JWTUtil;
+import com.collusic.collusicbe.web.controller.response.TokenResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 
-import static com.collusic.collusicbe.util.JWTUtil.REFRESH_TIME;
+import static com.collusic.collusicbe.global.util.JWTUtil.REFRESH_TIME;
 
 @RequiredArgsConstructor
 @Service
 public class TokenService {
 
     private final RedisRepository redisRepository;
-
-    public TokenResponseDto reissue(String refreshToken, String remoteAddress) {
-        String reissuedAccessToken = reissueAccessToken(refreshToken, remoteAddress);
-        String reissuedRefreshToken = reissueRefreshToken(refreshToken, remoteAddress);
-
-        return new TokenResponseDto(reissuedAccessToken, reissuedRefreshToken);
-    }
 
     public TokenResponseDto issue(String email, String role, String remoteAddress) {
         String accessToken = JWTUtil.createAccessToken(email, role);
@@ -46,18 +39,5 @@ public class TokenService {
         String role = JWTUtil.getRole(refreshToken);
 
         return JWTUtil.createAccessToken(email, role);
-    }
-
-    private String reissueRefreshToken(String refreshToken, String remoteAddress) {
-        redisRepository.delete(refreshToken);
-
-        String email = JWTUtil.getEmail(refreshToken);
-        String role = JWTUtil.getRole(refreshToken);
-
-        String token = JWTUtil.createRefreshToken(email, role);
-
-        redisRepository.save(token, remoteAddress, Duration.ofSeconds(REFRESH_TIME));
-
-        return token;
     }
 }

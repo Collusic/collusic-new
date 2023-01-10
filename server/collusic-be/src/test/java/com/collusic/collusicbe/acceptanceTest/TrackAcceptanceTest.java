@@ -1,10 +1,10 @@
 package com.collusic.collusicbe.acceptanceTest;
 
 import com.collusic.collusicbe.service.S3Service;
-import com.collusic.collusicbe.web.controller.dto.ProjectResponseDto;
-import com.collusic.collusicbe.web.controller.dto.TrackCreateRequestDto;
-import com.collusic.collusicbe.web.controller.dto.TrackCreateResponseDto;
-import com.collusic.collusicbe.web.controller.dto.TrackUpdateRequestDto;
+import com.collusic.collusicbe.web.controller.response.ProjectResponseDto;
+import com.collusic.collusicbe.web.controller.request.TrackCreateRequestDto;
+import com.collusic.collusicbe.web.controller.response.TrackCreateResponseDto;
+import com.collusic.collusicbe.web.controller.request.TrackUpdateRequestDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;

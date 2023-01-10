@@ -1,8 +1,8 @@
 package com.collusic.collusicbe.config;
 
-import com.collusic.collusicbe.config.auth.ExceptionHandlerFilter;
-import com.collusic.collusicbe.config.auth.JWTAuthenticationFilter;
-import com.collusic.collusicbe.config.auth.JWTAuthenticationProvider;
+import com.collusic.collusicbe.global.auth.ExceptionHandlerFilter;
+import com.collusic.collusicbe.global.auth.JWTAuthenticationFilter;
+import com.collusic.collusicbe.global.auth.JWTAuthenticationProvider;
 import com.collusic.collusicbe.service.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;

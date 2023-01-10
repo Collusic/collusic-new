@@ -1,7 +1,9 @@
 package com.collusic.collusicbe.acceptanceTest;
 
-import com.collusic.collusicbe.web.controller.ProjectsResponseDto;
-import com.collusic.collusicbe.web.controller.dto.*;
+import com.collusic.collusicbe.web.controller.response.ProjectsResponseDto;
+import com.collusic.collusicbe.web.controller.response.*;
+import com.collusic.collusicbe.web.controller.request.ProjectCreateRequestDto;
+import com.collusic.collusicbe.web.controller.request.ProjectUpdateRequestDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.*;
