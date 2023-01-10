@@ -7,7 +7,7 @@ import com.collusic.collusicbe.domain.project.ProjectLike;
 import com.collusic.collusicbe.domain.project.ProjectRepository;
 import com.collusic.collusicbe.domain.track.Track;
 import com.collusic.collusicbe.global.exception.ForbiddenException;
-import com.collusic.collusicbe.web.controller.ProjectPreview;
+import com.collusic.collusicbe.web.controller.dto.ProjectPreview;
 import com.collusic.collusicbe.web.controller.ProjectsResponseDto;
 import com.collusic.collusicbe.web.controller.dto.*;
 import lombok.RequiredArgsConstructor;

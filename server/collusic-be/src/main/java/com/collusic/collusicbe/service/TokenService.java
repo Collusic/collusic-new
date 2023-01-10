@@ -16,13 +16,6 @@ public class TokenService {
 
     private final RedisRepository redisRepository;
 
-    public TokenResponseDto reissue(String refreshToken, String remoteAddress) {
-        String reissuedAccessToken = reissueAccessToken(refreshToken, remoteAddress);
-        String reissuedRefreshToken = reissueRefreshToken(refreshToken, remoteAddress);
-
-        return new TokenResponseDto(reissuedAccessToken, reissuedRefreshToken);
-    }
-
     public TokenResponseDto issue(String email, String role, String remoteAddress) {
         String accessToken = JWTUtil.createAccessToken(email, role);
         String refreshToken = JWTUtil.createRefreshToken(email, role);
@@ -46,18 +39,5 @@ public class TokenService {
         String role = JWTUtil.getRole(refreshToken);
 
         return JWTUtil.createAccessToken(email, role);
-    }
-
-    private String reissueRefreshToken(String refreshToken, String remoteAddress) {
-        redisRepository.delete(refreshToken);
-
-        String email = JWTUtil.getEmail(refreshToken);
-        String role = JWTUtil.getRole(refreshToken);
-
-        String token = JWTUtil.createRefreshToken(email, role);
-
-        redisRepository.save(token, remoteAddress, Duration.ofSeconds(REFRESH_TIME));
-
-        return token;
     }
 }

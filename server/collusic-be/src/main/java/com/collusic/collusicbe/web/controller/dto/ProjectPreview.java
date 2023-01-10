@@ -1,4 +1,4 @@
-package com.collusic.collusicbe.web.controller;
+package com.collusic.collusicbe.web.controller.dto;
 
 import com.collusic.collusicbe.web.controller.dto.TrackPreview;
 import lombok.Builder;
