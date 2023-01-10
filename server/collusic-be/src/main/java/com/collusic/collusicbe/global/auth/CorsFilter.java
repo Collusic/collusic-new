@@ -13,6 +13,8 @@ import java.io.IOException;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CorsFilter implements Filter {
 
+    private final String[] allowedOrigins = {"http://localhost:3000", "https://localhost:3000", "http://www.collusic.com", "https://www.collusic.com"};
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -23,7 +25,15 @@ public class CorsFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
 
-        response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+        String origin = request.getHeader("Origin");
+        if (origin != null) {
+            for (String allowedOrigin : allowedOrigins) {
+                if (allowedOrigin.equals(origin)) {
+                    response.setHeader("Access-Control-Allow-Origin", origin);
+                }
+            }
+        }
+
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Allow-Methods", "*");
         response.setHeader("Access-Control-Max-Age", "3600");
