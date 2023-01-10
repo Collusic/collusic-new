@@ -1,7 +1,7 @@
 package com.collusic.collusicbe.config;
 
-import com.collusic.collusicbe.config.auth.LoginMemberArgumentResolver;
-import com.collusic.collusicbe.config.auth.VisitorArgumentResolver;
+import com.collusic.collusicbe.global.resolver.LoginMemberArgumentResolver;
+import com.collusic.collusicbe.global.resolver.VisitorArgumentResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;

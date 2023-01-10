@@ -1,13 +1,14 @@
 package com.collusic.collusicbe.web.controller;
 
-import com.collusic.collusicbe.config.auth.LoginMember;
+import com.collusic.collusicbe.global.resolver.LoginMember;
 import com.collusic.collusicbe.domain.member.Member;
 import com.collusic.collusicbe.service.MemberService;
 import com.collusic.collusicbe.service.TokenService;
-import com.collusic.collusicbe.util.CookieUtils;
-import com.collusic.collusicbe.util.ParsingUtil;
+import com.collusic.collusicbe.global.util.CookieUtils;
+import com.collusic.collusicbe.global.util.ParsingUtil;
 import com.collusic.collusicbe.web.auth.OAuth2LoginResponseType;
-import com.collusic.collusicbe.web.controller.dto.*;
+import com.collusic.collusicbe.web.controller.response.*;
+import com.collusic.collusicbe.web.controller.request.SignUpRequestDto;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;

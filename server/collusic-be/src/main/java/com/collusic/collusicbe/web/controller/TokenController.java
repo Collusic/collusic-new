@@ -1,6 +1,6 @@
 package com.collusic.collusicbe.web.controller;
 
-import com.collusic.collusicbe.web.controller.dto.ReissuedTokenDto;
+import com.collusic.collusicbe.web.controller.response.ReissuedTokenDto;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

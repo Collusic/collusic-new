@@ -2,7 +2,7 @@ package com.collusic.collusicbe.acceptanceTest;
 
 import com.collusic.collusicbe.domain.member.Member;
 import com.collusic.collusicbe.domain.member.MemberRepository;
-import com.collusic.collusicbe.util.JWTUtil;
+import com.collusic.collusicbe.global.util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;

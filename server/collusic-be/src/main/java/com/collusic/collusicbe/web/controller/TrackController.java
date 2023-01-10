@@ -1,14 +1,14 @@
 package com.collusic.collusicbe.web.controller;
 
-import com.collusic.collusicbe.config.auth.LoginMember;
+import com.collusic.collusicbe.global.resolver.LoginMember;
 import com.collusic.collusicbe.domain.member.Member;
 import com.collusic.collusicbe.domain.project.Project;
 import com.collusic.collusicbe.domain.track.Track;
 import com.collusic.collusicbe.service.ProjectService;
 import com.collusic.collusicbe.service.TrackService;
-import com.collusic.collusicbe.web.controller.dto.TrackCreateRequestDto;
-import com.collusic.collusicbe.web.controller.dto.TrackCreateResponseDto;
-import com.collusic.collusicbe.web.controller.dto.TrackUpdateRequestDto;
+import com.collusic.collusicbe.web.controller.request.TrackCreateRequestDto;
+import com.collusic.collusicbe.web.controller.response.TrackCreateResponseDto;
+import com.collusic.collusicbe.web.controller.request.TrackUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;

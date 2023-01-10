@@ -4,7 +4,7 @@ import com.collusic.collusicbe.domain.member.Member;
 import com.collusic.collusicbe.domain.member.MemberRepository;
 import com.collusic.collusicbe.domain.member.ProfileContentType;
 import com.collusic.collusicbe.global.exception.DuplicatedNicknameException;
-import com.collusic.collusicbe.web.controller.dto.SignUpRequestDto;
+import com.collusic.collusicbe.web.controller.request.SignUpRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;

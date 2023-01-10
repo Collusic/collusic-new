@@ -1,11 +1,13 @@
 package com.collusic.collusicbe.web.controller;
 
-import com.collusic.collusicbe.config.auth.LoginMember;
-import com.collusic.collusicbe.config.auth.Visitor;
+import com.collusic.collusicbe.global.resolver.LoginMember;
+import com.collusic.collusicbe.global.resolver.Visitor;
 import com.collusic.collusicbe.domain.member.Member;
 import com.collusic.collusicbe.domain.project.Project;
 import com.collusic.collusicbe.service.ProjectService;
-import com.collusic.collusicbe.web.controller.dto.*;
+import com.collusic.collusicbe.web.controller.response.*;
+import com.collusic.collusicbe.web.controller.request.ProjectCreateRequestDto;
+import com.collusic.collusicbe.web.controller.request.ProjectUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
