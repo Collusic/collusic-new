@@ -15,19 +15,14 @@ import java.util.Map;
 public class NaverClientService implements OAuth2ClientService {
 
     private static final String CONTENT_TYPE = MediaType.APPLICATION_JSON_VALUE;
-
+    private final NaverAccessTokenClient naverAccessTokenClient;
+    private final NaverProfileClient naverProfileClient;
     @Value("${oauth2.client.naver.client-id}")
     private String clientId;
-
     @Value("${oauth2.client.naver.client-secret}")
     private String clientSecret;
-
     @Value("${oauth2.client.naver.authorization-grant-type}")
     private String grantType;
-
-    private final NaverAccessTokenClient naverAccessTokenClient;
-
-    private final NaverProfileClient naverProfileClient;
 
     @Override
     public OAuth2Response requestLogin(Map<String, Object> authCode) {

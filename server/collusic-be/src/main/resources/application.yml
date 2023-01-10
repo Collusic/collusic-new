@@ -7,7 +7,7 @@ spring:
 
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:testdb
+    url: jdbc:h2:mem:testdb;MODE=MYSQL
     username: sa
     password:
 
@@ -21,6 +21,7 @@ spring:
           batch_size: 10
     hibernate:
       ddl-auto: create
+    generate-ddl: true
 
   h2:
     console:

@@ -3,8 +3,8 @@ package com.collusic.collusicbe.domain.track;
 import com.collusic.collusicbe.domain.BaseTimeEntity;
 import com.collusic.collusicbe.domain.member.Member;
 import com.collusic.collusicbe.domain.project.Project;
-import com.collusic.collusicbe.domain.state.State;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -27,23 +27,57 @@ public class Track extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private TrackTag trackTag;
 
-    @Column(columnDefinition = "tinyint(1) default 1", nullable = false)
-    private boolean editable;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MEMBER_ID")
+    @JoinColumn(name = "CREATOR_ID")
     private Member creator;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "PROJECT_ID")
     private Project project;
-
-    @Enumerated(EnumType.STRING)
-    private Measure measure;
 
     @Column(nullable = false)
     private String fileUrl;
 
-    @Enumerated(EnumType.STRING)
-    private State trackState;
+    @Column(nullable = false)
+    private int orderInProject;
+
+    @Builder
+    public Track(Long id, String trackName, TrackTag trackTag, Member creator, Project project, int orderInProject, String fileUrl) {
+        this.id = id;
+        this.trackName = trackName;
+        this.trackTag = trackTag;
+        this.creator = creator;
+        this.project = project;
+        this.orderInProject = orderInProject;
+        this.fileUrl = fileUrl;
+    }
+
+    public void changeTrackInfo(String trackName, TrackTag trackTag) {
+        this.trackName = trackName;
+        this.trackTag = trackTag;
+    }
+
+    public void changeOrder(int order) {
+        this.orderInProject = order;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    public void setFileUrl(String fileUrl) {
+        this.fileUrl = fileUrl;
+    }
+
+    public boolean hasSameCreator(Member member) {
+        return creator.isSameMember(member);
+    }
+
+    public void delete() {
+        this.creator = null;
+    }
+
+    public boolean isDeleted() {
+        return creator == null;
+    }
 }
