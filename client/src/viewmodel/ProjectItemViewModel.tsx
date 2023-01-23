@@ -31,7 +31,7 @@ function ProjectItemViewModel({ projectId, projectName, trackPreviews, likeCount
     await Promise.all(taskPromises);
   };
 
-  const handleClickPreview = async (e: MouseEvent) => {
+  const handleClickPlay = async (e: MouseEvent) => {
     e.preventDefault();
     if (!!previewPlayerRefs.find((ref) => ref.current!.paused)) {
       setIsPlaying(true);
@@ -68,7 +68,7 @@ function ProjectItemViewModel({ projectId, projectName, trackPreviews, likeCount
         likeCount={likeCountState}
         projectName={projectName}
         trackPreviews={trackPreviews}
-        onClickPreview={handleClickPreview}
+        onClickPlay={handleClickPlay}
         onClickLikeBtn={handleClickLikeBtn}
         currentRefs={previewPlayerRefs}
       />

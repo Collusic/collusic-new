@@ -1,7 +1,7 @@
 import React from "react";
 
 import TrackIcon from "components/atoms/TrackIcon";
-import PreviewButton, { PreviewButtonProps } from "components/atoms/PreviewButton";
+import PlayButton, { PlayButtonProps } from "components/atoms/PlayButton";
 import LikeButton from "components/atoms/LikeButton";
 import { ClickProjectItemEvent, ProjectItemProps } from "types/projectType";
 import "./style.scss";
@@ -12,10 +12,10 @@ function ProjectItem({
   likeCount,
   isLiked,
   isPlaying,
-  onClickPreview,
+  onClickPlay,
   onClickLikeBtn,
   currentRefs,
-}: ProjectItemProps & ClickProjectItemEvent & PreviewButtonProps) {
+}: ProjectItemProps & ClickProjectItemEvent & PlayButtonProps) {
   return (
     <div className="project-item">
       <div className="title">{projectName}</div>
@@ -33,7 +33,7 @@ function ProjectItem({
       </div>
       <hr />
       <div id="item-bottom">
-        <PreviewButton isPlaying={isPlaying} onClickPreview={onClickPreview} />
+        <PlayButton isPlaying={isPlaying} onClickPlay={onClickPlay} />
         <LikeButton isLiked={isLiked} likeCount={likeCount} onClickLikeBtn={onClickLikeBtn} />
       </div>
     </div>
