@@ -31,7 +31,7 @@ public class CookieUtils {
     public static Cookie setCookieWith(String refreshToken) {
         Cookie cookie = new Cookie("refreshToken", refreshToken);
         cookie.setMaxAge(REFRESH_TIME);
-        cookie.setSecure(true);
+        cookie.setSecure(false);
         cookie.setHttpOnly(true);
         cookie.setPath("/");
         return cookie;
