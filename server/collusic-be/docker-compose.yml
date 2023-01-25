@@ -20,4 +20,4 @@ services:
       JASYPT_PASSWORD: ${JASYPT_PASSWORD}
     depends_on:
       - redis
-    command: mvn clean spring-boot:run -Dspring-boot.run.profiles=dev
+    command: gradle clean verify spring-boot:run -Dspring-boot.run.profiles=dev
