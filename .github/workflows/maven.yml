@@ -29,8 +29,8 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         cache: maven
-    - name: Build with Gradle
-      run: gradle build
+    - name: Build with Maven
+      run: mvn package
       working-directory: ./server/collusic-be
       env:
         JASYPT_PASSWORD: ${{ secrets.JASYPT_PASSWORD }}
