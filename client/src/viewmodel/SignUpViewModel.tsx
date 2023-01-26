@@ -1,12 +1,13 @@
 import React from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { useLocation, useNavigate } from "react-router-dom";
+import { AxiosResponse } from "axios";
 
-import { isSignInState } from "model/signInModel";
 import { signUpState } from "model/signUpModel";
 
 import { SignUp } from "components/blocks/SignUp";
 import { Modal } from "components/atoms/Modal";
+import useAuth from "components/atoms/Auth/hooks/useAuth";
 
 import { API } from "api/axios";
 import { validateLetter, validateLength } from "../utils/validation";
@@ -21,10 +22,10 @@ type MemberData = {
 };
 
 export function SignUpViewModel() {
-  const [signUp, setSignUp] = useRecoilState(signUpState);
-  const setIsSignInState = useSetRecoilState(isSignInState);
   const location = useLocation();
   const navigate = useNavigate();
+  const [signUp, setSignUp] = useRecoilState(signUpState);
+  const { setAuth } = useAuth({ reissue: false });
 
   const { authId, email, profileImageUrl, snsType } = location.state as MemberData;
 
@@ -44,8 +45,11 @@ export function SignUpViewModel() {
         Object.keys(memberData).forEach((key) => formData.append(key, memberData[key]));
 
         API.post("/members", formData)
-          .then(() => {
-            setIsSignInState(true);
+          .then((res) => {
+            const { data }: AxiosResponse = res;
+            const { accessToken } = data.attributes;
+
+            setAuth(accessToken);
             alert("회원가입 완료");
             navigate("/");
           })

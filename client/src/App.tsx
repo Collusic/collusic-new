@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { NavBar } from "components/blocks/NavBar";
-import AuthVerify from "viewmodel/AuthVerify";
 import { SignInViewModel } from "viewmodel/SignInViewModel";
 import { SignUpViewModel } from "viewmodel/SignUpViewModel";
 import { RedirectViewModel } from "viewmodel/RedirectViewModel";
@@ -20,7 +19,6 @@ function App() {
         <Route path="/signup" element={<SignUpViewModel />} />
         <Route path="/auth/redirect/:snsType" element={<RedirectViewModel />} />
       </Routes>
-      <AuthVerify />
     </BrowserRouter>
   );
 }

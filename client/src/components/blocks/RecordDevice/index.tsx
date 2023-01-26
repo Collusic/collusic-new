@@ -18,19 +18,21 @@ function RecordDevice({ onDeviceClick, inputTextDevice }: RecordDeviceProps) {
     else setShowDropDown(false);
   };
 
-  useEffect(() => {
-    async function getMedia() {
-      let mediaDevices = null;
-      try {
-        mediaDevices = await navigator.mediaDevices.enumerateDevices();
-        const audioDevices = mediaDevices.filter((mediaDevice) => mediaDevice.kind === "audioinput");
-        setDeviceList(audioDevices);
-      } catch (err) {
-        console.log(err);
-        alert("녹음 가능한 입력장치를 찾을 수 없습니다.");
-      }
+  const getMedia = async () => {
+    let mediaDevices = null;
+    try {
+      mediaDevices = await navigator.mediaDevices.enumerateDevices();
+      const audioDevices = mediaDevices.filter((mediaDevice) => mediaDevice.kind === "audioinput");
+      setDeviceList(audioDevices);
+    } catch (err) {
+      console.log(err);
+      alert("녹음 가능한 입력장치를 찾을 수 없습니다.");
     }
+  };
+
+  useEffect(() => {
     getMedia();
+    return () => setDeviceList([]);
   }, []);
 
   return (
