@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 
 import useAuth from "components/atoms/Auth/hooks/useAuth";
@@ -27,9 +28,9 @@ export function NavBar() {
   return (
     <header>
       <div className="navbar">
-        <a href="/">
-          <img src={LogoImgUrl} alt="" />
-        </a>
+        <Link to="/">
+          <img src={LogoImgUrl} alt="logo" />
+        </Link>
         <nav>
           <ul>
             <li className="signin">
