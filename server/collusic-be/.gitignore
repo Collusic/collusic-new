@@ -35,7 +35,7 @@ build/
 # Edit at https://www.toptal.com/developers/gitignore?templates=gradle
 
 ### Gradle ###
-.gradle
+.gradle/
 **/build/
 !src/**/build/
 

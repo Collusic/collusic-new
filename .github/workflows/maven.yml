@@ -27,10 +27,13 @@ jobs:
       uses: actions/setup-java@v3
       with:
         java-version: '11'
-        distribution: 'temurin'
-        cache: maven
-    - name: Build with Maven
-      run: mvn package
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+      shell: bash
+
+    - name: Build with Gradle
+      run: ./gradlew build
       working-directory: ./server/collusic-be
       env:
         JASYPT_PASSWORD: ${{ secrets.JASYPT_PASSWORD }}
