@@ -11,8 +11,6 @@ name: Java CI with Maven
 on:
   push:
     branches: [ "dev-be" ]
-  pull_request:
-    branches: [ "dev-be" ]
 
 jobs:
   build:
@@ -47,7 +45,7 @@ jobs:
         JASYPT_PASSWORD: ${{ secrets.JASYPT_PASSWORD }}
       run: |
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        docker build -f Dockerfile-dev -t ${{ secrets.DOCKER_REPO }}/collusic-api .
+        docker build -f Dockerfile-prod -t ${{ secrets.DOCKER_REPO }}/collusic-api .
         docker push ${{ secrets.DOCKER_REPO }}/collusic-api
       
     ## docker compose up
