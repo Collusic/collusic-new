@@ -28,9 +28,14 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
-        cache: maven
-    - name: Build with Maven
-      run: mvn package
+        cache: gradle
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+      working-directory: ./server/collusic-be
+
+    - name: Build with Gradle
+      run: ./gradlew build
       working-directory: ./server/collusic-be
       env:
         JASYPT_PASSWORD: ${{ secrets.JASYPT_PASSWORD }}
@@ -42,7 +47,7 @@ jobs:
         JASYPT_PASSWORD: ${{ secrets.JASYPT_PASSWORD }}
       run: |
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        docker build -f Dockerfile-dev -t ${{ secrets.DOCKER_REPO }}/collusic-api .
+        docker build -f Dockerfile-prod -t ${{ secrets.DOCKER_REPO }}/collusic-api .
         docker push ${{ secrets.DOCKER_REPO }}/collusic-api
       
     ## docker compose up

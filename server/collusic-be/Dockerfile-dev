@@ -1,4 +1,4 @@
 FROM openjdk:11-jdk
-ADD target/collusic-be-0.0.1-SNAPSHOT.jar collusic-be-0.0.1-SNAPSHOT.jar
+ADD build/libs/collusic-be-0.0.1-SNAPSHOT.jar collusic-be-0.0.1-SNAPSHOT.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-Dspring.profiles.active=dev", "-Djava.security.egd=file:/dev/./urandom","-jar","/collusic-be-0.0.1-SNAPSHOT.jar", "-Dcom.amazonaws.sdk.disableEc2Metadata=true"]

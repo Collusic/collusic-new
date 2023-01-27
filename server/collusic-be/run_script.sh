@@ -8,7 +8,7 @@ echo -e "\n\n———— ⛔️ docker image 삭제 ————\n"
 docker rmi `docker images -a -q`
 
 echo -e "\n\n———— 📦 maven package 파일 생성 ————\n"
-mvn package
+gradle build
 
 echo -e "\n\n———— 🐳 docker container 생성 및 실행 ————\n"
 docker-compose up
