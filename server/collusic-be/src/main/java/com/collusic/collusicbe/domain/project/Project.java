@@ -53,7 +53,7 @@ public class Project extends BaseTimeEntity {
     }
 
     public boolean isTrackFull() {
-        return tracks.size() == MAX_TRACK_CAPACITY;
+        return tracks.size() >= MAX_TRACK_CAPACITY;
     }
 
     public int getNextTrackOrder() {
@@ -68,6 +68,10 @@ public class Project extends BaseTimeEntity {
     }
 
     public void addTrack(Track track) {
+        if (this.isTrackFull()) {
+            throw new IllegalStateException();
+        }
+
         track.setProject(this);
         this.tracks.add(track);
     }

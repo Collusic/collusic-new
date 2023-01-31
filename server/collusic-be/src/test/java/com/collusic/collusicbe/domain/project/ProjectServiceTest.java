@@ -97,7 +97,7 @@ public class ProjectServiceTest {
 
         // when
         when(projectRepository.save(any(Project.class))).thenReturn(testProject);
-        when(trackService.create(any(Member.class), any(Project.class), any(TrackCreateRequestDto.class))).thenReturn(testTrack);
+        when(trackService.create(any(Member.class), any(Long.class), any(TrackCreateRequestDto.class))).thenReturn(testTrack);
 
         Project savedProject = projectService.createProject(testMember, requestDto);
 

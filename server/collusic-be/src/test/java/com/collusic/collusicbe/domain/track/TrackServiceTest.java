@@ -72,9 +72,10 @@ public class TrackServiceTest {
 
         // when
         when(trackRepository.save(any(Track.class))).thenReturn(testTrack);
+        when(projectRepository.findById(any(Long.class))).thenReturn(Optional.of(testProject));
         when(s3Service.uploadAudioFile(any(MultipartFile.class))).thenReturn("test_audio_url");
 
-        Track savedTrack = trackService.create(testMember, testProject, requestDto);
+        Track savedTrack = trackService.create(testMember, testProject.getId(), requestDto);
 
         //then
         assertThat(savedTrack.getCreator().getNickname()).isEqualTo(testMember.getNickname());
@@ -95,14 +96,17 @@ public class TrackServiceTest {
                                                                 .build();
 
         // when
-        Project projectWithFullTrack = Project.builder().build();
+        Project projectWithFullTrack = Project.builder()
+                                              .id(99l)
+                                              .build();
+        when(projectRepository.findById(any(Long.class))).thenReturn(Optional.of(projectWithFullTrack));
 
         for (int i = 0; i < 10; i++) {
             projectWithFullTrack.addTrack(Track.builder().build());
         }
 
         // then
-        assertThrows(IllegalStateException.class, () -> trackService.create(testMember, projectWithFullTrack, requestDto));
+        assertThrows(IllegalStateException.class, () -> trackService.create(testMember, projectWithFullTrack.getId(), requestDto));
     }
 
     @Test

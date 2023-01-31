@@ -67,11 +67,10 @@ public class ProjectService {
                                  .fileUrl("empty")
                                  .build();
 
-        Project save = projectRepository.save(project);
-        Track track = trackService.create(member, project, new TrackCreateRequestDto(requestDto.getProjectName(), requestDto.getTrackTag().getLabel(), requestDto.getAudioFile()));
-        save.addTrack(track);
+        project = projectRepository.save(project);
+        Track track = trackService.create(member, project.getId(), new TrackCreateRequestDto(requestDto.getProjectName(), requestDto.getTrackTag().getLabel(), requestDto.getAudioFile()));
 
-        return projectRepository.save(save);
+        return project;
     }
 
     @Transactional(readOnly = true)

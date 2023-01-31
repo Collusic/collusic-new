@@ -33,6 +33,7 @@ public class ProjectController {
             @LoginMember Member member,
             @Validated @ModelAttribute ProjectCreateRequestDto requestDto) throws IOException {
         Project project = projectService.createProject(member, requestDto);
+        System.out.println("사이즈: " + project.getTracks().size());
         return ResponseEntity.created(URI.create("/projects/" + project.getId())).body(new ProjectCreateResponseDto(project));
     }
 

@@ -29,8 +29,7 @@ public class TrackController {
             @LoginMember Member member,
             @PathVariable Long projectId,
             @Validated @ModelAttribute TrackCreateRequestDto requestDto) throws IOException {
-        Project project = projectService.findById(projectId);
-        Track track = trackService.create(member, project, requestDto);
+        Track track = trackService.create(member, projectId, requestDto);
 
         return ResponseEntity.created(URI.create("/projects/" + projectId + "/tracks/" + track.getId())).body(new TrackCreateResponseDto(track));
     }
