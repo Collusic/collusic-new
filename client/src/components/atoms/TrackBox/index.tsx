@@ -1,29 +1,33 @@
-import React from "react";
+import React, { FormEvent, MouseEvent, useEffect, useRef, useState } from "react";
+import classNames from "classnames";
 
-import { SelectedTrackSrc } from "utils/data/track";
-import { Track } from "types/projectType";
 import "./style.scss";
 
 interface TrackBoxProps {
-  profileUrl: string;
-  nickName: string;
-  track: Track;
-  trackName: string;
+  currentTime: number;
+  isRecording: boolean;
+  onTrackBoxInput(e: FormEvent): void;
 }
+function TrackBox({ currentTime, isRecording, onTrackBoxInput }: TrackBoxProps) {
+  const [time, setTime] = useState(currentTime || 0);
+  const boxRef = useRef<HTMLInputElement>(null);
+  const fillRef = useRef<HTMLDivElement>(null);
+  const fillStyle = {
+    width: (currentTime / 30) * Number(boxRef.current?.getBoundingClientRect().width),
+  };
 
-function TrackBox({ profileUrl, nickName, track, trackName }: TrackBoxProps) {
+  const handleTrackBoxForm = (e: FormEvent) => {
+    setTime(Number((e.target as HTMLInputElement).value));
+    onTrackBoxInput(e);
+  };
+
+  useEffect(() => {}, [time]);
+
   return (
-    <div className="track-box">
-      <div className="top-box">
-        <img src={profileUrl} alt="" />
-        <span>{nickName}</span>
-      </div>
-      <div className="bottom-box">
-        <img src={SelectedTrackSrc[track]} alt="" />
-        <div className="cross-bar" />
-        <span>{trackName}</span>
-      </div>
-    </div>
+    <>
+      <input className={`${isRecording ? "recording-box" : "track-box"}`} onInput={handleTrackBoxForm} ref={boxRef} />
+      <div className={`${isRecording ? "record-fill" : "box-fill"}`} style={fillStyle} ref={fillRef} />
+    </>
   );
 }
 
