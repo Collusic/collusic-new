@@ -55,4 +55,3 @@ const useAuth = (props?: Props) => {
 };
 
 export default useAuth;
- 
