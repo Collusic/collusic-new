@@ -16,6 +16,7 @@ const useAuth = (props?: Props) => {
   const reissue = props?.reissue ?? true;
 
   const setAuth = (newToken: string) => {
+    // TODO: 토큰 valitaion
     setIsAuthorized(true);
     setAccessToken(newToken);
   };
@@ -54,3 +55,4 @@ const useAuth = (props?: Props) => {
 };
 
 export default useAuth;
+ 
