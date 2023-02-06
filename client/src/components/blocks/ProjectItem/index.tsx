@@ -1,5 +1,3 @@
-import React from "react";
-
 import TrackIcon from "components/atoms/TrackIcon";
 import PlayButton, { PlayButtonProps } from "components/atoms/PlayButton";
 import LikeButton from "components/atoms/LikeButton";

@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { useLocation, useNavigate } from "react-router-dom";
 

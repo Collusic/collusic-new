@@ -1,4 +1,3 @@
-import React from "react";
 import { useRecoilState } from "recoil";
 
 import { Modal } from "components/atoms/Modal";

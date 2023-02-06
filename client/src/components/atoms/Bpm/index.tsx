@@ -1,5 +1,3 @@
-import React from "react";
-
 import "./style.scss";
 
 function Bpm({ bpmState }: { bpmState: number }) {

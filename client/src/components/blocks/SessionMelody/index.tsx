@@ -1,4 +1,4 @@
-import React, { MouseEventHandler } from "react";
+import { MouseEventHandler } from "react";
 
 import Button from "components/atoms/Button";
 import Span from "components/atoms/Span";

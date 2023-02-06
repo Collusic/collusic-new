@@ -1,4 +1,4 @@
-import React, { FormEventHandler } from "react";
+import { FormEventHandler } from "react";
 
 import Bar from "components/atoms/Bar";
 import "./style.scss";

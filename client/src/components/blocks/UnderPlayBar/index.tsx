@@ -1,4 +1,4 @@
-import React, { FormEventHandler } from "react";
+import { FormEventHandler } from "react";
 
 import PlayButton, { PlayButtonProps } from "components/atoms/PlayButton";
 import SoundBar from "components/blocks/SoundBar";
