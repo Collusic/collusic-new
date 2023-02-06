@@ -1,4 +1,4 @@
-import React, { FormEvent, MouseEvent, useEffect, useRef, useState } from "react";
+import React, { FormEvent, useEffect, useRef, useState } from "react";
 import classNames from "classnames";
 
 import "./style.scss";
