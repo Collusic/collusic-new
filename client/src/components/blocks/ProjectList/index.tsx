@@ -1,4 +1,4 @@
-import React, { RefObject } from "react";
+import { RefObject } from "react";
 
 import { ProjectItemProps } from "types/projectType";
 import ProjectItemViewModel from "viewmodel/ProjectItemViewModel";

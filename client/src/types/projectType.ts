@@ -37,6 +37,6 @@ export interface GetProjectPagination {
 }
 
 export interface ClickProjectItemEvent {
-  onClickPreview(e: MouseEvent): void;
+  onClickPlay(e: MouseEvent): void;
   onClickLikeBtn(e: MouseEvent): void;
 }

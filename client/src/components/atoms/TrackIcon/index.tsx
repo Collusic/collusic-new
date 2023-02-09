@@ -1,5 +1,3 @@
-import React from "react";
-
 import { TrackIconSrc } from "utils/data/track";
 import { Track } from "types/projectType";
 import "./style.scss";

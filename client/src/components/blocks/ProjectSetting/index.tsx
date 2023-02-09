@@ -1,4 +1,4 @@
-import React, { FormEventHandler, MouseEventHandler } from "react";
+import { FormEventHandler, MouseEventHandler } from "react";
 
 import { Track } from "types/projectType";
 import Button from "components/atoms/Button";
