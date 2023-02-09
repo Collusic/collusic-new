@@ -1,4 +1,4 @@
-import React, { FormEvent, FormEventHandler, useEffect, useRef, useState } from "react";
+import { FormEvent, FormEventHandler, useEffect, useRef, useState } from "react";
 
 import Span from "components/atoms/Span";
 import { getSliderHandlePosition } from "utils/slider";

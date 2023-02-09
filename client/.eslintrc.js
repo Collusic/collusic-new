@@ -20,5 +20,6 @@ module.exports = {
     "react/no-array-index-key": 1,
     "jsx-a11y/media-has-caption": 0,
     "no-unused-expressions": ["error", { allowShortCircuit: true }],
+    "react/react-in-jsx-scope": 0,
   },
 };

@@ -1,5 +1,3 @@
-import React from "react";
-
 import "./style.scss";
 import ProjectSettingViewModel from "viewmodel/ProjectSettingViewModel";
 

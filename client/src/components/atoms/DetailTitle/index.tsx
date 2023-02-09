@@ -1,5 +1,3 @@
-import React from "react";
-
 import "./style.scss";
 
 function DetailTitle({ content }: { content: string }) {

@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef, MouseEventHandler } from "react";
+import { useState, useEffect, useRef, MouseEventHandler } from "react";
+import * as React from "react";
 import classNames from "classnames";
 
 import MikeImg from "../../../../public/assets/mike/mike.svg";

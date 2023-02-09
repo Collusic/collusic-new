@@ -1,4 +1,4 @@
-import React, { MouseEventHandler } from "react";
+import { MouseEventHandler } from "react";
 import classNames from "classnames";
 
 import Locked from "../../../../public/assets/locker/locked.svg";

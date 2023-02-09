@@ -1,4 +1,4 @@
-import React, { FormEvent, FormEventHandler, useEffect, useRef, useState } from "react";
+import { FormEvent, FormEventHandler, useEffect, useRef, useState } from "react";
 import classNames from "classnames";
 import { getSliderHandlePosition } from "utils/slider";
 import "./style.scss";

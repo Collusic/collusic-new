@@ -1,5 +1,3 @@
-import React from "react";
-
 import "./style.scss";
 
 function TrackCount({ trackCount }: { trackCount: number }) {
