@@ -14,6 +14,7 @@ function ProjectSettingViewModel() {
   const [selectedTrack, setSelectedTrack] = useRecoilState(selectedTrackState);
   const [inputTextDevice, setInputTextDevice] = useRecoilState(inputDeviceTextState);
   const [inputDeviceId, setInputDeviceId] = useState("");
+  const [time, setTime] = useState(0);
   const isRecording = useRef(false);
   const navigate = useNavigate();
 
@@ -92,6 +93,8 @@ function ProjectSettingViewModel() {
       selectedTrack={selectedTrack}
       tracks={trackList}
       inputTextDevice={inputTextDevice}
+      time={time}
+      setTime={setTime}
     />
   );
 }
