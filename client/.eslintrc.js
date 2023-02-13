@@ -21,5 +21,8 @@ module.exports = {
     "jsx-a11y/media-has-caption": 0,
     "no-unused-expressions": ["error", { allowShortCircuit: true }],
     "react/react-in-jsx-scope": 0,
+    "jsx-a11y/no-static-element-interactions": 0,
+    "no-console": 0,
+    "no-alert": 0,
   },
 };
