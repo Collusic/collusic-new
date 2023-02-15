@@ -6,6 +6,7 @@ import { SignUpViewModel } from "viewmodel/SignUpViewModel";
 import { RedirectViewModel } from "viewmodel/RedirectViewModel";
 import CreateProjectPage from "components/pages/CreateProjectPage";
 import ProjectListPage from "components/pages/ProjectListPage";
+import ProjectSettingViewModel from "./viewmodel/ProjectSettingViewModel";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/signin" element={<SignInViewModel />} />
         <Route path="/signup" element={<SignUpViewModel />} />
         <Route path="/auth/redirect/:snsType" element={<RedirectViewModel />} />
+        <Route path="/detailProject/:projectId" element={<ProjectSettingViewModel />} />
       </Routes>
     </BrowserRouter>
   );
