@@ -44,11 +44,11 @@ function ProjectSetting({
           <Bpm bpmState={bpmState} onBpmInput={onBpmInput} />
           <TrackTag onTrackClick={onTrackClick} selectedTrack={selectedTrack} tracks={tracks} />
         </div>
-        <Button type="green" onBtnClick={onBtnClick} width="20rem" marginTop="5rem">
+        <Button type="green" onBtnClick={onBtnClick} width="100%">
           프로젝트 생성하기
         </Button>
       </div>
-      <TrackSpace currentTime={time} setCurrentTime={setTime} />
+      <TrackSpace bpm={bpmState} currentTime={time} setCurrentTime={setTime} />
     </div>
   );
 }

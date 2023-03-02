@@ -1,8 +1,9 @@
 import { DragEvent, useEffect, useRef, useState } from "react";
 import PlayStick from "../PlayStick";
 import "./style.scss";
+import TopTimeBox from "../TopTimeBox";
 
-function TrackSpace({ currentTime, setCurrentTime }: any) {
+function TrackSpace({ bpm = 0, currentTime, setCurrentTime }: any) {
   const trackSpaceRef = useRef<HTMLInputElement>(null);
   const playStickRef = useRef<HTMLDivElement>(null);
   const [drag, setDrag] = useState(false);
@@ -50,6 +51,7 @@ function TrackSpace({ currentTime, setCurrentTime }: any) {
       onDragStart={dragStartHandler}
       ref={trackSpaceRef}
     >
+      <TopTimeBox bpm={bpm} />
       <PlayStick currentOffset={handleOffset} currentRef={playStickRef} />
     </div>
   );
