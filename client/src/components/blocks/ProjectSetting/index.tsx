@@ -7,6 +7,7 @@ import RecordDevice from "../RecordDevice";
 import TrackTag from "../TrackTag";
 import "./style.scss";
 import TrackSpace from "../TrackSpace";
+import UnderPlayBar from "../UnderPlayBar";
 
 interface ProjectSettingProps {
   onDeviceClick: (deviceId: string, deviceName: string) => void;
@@ -37,18 +38,30 @@ function ProjectSetting({
 }: ProjectSettingProps) {
   return (
     <div id="project-setting">
-      <div id="setting-section">
-        <div id="setting-box">
-          <input className="project-title" onInput={onTitleInput} type="text" placeholder="프로젝트명" />
-          <RecordDevice onDeviceClick={onDeviceClick} inputTextDevice={inputTextDevice} />
-          <Bpm bpmState={bpmState} onBpmInput={onBpmInput} />
-          <TrackTag onTrackClick={onTrackClick} selectedTrack={selectedTrack} tracks={tracks} />
+      <div id="top-section">
+        <div id="setting-section">
+          <div id="setting-box">
+            <input className="project-title" onInput={onTitleInput} type="text" placeholder="프로젝트명" />
+            <RecordDevice onDeviceClick={onDeviceClick} inputTextDevice={inputTextDevice} />
+            <Bpm bpmState={bpmState} onBpmInput={onBpmInput} />
+            <TrackTag onTrackClick={onTrackClick} selectedTrack={selectedTrack} tracks={tracks} />
+          </div>
+          <Button type="green" onBtnClick={onBtnClick} width="100%">
+            프로젝트 생성하기
+          </Button>
         </div>
-        <Button type="green" onBtnClick={onBtnClick} width="100%">
-          프로젝트 생성하기
-        </Button>
+        <TrackSpace bpm={bpmState} currentTime={time} setCurrentTime={setTime} />
       </div>
-      <TrackSpace bpm={bpmState} currentTime={time} setCurrentTime={setTime} />
+      <div id="bottom-section">
+        <UnderPlayBar
+          sound={0}
+          currentTime="00:00"
+          totalTime="00:30"
+          onSoundInput={() => {}}
+          isPlaying={false}
+          onClickPlay={() => {}}
+        />
+      </div>
     </div>
   );
 }
