@@ -38,7 +38,7 @@ function Button({ type, isSelected, onBtnClick, imgSrc, width, marginLeft, margi
         marginTop,
       }}
     >
-      {imgSrc && <img src={imgSrc} alt={children as string} />}
+      {imgSrc && <img className="tag-img" src={imgSrc} alt={children as string} />}
       {children}
     </button>
   );

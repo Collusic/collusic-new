@@ -6,7 +6,7 @@
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-  padding-top: 3rem;
+  padding-top: 2rem;
   white-space: nowrap;
 }
 
@@ -15,7 +15,7 @@
   justify-content: space-between;
   align-items: center;
   position: relative;
-  height: 40px;
+  height: 1.7rem;
   width: 90%;
   padding: 4px 16px;
   border-radius: 24px;
@@ -23,8 +23,8 @@
   color: $Font_Main;
 
   span {
-    padding: 16px;
-    font-size: 1rem;
+    padding: 8px;
+    font-size: 0.8rem;
   }
 
   & > button {
@@ -57,7 +57,7 @@
     & li {
       padding: 4px 16px;
       margin-top: 8px;
-      font-size: 1rem;
+      font-size: 0.8rem;
     }
 
     & li:hover {

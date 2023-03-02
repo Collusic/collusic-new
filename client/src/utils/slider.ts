@@ -5,7 +5,7 @@ export const getSliderHandlePosition = (
   sliderWidth: number,
   type: string = "bpm",
 ) => {
-  const BPM_HANDLE_WIDTH = 40;
+  const BPM_HANDLE_WIDTH = 32;
   const SOUND_HANDLE_WIDTH = 10;
   const percent = (value - min) / (max - min);
   return `${
