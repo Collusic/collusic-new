@@ -10,7 +10,7 @@
 }
 
 .sound-bar {
-  height:2rem;
+  height: 2rem;
   margin: 0 10px;
 }
 
@@ -44,10 +44,10 @@
 
   & > .bpm-fill {
     -webkit-appearance: none;
-    height: 15px;
+    height: 0.6rem;
     margin: 0 20px;
     position: absolute;
-    top: 2rem;
+    top: 1rem;
     border-radius: 9px;
     background-color: #fff;
     outline: none;
@@ -78,7 +78,7 @@
     -webkit-appearance: none;
     height: 5px;
     position: relative;
-    bottom: 10px;
+    bottom: 0.9rem;
     border-radius: 9px;
     background-color: #fff;
     outline: none;
@@ -91,7 +91,7 @@
     width: 40px;
     height: 40px;
     position: absolute;
-    top: 1.2rem;
+    top: 0.2rem;
     font-size: $FONT_SMALL;
     font-weight: bold;
     color: black;
