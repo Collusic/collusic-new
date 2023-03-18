@@ -1,7 +1,5 @@
 import { MouseEvent } from "react";
 import classNames from "classnames";
-
-
 import "./style.scss";
 
 interface LikeButtonProps {
