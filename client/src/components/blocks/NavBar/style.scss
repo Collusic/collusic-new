@@ -35,6 +35,7 @@ header {
     nav > ul {
       display: flex;
       list-style: none;
+      white-space: nowrap;
 
       .signin {
         display: flex;
