@@ -1,7 +1,9 @@
 #project-list {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
-  padding-top: 5rem;
+  gap: 24px;
+  width: 100%;
+  padding-top: 24px;
 }

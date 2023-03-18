@@ -15,8 +15,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2rem;
+    height: 2rem;
     background-color: $Color_Main;
     border-radius: 24px;
 
@@ -25,7 +25,7 @@
     }
 
     img {
-      width: 1.5rem;
+      width: 1.2rem;
     }
   }
 
@@ -45,7 +45,7 @@
   span {
     padding-left: 10px;
     font-family: "KronaOne";
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     line-height: 1.25;
     letter-spacing: -0.8px;
     text-align: center;

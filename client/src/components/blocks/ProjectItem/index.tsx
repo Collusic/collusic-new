@@ -23,7 +23,7 @@ function ProjectItem({
             <div key={track.trackId}>
               <TrackIcon
                 track={track.trackTag}
-                style={{ position: "relative", right: `${idx * 6}px`, zIndex: idx + 1 }}
+                style={{ position: "relative", right: `${idx * 8}px`, zIndex: idx + 1 }}
               />
               <audio ref={currentRefs![idx]} src={track.fileUrl} />
             </div>
