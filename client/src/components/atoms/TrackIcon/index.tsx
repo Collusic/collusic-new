@@ -8,7 +8,7 @@ interface TrackIconProps {
 }
 function TrackIcon({ track, style }: TrackIconProps) {
   return (
-    <div id="track-icon" style={style}>
+    <div className="track-icon" style={style}>
       <img src={TrackIconSrc[track]} alt={track} />
     </div>
   );
