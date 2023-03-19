@@ -25,7 +25,11 @@ function ProjectList({ projectList, currentRef }: ProjectListProps) {
           />
         ))
       ) : (
-        <div>프로젝트가 존재하지 않습니다.</div>
+        <div id="no-project">
+          <img src={`${process.env.PUBLIC_URL}/assets/no-project/no-project.png`} alt="no project" />
+          <span id="title">진행중인 프로젝트가 없습니다.</span>
+          <span id="sub-title">첫번째 프로젝트를 생성해보세요.</span>
+        </div>
       )}
       <ObservationTarget currentRef={currentRef} />
     </div>
