@@ -27,6 +27,7 @@ header {
     justify-content: space-between;
     align-items: center;
     width: calc(100% - 12rem);
+    min-width: 19rem;
     padding: 0 6rem;
     a > img {
       width: 9rem;
