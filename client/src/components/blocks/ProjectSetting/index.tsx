@@ -46,7 +46,7 @@ function ProjectSetting({
             <Bpm bpmState={bpmState} onBpmInput={onBpmInput} />
             <TrackTag onTrackClick={onTrackClick} selectedTrack={selectedTrack} tracks={tracks} />
           </div>
-          <Button type="green" onBtnClick={onBtnClick} width="100%">
+          <Button type="green" onBtnClick={onBtnClick} marginTop="5rem" width="100%">
             프로젝트 생성하기
           </Button>
         </div>
