@@ -16,14 +16,15 @@
   align-items: center;
   position: relative;
   height: 1.7rem;
-  width: 90%;
-  padding: 4px 16px;
+  width: 100%;
+  padding: 4px 0;
   border-radius: 24px;
   background-color: #555;
   color: $Font_Main;
 
   span {
     padding: 8px;
+    margin-left: 12px;
     font-size: 0.8rem;
   }
 
@@ -33,7 +34,7 @@
 }
 
 .device-list {
-  width: 90%;
+  width: calc(100% - 32px);
   height: 128px;
   margin-top: 8px;
   padding: 8px 16px;
