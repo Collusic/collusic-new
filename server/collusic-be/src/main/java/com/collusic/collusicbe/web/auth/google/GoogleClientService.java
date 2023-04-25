@@ -17,19 +17,30 @@ import java.util.stream.Collectors;
 public class GoogleClientService implements OAuth2ClientService {
 
     private static final String CONTENT_TYPE = MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=utf-8";
+
     private final GoogleProfileClient googleProfileClient;
+
     private final GoogleAccessTokenClient googleAccessTokenClient;
+
     @Value("${oauth2.client.google.client-id}")
     private String clientId;
+
     @Value("${oauth2.client.google.client-secret}")
     private String clientSecret;
+
     @Value("${oauth2.client.google.redirect-uri}")
     private String redirectUri;
+
     @Value("${oauth2.client.google.authorization-grant-type}")
     private String grantType;
 
     @Override
-    public OAuth2Response requestLogin(Map<String, Object> authCode) {
+    public OAuth2Response requestLogin(String host, Map<String, Object> authCode) {
+        if (host.endsWith("/")) {
+            host = host.substring(0, host.length() - 1);
+        }
+        redirectUri = host + redirectUri;
+
         Map<String, Object> body = new HashMap<>();
 
         body.put("code", authCode.get("code"));
