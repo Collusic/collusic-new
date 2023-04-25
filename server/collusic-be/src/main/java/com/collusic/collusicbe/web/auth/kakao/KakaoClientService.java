@@ -26,7 +26,7 @@ public class KakaoClientService implements OAuth2ClientService {
     private String clientSecret;
 
     @Value("${oauth2.client.kakao.redirect-uri}")
-    private String redirectUri;
+    private String redirectUriPath;
 
     @Value("${oauth2.client.kakao.authorization-grant-type}")
     private String grantType;
@@ -36,7 +36,7 @@ public class KakaoClientService implements OAuth2ClientService {
         if (host.endsWith("/")) {
             host = host.substring(0, host.length() - 1);
         }
-        redirectUri = host + redirectUri;
+        final String redirectUri = host + redirectUriPath;
 
         KakaoTokenResponse kakaoTokenResponse = kakaoAccessTokenClient.requestKakaoToken(CONTENT_TYPE, grantType, clientId, redirectUri, (String) authCode.get("code"), clientSecret);
         return kakaoProfileClient.requestKakaoProfile(CONTENT_TYPE, "Bearer " + kakaoTokenResponse.getAccessToken());

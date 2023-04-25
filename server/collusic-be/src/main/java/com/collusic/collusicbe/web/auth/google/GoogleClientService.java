@@ -29,7 +29,7 @@ public class GoogleClientService implements OAuth2ClientService {
     private String clientSecret;
 
     @Value("${oauth2.client.google.redirect-uri}")
-    private String redirectUri;
+    private String redirectUriPath;
 
     @Value("${oauth2.client.google.authorization-grant-type}")
     private String grantType;
@@ -39,7 +39,7 @@ public class GoogleClientService implements OAuth2ClientService {
         if (host.endsWith("/")) {
             host = host.substring(0, host.length() - 1);
         }
-        redirectUri = host + redirectUri;
+        final String redirectUri = host + redirectUriPath;
 
         Map<String, Object> body = new HashMap<>();
 
