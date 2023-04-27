@@ -1,7 +1,10 @@
-import { DragEvent, useEffect, useRef, useState } from "react";
+import { DragEvent, useEffect, useRef, useState, memo } from "react";
+import { Box, Slider, SliderThumb, SliderTrack, VStack, SliderFilledTrack } from "@chakra-ui/react";
 import PlayStick from "../PlayStick";
-import "./style.scss";
 import TopTimeBox from "../TopTimeBox";
+import PlayArea from "../PlayArea";
+
+import "./style.scss";
 
 function TrackSpace({ bpm = 0, currentTime, setCurrentTime }: any) {
   const trackSpaceRef = useRef<HTMLInputElement>(null);
@@ -33,6 +36,7 @@ function TrackSpace({ bpm = 0, currentTime, setCurrentTime }: any) {
   };
 
   useEffect(() => {
+    if (!trackSpaceRef.current) return;
     setCurrentTime(((handleOffset * 30) / (trackSpaceRef.current as HTMLDivElement).offsetWidth) * 100);
     // 재생 막대 바 드래그 범위를 TrackSpace 내부로 제한
     if (handleOffset <= 0 || handleOffset >= (trackSpaceRef.current as HTMLDivElement).offsetWidth - 6 * 16) {
@@ -40,21 +44,25 @@ function TrackSpace({ bpm = 0, currentTime, setCurrentTime }: any) {
     }
   }, [handleOffset]);
 
+  useEffect(() => {
+    console.log(currentTime);
+  }, [currentTime]);
+
   return (
     <div
       id="track-space"
-      draggable="true"
-      onMouseUp={mouseUpHandler}
-      onMouseDown={mouseDownHandler}
-      onMouseLeave={mouseLeaveHandler}
-      onDrag={dragHandler}
-      onDragStart={dragStartHandler}
-      ref={trackSpaceRef}
+      // draggable="true"
+      // onMouseUp={mouseUpHandler}
+      // onMouseDown={mouseDownHandler}
+      // onMouseLeave={mouseLeaveHandler}
+      // onDrag={dragHandler}
+      // onDragStart={dragStartHandler}
+      // ref={trackSpaceRef}
     >
       <TopTimeBox bpm={bpm} />
-      <PlayStick currentOffset={handleOffset} currentRef={playStickRef} />
+      <PlayArea bpm={bpm} />
     </div>
   );
 }
 
-export default TrackSpace;
+export default memo(TrackSpace);
