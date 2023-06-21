@@ -1,4 +1,5 @@
 import { MouseEvent, RefObject } from "react";
+import { TrackResponseType } from "./trackType";
 
 export type Track =
   | "피아노"
@@ -40,3 +41,12 @@ export interface ClickProjectItemEvent {
   onClickPlay(e: MouseEvent): void;
   onClickLikeBtn(e: MouseEvent): void;
 }
+
+export type ProjectResponseType = {
+  bpm: number;
+  isLiked: boolean;
+  likeCount: number;
+  projectId: number;
+  projectName: string;
+  tracks: Array<TrackResponseType>;
+};
