@@ -29,3 +29,8 @@ export const accessTokenAtom = atom<string | null>({
     },
   ],
 });
+
+export const isAuthorizedState = atom({
+  key: "isAuthorized",
+  default: false,
+});

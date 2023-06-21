@@ -5,14 +5,15 @@ import { NavLink } from "react-router-dom";
 import { ProjectItemProps } from "types/projectType";
 import ProjectItem from "components/blocks/ProjectItem";
 import { setProjectLike } from "api/project";
-import { isSignInState, modalOpenState } from "model/signInModel";
+import { modalOpenState } from "model/signInModel";
+import { isAuthorizedState } from "model/authModel";
 
 function ProjectItemViewModel({ projectId, projectName, trackPreviews, likeCount, isLiked }: ProjectItemProps) {
   const [isLikedState, setIsLikedState] = useState(isLiked);
   const [likeCountState, setLikeCountState] = useState<number>(likeCount);
   const [isPlaying, setIsPlaying] = useState(false);
   const setModalOpen = useSetRecoilState(modalOpenState);
-  const isSignIn = useRecoilValue(isSignInState);
+  const isAuthed = useRecoilValue(isAuthorizedState);
   const previewPlayerRefs = trackPreviews.map(() => useRef<HTMLMediaElement>(null));
 
   const previewAction = (ref: RefObject<HTMLMediaElement>, action: string) => {
@@ -44,7 +45,7 @@ function ProjectItemViewModel({ projectId, projectName, trackPreviews, likeCount
 
   const handleClickLikeBtn = async (e: MouseEvent) => {
     e.preventDefault();
-    if (isSignIn) {
+    if (isAuthed) {
       if (isLikedState) {
         setIsLikedState(false);
         setLikeCountState((prev) => prev - 1);
