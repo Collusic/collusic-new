@@ -1,4 +1,4 @@
-import { Dispatch, FormEventHandler, MouseEventHandler, SetStateAction } from "react";
+import { Dispatch, FormEventHandler, MouseEventHandler, SetStateAction, useRef } from "react";
 
 import { Track } from "types/projectType";
 import Button from "components/atoms/Button";
@@ -15,12 +15,17 @@ interface ProjectSettingProps {
   onBtnClick: MouseEventHandler;
   onBpmInput: FormEventHandler;
   onTitleInput: FormEventHandler;
+  onRecord: () => void;
+  mediaRecorderRef: ReturnType<typeof useRef<MediaRecorder>>;
   bpmState: number;
-  selectedTrack: Track;
-  tracks: Track[];
+  selectedTrackTag: Track;
+  trackTags: Track[];
   inputTextDevice: string;
   time: number;
-  setTime: Dispatch<SetStateAction<number>>;
+  setTime: (prev: number) => void;
+  isAudioPlaying: boolean;
+  toggleAudio: () => void;
+  audioTracks: HTMLAudioElement[];
 }
 
 function ProjectSetting({
@@ -29,12 +34,17 @@ function ProjectSetting({
   onBtnClick,
   onBpmInput,
   onTitleInput,
+  onRecord,
+  mediaRecorderRef,
   bpmState,
-  selectedTrack,
-  tracks,
+  selectedTrackTag,
+  trackTags,
   inputTextDevice,
   time,
   setTime,
+  isAudioPlaying,
+  toggleAudio,
+  audioTracks,
 }: ProjectSettingProps) {
   return (
     <div id="project-setting">
@@ -44,22 +54,28 @@ function ProjectSetting({
             <input className="project-title" onInput={onTitleInput} type="text" placeholder="프로젝트명" />
             <RecordDevice onDeviceClick={onDeviceClick} inputTextDevice={inputTextDevice} />
             <Bpm bpmState={bpmState} onBpmInput={onBpmInput} />
-            <TrackTag onTrackClick={onTrackClick} selectedTrack={selectedTrack} tracks={tracks} />
+            <TrackTag onTrackClick={onTrackClick} selectedTrack={selectedTrackTag} tracks={trackTags} />
           </div>
           <Button type="green" onBtnClick={onBtnClick} marginTop="5rem" width="100%">
             프로젝트 생성하기
           </Button>
         </div>
-        <TrackSpace bpm={bpmState} currentTime={time} setCurrentTime={setTime} />
+        <TrackSpace
+          bpm={bpmState}
+          currentTime={time}
+          audioTracks={audioTracks}
+          setCurrentTime={setTime}
+          onRecord={onRecord}
+        />
       </div>
       <div id="bottom-section">
         <UnderPlayBar
           sound={0}
-          currentTime="00:00"
+          currentTime={`00:${Math.floor(time).toString().padStart(2, "0")}`}
           totalTime="00:30"
           onSoundInput={() => {}}
-          isPlaying={false}
-          onClickPlay={() => {}}
+          isPlaying={isAudioPlaying}
+          onClickPlay={toggleAudio}
         />
       </div>
     </div>
