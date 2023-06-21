@@ -17,7 +17,7 @@ function PlayButton({ isPlaying, isFromMain, onClickPlay }: PlayButtonProps) {
       ) : (
         <div className="under-play-icon">
           <img
-            src={`${process.env.PUBLIC_URL}/assets/play/${isPlaying ? "under_play.png" : "under_pause.png"}`}
+            src={`${process.env.PUBLIC_URL}/assets/play/${isPlaying ? "under_pause.png" : "under_play.png"}`}
             alt=""
           />
         </div>
