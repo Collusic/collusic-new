@@ -59,8 +59,8 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         port: 22
         script: |
-          sudo docker rm -f $(docker ps -aq)
-          sudo docker rmi `docker images -a -q`
+          sudo docker ps --format '{{.Names}}' | grep -v 'mysql' | xargs -I {} docker rm {}
+          sudo docker image ls | grep -v 'mysql' | awk '{print $3}' | xargs -I {} docker image rm {}
           cd app
           rm -rf docker-compose.yml
           touch ./docker-compose.yml
