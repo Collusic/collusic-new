@@ -52,13 +52,7 @@ function TrackPlayer({
           spacing="1rem"
         >
           {audioTracks.map((audio) => (
-            <TrackPlayBox
-              key={audio.accessKey}
-              measure={currentMeasure}
-              setMeasure={setCurrentMeasure}
-              maxMeasure={measure}
-              isPlaying
-            />
+            <TrackPlayBox key={audio.accessKey} measure={currentMeasure} maxMeasure={measure} isPlaying />
           ))}
           <TrackRecordBox onRecord={onRecord} />
         </VStack>

@@ -3,7 +3,6 @@ import { Box, Button, Slider, SliderFilledTrack, SliderTrack, Text } from "@chak
 
 interface Props {
   measure: number;
-  setMeasure: (value: number) => void;
   maxMeasure: number;
   isFocus?: boolean;
   isPlaying?: boolean;
@@ -15,7 +14,6 @@ export default function TrackPlayBox({
   isRecording = false,
   isFocus = false,
   measure,
-  setMeasure,
   maxMeasure,
 }: Props) {
   const bgColor = isPlaying ? "#B1FF00" : isRecording ? "#fff" : "transparent";

@@ -41,6 +41,14 @@ const useAudios = () => {
     setAudioList([...audioList, new Audio(URL.createObjectURL(blob))]);
   };
 
+  // 0 ~ 10 까지의 수를 0.0 ~ 1.0 사이로 변환해서 volumne 값으로 설정
+  const onVolumeChange = (value: number) => {
+    audioList.forEach((audio) => {
+      // eslint-disable-next-line no-param-reassign
+      audio.volume = value / 10;
+    });
+  };
+
   useEffect(() => {
     if (currentTime >= 30) {
       setIsPlaying(false);
@@ -71,6 +79,7 @@ const useAudios = () => {
     setTime: (value: number) => setCurrentTime(value),
     isPlaying,
     toggle: () => setIsPlaying((prev) => !prev),
+    onVolumeChange,
   };
 };
 

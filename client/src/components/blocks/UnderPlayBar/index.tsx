@@ -8,7 +8,7 @@ export interface PlayStatus {
   sound: number;
   currentTime: string;
   totalTime: string;
-  onSoundInput: FormEventHandler;
+  onSoundInput: (value: number) => void;
 }
 
 function UnderPlayBar({
@@ -19,9 +19,13 @@ function UnderPlayBar({
   isPlaying,
   onClickPlay,
 }: PlayStatus & PlayButtonProps) {
+  const handleSoundInput: FormEventHandler = (event) => {
+    onSoundInput(Number((event.target as HTMLInputElement).value));
+  };
+
   return (
     <div id="under-play-bar">
-      <SoundBar targetState={sound} onSoundInput={onSoundInput} />
+      <SoundBar targetState={sound} onSoundInput={handleSoundInput} />
       <PlayButton isPlaying={isPlaying} isFromMain={false} onClickPlay={onClickPlay} />
       <div id="play-status">
         <span id="time">

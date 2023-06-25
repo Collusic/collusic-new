@@ -20,7 +20,16 @@ function ProjectSettingViewModel() {
   const navigate = useNavigate();
   const { projectId } = useParams();
 
-  const { audioList, setAudios, addAudio, time, setTime, isPlaying: isAudioPlaying, toggle: toggleAudio } = useAudios();
+  const {
+    audioList,
+    setAudios,
+    addAudio,
+    time,
+    setTime,
+    isPlaying: isAudioPlaying,
+    toggle: toggleAudio,
+    onVolumeChange,
+  } = useAudios();
 
   useEffect(() => {
     if (!projectId) {
@@ -110,6 +119,7 @@ function ProjectSettingViewModel() {
       onBpmInput={handleBpmInput}
       onTitleInput={handleTitleInput}
       onRecord={recordTrack}
+      onVolumeChange={onVolumeChange}
       mediaRecorderRef={mediaRecorderRef}
       bpmState={bpm}
       selectedTrackTag={selectedTrackTag}
