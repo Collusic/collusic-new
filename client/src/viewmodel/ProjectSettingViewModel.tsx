@@ -18,11 +18,9 @@ function ProjectSettingViewModel() {
   const mediaRecorderRef = useRef<MediaRecorder>();
 
   const navigate = useNavigate();
-  const { projectId } = useParams();
 
   const {
     audioList,
-    setAudios,
     addAudio,
     time,
     setTime,
@@ -30,19 +28,6 @@ function ProjectSettingViewModel() {
     toggle: toggleAudio,
     onVolumeChange,
   } = useAudios();
-
-  useEffect(() => {
-    if (!projectId) {
-      return;
-    }
-
-    getProject(projectId).then(({ bpm, projectName, tracks }) => {
-      setBpm(bpm);
-      setProjectName(projectName);
-      const sourceList = tracks.map(({ fileUrl }) => fileUrl);
-      setAudios(sourceList);
-    });
-  }, []);
 
   // 트랙 녹음
   const recordTrack = async () => {
