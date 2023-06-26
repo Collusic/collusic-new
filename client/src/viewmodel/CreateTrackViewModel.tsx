@@ -10,7 +10,15 @@ import useTrackSetting from "hooks/useTrackSetting";
 
 function CreateTrackViewModel() {
   const { projectId } = useParams();
-  const { audioList, time, setTime, setAudios } = useAudios();
+  const {
+    audioList,
+    time,
+    setTime,
+    setAudios,
+    isPlaying: isAudioPlaying,
+    toggle: toggleAudio,
+    onVolumeChange,
+  } = useAudios();
   const {
     title,
     inputTextDevice,
@@ -39,6 +47,7 @@ function CreateTrackViewModel() {
       onTrackTagClick={handleTrackTagSelect}
       onBtnClick={handleSettingSubmit}
       onRecord={() => {}}
+      onVolumeChange={onVolumeChange}
       projectTitle="프로젝트명"
       bpmState={30}
       selectedTrackTag={trackTag}
@@ -47,6 +56,8 @@ function CreateTrackViewModel() {
       audioTracks={audioList || []}
       time={time}
       setTime={setTime}
+      isAudioPlaying={isAudioPlaying}
+      toggleAudio={toggleAudio}
     />
   );
 }

@@ -8,7 +8,7 @@
 
 #top-section {
   display: flex;
-  max-height: calc(100% - 7rem);
+  max-height: calc(100% - 8rem);
 
   .flex-column {
     display: flex;
@@ -33,6 +33,7 @@
       font-size: 1.3rem;
       font-weight: 700;
       color: white;
+      margin: 1rem 0 0;
     }
   }
 

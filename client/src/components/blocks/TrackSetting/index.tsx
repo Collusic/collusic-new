@@ -22,6 +22,7 @@ interface TrackSettingProps {
   onTitleInput: FormEventHandler;
   onTrackTagClick: MouseEventHandler;
   onRecord: () => void;
+  onVolumeChange: (value: number) => void;
   projectTitle: string;
   bpmState: number;
   selectedTrackTag: Track;
@@ -30,6 +31,8 @@ interface TrackSettingProps {
   audioTracks: HTMLAudioElement[];
   time: number;
   setTime: (value: number) => void;
+  isAudioPlaying: boolean;
+  toggleAudio: () => void;
 }
 
 function TrackSetting({
@@ -38,6 +41,7 @@ function TrackSetting({
   onTitleInput,
   onTrackTagClick,
   onRecord,
+  onVolumeChange,
   projectTitle,
   bpmState,
   selectedTrackTag,
@@ -46,6 +50,8 @@ function TrackSetting({
   audioTracks,
   time,
   setTime,
+  isAudioPlaying,
+  toggleAudio,
 }: TrackSettingProps) {
   return (
     <div id="track-setting">
@@ -61,7 +67,7 @@ function TrackSetting({
               <RecordDevice onDeviceClick={onDeviceClick} inputTextDevice={inputTextDevice} />
               <TrackTag onTrackClick={onTrackTagClick} selectedTrack={selectedTrackTag} tracks={trackTags} />
             </div>
-            <Button type="green" onBtnClick={onBtnClick} marginTop="5rem" width="100%">
+            <Button type="green" onBtnClick={onBtnClick} marginTop="4rem" width="100%">
               트랙 추가하기
             </Button>
           </div>
@@ -74,7 +80,7 @@ function TrackSetting({
           onRecord={onRecord}
         />
       </div>
-      {/* <div id="bottom-section">
+      <div id="bottom-section">
         <UnderPlayBar
           sound={0}
           currentTime={`00:${Math.floor(time).toString().padStart(2, "0")}`}
@@ -83,7 +89,7 @@ function TrackSetting({
           isPlaying={isAudioPlaying}
           onClickPlay={toggleAudio}
         />
-      </div> */}
+      </div>
     </div>
   );
 }
