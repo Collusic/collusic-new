@@ -51,9 +51,11 @@ function RecordDevice({ onDeviceClick, inputTextDevice }: RecordDeviceProps) {
               <li
                 onClick={() => {
                   onDeviceClick(device.deviceId, device.label);
+                  setShowDropDown(false);
                 }}
                 onKeyDown={() => {
                   onDeviceClick(device.deviceId, device.label);
+                  setShowDropDown(false);
                 }}
                 key={device.deviceId}
               >
