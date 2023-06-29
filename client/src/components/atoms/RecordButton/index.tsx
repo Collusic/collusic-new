@@ -42,7 +42,7 @@ function RecordButton({ handleBtnClickEvent, onEndTimer }: RecordButtonProps) {
       <div className="inside-round">
         <button type="button" className="record-btn" onClick={handleBtnClick}>
           <img
-            src="../../assets/mike/mike.svg"
+            src="/assets/mike/mike.svg"
             alt="record"
             className={classNames("mike-img", { hidden: isStartCountDown })}
           />

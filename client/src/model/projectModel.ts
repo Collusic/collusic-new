@@ -25,7 +25,7 @@ export const sessionMelodyState = atom<MelodyLength>({
 // 프로젝트 bpm
 export const bpmState = atom({
   key: "bpmState",
-  default: 0,
+  default: 30,
 });
 // 선택한 트랙
 export const selectedTrackState = atom<Track>({

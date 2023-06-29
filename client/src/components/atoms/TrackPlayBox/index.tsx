@@ -1,9 +1,9 @@
-import { Box, Button, Slider, SliderFilledTrack, SliderProps, SliderTrack, Text } from "@chakra-ui/react";
-import { memo, useState } from "react";
+import { useState } from "react";
+import { Box, Button, Slider, SliderFilledTrack, SliderTrack, Text } from "@chakra-ui/react";
 
-interface Props extends SliderProps {
+interface Props {
   measure: number;
-  setMeasure: (value: number) => void;
+  maxMeasure: number;
   isFocus?: boolean;
   isPlaying?: boolean;
   isRecording?: boolean;
@@ -14,8 +14,7 @@ export default function TrackPlayBox({
   isRecording = false,
   isFocus = false,
   measure,
-  setMeasure,
-  ...props
+  maxMeasure,
 }: Props) {
   const bgColor = isPlaying ? "#B1FF00" : isRecording ? "#fff" : "transparent";
   const borderColor = isFocus ? "solid #B1FF00 0.5px" : undefined;
@@ -33,15 +32,14 @@ export default function TrackPlayBox({
     <Slider
       w="calc(100% - 1px)"
       minH="120px"
-      // value={value}
-      // defaultValue={value}
-      // onChange={setValue}
+      value={measure}
       border={borderColor}
       borderRadius="0.8rem"
       onMouseOver={handleMouseOver}
       onMouseLeave={handleMouseLeave}
       isDisabled
-      {...props}
+      min={0}
+      max={maxMeasure}
     >
       <SliderTrack width="100%" minH="inherit" borderRadius="inherit" bgColor="rgba(177, 255, 0, 0.1)">
         <SliderFilledTrack minH="inherit" bgColor={bgColor} borderLeftRadius="inherit" />

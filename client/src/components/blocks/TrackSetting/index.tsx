@@ -1,66 +1,76 @@
-import { Dispatch, FormEventHandler, MouseEventHandler, SetStateAction, useRef } from "react";
+import { FormEventHandler, MouseEventHandler, useRef } from "react";
 
 import { Track } from "types/projectType";
 import Button from "components/atoms/Button";
-import Bpm from "components/blocks/BpmBar";
+import Bpm from "components/atoms/Bpm";
 import RecordDevice from "../RecordDevice";
 import TrackTag from "../TrackTag";
-import "./style.scss";
 import TrackSpace from "../TrackSpace";
 import UnderPlayBar from "../UnderPlayBar";
 
-interface ProjectSettingProps {
+import "./style.scss";
+
+interface Props {
+  prjectId: number;
+  tarckId: number;
+  audioTracks: HTMLAudioElement[];
+}
+
+interface TrackSettingProps {
   onDeviceClick: (deviceId: string, deviceName: string) => void;
-  onTrackClick: MouseEventHandler;
   onBtnClick: MouseEventHandler;
-  onBpmInput: FormEventHandler;
   onTitleInput: FormEventHandler;
+  onTrackTagClick: MouseEventHandler;
   onRecord: () => void;
   onVolumeChange: (value: number) => void;
-  mediaRecorderRef: ReturnType<typeof useRef<MediaRecorder>>;
+  projectTitle: string;
   bpmState: number;
   selectedTrackTag: Track;
   trackTags: Track[];
   inputTextDevice: string;
+  audioTracks: HTMLAudioElement[];
   time: number;
-  setTime: (prev: number) => void;
+  setTime: (value: number) => void;
   isAudioPlaying: boolean;
   toggleAudio: () => void;
-  audioTracks: HTMLAudioElement[];
 }
 
-function ProjectSetting({
+function TrackSetting({
   onDeviceClick,
-  onTrackClick,
   onBtnClick,
-  onBpmInput,
   onTitleInput,
+  onTrackTagClick,
   onRecord,
   onVolumeChange,
-  mediaRecorderRef,
+  projectTitle,
   bpmState,
   selectedTrackTag,
   trackTags,
   inputTextDevice,
+  audioTracks,
   time,
   setTime,
   isAudioPlaying,
   toggleAudio,
-  audioTracks,
-}: ProjectSettingProps) {
+}: TrackSettingProps) {
   return (
-    <div id="project-setting">
+    <div id="track-setting">
       <div id="top-section">
-        <div id="setting-section">
-          <div id="setting-box">
-            <input className="project-title" onInput={onTitleInput} type="text" placeholder="프로젝트명" />
-            <RecordDevice onDeviceClick={onDeviceClick} inputTextDevice={inputTextDevice} />
-            <Bpm bpmState={bpmState} onBpmInput={onBpmInput} />
-            <TrackTag onTrackClick={onTrackClick} selectedTrack={selectedTrackTag} tracks={trackTags} />
+        <div className="flex-column">
+          <div id="project-info">
+            <Bpm bpmState={bpmState} />
+            <p>{projectTitle}</p>
           </div>
-          <Button type="green" onBtnClick={onBtnClick} marginTop="5rem" width="100%">
-            프로젝트 생성하기
-          </Button>
+          <div id="setting-section">
+            <div id="setting-box">
+              <input className="track-title" onInput={onTitleInput} type="text" placeholder="트랙명" />
+              <RecordDevice onDeviceClick={onDeviceClick} inputTextDevice={inputTextDevice} />
+              <TrackTag onTrackClick={onTrackTagClick} selectedTrack={selectedTrackTag} tracks={trackTags} />
+            </div>
+            <Button type="green" onBtnClick={onBtnClick} marginTop="4rem" width="100%">
+              트랙 추가하기
+            </Button>
+          </div>
         </div>
         <TrackSpace
           bpm={bpmState}
@@ -84,4 +94,4 @@ function ProjectSetting({
   );
 }
 
-export default ProjectSetting;
+export default TrackSetting;

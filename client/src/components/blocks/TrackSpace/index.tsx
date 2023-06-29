@@ -6,11 +6,25 @@ import TrackPlayer from "../TrackPlayer";
 
 import "./style.scss";
 
-function TrackSpace({ bpm = 0, currentTime, setCurrentTime }: any) {
+interface Props {
+  bpm: number;
+  currentTime: number;
+  audioTracks: HTMLAudioElement[];
+  setCurrentTime: (prev: number) => void;
+  onRecord: () => void;
+}
+
+function TrackSpace({ bpm = 0, currentTime, audioTracks, setCurrentTime, onRecord }: Props) {
   return (
     <div id="track-space">
       <TopTimeBox bpm={bpm} />
-      <TrackPlayer bpm={bpm} />
+      <TrackPlayer
+        bpm={bpm}
+        time={currentTime}
+        audioTracks={audioTracks}
+        setTime={setCurrentTime}
+        onRecord={onRecord}
+      />
     </div>
   );
 }

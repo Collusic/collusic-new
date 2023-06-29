@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 
-import { accessTokenAtom } from "model/authModel";
+import { accessTokenAtom, isAuthorizedState } from "model/authModel";
 import { API } from "api/axios";
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
 const useAuth = (props?: Props) => {
   const resetAccessToken = useResetRecoilState(accessTokenAtom);
   const [accessToken, setAccessToken] = useRecoilState(accessTokenAtom);
-  const [isAuthorized, setIsAuthorized] = useState(!!accessToken);
+  const [isAuthorized, setIsAuthorized] = useRecoilState(isAuthorizedState);
 
   const reissue = props?.reissue ?? true;
 

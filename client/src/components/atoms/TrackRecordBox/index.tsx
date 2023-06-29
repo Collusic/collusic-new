@@ -1,11 +1,14 @@
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import RecordButton from "../RecordButton";
+
 import "./style.scss";
 
-export function TrackRecordBox() {
+export function TrackRecordBox({ onRecord }: { onRecord: () => void }) {
   const handleRecordButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {};
 
-  const startRecord = () => {};
+  const startRecord = () => {
+    onRecord();
+  };
 
   const stopEventPropagation: EventListener = (event) => {
     event.stopPropagation();

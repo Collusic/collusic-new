@@ -10,10 +10,14 @@ interface BpmProps {
 }
 
 function BpmBar({ bpmState, onBpmInput }: BpmProps) {
-  const [bpm, setBpm] = useState(bpmState || 0);
+  const [bpm, setBpm] = useState(bpmState || 30);
   const sliderRef = useRef<HTMLInputElement>(null);
   const sliderValueRef = useRef<HTMLOutputElement>(null);
   const bpmFillRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setBpm(bpmState);
+  }, [bpmState]);
 
   // todo: 현재 bpm 알려주는 span 태그 클릭 시 sliderHandle이 동작되지 않는 에러
   // todo: 진행된 bpm 상태바 클릭 시 작동 안되는 에러
