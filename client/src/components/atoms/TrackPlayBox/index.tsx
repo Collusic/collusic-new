@@ -53,7 +53,7 @@ export default function TrackPlayBox({
           right="0.8rem"
           padding="0.1rem 0.5rem 0.1rem 0.2rem"
           borderRadius="0.2rem"
-          leftIcon={<img src="../../assets/trash/trash.svg" width="16" height="16" alt="trash" />}
+          leftIcon={<img src="/assets/trash/trash.svg" width="16" height="16" alt="trash" />}
           fontSize="0.8rem"
           iconSpacing="2px"
           cursor="pointer"
