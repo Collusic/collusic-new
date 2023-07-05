@@ -32,8 +32,6 @@ function ProjectSettingViewModel() {
 
   // 트랙 녹음
   const recordTrack = async () => {
-    // if (!mediaRecorderRef.current) {
-    // }
     try {
       // 녹음 데이터 저장 배열
       const audioArray: BlobPart[] = [];
@@ -73,10 +71,6 @@ function ProjectSettingViewModel() {
       alert("녹음이 가능한 입력장치가 아닙니다.");
     }
   };
-
-  useEffect(() => {
-    console.log(mediaRecorderRef);
-  }, [mediaRecorderRef.current]);
 
   // 입력장치 선택
   const handleDeviceClick = (deviceId: string, deviceName: string) => {
