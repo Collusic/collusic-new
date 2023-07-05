@@ -26,6 +26,8 @@ interface TrackSettingProps {
   projectTitle: string;
   bpmState: number;
   selectedTrackTag: Track;
+  isRecording: boolean;
+  isRecordSuccess: boolean;
   trackTags: Track[];
   inputTextDevice: string;
   audioTracks: HTMLAudioElement[];
@@ -45,6 +47,8 @@ function TrackSetting({
   projectTitle,
   bpmState,
   selectedTrackTag,
+  isRecording,
+  isRecordSuccess,
   trackTags,
   inputTextDevice,
   audioTracks,
@@ -77,6 +81,8 @@ function TrackSetting({
           currentTime={time}
           audioTracks={audioTracks}
           setCurrentTime={setTime}
+          isRecording={isRecording}
+          isRecordSuccess={isRecordSuccess}
           onRecord={onRecord}
         />
       </div>

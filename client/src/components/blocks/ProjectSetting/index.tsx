@@ -17,7 +17,8 @@ interface ProjectSettingProps {
   onTitleInput: FormEventHandler;
   onRecord: () => void;
   onVolumeChange: (value: number) => void;
-  mediaRecorderRef: ReturnType<typeof useRef<MediaRecorder>>;
+  isRecording: boolean;
+  isRecordSuccess: boolean;
   bpmState: number;
   selectedTrackTag: Track;
   trackTags: Track[];
@@ -37,7 +38,8 @@ function ProjectSetting({
   onTitleInput,
   onRecord,
   onVolumeChange,
-  mediaRecorderRef,
+  isRecording,
+  isRecordSuccess,
   bpmState,
   selectedTrackTag,
   trackTags,
@@ -67,6 +69,8 @@ function ProjectSetting({
           currentTime={time}
           audioTracks={audioTracks}
           setCurrentTime={setTime}
+          isRecording={isRecording}
+          isRecordSuccess={isRecordSuccess}
           onRecord={onRecord}
         />
       </div>

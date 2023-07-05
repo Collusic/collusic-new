@@ -10,12 +10,16 @@ function TrackPlayer({
   time,
   audioTracks,
   setTime,
+  isRecording,
+  isRecordSuccess,
   onRecord,
 }: {
   bpm: number;
   time: number;
   audioTracks: HTMLAudioElement[];
   setTime: (time: number) => void;
+  isRecording: boolean;
+  isRecordSuccess: boolean;
   onRecord: () => void;
 }) {
   const [currentMeasure, setCurrentMeasure] = useState(0);
@@ -54,7 +58,8 @@ function TrackPlayer({
           {audioTracks.map((audio) => (
             <TrackPlayBox key={audio.accessKey} measure={currentMeasure} maxMeasure={measure} isPlaying />
           ))}
-          <TrackRecordBox onRecord={onRecord} />
+          {!isRecording && !isRecordSuccess && <TrackRecordBox onRecord={onRecord} />}
+          {isRecording && <TrackPlayBox measure={currentMeasure} maxMeasure={measure} isRecording />}
         </VStack>
       </SliderTrack>
       <SliderThumb top="-6px" w="fit-content" h="100%" cursor="pointer" _focus={{ outline: "none" }}>

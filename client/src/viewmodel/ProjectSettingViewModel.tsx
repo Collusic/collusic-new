@@ -16,6 +16,7 @@ function ProjectSettingViewModel() {
   const [inputTextDevice, setInputTextDevice] = useRecoilState(inputDeviceTextState);
   const [inputDeviceId, setInputDeviceId] = useState("");
   const mediaRecorderRef = useRef<MediaRecorder>();
+  const [isRecording, setIsRecording] = useState(false);
 
   const navigate = useNavigate();
 
@@ -31,42 +32,52 @@ function ProjectSettingViewModel() {
 
   // 트랙 녹음
   const recordTrack = async () => {
-    if (!mediaRecorderRef.current) {
-      try {
-        // 녹음 데이터 저장 배열
-        const audioArray: BlobPart[] = [];
-        const stream = await navigator.mediaDevices.getUserMedia({
-          audio: {
-            deviceId: inputDeviceId,
-          },
-        });
-        const mediaRecorder = new MediaRecorder(stream);
-        mediaRecorderRef.current = mediaRecorder;
+    // if (!mediaRecorderRef.current) {
+    // }
+    try {
+      // 녹음 데이터 저장 배열
+      const audioArray: BlobPart[] = [];
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: {
+          deviceId: inputDeviceId,
+        },
+      });
+      mediaRecorderRef.current = new MediaRecorder(stream);
 
-        // 녹음 데이터 취득
-        mediaRecorder.ondataavailable = (e) => {
-          audioArray.push(e.data);
-        };
+      // 녹음 데이터 취득
+      mediaRecorderRef.current.ondataavailable = (e) => {
+        audioArray.push(e.data);
+      };
 
-        // 녹음이 종료되었을 때
-        mediaRecorder.onstop = () => {
-          // 배열에 담긴 오디오데이터 합치고, 코덱 설정
-          const blob = new Blob(audioArray, { type: "audio/ogg codecs=opus" });
-          audioArray.splice(0); // 기존 오디오 데이터 초기화
+      mediaRecorderRef.current.onstart = () => {
+        console.log("start?");
+        setIsRecording(true);
+      };
 
-          addAudio(blob);
+      // 녹음이 종료되었을 때
+      mediaRecorderRef.current.onstop = () => {
+        // 배열에 담긴 오디오데이터 합치고, 코덱 설정
+        const blob = new Blob(audioArray, { type: "audio/ogg codecs=opus" });
+        audioArray.splice(0); // 기존 오디오 데이터 초기화
 
-          // blob 데이터 접근 주소 생성
-          const blobUrl = URL.createObjectURL(blob);
+        const audio = new Audio(URL.createObjectURL(blob));
+        addAudio(audio);
+        setIsRecording(false);
 
-          // TODO: 파형에 녹음된 파일 표시
-        };
-      } catch (err) {
-        console.log(err);
-        alert("녹음이 가능한 입력장치가 아닙니다.");
-      }
+        // blob 데이터 접근 주소 생성
+
+        // TODO: 파형에 녹음된 파일 표시
+      };
+    } catch (err) {
+      console.log(err);
+      alert("녹음이 가능한 입력장치가 아닙니다.");
     }
   };
+
+  useEffect(() => {
+    console.log(mediaRecorderRef);
+  }, [mediaRecorderRef.current]);
+
   // 입력장치 선택
   const handleDeviceClick = (deviceId: string, deviceName: string) => {
     setInputDeviceId(deviceId);
@@ -105,9 +116,10 @@ function ProjectSettingViewModel() {
       onTitleInput={handleTitleInput}
       onRecord={recordTrack}
       onVolumeChange={onVolumeChange}
-      mediaRecorderRef={mediaRecorderRef}
       bpmState={bpm}
       selectedTrackTag={selectedTrackTag}
+      isRecording={isRecording}
+      isRecordSuccess={false}
       trackTags={trackTagList}
       inputTextDevice={inputTextDevice}
       time={time}

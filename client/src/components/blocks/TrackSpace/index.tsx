@@ -1,6 +1,3 @@
-import { DragEvent, useEffect, useRef, useState, memo } from "react";
-import { Box, Slider, SliderThumb, SliderTrack, VStack, SliderFilledTrack } from "@chakra-ui/react";
-import PlayStick from "../PlayStick";
 import TopTimeBox from "../TopTimeBox";
 import TrackPlayer from "../TrackPlayer";
 
@@ -11,10 +8,20 @@ interface Props {
   currentTime: number;
   audioTracks: HTMLAudioElement[];
   setCurrentTime: (prev: number) => void;
+  isRecording: boolean;
+  isRecordSuccess: boolean;
   onRecord: () => void;
 }
 
-function TrackSpace({ bpm = 0, currentTime, audioTracks, setCurrentTime, onRecord }: Props) {
+function TrackSpace({
+  bpm = 0,
+  currentTime,
+  audioTracks,
+  setCurrentTime,
+  isRecording,
+  isRecordSuccess,
+  onRecord,
+}: Props) {
   return (
     <div id="track-space">
       <TopTimeBox bpm={bpm} />
@@ -23,6 +30,8 @@ function TrackSpace({ bpm = 0, currentTime, audioTracks, setCurrentTime, onRecor
         time={currentTime}
         audioTracks={audioTracks}
         setTime={setCurrentTime}
+        isRecording={isRecording}
+        isRecordSuccess={isRecordSuccess}
         onRecord={onRecord}
       />
     </div>
