@@ -37,7 +37,13 @@ function CreateTrackViewModel() {
     handleSettingSubmit,
   } = useTrackSetting();
 
-  const { isRecording, isSuccess: isRecordSuccess, data: recordData, streamId, startRecord } = useRecord(inputDeviceId);
+  const {
+    isRecording,
+    isSuccess: isRecordSuccess,
+    data: recordData,
+    streamId: recordKey,
+    startRecord,
+  } = useRecord(inputDeviceId);
 
   useEffect(() => {
     if (!projectId) {
@@ -62,7 +68,7 @@ function CreateTrackViewModel() {
   useEffect(() => {
     if (isRecordSuccess) {
       const audio = new Audio(URL.createObjectURL(recordData));
-      audio.accessKey = streamId;
+      audio.accessKey = recordKey;
       addAudio(audio);
     }
   }, [isRecordSuccess]);
