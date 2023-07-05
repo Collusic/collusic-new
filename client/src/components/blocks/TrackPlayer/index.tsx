@@ -56,11 +56,11 @@ function TrackPlayer({
           align="stretch"
           spacing="1rem"
         >
-          {audioTracks.map(({ audio }) => (
-            <TrackPlayBox key={audio.accessKey} measure={currentMeasure} maxMeasure={measure} isPlaying />
+          {audioTracks.map(({ id, audio }) => (
+            <TrackPlayBox key={audio.accessKey} id={id} measure={currentMeasure} maxMeasure={measure} isPlaying />
           ))}
           {!isRecording && !isRecordSuccess && <TrackRecordBox onRecord={onRecord} />}
-          {isRecording && <TrackPlayBox measure={currentMeasure} maxMeasure={measure} isRecording />}
+          {isRecording && <TrackPlayBox id="new" measure={currentMeasure} maxMeasure={measure} isRecording />}
         </VStack>
       </SliderTrack>
       <SliderThumb top="-6px" w="fit-content" h="100%" cursor="pointer" _focus={{ outline: "none" }}>

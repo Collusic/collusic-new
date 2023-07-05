@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Box, Button, Slider, SliderFilledTrack, SliderTrack, Text } from "@chakra-ui/react";
+import { AudioType } from "types/audioType";
 
 interface Props {
+  id: AudioType["id"];
   measure: number;
   maxMeasure: number;
   isFocus?: boolean;
@@ -10,6 +12,7 @@ interface Props {
 }
 
 export default function TrackPlayBox({
+  id,
   isPlaying = false,
   isRecording = false,
   isFocus = false,
@@ -21,11 +24,11 @@ export default function TrackPlayBox({
   const [hover, setHover] = useState(false);
 
   const handleMouseOver = () => {
-    isRecording && setHover(true);
+    setHover(true);
   };
 
   const handleMouseLeave = () => {
-    isRecording && setHover(false);
+    setHover(false);
   };
 
   return (
@@ -45,7 +48,7 @@ export default function TrackPlayBox({
         <SliderFilledTrack minH="inherit" bgColor={bgColor} borderLeftRadius="inherit" />
       </SliderTrack>
 
-      {isRecording && (
+      {(isRecording || id === "new") && (
         <Button
           as={Box}
           pos="absolute"
