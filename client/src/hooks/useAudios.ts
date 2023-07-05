@@ -54,6 +54,11 @@ const useAudios = () => {
     setAudioList([...audioList, { id: "new", audio }]);
   };
 
+  const removeAudio = (audioId: AudioType["id"]) => {
+    const audios = audioList.filter(({ id }) => id !== audioId);
+    setAudioList([...audios]);
+  };
+
   // 0 ~ 10 까지의 수를 0.0 ~ 1.0 사이로 변환해서 volumne 값으로 설정
   const onVolumeChange = (value: number) => {
     audioList.forEach(({ audio }) => {
@@ -88,6 +93,7 @@ const useAudios = () => {
     audioList,
     setAudios,
     addAudio,
+    removeAudio,
     time: currentTime,
     setTime: (value: number) => setCurrentTime(value),
     isPlaying,

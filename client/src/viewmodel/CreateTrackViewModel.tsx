@@ -9,6 +9,7 @@ import TrackSetting from "components/blocks/TrackSetting";
 import useTrackSetting from "hooks/useTrackSetting";
 import { ProjectResponseType } from "types/projectType";
 import useRecord from "hooks/useRecord";
+import { AudioType } from "types/audioType";
 
 function CreateTrackViewModel() {
   const { projectId } = useParams();
@@ -22,6 +23,7 @@ function CreateTrackViewModel() {
     setTime,
     setAudios,
     addAudio,
+    removeAudio,
     isPlaying: isAudioPlaying,
     toggle: toggleAudio,
     onVolumeChange,
@@ -43,7 +45,13 @@ function CreateTrackViewModel() {
     data: recordData,
     streamId: recordKey,
     startRecord,
+    initRecord,
   } = useRecord(inputDeviceId);
+
+  const handleTrackRemove = (audioId: AudioType["id"]) => {
+    removeAudio(audioId);
+    initRecord();
+  };
 
   useEffect(() => {
     if (!projectId) {
@@ -81,6 +89,7 @@ function CreateTrackViewModel() {
       onBtnClick={handleSettingSubmit}
       onRecord={startRecord}
       onVolumeChange={onVolumeChange}
+      onTrackRemove={handleTrackRemove}
       projectTitle={projectInfo.projectName}
       bpmState={projectInfo.bpm}
       selectedTrackTag={trackTag}

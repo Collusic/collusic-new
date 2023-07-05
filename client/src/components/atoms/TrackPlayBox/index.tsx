@@ -9,6 +9,7 @@ interface Props {
   isFocus?: boolean;
   isPlaying?: boolean;
   isRecording?: boolean;
+  onRemoveButtonClick?: (id: AudioType["id"]) => void;
 }
 
 export default function TrackPlayBox({
@@ -18,6 +19,7 @@ export default function TrackPlayBox({
   isFocus = false,
   measure,
   maxMeasure,
+  onRemoveButtonClick,
 }: Props) {
   const bgColor = isPlaying ? "#B1FF00" : isRecording ? "#fff" : "transparent";
   const borderColor = isFocus ? "solid #B1FF00 0.5px" : undefined;
@@ -29,6 +31,10 @@ export default function TrackPlayBox({
 
   const handleMouseLeave = () => {
     setHover(false);
+  };
+
+  const handleRemoveButtonClick = () => {
+    onRemoveButtonClick && onRemoveButtonClick(id);
   };
 
   return (
@@ -62,6 +68,7 @@ export default function TrackPlayBox({
           cursor="pointer"
           backgroundColor="rgb(64, 64, 64, 0.8)"
           visibility={hover ? "visible" : "hidden"}
+          onClick={handleRemoveButtonClick}
         >
           <Text margin="0" fontSize="0.5rem" letterSpacing="0.01rem">
             삭제
@@ -76,4 +83,5 @@ TrackPlayBox.defaultProps = {
   isRecording: false,
   isFocus: false,
   isPlaying: false,
+  onRemoveButtonClick: () => {},
 };

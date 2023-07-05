@@ -25,6 +25,7 @@ interface TrackSettingProps {
   onTrackTagClick: MouseEventHandler;
   onRecord: () => void;
   onVolumeChange: (value: number) => void;
+  onTrackRemove: (audioId: AudioType["id"]) => void;
   projectTitle: string;
   bpmState: number;
   selectedTrackTag: Track;
@@ -46,6 +47,7 @@ function TrackSetting({
   onTrackTagClick,
   onRecord,
   onVolumeChange,
+  onTrackRemove,
   projectTitle,
   bpmState,
   selectedTrackTag,
@@ -86,6 +88,7 @@ function TrackSetting({
           isRecording={isRecording}
           isRecordSuccess={isRecordSuccess}
           onRecord={onRecord}
+          onTrackRemove={onTrackRemove}
         />
       </div>
       <div id="bottom-section">

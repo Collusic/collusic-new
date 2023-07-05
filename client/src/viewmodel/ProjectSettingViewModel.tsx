@@ -23,6 +23,7 @@ function ProjectSettingViewModel() {
   const {
     audioList,
     addAudio,
+    removeAudio,
     time,
     setTime,
     isPlaying: isAudioPlaying,
@@ -48,7 +49,6 @@ function ProjectSettingViewModel() {
       };
 
       mediaRecorderRef.current.onstart = () => {
-        console.log("start?");
         setIsRecording(true);
       };
 
@@ -110,6 +110,7 @@ function ProjectSettingViewModel() {
       onTitleInput={handleTitleInput}
       onRecord={recordTrack}
       onVolumeChange={onVolumeChange}
+      onTrackRemove={removeAudio}
       bpmState={bpm}
       selectedTrackTag={selectedTrackTag}
       isRecording={isRecording}

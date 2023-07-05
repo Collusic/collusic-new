@@ -6,6 +6,8 @@ interface MediaRecorderBaseResult {
   data: Blob | undefined;
   streamId: string | undefined;
   startRecord: () => void;
+  stopRecord: () => void;
+  initRecord: () => void;
 }
 
 interface MediaRecorderSuccessResult extends MediaRecorderBaseResult {
@@ -79,6 +81,12 @@ const useRecord = (deviceId: ConstrainDOMString) => {
     setIsSuccess(true);
   };
 
+  const initRecord = () => {
+    setData(undefined);
+    setIsRecording(false);
+    setIsSuccess(false);
+  };
+
   const startRecord = async () => {
     try {
       const mediaRecorder = await getMediaRecorder({
@@ -102,12 +110,20 @@ const useRecord = (deviceId: ConstrainDOMString) => {
     }
   };
 
+  const stopRecord = () => {
+    if (mediaRecorderRef.current) {
+      mediaRecorderRef.current.stop();
+    }
+  };
+
   return {
     isRecording,
     isSuccess,
     data,
     streamId: mediaRecorderRef.current?.stream.id,
     startRecord,
+    stopRecord,
+    initRecord,
   } as MediaRecorderResult;
 };
 

@@ -12,6 +12,7 @@ interface Props {
   isRecording: boolean;
   isRecordSuccess: boolean;
   onRecord: () => void;
+  onTrackRemove: (audioId: AudioType["id"]) => void;
 }
 
 function TrackSpace({
@@ -22,6 +23,7 @@ function TrackSpace({
   isRecording,
   isRecordSuccess,
   onRecord,
+  onTrackRemove,
 }: Props) {
   return (
     <div id="track-space">
@@ -34,6 +36,7 @@ function TrackSpace({
         isRecording={isRecording}
         isRecordSuccess={isRecordSuccess}
         onRecord={onRecord}
+        onTrackRemove={onTrackRemove}
       />
     </div>
   );

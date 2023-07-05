@@ -19,6 +19,7 @@ interface ProjectSettingProps {
   onTitleInput: FormEventHandler;
   onRecord: () => void;
   onVolumeChange: (value: number) => void;
+  onTrackRemove: (audioId: AudioType["id"]) => void;
   isRecording: boolean;
   isRecordSuccess: boolean;
   bpmState: number;
@@ -40,6 +41,7 @@ function ProjectSetting({
   onTitleInput,
   onRecord,
   onVolumeChange,
+  onTrackRemove,
   isRecording,
   isRecordSuccess,
   bpmState,
@@ -74,6 +76,7 @@ function ProjectSetting({
           isRecording={isRecording}
           isRecordSuccess={isRecordSuccess}
           onRecord={onRecord}
+          onTrackRemove={onTrackRemove}
         />
       </div>
       <div id="bottom-section">

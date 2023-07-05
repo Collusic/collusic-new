@@ -14,6 +14,7 @@ function TrackPlayer({
   isRecording,
   isRecordSuccess,
   onRecord,
+  onTrackRemove,
 }: {
   bpm: number;
   time: number;
@@ -22,6 +23,7 @@ function TrackPlayer({
   isRecording: boolean;
   isRecordSuccess: boolean;
   onRecord: () => void;
+  onTrackRemove: (audioId: AudioType["id"]) => void;
 }) {
   const [currentMeasure, setCurrentMeasure] = useState(0);
   const measure = Math.floor(bpm / 2) + 1;
@@ -57,10 +59,25 @@ function TrackPlayer({
           spacing="1rem"
         >
           {audioTracks.map(({ id, audio }) => (
-            <TrackPlayBox key={audio.accessKey} id={id} measure={currentMeasure} maxMeasure={measure} isPlaying />
+            <TrackPlayBox
+              key={audio.accessKey}
+              id={id}
+              measure={currentMeasure}
+              maxMeasure={measure}
+              onRemoveButtonClick={onTrackRemove}
+              isPlaying
+            />
           ))}
-          {!isRecording && !isRecordSuccess && <TrackRecordBox onRecord={onRecord} />}
-          {isRecording && <TrackPlayBox id="new" measure={currentMeasure} maxMeasure={measure} isRecording />}
+          {!isRecordSuccess && !isRecording && <TrackRecordBox onRecord={onRecord} />}
+          {isRecording && (
+            <TrackPlayBox
+              id="new"
+              measure={currentMeasure}
+              maxMeasure={measure}
+              onRemoveButtonClick={onTrackRemove}
+              isRecording
+            />
+          )}
         </VStack>
       </SliderTrack>
       <SliderThumb top="-6px" w="fit-content" h="100%" cursor="pointer" _focus={{ outline: "none" }}>
