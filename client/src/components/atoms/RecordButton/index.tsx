@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef, MouseEventHandler } from "react";
-import * as React from "react";
 import classNames from "classnames";
 
 import "./style.scss";
@@ -28,12 +27,12 @@ function RecordButton({ handleBtnClickEvent, onEndTimer }: RecordButtonProps) {
   }, [isStartCountDown]);
 
   useEffect(() => {
-    if (count === 0) {
+    if (count === 1) {
       clearInterval(countDownInterval.current as NodeJS.Timer);
       countDownInterval.current = null;
-      setIsStartCountDown(false);
-      setCount(3);
       onEndTimer();
+    } else if (count === 0) {
+      setIsStartCountDown(false);
     }
   }, [count]);
 
