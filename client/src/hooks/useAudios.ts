@@ -1,15 +1,13 @@
-import { API, TRACK_API } from "api/axios";
-import axios, { Axios, AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
+import axios, { Axios, AxiosResponse } from "axios";
+
+import { TRACK_API } from "api/axios";
+import type { AudioType, AudioSourceType } from "types/audioType";
+
 import useTime from "./useTime";
 
-type AudioSourceType = {
-  id: number;
-  source: string;
-};
-
 const useAudios = () => {
-  const [audioList, setAudioList] = useState<Array<HTMLAudioElement>>([]);
+  const [audioList, setAudioList] = useState<AudioType[]>([]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useTime();
 
@@ -38,13 +36,13 @@ const useAudios = () => {
       const audios = blobs.map(({ id, blob }) => {
         const audio = new Audio(URL.createObjectURL(blob));
         audio.accessKey = String(id);
-        return audio;
+        return { id, audio };
       });
 
       // 가장 첫 번째 audio를 기준으로 재생시간 설정
       if (audios.length > 0 && audioList.length === 0) {
-        audios[0].addEventListener("timeupdate", () => {
-          setCurrentTime(Number(audios[0].currentTime));
+        audios[0].audio.addEventListener("timeupdate", () => {
+          setCurrentTime(Number(audios[0].audio.currentTime));
         });
       }
 
@@ -53,12 +51,12 @@ const useAudios = () => {
   };
 
   const addAudio = (audio: HTMLAudioElement) => {
-    setAudioList([...audioList, audio]);
+    setAudioList([...audioList, { id: "new", audio }]);
   };
 
   // 0 ~ 10 까지의 수를 0.0 ~ 1.0 사이로 변환해서 volumne 값으로 설정
   const onVolumeChange = (value: number) => {
-    audioList.forEach((audio) => {
+    audioList.forEach(({ audio }) => {
       // eslint-disable-next-line no-param-reassign
       audio.volume = value / 10;
     });
@@ -71,7 +69,7 @@ const useAudios = () => {
     }
 
     if (!isPlaying) {
-      audioList.forEach((audio) => {
+      audioList.forEach(({ audio }) => {
         // eslint-disable-next-line no-param-reassign
         audio.currentTime = currentTime;
       });
@@ -80,9 +78,9 @@ const useAudios = () => {
 
   useEffect(() => {
     if (isPlaying) {
-      audioList.forEach((audio) => audio.play());
+      audioList.forEach(({ audio }) => audio.play());
     } else {
-      audioList.forEach((audio) => audio.pause());
+      audioList.forEach(({ audio }) => audio.pause());
     }
   }, [isPlaying]);
 

@@ -1,6 +1,8 @@
 import { FormEventHandler, MouseEventHandler, useRef } from "react";
 
 import { Track } from "types/projectType";
+import { AudioType } from "types/audioType";
+
 import Button from "components/atoms/Button";
 import Bpm from "components/atoms/Bpm";
 import RecordDevice from "../RecordDevice";
@@ -30,7 +32,7 @@ interface TrackSettingProps {
   isRecordSuccess: boolean;
   trackTags: Track[];
   inputTextDevice: string;
-  audioTracks: HTMLAudioElement[];
+  audioTracks: AudioType[];
   time: number;
   setTime: (value: number) => void;
   isAudioPlaying: boolean;

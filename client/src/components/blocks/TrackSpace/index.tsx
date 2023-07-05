@@ -1,3 +1,4 @@
+import { AudioType } from "types/audioType";
 import TopTimeBox from "../TopTimeBox";
 import TrackPlayer from "../TrackPlayer";
 
@@ -6,7 +7,7 @@ import "./style.scss";
 interface Props {
   bpm: number;
   currentTime: number;
-  audioTracks: HTMLAudioElement[];
+  audioTracks: AudioType[];
   setCurrentTime: (prev: number) => void;
   isRecording: boolean;
   isRecordSuccess: boolean;

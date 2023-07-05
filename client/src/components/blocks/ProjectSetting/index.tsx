@@ -1,13 +1,15 @@
 import { Dispatch, FormEventHandler, MouseEventHandler, SetStateAction, useRef } from "react";
 
 import { Track } from "types/projectType";
+import { AudioType } from "types/audioType";
 import Button from "components/atoms/Button";
 import Bpm from "components/blocks/BpmBar";
 import RecordDevice from "../RecordDevice";
 import TrackTag from "../TrackTag";
-import "./style.scss";
 import TrackSpace from "../TrackSpace";
 import UnderPlayBar from "../UnderPlayBar";
+
+import "./style.scss";
 
 interface ProjectSettingProps {
   onDeviceClick: (deviceId: string, deviceName: string) => void;
@@ -27,7 +29,7 @@ interface ProjectSettingProps {
   setTime: (prev: number) => void;
   isAudioPlaying: boolean;
   toggleAudio: () => void;
-  audioTracks: HTMLAudioElement[];
+  audioTracks: AudioType[];
 }
 
 function ProjectSetting({

@@ -2,6 +2,7 @@ import { Slider, SliderThumb, SliderTrack, VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import TrackPlayBox from "components/atoms/TrackPlayBox";
 import { TrackRecordBox } from "components/atoms/TrackRecordBox";
+import { AudioType } from "types/audioType";
 
 import PlayStick from "../PlayStick";
 
@@ -16,7 +17,7 @@ function TrackPlayer({
 }: {
   bpm: number;
   time: number;
-  audioTracks: HTMLAudioElement[];
+  audioTracks: AudioType[];
   setTime: (time: number) => void;
   isRecording: boolean;
   isRecordSuccess: boolean;
@@ -55,7 +56,7 @@ function TrackPlayer({
           align="stretch"
           spacing="1rem"
         >
-          {audioTracks.map((audio) => (
+          {audioTracks.map(({ audio }) => (
             <TrackPlayBox key={audio.accessKey} measure={currentMeasure} maxMeasure={measure} isPlaying />
           ))}
           {!isRecording && !isRecordSuccess && <TrackRecordBox onRecord={onRecord} />}
