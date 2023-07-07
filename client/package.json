@@ -34,6 +34,7 @@
     "start": "env-cmd -f .env.development react-scripts start",
     "build": "env-cmd -f .env.production react-scripts build",
     "test": "env-cmd -f .env.development react-scripts test",
+    "mock": "REACT_APP_MOCK=Y env-cmd -f .env.development react-scripts start",
     "eject": "env-cmd -f .env.development react-scripts eject",
     "storybook": "start-storybook -p 6006 -s ./public",
     "build-storybook": "build-storybook -s public"

@@ -4,7 +4,7 @@ import { RecoilRoot } from "recoil";
 import { worker } from "./mocks/browser";
 import App from "./App";
 
-if (process.env.NODE_ENV === "development") {
+if (process.env.REACT_APP_MOCK === "Y") {
   worker.start();
 }
 
