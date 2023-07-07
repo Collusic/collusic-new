@@ -1,4 +1,4 @@
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { RecoilRoot } from "recoil";
 
 import { worker } from "./mocks/browser";
@@ -8,9 +8,9 @@ if (process.env.NODE_ENV === "development") {
   worker.start();
 }
 
-ReactDOM.render(
+// Replace ReactDOM.render
+createRoot(document.getElementById("root") as HTMLElement).render(
   <RecoilRoot>
     <App />
   </RecoilRoot>,
-  document.getElementById("root") as HTMLElement,
 );
