@@ -1,5 +1,4 @@
-import { API, TRACK_API } from "api/axios";
-import axios, { Axios, AxiosResponse } from "axios";
+import { TRACK_API } from "api/axios";
 import { useEffect, useState } from "react";
 import useTime from "./useTime";
 
