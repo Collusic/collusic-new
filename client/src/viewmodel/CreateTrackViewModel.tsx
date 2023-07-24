@@ -10,24 +10,9 @@ import useTrackSetting from "hooks/useTrackSetting";
 
 function CreateTrackViewModel() {
   const { projectId } = useParams();
-  const {
-    audioList,
-    time,
-    setTime,
-    setAudios,
-    isPlaying: isAudioPlaying,
-    toggle: toggleAudio,
-    onVolumeChange,
-  } = useAudios();
-  const {
-    title,
-    inputTextDevice,
-    trackTag,
-    handleTitleInput,
-    handleTrackTagSelect,
-    handleDeviceClick,
-    handleSettingSubmit,
-  } = useTrackSetting();
+  const { setAudios } = useAudios();
+  const { inputTextDevice, trackTag, handleTitleInput, handleTrackTagSelect, handleDeviceClick, handleSettingSubmit } =
+    useTrackSetting();
 
   useEffect(() => {
     if (!projectId) {
@@ -47,17 +32,11 @@ function CreateTrackViewModel() {
       onTrackTagClick={handleTrackTagSelect}
       onBtnClick={handleSettingSubmit}
       onRecord={() => {}}
-      onVolumeChange={onVolumeChange}
       projectTitle="프로젝트명"
       bpmState={30}
       selectedTrackTag={trackTag}
       trackTags={TrackTags}
       inputTextDevice={inputTextDevice}
-      audioTracks={audioList || []}
-      time={time}
-      setTime={setTime}
-      isAudioPlaying={isAudioPlaying}
-      toggleAudio={toggleAudio}
     />
   );
 }
