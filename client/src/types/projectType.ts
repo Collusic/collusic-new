@@ -1,4 +1,4 @@
-import { MouseEvent, RefObject } from "react";
+import { FormEventHandler, MouseEvent, MouseEventHandler, RefObject, useRef } from "react";
 import { TrackResponseType } from "./trackType";
 
 export type Track =
@@ -50,3 +50,17 @@ export type ProjectResponseType = {
   projectName: string;
   tracks: Array<TrackResponseType>;
 };
+
+export interface ProjectSettingProps {
+  onDeviceClick: (deviceId: string, deviceName: string) => void;
+  onTrackClick?: MouseEventHandler;
+  onBtnClick: MouseEventHandler;
+  onBpmInput?: FormEventHandler;
+  onTitleInput: FormEventHandler;
+  onRecord: () => void;
+  mediaRecorderRef?: ReturnType<typeof useRef<MediaRecorder>>;
+  bpmState: number;
+  selectedTrackTag: Track;
+  trackTags: Track[];
+  inputTextDevice: string;
+}
