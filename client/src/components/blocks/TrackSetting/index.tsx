@@ -1,38 +1,18 @@
-import { FormEventHandler, MouseEventHandler, useRef } from "react";
+import { MouseEventHandler } from "react";
 
-import { Track } from "types/projectType";
+import { ProjectSettingProps } from "types/projectType";
 import Button from "components/atoms/Button";
 import Bpm from "components/atoms/Bpm";
 import RecordDevice from "../RecordDevice";
 import TrackTag from "../TrackTag";
 import TrackSpace from "../TrackSpace";
-import UnderPlayBar from "../UnderPlayBar";
-
+import useAudios from "hooks/useAudios";
+import UnderPlayBarViewModel from "viewmodel/UnderPlayBarViewModel";
 import "./style.scss";
 
-interface Props {
-  prjectId: number;
-  tarckId: number;
-  audioTracks: HTMLAudioElement[];
-}
-
-interface TrackSettingProps {
-  onDeviceClick: (deviceId: string, deviceName: string) => void;
-  onBtnClick: MouseEventHandler;
-  onTitleInput: FormEventHandler;
+interface TrackSettingProps extends ProjectSettingProps {
   onTrackTagClick: MouseEventHandler;
-  onRecord: () => void;
-  onVolumeChange: (value: number) => void;
   projectTitle: string;
-  bpmState: number;
-  selectedTrackTag: Track;
-  trackTags: Track[];
-  inputTextDevice: string;
-  audioTracks: HTMLAudioElement[];
-  time: number;
-  setTime: (value: number) => void;
-  isAudioPlaying: boolean;
-  toggleAudio: () => void;
 }
 
 function TrackSetting({
@@ -41,18 +21,13 @@ function TrackSetting({
   onTitleInput,
   onTrackTagClick,
   onRecord,
-  onVolumeChange,
   projectTitle,
   bpmState,
   selectedTrackTag,
   trackTags,
   inputTextDevice,
-  audioTracks,
-  time,
-  setTime,
-  isAudioPlaying,
-  toggleAudio,
 }: TrackSettingProps) {
+  const { time, setTime, audioList } = useAudios();
   return (
     <div id="track-setting">
       <div id="top-section">
@@ -72,23 +47,10 @@ function TrackSetting({
             </Button>
           </div>
         </div>
-        <TrackSpace
-          bpm={bpmState}
-          currentTime={time}
-          audioTracks={audioTracks}
-          setCurrentTime={setTime}
-          onRecord={onRecord}
-        />
+        <TrackSpace bpm={bpmState} time={time} audioTracks={audioList} setTime={setTime} onRecord={onRecord} />
       </div>
       <div id="bottom-section">
-        <UnderPlayBar
-          sound={0}
-          currentTime={`00:${Math.floor(time).toString().padStart(2, "0")}`}
-          totalTime="00:30"
-          onSoundInput={onVolumeChange}
-          isPlaying={isAudioPlaying}
-          onClickPlay={toggleAudio}
-        />
+        <UnderPlayBarViewModel currentTime={time} />
       </div>
     </div>
   );

@@ -4,20 +4,9 @@ import TrackPlayBox from "components/atoms/TrackPlayBox";
 import { TrackRecordBox } from "components/atoms/TrackRecordBox";
 
 import PlayStick from "../PlayStick";
+import { TrackPlayerProps } from "../../../types/trackType";
 
-function TrackPlayer({
-  bpm,
-  time,
-  audioTracks,
-  setTime,
-  onRecord,
-}: {
-  bpm: number;
-  time: number;
-  audioTracks: HTMLAudioElement[];
-  setTime: (time: number) => void;
-  onRecord: () => void;
-}) {
+function TrackPlayer({ bpm, time, audioTracks, setTime, onRecord }: TrackPlayerProps) {
   const [currentMeasure, setCurrentMeasure] = useState(0);
   const measure = Math.floor(bpm / 2) + 1;
 
@@ -54,7 +43,7 @@ function TrackPlayer({
           {audioTracks.map((audio) => (
             <TrackPlayBox key={audio.accessKey} measure={currentMeasure} maxMeasure={measure} isPlaying />
           ))}
-          <TrackRecordBox onRecord={onRecord} />
+          {onRecord && <TrackRecordBox onRecord={onRecord} />}
         </VStack>
       </SliderTrack>
       <SliderThumb top="-6px" w="fit-content" h="100%" cursor="pointer" _focus={{ outline: "none" }}>
@@ -63,5 +52,9 @@ function TrackPlayer({
     </Slider>
   );
 }
+
+TrackPlayer.defaultProps = {
+  onRecord: undefined,
+};
 
 export default TrackPlayer;
