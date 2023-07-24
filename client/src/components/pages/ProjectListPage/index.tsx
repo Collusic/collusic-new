@@ -14,7 +14,7 @@ function ProjectListPage() {
       <Suspense fallback={<Loading />}>
         <ProjectListViewModel />
       </Suspense>
-      <button type="button" id="create-project-btn" onClick={() => navigate("/createproject")}>
+      <button type="button" id="create-project-btn" onClick={() => navigate("/create")}>
         <img src={`${process.env.PUBLIC_URL}/assets/plus/plus.png`} alt="" />
       </button>
     </div>
