@@ -1,14 +1,14 @@
 import { MouseEventHandler } from "react";
+import "./style.scss";
 
 import { ProjectSettingProps } from "types/projectType";
-import Button from "components/atoms/Button";
-import Bpm from "components/atoms/Bpm";
-import RecordDevice from "../RecordDevice";
-import TrackTag from "../TrackTag";
-import TrackSpace from "../TrackSpace";
 import useAudios from "hooks/useAudios";
 import UnderPlayBarViewModel from "viewmodel/UnderPlayBarViewModel";
-import "./style.scss";
+import Button from "components/atoms/Button";
+import Bpm from "components/atoms/Bpm";
+import RecordDevice from "components/blocks/RecordDevice";
+import TrackTag from "components/blocks/TrackTag";
+import TrackSpace from "components/blocks/TrackSpace";
 
 interface TrackSettingProps extends ProjectSettingProps {
   onTrackTagClick: MouseEventHandler;
