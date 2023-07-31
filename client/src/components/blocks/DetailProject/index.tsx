@@ -11,30 +11,35 @@ import TrackBox from "components/atoms/TrackBox";
 import TrackSpace from "components/blocks/TrackSpace";
 import useAudios from "hooks/useAudios";
 import TrackCount from "components/atoms/TrackCount";
+import { setProjectLike } from "api/project";
 
-function DetailProject({ projectId, projectName, likeCount, isLiked, bpm, tracks }: DetailProjectInfo) {
+function DetailProject({ projectName, likeCount, isLiked, bpm, tracks }: DetailProjectInfo) {
   const navigate = useNavigate();
   const location = useLocation();
   const { time, setTime, audioList, setAudios } = useAudios();
 
-  const [count, setCount] = useState(likeCount);
-  const [like, setLike] = useState(isLiked);
+  const [count, setCount] = useState(0);
+  const [like, setLike] = useState(false);
 
-  const clickLikeButtonHandler = () => {
-    if (like) {
-      setCount(count - 1);
-    } else {
-      setCount(count + 1);
-    }
-
-    setLike(!like);
+  const clickLikeButtonHandler = async () => {
+    const { likeCount, isLiked } = await setProjectLike(Number(location.pathname.slice(1)));
+    setCount(likeCount);
+    setLike(isLiked);
   };
 
   useEffect(() => {
+    if (tracks.length === 0) {
+      return;
+    }
     setAudios(tracks.map((track) => track.fileUrl));
-    setLike(isLiked);
+  }, [tracks]);
+  useEffect(() => {
     setCount(likeCount);
-  });
+  }, [likeCount]);
+  useEffect(() => {
+    setLike(isLiked);
+  }, [isLiked]);
+
   return (
     <div id="detail-box">
       <div id="detail-header">
