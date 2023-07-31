@@ -21,7 +21,7 @@ const useAudios = () => {
         process.env.NODE_ENV === "development" ? url.replace(process.env.REACT_APP_TRACK_API || "", "") : url,
       );
       const promises = urlList.map((uri) => TRACK_API.get<Blob>(uri, { responseType: "blob" }).then((res) => res.data));
-      return await Promise.all(promises);
+      return Promise.all(promises);
     };
 
     getAudioBlob().then(async (blobs) => {
