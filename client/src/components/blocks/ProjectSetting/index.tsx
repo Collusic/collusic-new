@@ -9,6 +9,10 @@ import TrackTag from "../TrackTag";
 import TrackSpace from "../TrackSpace";
 import UnderPlayBar from "../UnderPlayBar";
 
+import useAudios from "../../../hooks/useAudios";
+// import { ProjectSettingProps } from "../../../types/projectType";
+import UnderPlayBarViewModel from "../../../viewmodel/UnderPlayBarViewModel";
+
 import "./style.scss";
 
 interface ProjectSettingProps {
@@ -48,12 +52,9 @@ function ProjectSetting({
   selectedTrackTag,
   trackTags,
   inputTextDevice,
-  time,
-  setTime,
-  isAudioPlaying,
-  toggleAudio,
-  audioTracks,
 }: ProjectSettingProps) {
+  const { time, setTime, audioList } = useAudios();
+
   return (
     <div id="project-setting">
       <div id="top-section">
@@ -61,8 +62,10 @@ function ProjectSetting({
           <div id="setting-box">
             <input className="project-title" onInput={onTitleInput} type="text" placeholder="프로젝트명" />
             <RecordDevice onDeviceClick={onDeviceClick} inputTextDevice={inputTextDevice} />
-            <Bpm bpmState={bpmState} onBpmInput={onBpmInput} />
-            <TrackTag onTrackClick={onTrackClick} selectedTrack={selectedTrackTag} tracks={trackTags} />
+            {onBpmInput && <Bpm bpmState={bpmState} onBpmInput={onBpmInput} />}
+            {onTrackClick && (
+              <TrackTag onTrackClick={onTrackClick} selectedTrack={selectedTrackTag} tracks={trackTags} />
+            )}
           </div>
           <Button type="green" onBtnClick={onBtnClick} marginTop="5rem" width="100%">
             프로젝트 생성하기
@@ -71,7 +74,7 @@ function ProjectSetting({
         <TrackSpace
           bpm={bpmState}
           currentTime={time}
-          audioTracks={audioTracks}
+          audioTracks={audioList}
           setCurrentTime={setTime}
           isRecording={isRecording}
           isRecordSuccess={isRecordSuccess}
@@ -80,14 +83,7 @@ function ProjectSetting({
         />
       </div>
       <div id="bottom-section">
-        <UnderPlayBar
-          sound={0}
-          currentTime={`00:${Math.floor(time).toString().padStart(2, "0")}`}
-          totalTime="00:30"
-          onSoundInput={onVolumeChange}
-          isPlaying={isAudioPlaying}
-          onClickPlay={toggleAudio}
-        />
+        <UnderPlayBarViewModel currentTime={time} />
       </div>
     </div>
   );

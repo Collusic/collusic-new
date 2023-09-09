@@ -1,14 +1,18 @@
 import { useEffect, useState } from "react";
 import axios, { Axios, AxiosResponse } from "axios";
+import { useRecoilState } from "recoil";
 
 import { TRACK_API } from "api/axios";
 import type { AudioType, AudioSourceType } from "types/audioType";
 
 import useTime from "./useTime";
+import { audioListState, isPlayingState } from "../model/audioModel";
 
 const useAudios = () => {
-  const [audioList, setAudioList] = useState<AudioType[]>([]);
-  const [isPlaying, setIsPlaying] = useState(false);
+  // const [audioList, setAudioList] = useState<AudioType[]>([]);
+  // const [isPlaying, setIsPlaying] = useState(false);
+  const [audioList, setAudioList] = useRecoilState<AudioType[]>(audioListState);
+  const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState);
   const [currentTime, setCurrentTime] = useTime();
 
   const setAudios = (sources: AudioSourceType[]) => {
@@ -28,8 +32,7 @@ const useAudios = () => {
       const promises = newSources.map(({ id, source: uri }) =>
         TRACK_API.get<Blob>(uri, { responseType: "blob" }).then((res) => ({ id, blob: res.data })),
       );
-      const blobs = await Promise.all(promises);
-      return blobs;
+      return Promise.all(promises);
     };
 
     getAudioBlob().then(async (blobs) => {

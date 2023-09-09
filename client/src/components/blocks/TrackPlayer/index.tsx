@@ -5,6 +5,7 @@ import { TrackRecordBox } from "components/atoms/TrackRecordBox";
 import { AudioType } from "types/audioType";
 
 import PlayStick from "../PlayStick";
+// import { TrackPlayerProps } from "../../../types/trackType";
 
 function TrackPlayer({
   bpm,
@@ -22,7 +23,7 @@ function TrackPlayer({
   setTime: (time: number) => void;
   isRecording: boolean;
   isRecordSuccess: boolean;
-  onRecord: () => void;
+  onRecord?: () => void;
   onTrackRemove: (audioId: AudioType["id"]) => void;
 }) {
   const [currentMeasure, setCurrentMeasure] = useState(0);
@@ -68,7 +69,7 @@ function TrackPlayer({
               isPlaying
             />
           ))}
-          {!isRecordSuccess && !isRecording && <TrackRecordBox onRecord={onRecord} />}
+          {!isRecordSuccess && !isRecording && onRecord && <TrackRecordBox onRecord={onRecord} />}
           {isRecording && (
             <TrackPlayBox
               id="new"
@@ -86,5 +87,9 @@ function TrackPlayer({
     </Slider>
   );
 }
+
+TrackPlayer.defaultProps = {
+  onRecord: undefined,
+};
 
 export default TrackPlayer;

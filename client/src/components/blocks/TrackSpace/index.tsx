@@ -1,6 +1,7 @@
 import { AudioType } from "types/audioType";
 import TopTimeBox from "../TopTimeBox";
 import TrackPlayer from "../TrackPlayer";
+// import { TrackPlayerProps } from "../../../types/trackType";
 
 import "./style.scss";
 

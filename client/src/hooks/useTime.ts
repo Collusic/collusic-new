@@ -1,7 +1,9 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { useRecoilState } from "recoil";
+
+import { timeState } from "../model/audioModel";
 
 const useTime = (): [number, (prev: number) => void] => {
-  const [time, setTime] = useState(0);
+  const [time, setTime] = useRecoilState(timeState);
 
   return [
     time,

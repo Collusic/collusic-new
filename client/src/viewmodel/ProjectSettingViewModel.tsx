@@ -1,12 +1,12 @@
-import { FormEvent, MouseEvent, useEffect, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { FormEvent, MouseEvent, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 
 import { bpmState, inputDeviceTextState, selectedTrackState, projectNameState } from "model/projectModel";
 import ProjectSetting from "components/blocks/ProjectSetting";
 import { trackList as trackTagList } from "utils/data/track";
 import { Track } from "types/projectType";
-import { addProject, getProject } from "api/project";
+import { addProject } from "api/project";
 import useAudios from "hooks/useAudios";
 
 function ProjectSettingViewModel() {

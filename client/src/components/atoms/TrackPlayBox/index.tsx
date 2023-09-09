@@ -40,7 +40,7 @@ export default function TrackPlayBox({
   return (
     <Slider
       w="calc(100% - 1px)"
-      minH="120px"
+      minH="6rem"
       value={measure}
       border={borderColor}
       borderRadius="0.8rem"

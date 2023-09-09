@@ -12,16 +12,11 @@ import UnderPlayBar from "../UnderPlayBar";
 
 import "./style.scss";
 
-interface Props {
-  prjectId: number;
-  tarckId: number;
-  audioTracks: HTMLAudioElement[];
-}
+import { ProjectSettingProps } from "types/projectType";
+import useAudios from "hooks/useAudios";
+import UnderPlayBarViewModel from "viewmodel/UnderPlayBarViewModel";
 
-interface TrackSettingProps {
-  onDeviceClick: (deviceId: string, deviceName: string) => void;
-  onBtnClick: MouseEventHandler;
-  onTitleInput: FormEventHandler;
+interface TrackSettingProps extends ProjectSettingProps {
   onTrackTagClick: MouseEventHandler;
   onRecord: () => void;
   onVolumeChange: (value: number) => void;
@@ -55,12 +50,8 @@ function TrackSetting({
   isRecordSuccess,
   trackTags,
   inputTextDevice,
-  audioTracks,
-  time,
-  setTime,
-  isAudioPlaying,
-  toggleAudio,
 }: TrackSettingProps) {
+  const { time, setTime, audioList } = useAudios();
   return (
     <div id="track-setting">
       <div id="top-section">
@@ -83,7 +74,7 @@ function TrackSetting({
         <TrackSpace
           bpm={bpmState}
           currentTime={time}
-          audioTracks={audioTracks}
+          audioTracks={audioList}
           setCurrentTime={setTime}
           isRecording={isRecording}
           isRecordSuccess={isRecordSuccess}
@@ -92,14 +83,7 @@ function TrackSetting({
         />
       </div>
       <div id="bottom-section">
-        <UnderPlayBar
-          sound={0}
-          currentTime={`00:${Math.floor(time).toString().padStart(2, "0")}`}
-          totalTime="00:30"
-          onSoundInput={onVolumeChange}
-          isPlaying={isAudioPlaying}
-          onClickPlay={toggleAudio}
-        />
+        <UnderPlayBarViewModel currentTime={time} />
       </div>
     </div>
   );
