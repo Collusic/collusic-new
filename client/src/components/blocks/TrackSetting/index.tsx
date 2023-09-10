@@ -1,57 +1,74 @@
-import { FormEventHandler, MouseEventHandler, useRef } from "react";
+import { useEffect } from "react";
 
 import { Track } from "types/projectType";
+import { TrackResponseType } from "types/trackType";
 import { AudioType } from "types/audioType";
 
 import Button from "components/atoms/Button";
 import Bpm from "components/atoms/Bpm";
-import RecordDevice from "../RecordDevice";
-import TrackTag from "../TrackTag";
-import TrackSpace from "../TrackSpace";
-import UnderPlayBar from "../UnderPlayBar";
+import RecordDevice from "components/blocks/RecordDevice";
+import TrackTag from "components/blocks//TrackTag";
+import TrackSpace from "components/blocks//TrackSpace";
+
+import UnderPlayBarViewModel from "viewmodel/UnderPlayBarViewModel";
+
+import useTrackSetting from "hooks/useTrackSetting";
+import useRecord from "hooks/useRecord";
+import useAudios from "hooks/useAudios";
 
 import "./style.scss";
 
-import { ProjectSettingProps } from "types/projectType";
-import useAudios from "hooks/useAudios";
-import UnderPlayBarViewModel from "viewmodel/UnderPlayBarViewModel";
-
-interface TrackSettingProps extends ProjectSettingProps {
-  onTrackTagClick: MouseEventHandler;
-  onRecord: () => void;
-  onVolumeChange: (value: number) => void;
-  onTrackRemove: (audioId: AudioType["id"]) => void;
+interface ProjectInfoType {
   projectTitle: string;
   bpmState: number;
-  selectedTrackTag: Track;
-  isRecording: boolean;
-  isRecordSuccess: boolean;
   trackTags: Track[];
-  inputTextDevice: string;
-  audioTracks: AudioType[];
-  time: number;
-  setTime: (value: number) => void;
-  isAudioPlaying: boolean;
-  toggleAudio: () => void;
+  tracks: TrackResponseType[];
 }
 
-function TrackSetting({
-  onDeviceClick,
-  onBtnClick,
-  onTitleInput,
-  onTrackTagClick,
-  onRecord,
-  onVolumeChange,
-  onTrackRemove,
-  projectTitle,
-  bpmState,
-  selectedTrackTag,
-  isRecording,
-  isRecordSuccess,
-  trackTags,
-  inputTextDevice,
-}: TrackSettingProps) {
-  const { time, setTime, audioList } = useAudios();
+function TrackSetting({ projectTitle, bpmState, trackTags, tracks }: ProjectInfoType) {
+  const {
+    inputDeviceId,
+    inputTextDevice,
+    trackTag,
+    handleTitleInput,
+    handleTrackTagSelect,
+    handleDeviceClick,
+    handleSettingSubmit,
+  } = useTrackSetting();
+
+  const {
+    isRecording,
+    isSuccess: isRecordSuccess,
+    data: recordData,
+    streamId: recordKey,
+    startRecord,
+    initRecord,
+  } = useRecord(inputDeviceId);
+
+  const { setAudios, addAudio, removeAudio } = useAudios();
+
+  const handleTrackRemove = (audioId: AudioType["id"]) => {
+    removeAudio(audioId);
+    initRecord();
+  };
+
+  useEffect(() => {
+    if (tracks.length === 0) {
+      return;
+    }
+
+    const audioSourceList = tracks.map(({ trackId, fileUrl }) => ({ id: trackId, source: fileUrl }));
+    setAudios(audioSourceList);
+  }, [tracks]);
+
+  useEffect(() => {
+    if (isRecordSuccess) {
+      const audio = new Audio(URL.createObjectURL(recordData));
+      audio.accessKey = recordKey;
+      addAudio(audio);
+    }
+  }, [isRecordSuccess]);
+
   return (
     <div id="track-setting">
       <div id="top-section">
@@ -62,28 +79,25 @@ function TrackSetting({
           </div>
           <div id="setting-section">
             <div id="setting-box">
-              <input className="track-title" onInput={onTitleInput} type="text" placeholder="트랙명" />
-              <RecordDevice onDeviceClick={onDeviceClick} inputTextDevice={inputTextDevice} />
-              <TrackTag onTrackClick={onTrackTagClick} selectedTrack={selectedTrackTag} tracks={trackTags} />
+              <input className="track-title" onInput={handleTitleInput} type="text" placeholder="트랙명" />
+              <RecordDevice onDeviceClick={handleDeviceClick} inputTextDevice={inputTextDevice} />
+              <TrackTag onTrackClick={handleTrackTagSelect} selectedTrack={trackTag} tracks={trackTags} />
             </div>
-            <Button type="green" onBtnClick={onBtnClick} marginTop="4rem" width="100%">
+            <Button type="green" onBtnClick={handleSettingSubmit} marginTop="4rem" width="100%">
               트랙 추가하기
             </Button>
           </div>
         </div>
         <TrackSpace
           bpm={bpmState}
-          currentTime={time}
-          audioTracks={audioList}
-          setCurrentTime={setTime}
           isRecording={isRecording}
           isRecordSuccess={isRecordSuccess}
-          onRecord={onRecord}
-          onTrackRemove={onTrackRemove}
+          onRecord={startRecord}
+          onTrackRemove={handleTrackRemove}
         />
       </div>
       <div id="bottom-section">
-        <UnderPlayBarViewModel currentTime={time} />
+        <UnderPlayBarViewModel />
       </div>
     </div>
   );

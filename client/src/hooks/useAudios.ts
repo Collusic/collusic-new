@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios, { Axios, AxiosResponse } from "axios";
 import { useRecoilState } from "recoil";
 
 import { TRACK_API } from "api/axios";
@@ -9,8 +8,6 @@ import useTime from "./useTime";
 import { audioListState, isPlayingState } from "../model/audioModel";
 
 const useAudios = () => {
-  // const [audioList, setAudioList] = useState<AudioType[]>([]);
-  // const [isPlaying, setIsPlaying] = useState(false);
   const [audioList, setAudioList] = useRecoilState<AudioType[]>(audioListState);
   const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState);
   const [currentTime, setCurrentTime] = useTime();
@@ -90,7 +87,19 @@ const useAudios = () => {
     } else {
       audioList.forEach(({ audio }) => audio.pause());
     }
+
+    return () => {
+      audioList.forEach(({ audio }) => audio.pause());
+    };
   }, [isPlaying]);
+
+  // 언마운트 시 오디오 리스트, 재생 상태 초기화
+  useEffect(() => {
+    return () => {
+      setIsPlaying(false);
+      setAudioList([]);
+    };
+  }, []);
 
   return {
     audioList,

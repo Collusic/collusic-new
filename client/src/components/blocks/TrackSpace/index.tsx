@@ -1,31 +1,23 @@
 import { AudioType } from "types/audioType";
-import TopTimeBox from "../TopTimeBox";
-import TrackPlayer from "../TrackPlayer";
-// import { TrackPlayerProps } from "../../../types/trackType";
+
+import TopTimeBox from "components/blocks/TopTimeBox";
+import TrackPlayer from "components/blocks/TrackPlayer";
+
+import useAudios from "hooks/useAudios";
 
 import "./style.scss";
 
 interface Props {
   bpm: number;
-  currentTime: number;
-  audioTracks: AudioType[];
-  setCurrentTime: (prev: number) => void;
-  isRecording: boolean;
-  isRecordSuccess: boolean;
-  onRecord: () => void;
-  onTrackRemove: (audioId: AudioType["id"]) => void;
+  isRecording?: boolean;
+  isRecordSuccess?: boolean;
+  onRecord?: () => void;
+  onTrackRemove?: (audioId: AudioType["id"]) => void;
 }
 
-function TrackSpace({
-  bpm = 0,
-  currentTime,
-  audioTracks,
-  setCurrentTime,
-  isRecording,
-  isRecordSuccess,
-  onRecord,
-  onTrackRemove,
-}: Props) {
+function TrackSpace({ bpm = 0, isRecording, isRecordSuccess, onRecord, onTrackRemove }: Props) {
+  const { time: currentTime, setTime: setCurrentTime, audioList: audioTracks } = useAudios();
+
   return (
     <div id="track-space">
       <TopTimeBox bpm={bpm} />
@@ -42,5 +34,12 @@ function TrackSpace({
     </div>
   );
 }
+
+TrackSpace.defaultProps = {
+  isRecording: false,
+  isRecordSuccess: false,
+  onRecord: undefined,
+  onTrackRemove: undefined,
+};
 
 export default TrackSpace;

@@ -1,21 +1,16 @@
-import useAudios from "../hooks/useAudios";
-import UnderPlayBar from "../components/blocks/UnderPlayBar";
+import UnderPlayBar from "components/blocks/UnderPlayBar";
 
-interface UnderPlayBarViewModelProps {
-  currentTime?: number;
-}
+import useAudios from "hooks/useAudios";
 
-function UnderPlayBarViewModel({ currentTime }: UnderPlayBarViewModelProps) {
+function UnderPlayBarViewModel() {
   const { time, onVolumeChange, isPlaying, toggle } = useAudios();
 
-  const refineTime = `00:${Math.floor(currentTime || time)
-    .toString()
-    .padStart(2, "0")}`;
+  const refinedTime = `00:${Math.floor(time).toString().padStart(2, "0")}`;
 
   return (
     <UnderPlayBar
       sound={50}
-      currentTime={refineTime}
+      currentTime={refinedTime}
       totalTime="00:30"
       onSoundInput={onVolumeChange}
       isPlaying={isPlaying}
@@ -23,9 +18,5 @@ function UnderPlayBarViewModel({ currentTime }: UnderPlayBarViewModelProps) {
     />
   );
 }
-
-UnderPlayBarViewModel.defaultProps = {
-  currentTime: undefined,
-};
 
 export default UnderPlayBarViewModel;

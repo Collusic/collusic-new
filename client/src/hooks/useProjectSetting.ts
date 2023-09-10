@@ -1,10 +1,14 @@
-import { useState, MouseEvent, FormEvent } from "react";
+import { FormEvent, MouseEvent, useState } from "react";
+import { useRecoilState } from "recoil";
 
 import type { Track } from "types/projectType";
+
+import { bpmState } from "model/projectModel";
 import useInputDevice from "hooks/useInputDevice";
 
-const useTrackSetting = () => {
-  const [title, setTitle] = useState("");
+const useProjectSetting = () => {
+  const [title, setTitle] = useState<string>();
+  const [bpm, setBpm] = useRecoilState(bpmState);
   const [trackTag, setTrackTag] = useState<Track>("");
 
   const { inputDeviceId, inputTextDevice, handleDeviceClick } = useInputDevice();
@@ -12,6 +16,11 @@ const useTrackSetting = () => {
   // 프로젝트 이름 설정
   const handleTitleInput = (e: FormEvent) => {
     setTitle((e.currentTarget as HTMLInputElement).value);
+  };
+
+  // 프로젝트 bpm 설정
+  const handleBpmInput = (e: FormEvent) => {
+    setBpm(Number((e.currentTarget as HTMLInputElement).value));
   };
 
   // 등록할 트랙 태그 선택
@@ -22,19 +31,17 @@ const useTrackSetting = () => {
     setTrackTag(e.currentTarget.lastChild?.nodeValue as Track);
   };
 
-  // 프로젝트 생성하기 버튼 클릭
-  const handleSettingSubmit = () => {};
-
   return {
     title,
+    bpm,
     inputDeviceId,
     inputTextDevice,
     trackTag,
     handleTitleInput,
+    handleBpmInput,
     handleDeviceClick,
     handleTrackTagSelect,
-    handleSettingSubmit,
   };
 };
 
-export default useTrackSetting;
+export default useProjectSetting;

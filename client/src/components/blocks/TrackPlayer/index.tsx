@@ -21,10 +21,10 @@ function TrackPlayer({
   time: number;
   audioTracks: AudioType[];
   setTime: (time: number) => void;
-  isRecording: boolean;
-  isRecordSuccess: boolean;
+  isRecording?: boolean;
+  isRecordSuccess?: boolean;
   onRecord?: () => void;
-  onTrackRemove: (audioId: AudioType["id"]) => void;
+  onTrackRemove?: (audioId: AudioType["id"]) => void;
 }) {
   const [currentMeasure, setCurrentMeasure] = useState(0);
   const measure = Math.floor(bpm / 2) + 1;
@@ -89,7 +89,10 @@ function TrackPlayer({
 }
 
 TrackPlayer.defaultProps = {
+  isRecording: false,
+  isRecordSuccess: false,
   onRecord: undefined,
+  onTrackRemove: undefined,
 };
 
 export default TrackPlayer;
