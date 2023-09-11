@@ -40,7 +40,7 @@ function CreateTrackViewModel() {
       tracks={projectInfo.tracks}
     />
   ) : (
-    <div>Laoding ...</div>
+    <div>Loading...</div>
   );
 }
 
