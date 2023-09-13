@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
-import { DetailProjectInfo } from "types/detailProjectType";
+import { ProjectResponseType } from "types/projectType";
 import { API } from "api/axios";
 
 import DetailProject from "components/blocks/DetailProject";
 
 function DetailProjectViewModel() {
   const { pathname } = useLocation();
-  const [detailProjectInfo, setDetailProjectInfo] = useState<DetailProjectInfo>();
+  const [detailProjectInfo, setDetailProjectInfo] = useState<ProjectResponseType>();
 
   const getData = async () => {
-    const { data } = await API.get<DetailProjectInfo>(`projects/${pathname.slice(1)}`);
+    const { data } = await API.get<ProjectResponseType>(`projects/${pathname.slice(1)}`);
 
     setDetailProjectInfo(data);
   };

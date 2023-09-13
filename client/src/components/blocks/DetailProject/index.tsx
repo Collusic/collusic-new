@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { DetailProjectInfo } from "types/detailProjectType";
+import { DetailProjectProps } from "types/detailProjectType";
 import { setProjectLike } from "api/project";
 
 import Bpm from "components/atoms/Bpm";
@@ -16,7 +16,7 @@ import useAudios from "hooks/useAudios";
 
 import "./style.scss";
 
-function DetailProject({ projectName, likeCount, isLiked, bpm, tracks }: DetailProjectInfo) {
+function DetailProject({ projectName, likeCount, isLiked, bpm, tracks }: DetailProjectProps) {
   const navigate = useNavigate();
   const location = useLocation();
 
