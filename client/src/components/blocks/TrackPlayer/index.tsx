@@ -6,43 +6,39 @@ import { AudioType } from "types/audioType";
 import PlayStick from "components/blocks/PlayStick";
 import TrackPlayBox from "components/atoms/TrackPlayBox";
 import TrackRecordBox from "components/atoms/TrackRecordBox";
+import useAudios from "hooks/useAudios";
 
 function TrackPlayer({
   bpm,
-  time,
-  audioTracks,
-  setTime,
   isRecording,
   isRecordSuccess,
   onRecord,
   onTrackRemove,
 }: {
   bpm: number;
-  time: number;
-  audioTracks: AudioType[];
-  setTime: (time: number) => void;
   isRecording?: boolean;
   isRecordSuccess?: boolean;
   onRecord?: () => void;
   onTrackRemove?: (audioId: AudioType["id"]) => void;
 }) {
+  const { time: currentTime, setTime: setCurrentTime, audioList: audioTracks } = useAudios();
   const [currentMeasure, setCurrentMeasure] = useState(0);
   const totalMeasure = Math.floor(bpm / 2) + 1;
 
   const handlePlayerChange = (nextMeasure: number) => {
     setCurrentMeasure(nextMeasure);
-    setTime(Number((nextMeasure * (30 / totalMeasure)).toFixed(3)));
+    setCurrentTime(Number((nextMeasure * (30 / totalMeasure)).toFixed(3)));
   };
 
   useEffect(() => {
-    setCurrentMeasure(time / (30 / totalMeasure));
-  }, [time]);
+    setCurrentMeasure(currentTime / (30 / totalMeasure));
+  }, [currentTime]);
 
   return (
     <Slider
       w="100%"
       h="calc(100% - 5rem)"
-      aria-label="slider-ex-2"
+      aria-label="track-player"
       value={currentMeasure}
       onChange={handlePlayerChange}
       min={0}

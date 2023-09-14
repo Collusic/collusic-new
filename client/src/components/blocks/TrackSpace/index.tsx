@@ -3,8 +3,6 @@ import { AudioType } from "types/audioType";
 import TopTimeBox from "components/blocks/TopTimeBox";
 import TrackPlayer from "components/blocks/TrackPlayer";
 
-import useAudios from "hooks/useAudios";
-
 import "./style.scss";
 
 interface Props {
@@ -16,16 +14,11 @@ interface Props {
 }
 
 function TrackSpace({ bpm = 0, isRecording, isRecordSuccess, onRecord, onTrackRemove }: Props) {
-  const { time: currentTime, setTime: setCurrentTime, audioList: audioTracks } = useAudios();
-
   return (
     <div id="track-space">
       <TopTimeBox bpm={bpm} />
       <TrackPlayer
         bpm={bpm}
-        time={currentTime}
-        audioTracks={audioTracks}
-        setTime={setCurrentTime}
         isRecording={isRecording}
         isRecordSuccess={isRecordSuccess}
         onRecord={onRecord}
