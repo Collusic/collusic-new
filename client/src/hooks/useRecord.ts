@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface MediaRecorderBaseResult {
   isRecording: boolean;
@@ -32,8 +32,8 @@ const getMediaRecorder = async ({
   onRecStop,
 }: {
   deviceId: ConstrainDOMString;
-  onRecStart: () => void;
-  onRecStop: (data: Blob) => void;
+  onRecStart?: () => void;
+  onRecStop?: (data: Blob) => void;
 }) => {
   const audioArray: BlobPart[] = []; // 녹음 데이터 저장 배열
   const stream = await navigator.mediaDevices.getUserMedia({
@@ -46,7 +46,7 @@ const getMediaRecorder = async ({
     audioArray.push(e.data);
   });
 
-  mediaRecorder.addEventListener("start", onRecStart);
+  onRecStart && mediaRecorder.addEventListener("start", onRecStart);
 
   // 녹음이 종료되었을 때
   mediaRecorder.addEventListener("stop", () => {
@@ -56,7 +56,7 @@ const getMediaRecorder = async ({
     audioArray.splice(0); // 기존 오디오 데이터 초기화
 
     stream.getAudioTracks().forEach((track) => track.stop());
-    onRecStop(blob);
+    onRecStop && onRecStop(blob);
   });
 
   return mediaRecorder;
@@ -65,7 +65,7 @@ const getMediaRecorder = async ({
 const useRecord = (deviceId: ConstrainDOMString) => {
   const [isRecording, setIsRecording] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [data, setData] = useState<Blob>();
+  const dataRef = useRef<Blob>();
   const mediaRecorderRef = useRef<MediaRecorder>();
 
   const handleRecordStart = () => {
@@ -75,15 +75,13 @@ const useRecord = (deviceId: ConstrainDOMString) => {
   };
 
   const handleRecordStop = (data: Blob) => {
-    console.log("stop!");
-    setData(data);
+    dataRef.current = data;
     setIsRecording(false);
     setIsSuccess(true);
   };
 
   const initRecord = () => {
-    setData(undefined);
-    setIsRecording(false);
+    dataRef.current = undefined;
     setIsSuccess(false);
   };
 
@@ -97,29 +95,30 @@ const useRecord = (deviceId: ConstrainDOMString) => {
 
       mediaRecorderRef.current = mediaRecorder;
       mediaRecorder.start();
-
-      // 30초 뒤에 녹음 중지
-      setTimeout(() => {
-        mediaRecorder.stop();
-      }, 30000);
-
-      console.log(mediaRecorderRef);
     } catch (err) {
       console.log(err);
       alert("녹음이 가능한 입력장치가 아닙니다.");
     }
   };
 
+  useEffect(() => {}, [isSuccess]);
+
   const stopRecord = () => {
-    if (mediaRecorderRef.current) {
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state === "recording") {
       mediaRecorderRef.current.stop();
     }
   };
 
+  useEffect(() => {
+    return () => {
+      mediaRecorderRef.current = undefined;
+    };
+  }, []);
+
   return {
     isRecording,
     isSuccess,
-    data,
+    data: dataRef.current,
     streamId: mediaRecorderRef.current?.stream.id,
     startRecord,
     stopRecord,

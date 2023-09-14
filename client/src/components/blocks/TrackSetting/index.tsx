@@ -15,6 +15,7 @@ import UnderPlayBarViewModel from "viewmodel/UnderPlayBarViewModel";
 import useTrackSetting from "hooks/useTrackSetting";
 import useRecord from "hooks/useRecord";
 import useAudios from "hooks/useAudios";
+import useTimer from "hooks/useTimer";
 
 import "./style.scss";
 
@@ -42,15 +43,39 @@ function TrackSetting({ projectTitle, bpmState, trackTags, tracks }: ProjectInfo
     data: recordData,
     streamId: recordKey,
     startRecord,
+    stopRecord,
     initRecord,
   } = useRecord(inputDeviceId);
 
   const { setAudios, addAudio, removeAudio } = useAudios();
 
-  const handleTrackRemove = (audioId: AudioType["id"]) => {
-    removeAudio(audioId);
-    initRecord();
+  const { startTimer, stopTimer, isEnd: isTimerEnd, time: timerTime } = useTimer(10);
+
+  const handleRecordButtonClick = () => {
+    startRecord();
+    startTimer();
   };
+
+  const handleTrackRemove = (audioId: AudioType["id"]) => {
+    stopRecord();
+    stopTimer();
+
+    if (window.confirm("녹음된 트랙이 있어요. 정말 삭제할까요?")) {
+      initRecord();
+      removeAudio(audioId);
+    }
+  };
+
+  // timer가 종료되면 트랙 녹음 중지
+  useEffect(() => {
+    if (isTimerEnd) {
+      stopRecord();
+    }
+  }, [isTimerEnd]);
+
+  useEffect(() => {
+    console.log(timerTime);
+  }, [timerTime]);
 
   useEffect(() => {
     if (tracks.length === 0) {
@@ -92,7 +117,7 @@ function TrackSetting({ projectTitle, bpmState, trackTags, tracks }: ProjectInfo
           bpm={bpmState}
           isRecording={isRecording}
           isRecordSuccess={isRecordSuccess}
-          onRecord={startRecord}
+          onRecord={handleRecordButtonClick}
           onTrackRemove={handleTrackRemove}
         />
       </div>

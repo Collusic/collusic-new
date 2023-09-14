@@ -27,7 +27,7 @@ const useTimer = (value: number) => {
     }
   }, [time]);
 
-  return { isEnd, time, startTimer: () => setIsStart(true) };
+  return { isEnd, time, startTimer: () => setIsStart(true), stopTimer: () => setIsStart(false) };
 };
 
 export default useTimer;

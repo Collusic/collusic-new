@@ -29,3 +29,5 @@ export function TrackRecordBox({ onRecord }: { onRecord: () => void }) {
     </div>
   );
 }
+
+export default TrackRecordBox;
