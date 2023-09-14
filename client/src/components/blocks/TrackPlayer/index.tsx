@@ -1,11 +1,11 @@
-import { Slider, SliderThumb, SliderTrack, VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import TrackPlayBox from "components/atoms/TrackPlayBox";
-import { TrackRecordBox } from "components/atoms/TrackRecordBox";
+import { Slider, SliderThumb, SliderTrack, VStack } from "@chakra-ui/react";
+
 import { AudioType } from "types/audioType";
 
-import PlayStick from "../PlayStick";
-// import { TrackPlayerProps } from "../../../types/trackType";
+import PlayStick from "components/blocks/PlayStick";
+import TrackPlayBox from "components/atoms/TrackPlayBox";
+import TrackRecordBox from "components/atoms/TrackRecordBox";
 
 function TrackPlayer({
   bpm,
@@ -27,14 +27,15 @@ function TrackPlayer({
   onTrackRemove?: (audioId: AudioType["id"]) => void;
 }) {
   const [currentMeasure, setCurrentMeasure] = useState(0);
-  const measure = Math.floor(bpm / 2) + 1;
+  const totalMeasure = Math.floor(bpm / 2) + 1;
+
+  const handlePlayerChange = (nextMeasure: number) => {
+    setCurrentMeasure(nextMeasure);
+    setTime(Number((nextMeasure * (30 / totalMeasure)).toFixed(3)));
+  };
 
   useEffect(() => {
-    setTime(Number((currentMeasure * (30 / measure)).toFixed(3)));
-  }, [currentMeasure]);
-
-  useEffect(() => {
-    setCurrentMeasure(time / (30 / measure));
+    setCurrentMeasure(time / (30 / totalMeasure));
   }, [time]);
 
   return (
@@ -43,9 +44,9 @@ function TrackPlayer({
       h="calc(100% - 5rem)"
       aria-label="slider-ex-2"
       value={currentMeasure}
-      onChange={setCurrentMeasure}
+      onChange={handlePlayerChange}
       min={0}
-      max={measure}
+      max={totalMeasure}
       focusThumbOnChange={false}
     >
       <SliderTrack w="100%" height="calc(100% - 3rem)" maxH="inherit" minH="inherit" paddingY="5%">
@@ -64,7 +65,7 @@ function TrackPlayer({
               key={audio.accessKey}
               id={id}
               measure={currentMeasure}
-              maxMeasure={measure}
+              maxMeasure={totalMeasure}
               onRemoveButtonClick={onTrackRemove}
               isPlaying
             />
@@ -74,7 +75,7 @@ function TrackPlayer({
             <TrackPlayBox
               id="new"
               measure={currentMeasure}
-              maxMeasure={measure}
+              maxMeasure={totalMeasure}
               onRemoveButtonClick={onTrackRemove}
               isRecording
             />
