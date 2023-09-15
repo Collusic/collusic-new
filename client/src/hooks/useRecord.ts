@@ -50,7 +50,6 @@ const getMediaRecorder = async ({
 
   // 녹음이 종료되었을 때
   mediaRecorder.addEventListener("stop", () => {
-    console.log("stop!");
     // 배열에 담긴 오디오데이터 합치고, 코덱 설정
     const blob = new Blob(audioArray, { type: "audio/ogg codecs=opus" });
     audioArray.splice(0); // 기존 오디오 데이터 초기화
@@ -62,6 +61,7 @@ const getMediaRecorder = async ({
   return mediaRecorder;
 };
 
+// TODO : 녹음 중에 삭제 안되는 이슈 해결
 const useRecord = (deviceId: ConstrainDOMString) => {
   const [isRecording, setIsRecording] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -69,7 +69,6 @@ const useRecord = (deviceId: ConstrainDOMString) => {
   const mediaRecorderRef = useRef<MediaRecorder>();
 
   const handleRecordStart = () => {
-    console.log("start~");
     setIsRecording(true);
     setIsSuccess(false);
   };

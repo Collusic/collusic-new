@@ -49,7 +49,7 @@ function TrackSetting({ projectTitle, bpmState, trackTags, tracks }: ProjectInfo
 
   const { setAudios, addAudio, removeAudio } = useAudios();
 
-  const { start: startTimer, pause: pauseTimer, isExpired, time: timerTime } = useTimer(10);
+  const { start: startTimer, pause: pauseTimer, isExpired, time: timerTime } = useTimer(30);
 
   const handleRecordButtonClick = () => {
     startRecord();
@@ -72,10 +72,6 @@ function TrackSetting({ projectTitle, bpmState, trackTags, tracks }: ProjectInfo
       stopRecord();
     }
   }, [isExpired]);
-
-  useEffect(() => {
-    console.log(timerTime);
-  }, [timerTime]);
 
   useEffect(() => {
     if (tracks.length === 0) {
