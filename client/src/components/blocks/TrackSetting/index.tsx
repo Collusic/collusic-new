@@ -49,7 +49,7 @@ function TrackSetting({ projectTitle, bpmState, trackTags, tracks }: ProjectInfo
 
   const { setAudios, addAudio, removeAudio } = useAudios();
 
-  const { startTimer, stopTimer, isEnd: isTimerEnd, time: timerTime } = useTimer(10);
+  const { start: startTimer, pause: pauseTimer, isExpired, time: timerTime } = useTimer(10);
 
   const handleRecordButtonClick = () => {
     startRecord();
@@ -58,7 +58,7 @@ function TrackSetting({ projectTitle, bpmState, trackTags, tracks }: ProjectInfo
 
   const handleTrackRemove = (audioId: AudioType["id"]) => {
     stopRecord();
-    stopTimer();
+    pauseTimer();
 
     if (window.confirm("녹음된 트랙이 있어요. 정말 삭제할까요?")) {
       initRecord();
@@ -68,10 +68,10 @@ function TrackSetting({ projectTitle, bpmState, trackTags, tracks }: ProjectInfo
 
   // timer가 종료되면 트랙 녹음 중지
   useEffect(() => {
-    if (isTimerEnd) {
+    if (isExpired) {
       stopRecord();
     }
-  }, [isTimerEnd]);
+  }, [isExpired]);
 
   useEffect(() => {
     console.log(timerTime);

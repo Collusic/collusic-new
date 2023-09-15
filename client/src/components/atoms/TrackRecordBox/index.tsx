@@ -1,10 +1,16 @@
 import { useEffect } from "react";
+
+import useTimer from "hooks/useTimer";
 import RecordButton from "components/atoms/RecordButton";
 
 import "./style.scss";
 
 export function TrackRecordBox({ onRecord }: { onRecord: () => void }) {
-  const handleRecordButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {};
+  const { time: count, didStart, isExpired, start: startTimer } = useTimer(3);
+
+  const handleRecordButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    startTimer();
+  };
 
   const startRecord = () => {
     onRecord();
@@ -15,6 +21,12 @@ export function TrackRecordBox({ onRecord }: { onRecord: () => void }) {
   };
 
   useEffect(() => {
+    if (isExpired) {
+      startRecord();
+    }
+  }, [isExpired]);
+
+  useEffect(() => {
     const $recordBox = document.querySelector("#record-box");
     $recordBox?.addEventListener("pointerdown", stopEventPropagation);
     return () => {
@@ -22,12 +34,12 @@ export function TrackRecordBox({ onRecord }: { onRecord: () => void }) {
     };
   });
 
-  return (
+  return !isExpired ? (
     <div id="record-box">
-      <RecordButton handleBtnClickEvent={handleRecordButtonClick} onEndTimer={startRecord} />
+      <RecordButton isTimerStart={didStart} timerCount={count} onClick={handleRecordButtonClick} />
       <input type="hidden" />
     </div>
-  );
+  ) : null;
 }
 
 export default TrackRecordBox;

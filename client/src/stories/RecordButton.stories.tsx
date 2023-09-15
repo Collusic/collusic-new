@@ -10,6 +10,4 @@ export default {
 const Template: ComponentStory<typeof RecordButton> = (args) => <RecordButton {...args} />;
 
 export const Default = Template.bind({});
-Default.args = {
-  handleBtnClickEvent: () => {},
-};
+Default.args = {};
