@@ -1,5 +1,5 @@
 import { MouseEvent, RefObject } from "react";
-import { TrackResponseType } from "./trackType";
+import { TrackResponseType } from "types/trackType";
 
 export type Track =
   | "피아노"

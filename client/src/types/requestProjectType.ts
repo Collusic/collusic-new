@@ -1,5 +1,5 @@
-import { ContributeProject } from "./contributeProjectType";
-import { User } from "./userType";
+import { ContributeProject } from "types/contributeProjectType";
+import { User } from "types/userType";
 
 type Field = "melody" | "instrument" | "lyric";
 
@@ -10,7 +10,6 @@ type Genre =
   | "Country"
   | "Electronic"
   | "Fork"
-  | "Funk"
   | "Hiphop"
   | "Indie"
   | "Jazz"

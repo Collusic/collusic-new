@@ -4,8 +4,8 @@ import { useRecoilState } from "recoil";
 import { TRACK_API } from "api/axios";
 import type { AudioType, AudioSourceType } from "types/audioType";
 
-import useTime from "./useTime";
-import { audioListState, isPlayingState } from "../model/audioModel";
+import useTime from "hooks/useTime";
+import { audioListState, isPlayingState } from "model/audioModel";
 
 const useAudios = () => {
   const [audioList, setAudioList] = useRecoilState<AudioType[]>(audioListState);

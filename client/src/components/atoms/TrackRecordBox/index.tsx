@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import RecordButton from "../RecordButton";
+import RecordButton from "components/atoms/RecordButton";
 
 import "./style.scss";
 

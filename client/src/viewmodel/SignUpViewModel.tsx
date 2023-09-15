@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AxiosResponse } from "axios";
 
@@ -10,7 +10,7 @@ import { Modal } from "components/atoms/Modal";
 import useAuth from "components/atoms/Auth/hooks/useAuth";
 
 import { API } from "api/axios";
-import { validateLetter, validateLength } from "../utils/validation";
+import { validateLetter, validateLength } from "utils/validation";
 
 type MemberData = {
   [key: string]: any;

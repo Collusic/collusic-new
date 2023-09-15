@@ -1,5 +1,5 @@
 import type { ProjectResponseType } from "types/projectType";
-import { API } from "./axios";
+import { API } from "api/axios";
 
 // 프로젝트 생성
 export const addProject = async (params: {}) => {
