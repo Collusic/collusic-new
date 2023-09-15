@@ -1,6 +1,6 @@
-import TopTimeBox from "../TopTimeBox";
-import TrackPlayer from "../TrackPlayer";
-import { TrackPlayerProps } from "../../../types/trackType";
+import TopTimeBox from "components/blocks/TopTimeBox";
+import TrackPlayer from "components/blocks/TrackPlayer";
+import { TrackPlayerProps } from "types/trackType";
 import "./style.scss";
 
 function TrackSpace({ bpm = 0, time, audioTracks, setTime, onRecord }: TrackPlayerProps) {

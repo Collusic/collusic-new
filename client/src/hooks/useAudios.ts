@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { TRACK_API } from "api/axios";
 
-import useTime from "./useTime";
-import { audioListState, isPlayingState } from "../model/audioModel";
+import useTime from "hooks/useTime";
+import { audioListState, isPlayingState } from "model/audioModel";
 
 const useAudios = () => {
   const [audioList, setAudioList] = useRecoilState(audioListState);

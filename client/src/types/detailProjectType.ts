@@ -1,4 +1,4 @@
-import { TrackResponseType } from "./trackType";
+import { TrackResponseType } from "types/trackType";
 
 export interface DetailProjectInfo {
   projectId: number;

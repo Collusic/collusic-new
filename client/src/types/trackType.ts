@@ -1,4 +1,4 @@
-import { Track } from "./projectType";
+import { Track } from "types/projectType";
 
 export type TrackResponseType = {
   fileUrl: string;

@@ -1,4 +1,4 @@
-import { LoginButton } from "../../atoms/LoginButton";
+import { LoginButton } from "components/atoms/LoginButton";
 import "./style.scss";
 
 type signInProps = {

@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import TrackPlayBox from "components/atoms/TrackPlayBox";
 import { TrackRecordBox } from "components/atoms/TrackRecordBox";
 
-import PlayStick from "../PlayStick";
-import { TrackPlayerProps } from "../../../types/trackType";
+import PlayStick from "components/blocks/PlayStick";
+import { TrackPlayerProps } from "types/trackType";
 
 function TrackPlayer({ bpm, time, audioTracks, setTime, onRecord }: TrackPlayerProps) {
   const [currentMeasure, setCurrentMeasure] = useState(0);

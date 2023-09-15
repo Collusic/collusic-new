@@ -7,8 +7,8 @@ import { RedirectViewModel } from "viewmodel/RedirectViewModel";
 import CreateProjectPage from "components/pages/CreateProjectPage";
 import ProjectListPage from "components/pages/ProjectListPage";
 import CreateTrackViewModel from "viewmodel/CreateTrackViewModel";
-import ProjectSettingViewModel from "./viewmodel/ProjectSettingViewModel";
-import DetailProjectPage from "./components/pages/DetailProjectPage";
+import ProjectSettingViewModel from "viewmodel/ProjectSettingViewModel";
+import DetailProjectPage from "components/pages/DetailProjectPage";
 
 function App() {
   return (

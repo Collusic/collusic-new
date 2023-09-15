@@ -1,12 +1,12 @@
 import Button from "components/atoms/Button";
 import Bpm from "components/blocks/BpmBar";
-import RecordDevice from "../RecordDevice";
-import TrackTag from "../TrackTag";
+import RecordDevice from "components/blocks/RecordDevice";
+import TrackTag from "components/blocks/TrackTag";
 import "./style.scss";
-import TrackSpace from "../TrackSpace";
-import useAudios from "../../../hooks/useAudios";
-import { ProjectSettingProps } from "../../../types/projectType";
-import UnderPlayBarViewModel from "../../../viewmodel/UnderPlayBarViewModel";
+import TrackSpace from "components/blocks/TrackSpace";
+import useAudios from "hooks/useAudios";
+import { ProjectSettingProps } from "types/projectType";
+import UnderPlayBarViewModel from "viewmodel/UnderPlayBarViewModel";
 
 function ProjectSetting({
   onDeviceClick,

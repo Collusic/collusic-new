@@ -1,5 +1,5 @@
 import { FormEventHandler, MouseEvent, MouseEventHandler, RefObject, useRef } from "react";
-import { TrackResponseType } from "./trackType";
+import { TrackResponseType } from "types/trackType";
 
 export type Track =
   | "피아노"

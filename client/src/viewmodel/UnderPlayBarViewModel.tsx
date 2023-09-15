@@ -1,5 +1,5 @@
-import useAudios from "../hooks/useAudios";
-import UnderPlayBar from "../components/blocks/UnderPlayBar";
+import useAudios from "hooks/useAudios";
+import UnderPlayBar from "components/blocks/UnderPlayBar";
 
 interface UnderPlayBarViewModelProps {
   currentTime?: number;

@@ -17,7 +17,7 @@ function DetailProjectViewModel() {
   });
 
   const getData = async () => {
-    const { data }: { data: DetailProjectInfo } = await API.get(`projects/${pathname.slice(1)}`);
+    const { data } = await API.get<DetailProjectInfo>(`projects/${pathname.slice(1)}`);
 
     setDetailProjectInfo(data);
   };
