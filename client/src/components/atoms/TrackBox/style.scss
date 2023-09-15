@@ -3,9 +3,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 24rem;
+  min-width: 15rem;
+  width: 22vw;
   height: 6rem;
-  background-color: #242424;
+  margin-top: 1rem;
+  background-color: #1b1b1b;
   border-radius: 20px;
 
   .top-box {

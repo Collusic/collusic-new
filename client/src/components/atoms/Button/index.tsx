@@ -10,6 +10,8 @@ interface ButtonProps {
   isSelected?: boolean;
   onBtnClick: MouseEventHandler;
   width?: string;
+  height?: string;
+  padding?: string;
   marginLeft?: string;
   marginTop?: string;
   imgSrc?: string | null;
@@ -19,21 +21,35 @@ interface ButtonProps {
 const defaultProps = {
   imgSrc: "",
   width: "fit-content",
+  height: "fit-content",
+  padding: "",
   marginLeft: "0",
   marginTop: "0",
   isSelected: true,
   children: null,
 };
 
-function Button({ type, isSelected, onBtnClick, imgSrc, width, marginLeft, marginTop, children }: ButtonProps) {
+function Button({
+  type,
+  isSelected,
+  onBtnClick,
+  imgSrc,
+  width,
+  height,
+  padding,
+  marginLeft,
+  marginTop,
+  children,
+}: ButtonProps) {
   return (
     <button
-      id="button"
       type="button"
-      className={classNames(type, { selected: isSelected })}
+      className={classNames("button", type, { selected: isSelected })}
       onClick={onBtnClick}
       style={{
         width,
+        height,
+        ...(padding && { padding }),
         marginLeft,
         marginTop,
       }}

@@ -61,7 +61,7 @@ function ProjectItemViewModel({ projectId, projectName, trackPreviews, likeCount
   };
 
   return (
-    <NavLink to={`/detailProject/${projectId}`}>
+    <NavLink to={`/${projectId}`}>
       <ProjectItem
         projectId={projectId}
         isLiked={isLikedState}

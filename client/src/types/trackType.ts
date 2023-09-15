@@ -1,4 +1,4 @@
-import { Track } from "./projectType";
+import { Track } from "types/projectType";
 
 export type TrackResponseType = {
   fileUrl: string;
@@ -9,3 +9,11 @@ export type TrackResponseType = {
   trackName: string;
   trackTag: Track;
 };
+
+export interface TrackPlayerProps {
+  bpm: number;
+  time: number;
+  audioTracks: HTMLAudioElement[];
+  setTime: (prev: number) => void;
+  onRecord?: () => void;
+}

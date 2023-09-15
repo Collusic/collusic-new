@@ -7,7 +7,8 @@ import { RedirectViewModel } from "viewmodel/RedirectViewModel";
 import CreateProjectPage from "components/pages/CreateProjectPage";
 import ProjectListPage from "components/pages/ProjectListPage";
 import CreateTrackViewModel from "viewmodel/CreateTrackViewModel";
-import ProjectSettingViewModel from "./viewmodel/ProjectSettingViewModel";
+import ProjectSettingViewModel from "viewmodel/ProjectSettingViewModel";
+import DetailProjectPage from "components/pages/DetailProjectPage";
 
 function App() {
   return (
@@ -15,12 +16,13 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<ProjectListPage />} />
-        <Route path="/createproject" element={<CreateProjectPage />} />
+        <Route path="/create" element={<CreateProjectPage />} />
         <Route path="/signin" element={<SignInViewModel />} />
         <Route path="/signup" element={<SignUpViewModel />} />
         <Route path="/auth/redirect/:snsType" element={<RedirectViewModel />} />
-        <Route path="/detailProject/:projectId" element={<ProjectSettingViewModel />} />
-        <Route path="/project/:projectId/track/new" element={<CreateTrackViewModel />} />
+        <Route path="/:projectId" element={<DetailProjectPage />} />
+        <Route path="/update/:projectId" element={<ProjectSettingViewModel />} />
+        <Route path="/:projectId/track/new" element={<CreateTrackViewModel />} />
       </Routes>
     </BrowserRouter>
   );

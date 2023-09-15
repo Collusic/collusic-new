@@ -1,7 +1,7 @@
 import { useSetRecoilState } from "recoil";
 
-import { SignIn } from "../components/blocks/SignIn";
-import { loginTypeState } from "../model/userModel";
+import { SignIn } from "components/blocks/SignIn";
+import { loginTypeState } from "model/userModel";
 
 export function SignInViewModel() {
   const setLoginType = useSetRecoilState(loginTypeState);
