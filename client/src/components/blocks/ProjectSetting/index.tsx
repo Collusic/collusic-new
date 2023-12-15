@@ -1,6 +1,4 @@
 import { Track } from "types/projectType";
-import { AudioType } from "types/audioType";
-// import { ProjectSettingProps } from "types/projectType";
 
 import Button from "components/atoms/Button";
 import Bpm from "components/blocks/BpmBar";
@@ -10,9 +8,9 @@ import TrackSpace from "components/blocks/TrackSpace";
 
 import UnderPlayBarViewModel from "viewmodel/UnderPlayBarViewModel";
 
-import useProjectSetting from "hooks/useProjectSetting";
-import useRecord from "hooks/useRecord";
 import useAudios from "hooks/useAudios";
+import useProjectSetting from "hooks/useProjectSetting";
+import useCreateTrack from "hooks/useCreateTrack";
 
 import "./style.scss";
 
@@ -34,21 +32,19 @@ function ProjectSetting({ onProjectSubmit, trackTags }: ProjectSettingProps) {
     handleTrackTagSelect,
   } = useProjectSetting();
 
-  const {
-    isRecording,
-    isSuccess: isRecordSuccess,
-    data: recordData,
-    streamId: recordKey,
-    startRecord,
-    initRecord,
-  } = useRecord(inputDeviceId);
-
   const { addAudio, removeAudio } = useAudios();
 
-  const removeTrack = (audioId: AudioType["id"]) => {
-    removeAudio(audioId);
-    initRecord();
-  };
+  const { isRecording, isRecordSuccess, handleRecordButtonClick, handleTrackRemove } = useCreateTrack({
+    inputDeviceId,
+    onReocrdSuccess: (data, key) => {
+      const audio = new Audio(URL.createObjectURL(data));
+      audio.accessKey = key;
+      addAudio(audio);
+    },
+    onTrackRemove: (audioId) => {
+      removeAudio(audioId);
+    },
+  });
 
   const handleCreateButtonClick = () => {
     if (!title || !trackTag || !bpm) {
@@ -76,8 +72,8 @@ function ProjectSetting({ onProjectSubmit, trackTags }: ProjectSettingProps) {
           bpm={bpm}
           isRecording={isRecording}
           isRecordSuccess={isRecordSuccess}
-          onRecord={startRecord}
-          onTrackRemove={removeTrack}
+          onRecord={handleRecordButtonClick}
+          onTrackRemove={handleTrackRemove}
         />
       </div>
       <div id="bottom-section">
