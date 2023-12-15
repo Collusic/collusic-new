@@ -4,9 +4,10 @@ import { API } from "api/axios";
 // 프로젝트 생성
 export const addProject = async (params: {}) => {
   const url = "/projects";
-  const res = await API.post(url, params);
 
   try {
+    const res = await API.post(url, params);
+
     if (res.status === 200) {
       return res.data;
     }
@@ -19,9 +20,10 @@ export const addProject = async (params: {}) => {
 
 export const getProjectList = async (params: {}) => {
   const url = "/projects";
-  const res = await API.get(url, { params });
 
   try {
+    const res = await API.get(url, { params });
+
     if (res.status === 200) {
       return res.data;
     }
@@ -34,9 +36,10 @@ export const getProjectList = async (params: {}) => {
 
 export const setProjectLike = async (params: number) => {
   const url = `/projects/${params}/like`;
-  const res = await API.post(url);
 
   try {
+    const res = await API.post(url);
+
     if (res.status === 200) {
       return res.data;
     }

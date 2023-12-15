@@ -1,23 +1,17 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
+import { ProjectResponseType } from "types/projectType";
 import { API } from "api/axios";
+
 import DetailProject from "components/blocks/DetailProject";
-import { DetailProjectInfo } from "types/detailProjectType";
 
 function DetailProjectViewModel() {
   const { pathname } = useLocation();
-  const [detailProjectInfo, setDetailProjectInfo] = useState<DetailProjectInfo>({
-    projectId: 0,
-    projectName: "",
-    likeCount: 0,
-    isLiked: false,
-    tracks: [],
-    bpm: 30,
-  });
+  const [detailProjectInfo, setDetailProjectInfo] = useState<ProjectResponseType>();
 
   const getData = async () => {
-    const { data } = await API.get<DetailProjectInfo>(`projects/${pathname.slice(1)}`);
+    const { data } = await API.get<ProjectResponseType>(`projects/${pathname.slice(1)}`);
 
     setDetailProjectInfo(data);
   };
@@ -26,7 +20,7 @@ function DetailProjectViewModel() {
     getData();
   }, []);
 
-  return (
+  return detailProjectInfo ? (
     <DetailProject
       projectId={detailProjectInfo.projectId}
       projectName={detailProjectInfo.projectName}
@@ -35,6 +29,8 @@ function DetailProjectViewModel() {
       bpm={detailProjectInfo.bpm}
       tracks={detailProjectInfo.tracks}
     />
+  ) : (
+    <div>Loading...</div>
   );
 }
 

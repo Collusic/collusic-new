@@ -1,10 +1,3 @@
-import { TrackResponseType } from "types/trackType";
+import { ProjectResponseType } from "types/projectType";
 
-export interface DetailProjectInfo {
-  projectId: number;
-  projectName: string;
-  bpm: number;
-  likeCount: number;
-  isLiked: boolean;
-  tracks: TrackResponseType[];
-}
+export interface DetailProjectProps extends ProjectResponseType {}

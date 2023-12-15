@@ -1,32 +1,48 @@
-import { Slider, SliderThumb, SliderTrack, VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import TrackPlayBox from "components/atoms/TrackPlayBox";
-import { TrackRecordBox } from "components/atoms/TrackRecordBox";
+import { Slider, SliderThumb, SliderTrack, VStack } from "@chakra-ui/react";
+
+import { AudioType } from "types/audioType";
 
 import PlayStick from "components/blocks/PlayStick";
-import { TrackPlayerProps } from "types/trackType";
+import TrackPlayBox from "components/atoms/TrackPlayBox";
+import TrackRecordBox from "components/atoms/TrackRecordBox";
+import useAudios from "hooks/useAudios";
 
-function TrackPlayer({ bpm, time, audioTracks, setTime, onRecord }: TrackPlayerProps) {
+function TrackPlayer({
+  bpm,
+  isRecording,
+  isRecordSuccess,
+  onRecord,
+  onTrackRemove,
+}: {
+  bpm: number;
+  isRecording?: boolean;
+  isRecordSuccess?: boolean;
+  onRecord?: () => void;
+  onTrackRemove?: (audioId: AudioType["id"]) => void;
+}) {
+  const { time: currentTime, setTime: setCurrentTime, audioList: audioTracks } = useAudios();
   const [currentMeasure, setCurrentMeasure] = useState(0);
-  const measure = Math.floor(bpm / 2) + 1;
+  const totalMeasure = Math.floor(bpm / 2) + 1;
+
+  const handlePlayerChange = (nextMeasure: number) => {
+    setCurrentMeasure(nextMeasure);
+    setCurrentTime(Number((nextMeasure * (30 / totalMeasure)).toFixed(3)));
+  };
 
   useEffect(() => {
-    setTime(Number((currentMeasure * (30 / measure)).toFixed(3)));
-  }, [currentMeasure]);
-
-  useEffect(() => {
-    setCurrentMeasure(time / (30 / measure));
-  }, [time]);
+    setCurrentMeasure(currentTime / (30 / totalMeasure));
+  }, [currentTime]);
 
   return (
     <Slider
       w="100%"
       h="calc(100% - 5rem)"
-      aria-label="slider-ex-2"
+      aria-label="track-player"
       value={currentMeasure}
-      onChange={setCurrentMeasure}
+      onChange={handlePlayerChange}
       min={0}
-      max={measure}
+      max={totalMeasure}
       focusThumbOnChange={false}
     >
       <SliderTrack w="100%" height="calc(100% - 3rem)" maxH="inherit" minH="inherit" paddingY="5%">
@@ -40,10 +56,26 @@ function TrackPlayer({ bpm, time, audioTracks, setTime, onRecord }: TrackPlayerP
           align="stretch"
           spacing="1rem"
         >
-          {audioTracks.map((audio) => (
-            <TrackPlayBox key={audio.accessKey} measure={currentMeasure} maxMeasure={measure} isPlaying />
+          {audioTracks.map(({ id, audio }) => (
+            <TrackPlayBox
+              key={audio.accessKey}
+              id={id}
+              measure={currentMeasure}
+              maxMeasure={totalMeasure}
+              onRemoveButtonClick={onTrackRemove}
+              isPlaying
+            />
           ))}
-          {onRecord && <TrackRecordBox onRecord={onRecord} />}
+          {!isRecordSuccess && !isRecording && onRecord && <TrackRecordBox onRecord={onRecord} />}
+          {isRecording && (
+            <TrackPlayBox
+              id="new"
+              measure={currentMeasure}
+              maxMeasure={totalMeasure}
+              onRemoveButtonClick={onTrackRemove}
+              isRecording
+            />
+          )}
         </VStack>
       </SliderTrack>
       <SliderThumb top="-6px" w="fit-content" h="100%" cursor="pointer" _focus={{ outline: "none" }}>
@@ -54,7 +86,10 @@ function TrackPlayer({ bpm, time, audioTracks, setTime, onRecord }: TrackPlayerP
 }
 
 TrackPlayer.defaultProps = {
+  isRecording: false,
+  isRecordSuccess: false,
   onRecord: undefined,
+  onTrackRemove: undefined,
 };
 
 export default TrackPlayer;

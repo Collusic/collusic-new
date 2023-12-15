@@ -1,6 +1,7 @@
 import { atom } from "recoil";
+import { AudioType } from "types/audioType";
 
-const audioListState = atom<Array<HTMLAudioElement>>({
+const audioListState = atom<AudioType[]>({
   key: "audioListState",
   default: [],
 });

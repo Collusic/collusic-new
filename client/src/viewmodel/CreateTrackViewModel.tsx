@@ -1,43 +1,46 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+
+import { ProjectResponseType } from "types/projectType";
 
 import { getProject } from "api/project";
 import { trackList as TrackTags } from "utils/data/track";
 
-import useAudios from "hooks/useAudios";
 import TrackSetting from "components/blocks/TrackSetting";
-import useTrackSetting from "hooks/useTrackSetting";
 
 function CreateTrackViewModel() {
   const { projectId } = useParams();
-  const { setAudios } = useAudios();
-  const { inputTextDevice, trackTag, handleTitleInput, handleTrackTagSelect, handleDeviceClick, handleSettingSubmit } =
-    useTrackSetting();
+
+  const [projectInfo, setProjectInfo] = useState<ProjectResponseType>();
+  const [isLoading, setIsLoading] = useState(false);
+  const isFetched = !isLoading && projectInfo;
 
   useEffect(() => {
     if (!projectId) {
       return;
     }
 
-    getProject(projectId).then(({ bpm, projectName, tracks }) => {
-      const sourceList = tracks.map(({ fileUrl }) => fileUrl);
-      setAudios(sourceList);
-    });
+    const fetchProjectInfo = async () => {
+      setIsLoading(true);
+
+      const projectData = await getProject(projectId);
+      setProjectInfo(projectData);
+
+      setIsLoading(false);
+    };
+
+    fetchProjectInfo();
   }, []);
 
-  return (
+  return isFetched ? (
     <TrackSetting
-      onTitleInput={handleTitleInput}
-      onDeviceClick={handleDeviceClick}
-      onTrackTagClick={handleTrackTagSelect}
-      onBtnClick={handleSettingSubmit}
-      onRecord={() => {}}
-      projectTitle="프로젝트명"
-      bpmState={30}
-      selectedTrackTag={trackTag}
       trackTags={TrackTags}
-      inputTextDevice={inputTextDevice}
+      projectTitle={projectInfo.projectName}
+      bpmState={projectInfo.bpm}
+      tracks={projectInfo.tracks}
     />
+  ) : (
+    <div>Loading...</div>
   );
 }
 
