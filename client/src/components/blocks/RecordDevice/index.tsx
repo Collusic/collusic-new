@@ -20,6 +20,11 @@ function RecordDevice({ onDeviceClick, inputTextDevice }: RecordDeviceProps) {
 
   const getMedia = async () => {
     let mediaDevices = null;
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    if (!stream.active) {
+      alert("먼저 마이크 사용 권한을 허용해 주세요.");
+    }
+
     try {
       mediaDevices = await navigator.mediaDevices.enumerateDevices();
       const audioDevices = mediaDevices.filter((mediaDevice) => mediaDevice.kind === "audioinput");
