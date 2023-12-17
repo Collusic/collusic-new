@@ -23,23 +23,27 @@ function RecordDevice({ onDeviceClick, inputTextDevice }: RecordDeviceProps) {
 
   const getMedia = async () => {
     let mediaDevices = null;
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    if (!stream.active) {
-      alert("먼저 마이크 사용 권한을 허용해 주세요.");
-    }
-
-    const initialAudioInputDevice = stream?.getAudioTracks()[0]?.label;
-    if (!!initialAudioInputDevice) {
-      setInputTextDevice(initialAudioInputDevice);
-    }
-
     try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+      const initialAudioInputDevice = stream?.getAudioTracks()[0]?.label;
+      if (!!initialAudioInputDevice) {
+        setInputTextDevice(initialAudioInputDevice);
+      }
+
       mediaDevices = await navigator.mediaDevices.enumerateDevices();
       const audioDevices = mediaDevices.filter((mediaDevice) => mediaDevice.kind === "audioinput");
+      if (audioDevices.length === 0) {
+        alert("녹음 가능한 입력장치를 찾을 수 없습니다.");
+        return;
+      }
       setDeviceList(audioDevices);
-    } catch (err) {
-      console.log(err);
-      alert("녹음 가능한 입력장치를 찾을 수 없습니다.");
+    } catch (err: any) {
+      if (err.message.includes("Permission denied")) {
+        alert("먼저 마이크 권한을 허용해 주세요.");
+        return;
+      }
+      console.error(err.message);
     }
   };
 
