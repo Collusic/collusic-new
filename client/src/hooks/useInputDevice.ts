@@ -13,7 +13,7 @@ const useInputDevice = () => {
     setInputTextDevice(deviceName);
   };
 
-  return { inputDeviceId, inputTextDevice, handleDeviceClick };
+  return { inputDeviceId, inputTextDevice, setInputTextDevice, handleDeviceClick };
 };
 
 export default useInputDevice;
