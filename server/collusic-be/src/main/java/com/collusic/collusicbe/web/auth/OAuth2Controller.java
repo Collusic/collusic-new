@@ -3,9 +3,9 @@ package com.collusic.collusicbe.web.auth;
 import com.collusic.collusicbe.domain.member.Member;
 import com.collusic.collusicbe.domain.member.MemberRepository;
 import com.collusic.collusicbe.domain.member.SnsType;
-import com.collusic.collusicbe.service.TokenService;
 import com.collusic.collusicbe.global.util.CookieUtils;
 import com.collusic.collusicbe.global.util.ParsingUtil;
+import com.collusic.collusicbe.service.TokenService;
 import com.collusic.collusicbe.web.controller.response.TokenResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,10 @@ public class OAuth2Controller {
     @GetMapping("/oauth2/login/{provider}")
     public ResponseEntity<OAuth2LoginResponseDto> loginToSns(@PathVariable String provider, @RequestParam Map<String, Object> authCode, HttpServletRequest request, HttpServletResponse response) {
         OAuth2ClientService oAuth2ClientService = oAuth2ProviderClientManager.getClientService(provider);
-        OAuth2Response oAuth2Response = oAuth2ClientService.requestLogin(authCode);
+
+        String referer = request.getHeader("Referer");
+        OAuth2Response oAuth2Response = oAuth2ClientService.requestLogin(referer, authCode);
+
         String email = (String) oAuth2Response.getAttributes().get("email");
         String authId = (String) oAuth2Response.getAttributes().get("sub");
         String profileImageUrl = (String) oAuth2Response.getAttributes().get("picture");
