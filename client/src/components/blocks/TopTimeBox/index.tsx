@@ -9,7 +9,6 @@ function TopTimeBox({ bpm = 30 }) {
   );
 
   const gapBetweenBars = (isLast = false) => {
-    console.log("between");
     const WIDTH_OF_TIME_BAR = 4;
     const PADDING_LEFT = 4;
     const WIDTH_OF_PLAY_STICK = 12;
@@ -18,7 +17,7 @@ function TopTimeBox({ bpm = 30 }) {
     if (!trackSpaceDOM) return 0;
     const timeBoxWidth =
       (trackSpaceDOM as HTMLDivElement).offsetWidth -
-      parseFloat(getComputedStyle(document.querySelector("#track-space") as HTMLDivElement).paddingLeft) -
+      parseFloat(getComputedStyle(trackSpaceDOM as HTMLDivElement).paddingLeft) -
       PADDING_LEFT -
       WIDTH_OF_PLAY_STICK;
 
@@ -28,15 +27,15 @@ function TopTimeBox({ bpm = 30 }) {
     return parseFloat((timeBoxWidth / (stickCnt - 1) - WIDTH_OF_TIME_BAR).toFixed(2));
   };
 
+  const resizeCallback = () => {
+    setTimeBoxSize((document.querySelector("#track-space") as HTMLDivElement)?.offsetWidth);
+  };
+
   // 브라우저 크기가 변경될 경우, 상단 막대 간격 조정
   useEffect(() => {
-    window.addEventListener("resize", () =>
-      setTimeBoxSize((document.querySelector("#track-space") as HTMLDivElement)?.offsetWidth),
-    );
+    window.addEventListener("resize", resizeCallback);
     return () => {
-      window.removeEventListener("resize", () =>
-        setTimeBoxSize((document.querySelector("#track-space") as HTMLDivElement)?.offsetWidth),
-      );
+      window.removeEventListener("resize", resizeCallback);
     };
   }, []);
   // bpm이 변경될 경우, 상단 막대 간격 조정
