@@ -2,6 +2,7 @@
 @import "utils/style/size";
 
 #record-device {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -34,6 +35,8 @@
 }
 
 .device-list {
+  position: absolute;
+  top: 110px;
   width: calc(100% - 32px);
   height: 128px;
   margin-top: 8px;
