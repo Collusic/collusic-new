@@ -1,20 +1,20 @@
 import { MouseEvent, RefObject, useRef, useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { NavLink } from "react-router-dom";
 
 import { ProjectItemProps } from "types/projectType";
 import ProjectItem from "components/blocks/ProjectItem";
 import { setProjectLike } from "api/project";
 import { modalOpenState } from "model/signInModel";
-import { isAuthorizedState } from "model/authModel";
+import useAuth from "components/atoms/Auth/hooks/useAuth";
 
 function ProjectItemViewModel({ projectId, projectName, trackPreviews, likeCount, isLiked }: ProjectItemProps) {
   const [isLikedState, setIsLikedState] = useState(isLiked);
   const [likeCountState, setLikeCountState] = useState<number>(likeCount);
   const [isPlaying, setIsPlaying] = useState(false);
   const setModalOpen = useSetRecoilState(modalOpenState);
-  const isAuthed = useRecoilValue(isAuthorizedState);
   const previewPlayerRefs = trackPreviews.map(() => useRef<HTMLMediaElement>(null));
+  const { isAuthorized: isAuthed } = useAuth({ reissue: false });
 
   const previewAction = (ref: RefObject<HTMLMediaElement>, action: string) => {
     return new Promise(() => {

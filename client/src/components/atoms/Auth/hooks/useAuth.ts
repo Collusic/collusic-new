@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
+import { useEffect } from "react";
+import { useRecoilState, useResetRecoilState } from "recoil";
 
-import { accessTokenAtom, isAuthorizedState } from "model/authModel";
+import { accessTokenAtom } from "model/authModel";
 import { API } from "api/axios";
 
 type Props = {
@@ -11,13 +11,10 @@ type Props = {
 const useAuth = (props?: Props) => {
   const resetAccessToken = useResetRecoilState(accessTokenAtom);
   const [accessToken, setAccessToken] = useRecoilState(accessTokenAtom);
-  const [isAuthorized, setIsAuthorized] = useRecoilState(isAuthorizedState);
 
   const reissue = props?.reissue ?? true;
 
   const setAuth = (newToken: string) => {
-    // TODO: 토큰 valitaion
-    setIsAuthorized(true);
     setAccessToken(newToken);
   };
 
@@ -39,16 +36,11 @@ const useAuth = (props?: Props) => {
     }
   });
 
-  useEffect(() => {
-    setIsAuthorized(!!accessToken);
-  }, [accessToken]);
-
   return {
-    isAuthorized,
+    isAuthorized: !!accessToken,
     setAuth,
     signOut: () => {
       API.get("/logout");
-      setIsAuthorized(false);
       resetAccessToken();
     },
   };

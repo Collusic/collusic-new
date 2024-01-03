@@ -15,6 +15,7 @@ export const accessTokenAtom = atom<string | null>({
 
       if (isAuthorized()) {
         param.setSelf(defaultToken);
+        API.defaults.headers.common.Authorization = `Bearer ${defaultToken}`;
       }
 
       param.onSet((newToken, _, isReset) => {
@@ -28,9 +29,4 @@ export const accessTokenAtom = atom<string | null>({
       });
     },
   ],
-});
-
-export const isAuthorizedState = atom({
-  key: "isAuthorized",
-  default: false,
 });
