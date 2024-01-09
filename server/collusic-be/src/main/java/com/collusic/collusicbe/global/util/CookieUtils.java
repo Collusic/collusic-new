@@ -33,7 +33,7 @@ public class CookieUtils {
         cookie.setMaxAge(REFRESH_TIME);
         cookie.setSecure(false);
         cookie.setHttpOnly(true);
-        cookie.setPath("/");
+        cookie.setPath("/reissue");
         return cookie;
     }
 }
