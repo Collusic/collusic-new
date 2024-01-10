@@ -6,8 +6,13 @@ const audioListState = atom<AudioType[]>({
   default: [],
 });
 
-const isPlayingState = atom({
-  key: "isPlayingState",
+const isAudioPlayingState = atom({
+  key: "isAudioPlayingState",
+  default: false,
+});
+
+const isTrackPlayingState = atom({
+  key: "isTrackPlayingState",
   default: false,
 });
 
@@ -16,4 +21,4 @@ const timeState = atom({
   default: 0,
 });
 
-export { audioListState, isPlayingState, timeState };
+export { audioListState, isAudioPlayingState, isTrackPlayingState, timeState };

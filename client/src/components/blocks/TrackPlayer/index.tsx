@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Slider, SliderThumb, SliderTrack, VStack } from "@chakra-ui/react";
 
 import { AudioType } from "types/audioType";
@@ -6,6 +5,8 @@ import { AudioType } from "types/audioType";
 import PlayStick from "components/blocks/PlayStick";
 import TrackPlayBox from "components/atoms/TrackPlayBox";
 import TrackRecordBox from "components/atoms/TrackRecordBox";
+
+import useTrackPlayer from "hooks/useTrackPlayer";
 import useAudios from "hooks/useAudios";
 
 function TrackPlayer({
@@ -21,18 +22,12 @@ function TrackPlayer({
   onRecord?: () => void;
   onTrackRemove?: (audioId: AudioType["id"]) => void;
 }) {
-  const { time: currentTime, setTime: setCurrentTime, audioList: audioTracks } = useAudios();
-  const [currentMeasure, setCurrentMeasure] = useState(0);
-  const totalMeasure = Math.floor(bpm / 2) + 1;
+  const { audioList: audioTracks } = useAudios();
+  const { measure: currentMeasure, setMeasure: setCurrentMeasure, totalMeasure } = useTrackPlayer({ bpm, isRecording });
 
   const handlePlayerChange = (nextMeasure: number) => {
     setCurrentMeasure(nextMeasure);
-    setCurrentTime(Number((nextMeasure * (30 / totalMeasure)).toFixed(3)));
   };
-
-  useEffect(() => {
-    setCurrentMeasure(currentTime / (30 / totalMeasure));
-  }, [currentTime]);
 
   return (
     <Slider
