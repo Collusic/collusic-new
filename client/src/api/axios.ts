@@ -1,6 +1,29 @@
-import axios, { AxiosInstance } from "axios";
+import axios, { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig, isAxiosError } from "axios";
+import tokenStorage from "../utils/tokenStorage";
+import { ACCESS_TOKEN_KEY } from "../constants/key";
 
 axios.defaults.withCredentials = true;
+
+// accessToken 재발급 api 호출
+const refreshAccessToken = async (axiosInstance: AxiosInstance, axiosConfig: InternalAxiosRequestConfig) => {
+  const storage = tokenStorage(ACCESS_TOKEN_KEY);
+  try {
+    const response = await API.post("/reissue");
+    if (response.status === 200) {
+      storage.set(response.headers.Authorization);
+      axiosInstance(axiosConfig);
+      return response;
+    }
+  } catch (e) {
+    if (isAxiosError(e) && e.status === 401) {
+      storage.remove();
+      alert("로그인이 필요해요.");
+      window.location.href = "/";
+      return Promise.reject();
+    }
+  }
+  return false;
+};
 
 const setInterceptors = (instance: AxiosInstance) => {
   // request interceptor 설정
@@ -14,19 +37,15 @@ const setInterceptors = (instance: AxiosInstance) => {
     },
   );
 
-  // request interceptor 설정
+  // response interceptor 설정
   instance.interceptors.response.use(
-    (response) => {
-      const accessToken = response.headers.Authorization;
-
-      if (accessToken) {
-        API.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
-      }
-
+    (response: AxiosResponse) => {
       return response;
     },
-    (error) => {
-      console.error(error);
+    (error: AxiosError) => {
+      if (error.response?.status === 401 && !!error.config && error.config.url !== "/reissue") {
+        refreshAccessToken(API, error.config);
+      }
       return Promise.reject(error);
     },
   );
