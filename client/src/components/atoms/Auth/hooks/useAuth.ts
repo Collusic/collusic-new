@@ -40,8 +40,8 @@ const useAuth = (props?: Props) => {
     isAuthorized: !!accessToken,
     setAuth,
     signOut: () => {
-      API.get("/logout");
       resetAccessToken();
+      API.get("/logout");
     },
   };
 };
