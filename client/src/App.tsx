@@ -5,6 +5,7 @@ import { SignInViewModel } from "viewmodel/SignInViewModel";
 import { SignUpViewModel } from "viewmodel/SignUpViewModel";
 import { RedirectViewModel } from "viewmodel/RedirectViewModel";
 import ProjectSettingViewModel from "viewmodel/CreateProjectViewModel";
+import RouteHandlerViewModel from "viewmodel/RouteHandlerViewModel";
 
 import CreateProjectPage from "components/pages/CreateProjectPage";
 import ProjectListPage from "components/pages/ProjectListPage";
@@ -15,6 +16,7 @@ import AuthRequired from "components/atoms/Auth/AuthRequired";
 function App() {
   return (
     <BrowserRouter>
+      <RouteHandlerViewModel />
       <NavBar />
       <Routes>
         <Route path="/" element={<ProjectListPage />} />
