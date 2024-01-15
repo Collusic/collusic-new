@@ -1,40 +1,23 @@
-import { useEffect } from "react";
-import { useRecoilState, useResetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 
 import { accessTokenAtom } from "model/authModel";
 import { API } from "api/axios";
+import tokenStorage from "utils/tokenStorage";
+import { ACCESS_TOKEN_KEY } from "constants/key";
 
-type Props = {
-  reissue: boolean;
-};
-
-const useAuth = (props?: Props) => {
-  const resetAccessToken = useResetRecoilState(accessTokenAtom);
+const useAuth = () => {
   const [accessToken, setAccessToken] = useRecoilState(accessTokenAtom);
-
-  const reissue = props?.reissue ?? true;
+  const storage = tokenStorage(ACCESS_TOKEN_KEY);
 
   const setAuth = (newToken: string) => {
+    storage.set(newToken);
     setAccessToken(newToken);
+    API.defaults.headers.common.Authorization = `Bearer ${newToken}`;
   };
-
-  useEffect(() => {
-    if (accessToken === null && reissue) {
-      API.post("/reissue")
-        .then((res) => {
-          const { token } = res.data;
-
-          if (!token) {
-            return;
-          }
-
-          setAuth(token);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
-  });
+  const resetAccessToken = () => {
+    storage.remove();
+    setAccessToken(null);
+  };
 
   return {
     isAuthorized: !!accessToken,

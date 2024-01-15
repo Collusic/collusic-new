@@ -25,7 +25,7 @@ export function SignUpViewModel() {
   const location = useLocation();
   const navigate = useNavigate();
   const [signUp, setSignUp] = useRecoilState(signUpState);
-  const { setAuth } = useAuth({ reissue: false });
+  const { setAuth } = useAuth();
 
   const { authId, email, profileImageUrl, snsType } = location.state as MemberData;
 

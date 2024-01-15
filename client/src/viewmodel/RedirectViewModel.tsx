@@ -18,7 +18,7 @@ export function RedirectViewModel() {
   const code = query.get("code");
   const state = query.get("state");
 
-  const { isAuthorized, setAuth } = useAuth({ reissue: false });
+  const { isAuthorized, setAuth } = useAuth();
 
   useEffect(() => {
     if (isAuthorized) {

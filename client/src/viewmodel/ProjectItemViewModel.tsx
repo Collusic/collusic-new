@@ -14,7 +14,7 @@ function ProjectItemViewModel({ projectId, projectName, trackPreviews, likeCount
   const [isPlaying, setIsPlaying] = useState(false);
   const setModalOpen = useSetRecoilState(modalOpenState);
   const previewPlayerRefs = trackPreviews.map(() => useRef<HTMLMediaElement>(null));
-  const { isAuthorized: isAuthed } = useAuth({ reissue: false });
+  const { isAuthorized: isAuthed } = useAuth();
 
   const previewAction = (ref: RefObject<HTMLMediaElement>, action: string) => {
     return new Promise(() => {
