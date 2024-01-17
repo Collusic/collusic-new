@@ -1,0 +1,9 @@
+#record-box {
+  width: calc(100% - 1px);
+  min-height: 6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #404040;
+  border-radius: 10px;
+}

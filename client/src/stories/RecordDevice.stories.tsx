@@ -11,5 +11,5 @@ const Template: ComponentStory<typeof RecordDevice> = (args) => <RecordDevice {.
 
 export const Default = Template.bind({});
 Default.args = {
-  clickHandler: () => {},
+  onDeviceClick: () => {},
 };

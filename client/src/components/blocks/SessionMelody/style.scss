@@ -1,4 +1,10 @@
 .session-melody {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  padding-top: 3rem;
+}
+
+.session-buttons {
+  display: flex;
 }

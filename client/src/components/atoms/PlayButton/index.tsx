@@ -1,21 +1,34 @@
-import React from "react";
+import { MouseEvent } from "react";
 
-import { stopEventBubbling } from "../../../utils/eventHandler";
+import "./style.scss";
 
-type PlayProps = {
-  handleClick(): void;
-};
-
-export const PlayButton: React.FC<PlayProps> = ({ handleClick }) => {
+export interface PlayButtonProps {
+  isPlaying: boolean;
+  isFromMain?: boolean;
+  onClickPlay(e: MouseEvent): void;
+}
+function PlayButton({ isPlaying, isFromMain, onClickPlay }: PlayButtonProps) {
   return (
-    <button
-      className="player__button"
-      onClick={(e) => {
-        stopEventBubbling(e);
-        handleClick();
-      }}
-    >
-      <img src="../assets/play/play.png" alt="play버튼" />
+    <button type="button" className="play-button" onClick={onClickPlay}>
+      {isFromMain ? (
+        <div className="play-icon">
+          <img src={`${process.env.PUBLIC_URL}/assets/play/${!isPlaying ? "play.png" : "pause.png"}`} alt="" />
+        </div>
+      ) : (
+        <div className="under-play-icon">
+          <img
+            src={`${process.env.PUBLIC_URL}/assets/play/${isPlaying ? "under_pause.png" : "under_play.png"}`}
+            alt=""
+          />
+        </div>
+      )}
+      {isFromMain && <span>Play Now</span>}
     </button>
   );
+}
+
+PlayButton.defaultProps = {
+  isFromMain: true,
 };
+
+export default PlayButton;

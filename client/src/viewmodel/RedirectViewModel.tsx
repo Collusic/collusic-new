@@ -1,17 +1,16 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import { AxiosResponse } from "axios";
 
-import { LOCAL_API } from "../utils/axios";
-import { refreshTokenState } from "../model/userModel";
-import { modalOpenState } from "../model/signInModel";
-import { signUpState } from "../model/signUpModel";
+import { API } from "api/axios";
+import { modalOpenState } from "model/signInModel";
+import { signUpState } from "model/signUpModel";
+import useAuth from "components/atoms/Auth/hooks/useAuth";
 
 export function RedirectViewModel() {
   const setModalOpenState = useSetRecoilState(modalOpenState);
   const setSignUpState = useSetRecoilState(signUpState);
-  const setRefreshToken = useSetRecoilState(refreshTokenState);
 
   const navigate = useNavigate();
   const { snsType } = useParams();
@@ -19,20 +18,29 @@ export function RedirectViewModel() {
   const code = query.get("code");
   const state = query.get("state");
 
+  const { isAuthorized, setAuth } = useAuth();
+
   useEffect(() => {
+    if (isAuthorized) {
+      return;
+    }
+
     const getLoginState = async () => {
       try {
-        const { data }: AxiosResponse = await LOCAL_API.get(`/oauth2/login/${snsType}`, {
+        const response: AxiosResponse = await API.get(`/oauth2/login/${snsType}`, {
           params: {
             code,
             state,
           },
         });
 
+        const { data } = response;
+
         if (data.responseType === "SIGN_IN") {
-          const { accessToken, refreshToken } = data;
-          setRefreshToken(refreshToken);
-          LOCAL_API.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+          const { accessToken } = data.attributes;
+
+          setAuth(accessToken);
+          navigate("/");
         }
 
         if (data.responseType === "SIGN_UP") {

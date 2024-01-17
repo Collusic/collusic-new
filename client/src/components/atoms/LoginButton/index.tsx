@@ -1,5 +1,3 @@
-import React from "react";
-
 import "./style.scss";
 
 type LoginButtonProps = {
@@ -7,16 +5,16 @@ type LoginButtonProps = {
   backgroundColor: string;
   textColor: string;
   src: string;
-  onClickHandler(): void;
+  onBtnClick(): void;
 };
 
-export function LoginButton({ innerText, backgroundColor, textColor, src, onClickHandler }: LoginButtonProps) {
+export function LoginButton({ innerText, backgroundColor, textColor, src, onBtnClick }: LoginButtonProps) {
   return (
     <button
       type="button"
       className="login-button"
       style={{ backgroundColor: `${backgroundColor}`, color: `${textColor}` }}
-      onClick={onClickHandler}
+      onClick={onBtnClick}
     >
       <img src={src} alt="logo" />
       <p>{innerText}</p>

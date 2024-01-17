@@ -1,4 +1,4 @@
-import { Field } from "./requestProjectType";
+import { Field } from "types/requestProjectType";
 
 export type ContributeProject = {
   id: number;

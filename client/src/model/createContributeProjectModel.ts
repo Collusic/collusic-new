@@ -1,7 +1,7 @@
 import { atom, selector } from "recoil";
 
-import { Field } from "../types/requestProjectType";
-import { getDetailRequestState } from "./detailRequestProjectModel";
+import { Field } from "types/requestProjectType";
+import { getDetailRequestState } from "model/detailRequestProjectModel";
 
 const contributeFields = atom<Field[]>({
   key: "contributeFields",
@@ -12,8 +12,7 @@ const getRequestProjectField = selector({
   key: "getRequestProjectField",
   get: ({ get }) => {
     const requestProject = get(getDetailRequestState);
-    const requestProjectFieldList = requestProject.fields;
-    return requestProjectFieldList;
+    return requestProject.fields;
   },
 });
 

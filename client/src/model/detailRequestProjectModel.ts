@@ -1,8 +1,7 @@
-import { atom, selector, selectorFamily } from "recoil";
-import { ContributeProject } from "../types/contributeProjectType";
-import { RequestProjectType } from "../types/requestProjectType";
-import { User } from "../types/userType";
-import { TEST_API } from "../utils/axios";
+import { atom, selector } from "recoil";
+import { ContributeProject } from "types/contributeProjectType";
+import { User } from "types/userType";
+import { TEST_API } from "api/axios";
 
 const detailRequestProjectIdState = atom({
   key: "detailRequestProjectIdState",
@@ -13,9 +12,7 @@ const getDetailRequestState = selector({
   key: "getDetailRequestState",
   get: async ({ get }) => {
     const id = get(detailRequestProjectIdState);
-    const { data } = await TEST_API.get(
-      `api/requestprojects/${id}/contributeprojects`
-    );
+    const { data } = await TEST_API.get(`api/requestprojects/${id}/contributeprojects`);
 
     return {
       userProfile: data.userProfile,
@@ -38,13 +35,8 @@ const contributeListState = selector<Array<User & ContributeProject>>({
   key: "contributeListState",
   get: ({ get }) => {
     const data = get(getDetailRequestState);
-    const contributeList = data.contributeProjectResponseDtos!;
-    return contributeList;
+    return data.contributeProjectResponseDtos!;
   },
 });
 
-export {
-  detailRequestProjectIdState,
-  getDetailRequestState,
-  contributeListState,
-};
+export { detailRequestProjectIdState, getDetailRequestState, contributeListState };

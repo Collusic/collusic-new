@@ -1,96 +1,85 @@
-import moment from "moment";
-import React from "react";
-import "moment-duration-format";
+import { FormEvent, FormEventHandler, useEffect, useRef, useState } from "react";
+import classNames from "classnames";
+import { getSliderHandlePosition } from "utils/slider";
+import "./style.scss";
 
-import { stopEventBubbling } from "../../../utils/eventHandler";
+interface BarProps {
+  targetState: number;
+  min: number;
+  max: number;
+  isShowTarget?: boolean;
+  onBarInput: FormEventHandler;
+  type?: string;
+}
 
-type BarProps = {
-  duration: number; // 미디어 파일 총 길이
-  curTime: number; // 시간 위치
-  onTimeUpdate(num: number): void;
-};
+function Bar({ targetState, min, max, isShowTarget, onBarInput, type }: BarProps) {
+  const [target, setTarget] = useState(targetState || 0);
+  const sliderRef = useRef<HTMLInputElement>(null);
+  const sliderValueRef = useRef<HTMLOutputElement>(null);
+  const targetFillRef = useRef<HTMLDivElement>(null);
 
-export const Bar: React.FC<BarProps> = ({ duration, curTime, onTimeUpdate }) => {
-  const curPercentage = (curTime / duration) * 100;
+  // TODO: 현재 bpm 알려주는 span 태그 클릭 시 sliderHandle이 동작되지 않는 에러
+  // TODO: 진행된 bpm 상태바 클릭 시 작동 안되는 에러
 
-  const formatDuration = (duration: moment.DurationInputArg1) => {
-    let time = moment.duration(duration, "seconds").format("mm:ss");
-    if (time.length !== 5) {
-      return "00:" + time;
-    } else {
-      return time;
-    }
+  const handleForm = (e: FormEvent) => {
+    setTarget(Number((e.target as HTMLInputElement).value));
+    onBarInput(e);
   };
 
-  function calcClickedTime(e: MouseEvent | React.MouseEvent<HTMLDivElement>) {
-    const clickPositionInPage = e.pageX;
-    const bar = e.currentTarget as HTMLDivElement;
-    const barStart = bar.getBoundingClientRect().left + window.scrollX;
-    const barWidth = bar.offsetWidth;
-    const clickPositionInBar = clickPositionInPage - barStart;
-    const timePerPixel = duration / barWidth;
-    return timePerPixel * clickPositionInBar;
-  }
+  useEffect(() => {
+    (sliderRef.current as HTMLInputElement).value = String(target);
+  });
 
-  function handleTimeDrag(e: React.MouseEvent<HTMLDivElement>) {
-    onTimeUpdate(calcClickedTime(e));
+  // TODO: 중복 제거
+  useEffect(() => {
+    isShowTarget &&
+      ((sliderValueRef.current as HTMLOutputElement).style.left = getSliderHandlePosition(
+        min,
+        max,
+        target,
+        Number(sliderRef.current?.getBoundingClientRect().width),
+        type,
+      ));
 
-    const updateTimeOnMove = (eMove: MouseEvent) => {
-      e.stopPropagation();
-      onTimeUpdate(calcClickedTime(eMove));
-    };
-    document.addEventListener("mousemove", updateTimeOnMove);
-
-    document.addEventListener("mouseup", () => {
-      document.removeEventListener("mousemove", updateTimeOnMove);
-    });
-  }
+    (targetFillRef.current as HTMLDivElement).style.width = getSliderHandlePosition(
+      min,
+      max,
+      target,
+      Number(sliderRef.current?.getBoundingClientRect().width),
+      type,
+    );
+  }, [target]);
 
   return (
-    <div className="bar">
-      <div
-        className="bar__progress"
-        onClick={stopEventBubbling}
-        style={{
-          background: `linear-gradient(to right, orange ${curPercentage}%, #f1f1f1 0)`,
-        }}
-        onMouseDown={(e) => {
-          // onTimeUpdate(calcClickedTime(e));
-          // console.log("down");
-          // console.dir(e.currentTarget);
-
-          // e.currentTarget.addEventListener("mousemove", updateTimeOnMove);
-          // e.currentTarget.addEventListener("mouseup", (e ) => {
-          //   console.log(e.currentTarget);
-          //   e.currentTarget.removeEventListener("mousemove", updateTimeOnMove);
-          // });
-          onTimeUpdate(calcClickedTime(e));
-
-          const updateTimeOnMove = (eMove: MouseEvent) => {
-            stopEventBubbling(eMove);
-            onTimeUpdate(calcClickedTime(eMove));
-          };
-
-          const removeListener = (eMove: MouseEvent) => {
-            stopEventBubbling(eMove);
-            document.removeEventListener("mousemove", updateTimeOnMove);
-          };
-          document.addEventListener("mousemove", updateTimeOnMove);
-          document.addEventListener("mouseup", removeListener);
-        }}
-        // onMouseUp={(e) => {
-        //   console.log("up");
-
-        //   console.dir(e.currentTarget);
-        //   e.currentTarget.removeEventListener("mousemove", updateTimeOnMove);
-        // }}
-      >
-        {/* <span
-          className="bar__progress__knob"
-          style={{ left: `${curPercentage - 2}%` }}
-        /> */}
+    <div className={classNames("bar", { "bpm-bar": type === "bpm" }, { "sound-bar": type === "sound" })}>
+      <div className="slide-container">
+        <input
+          className={classNames({ "bpm-slider": type === "bpm" }, { "sound-slider": type === "sound" })}
+          type="range"
+          min={min}
+          max={max}
+          step="1"
+          name="bar"
+          onInput={handleForm}
+          ref={sliderRef}
+        />
+        <div
+          className={classNames({ "bpm-fill": type === "bpm" }, { "sound-fill": type === "sound" })}
+          ref={targetFillRef}
+        />
+        {isShowTarget && (
+          <output id="output" name="output" htmlFor="bar" ref={sliderValueRef}>
+            {target}
+          </output>
+        )}
       </div>
-      <span className="bar__time">{formatDuration(curTime)}</span>
     </div>
   );
+}
+
+Bar.defaultProps = {
+  isShowTarget: true,
+  type: "bpm",
 };
+
+export default Bar;
