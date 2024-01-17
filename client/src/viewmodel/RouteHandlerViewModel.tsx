@@ -19,13 +19,13 @@ function RouteHandlerViewModel() {
 
     if (isAuthed) {
       API.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
-      setAccessToken(accessToken);
     }
   };
 
   useEffect(() => {
     updateAuth();
     if (location.search.includes("needToLogin=true")) {
+      setAccessToken(null);
       setIsModalOpen(true);
     }
   }, [location.pathname]);
