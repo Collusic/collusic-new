@@ -11,6 +11,7 @@ function UnderPlayBarViewModel({ isRecording }: { isRecording?: boolean }) {
   const time = useRecoilValue(trackTimeState);
   const refinedTime = `00:${Math.floor(time).toString().padStart(2, "0")}`;
 
+  // 녹음 중이면 오디오 재생상태 조작 불가능
   const handlePlayButtonClick = () => {
     if (!isRecording) {
       toggleAudio();

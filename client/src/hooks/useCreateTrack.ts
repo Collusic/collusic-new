@@ -42,7 +42,7 @@ const useCreateTrack = ({
     }
   };
 
-  // 녹음 상태이고, track player가 재생상태인 경우에 녹음
+  // 녹음 상태이고, track player가 재생상태인 경우에 녹음 시작
   useEffect(() => {
     if (!isRecording) {
       return;
