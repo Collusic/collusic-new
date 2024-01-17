@@ -14,7 +14,7 @@ export default function AuthRequired({ children }: Props) {
   useEffect(() => {
     if (!isAuthorized) {
       alert("로그인이 필요해요.");
-      navigate("/");
+      navigate("/?needToLogin=true");
     }
   }, [isAuthorized]);
 

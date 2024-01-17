@@ -18,7 +18,7 @@ const refreshAccessToken = async (axiosInstance: AxiosInstance, axiosConfig: Int
     if (isAxiosError(e) && e.status === 401) {
       storage.remove();
       alert("로그인이 필요해요.");
-      window.location.href = "/";
+      window.location.href = "/?needToLogin=true";
       return Promise.reject();
     }
   }
@@ -43,8 +43,13 @@ const setInterceptors = (instance: AxiosInstance) => {
       return response;
     },
     (error: AxiosError) => {
-      if (error.response?.status === 401 && !!error.config && error.config.url !== "/reissue") {
-        refreshAccessToken(API, error.config);
+      if (error.response?.status === 401 && !!error.config) {
+        if (error.config.url !== "/reissue") {
+          refreshAccessToken(API, error.config);
+        } else {
+          alert("로그인이 필요해요.");
+          window.location.href = "/?needToLogin=true";
+        }
       }
       return Promise.reject(error);
     },
