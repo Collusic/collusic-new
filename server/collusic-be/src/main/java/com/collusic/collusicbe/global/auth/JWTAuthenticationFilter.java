@@ -7,6 +7,7 @@ import com.collusic.collusicbe.global.util.CookieUtils;
 import com.collusic.collusicbe.global.util.JWTUtil;
 import com.collusic.collusicbe.global.util.ParsingUtil;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -37,6 +38,14 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException, ExpiredTokenException {
+
+        String requestURI = request.getRequestURI();
+        String method = request.getMethod();
+
+        if (HttpMethod.GET.matches(method) && requestURI.startsWith("/projects")) {
+            chain.doFilter(request, response);
+            return;
+        }
 
         String bearer = request.getHeader(HttpHeaders.AUTHORIZATION);
 

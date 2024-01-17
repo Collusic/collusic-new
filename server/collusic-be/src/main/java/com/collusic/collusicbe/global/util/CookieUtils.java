@@ -31,8 +31,9 @@ public class CookieUtils {
     public static Cookie setCookieWith(String refreshToken) {
         Cookie cookie = new Cookie("refreshToken", refreshToken);
         cookie.setMaxAge(REFRESH_TIME);
-        cookie.setSecure(false); // TODO : HTTPS 적용 시 true로 옵션 변경하기
+        cookie.setSecure(false);
         cookie.setHttpOnly(true);
+        cookie.setPath("/auth");
         return cookie;
     }
 }

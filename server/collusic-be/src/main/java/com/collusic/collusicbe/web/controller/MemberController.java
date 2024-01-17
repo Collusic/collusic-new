@@ -87,7 +87,7 @@ public class MemberController {
     }
 
     @Operation(summary = "로그아웃", description = "로그인된 회원을 로그아웃 시킨다.")
-    @GetMapping("/logout")
+    @GetMapping("/auth/logout")
     public ResponseEntity<Void> logout(HttpServletRequest request, HttpServletResponse response) {
         tokenService.deleteRefreshToken(CookieUtils.extractRefreshToken(request));
         CookieUtils.expireCookie(response, "refreshToken");
