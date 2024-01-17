@@ -17,7 +17,7 @@ public class TokenController {
     private final static String BEARER_PREFIX = "Bearer ";
 
     @Operation(summary = "토큰 재발급", description = "refresh token을 통한 access token 재발급")
-    @PostMapping("/reissue")
+    @PostMapping("/auth/reissue")
     public ResponseEntity<ReissuedTokenDto> reissue(HttpServletResponse response) {
         String bearer = response.getHeader("Authorization");
         String accessToken = bearer.substring(BEARER_PREFIX.length());
