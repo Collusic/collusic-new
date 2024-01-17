@@ -17,9 +17,9 @@ const useTrackPlayer = ({ bpm, isRecording }: { bpm: number; isRecording?: boole
   // 현재 재생 중인 마디 값이 바뀌면 TrackPlayer, 오디오의 재생 시간도 변경
   const setMeasure = useCallback(
     (nextMeasure: number) => {
-      const currentTime = Number((nextMeasure * (30 / totalMeasure)).toFixed(3));
-      setTrackTime(currentTime);
-      changeAudioTime(currentTime);
+      const currentTime = nextMeasure * (30 / totalMeasure);
+      setTrackTime(Math.floor(currentTime));
+      changeAudioTime(Number(currentTime.toFixed(3)));
     },
     [changeAudioTime],
   );

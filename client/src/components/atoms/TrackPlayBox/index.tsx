@@ -49,6 +49,7 @@ export default function TrackPlayBox({
       isDisabled
       min={0}
       max={maxMeasure}
+      cursor="initial"
     >
       <SliderTrack width="100%" minH="inherit" borderRadius="inherit" bgColor="rgba(177, 255, 0, 0.1)">
         <SliderFilledTrack minH="inherit" bgColor={bgColor} borderLeftRadius="inherit" />
