@@ -9,7 +9,7 @@ type Props = {
 
 export default function AuthRequired({ children }: Props) {
   const navigate = useNavigate();
-  const { isAuthorized } = useAuth({ reissue: false });
+  const { isAuthorized } = useAuth();
 
   useEffect(() => {
     if (!isAuthorized) {

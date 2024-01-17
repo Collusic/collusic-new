@@ -14,7 +14,7 @@ export function NavBar() {
   const LogoImgUrl = `${process.env.PUBLIC_URL}/assets/logo/logo@2x.png`;
   const SignInImgUrl = `${process.env.PUBLIC_URL}/assets/signin/logo@2x.png`;
 
-  const { isAuthorized, signOut } = useAuth({ reissue: false });
+  const { isAuthorized, signOut } = useAuth();
 
   const handleLoginButtonClick = () => {
     if (!isAuthorized) {
