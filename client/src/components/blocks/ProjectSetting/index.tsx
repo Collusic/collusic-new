@@ -80,7 +80,7 @@ function ProjectSetting({ onProjectSubmit, trackTags }: ProjectSettingProps) {
         />
       </div>
       <div id="bottom-section">
-        <UnderPlayBarViewModel />
+        <UnderPlayBarViewModel isRecording={isRecording} />
       </div>
     </div>
   );
