@@ -8,6 +8,7 @@ import { TRACK_API } from "api/axios";
 import { audioListState, isAudioPlayingState } from "model/audioModel";
 import { INITIAL_AUDIO_VOLUME } from "constants/audio";
 import throttle from "utils/throttle";
+import { NEW_TRACK_ID } from "constants/key";
 
 const useAudios = () => {
   const [audioList, setAudioList] = useRecoilState<AudioType[]>(audioListState);
@@ -44,7 +45,7 @@ const useAudios = () => {
 
   // 오디오 추가
   const addAudio = (audio: HTMLAudioElement) => {
-    setAudioList([...audioList, { id: "new", audio }]);
+    setAudioList([...audioList, { id: NEW_TRACK_ID, audio }]);
   };
 
   // id로 오디오 삭제
