@@ -1,3 +1,4 @@
+// audio 객체에서 Blob 데이터를 받아오기 위한 함수
 const getAudioBlob = async (audio: HTMLAudioElement) => {
   try {
     const response = await fetch(audio.src);
