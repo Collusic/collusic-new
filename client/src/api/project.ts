@@ -4,18 +4,17 @@ import { API } from "api/axios";
 // 프로젝트 생성
 export const addProject = async (params: {}) => {
   const url = "/projects";
+  const errorMessage = "프로젝트가 생성되지 않았습니다. 잠시 후 다시 시도해주세요.";
 
   try {
     const res = await API.post(url, params);
-
-    if (res.status === 200) {
-      return res.data;
-    }
+    return res.data;
   } catch (err) {
     console.log(err);
-    alert("프로젝트가 생성되지 않았습니다. 잠시후 다시 시도해주세요.");
+    alert(errorMessage);
   }
-  return false;
+
+  return Promise.reject(new Error(errorMessage));
 };
 
 export const getProjectList = async (params: {}) => {
