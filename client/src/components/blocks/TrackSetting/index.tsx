@@ -79,6 +79,7 @@ function TrackSetting({ projectTitle, bpmState, trackTags, tracks }: ProjectInfo
         </div>
         <TrackSpace
           bpm={bpmState}
+          tracks={tracks}
           isRecording={isRecording}
           isRecordSuccess={isRecordSuccess}
           onRecord={handleRecordButtonClick}
