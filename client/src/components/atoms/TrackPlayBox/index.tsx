@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Box, Button, Slider, SliderFilledTrack, SliderTrack, Text } from "@chakra-ui/react";
 import { AudioType } from "types/audioType";
+import { NEW_TRACK_ID } from "constants/key";
 
 interface Props {
   id: AudioType["id"];
@@ -55,7 +56,7 @@ export default function TrackPlayBox({
         <SliderFilledTrack minH="inherit" bgColor={bgColor} borderLeftRadius="inherit" />
       </SliderTrack>
 
-      {(isRecording || id === "new") && (
+      {(isRecording || id === NEW_TRACK_ID) && (
         <Button
           as={Box}
           pos="absolute"

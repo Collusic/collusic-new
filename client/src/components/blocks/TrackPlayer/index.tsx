@@ -8,6 +8,7 @@ import TrackRecordBox from "components/atoms/TrackRecordBox";
 
 import useTrackPlayer from "hooks/useTrackPlayer";
 import useAudios from "hooks/useAudios";
+import { NEW_TRACK_ID } from "constants/key";
 
 function TrackPlayer({
   bpm,
@@ -70,7 +71,7 @@ function TrackPlayer({
           {!isRecordSuccess && !isRecording && onRecord && <TrackRecordBox onRecord={onRecord} />}
           {isRecording && (
             <TrackPlayBox
-              id="new"
+              id={NEW_TRACK_ID}
               measure={currentMeasure}
               maxMeasure={totalMeasure}
               onRemoveButtonClick={onTrackRemove}

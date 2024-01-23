@@ -61,28 +61,22 @@ const setInterceptors = (instance: AxiosInstance) => {
 export const API = setInterceptors(
   axios.create({
     baseURL: process.env.REACT_APP_API,
-    headers: { "X-Custom-Header": "foobar" },
-    timeout: 3000,
+    timeout: 5000,
   }),
 );
 
 export const TRACK_API = setInterceptors(
   axios.create({
     baseURL: process.env.NODE_ENV === "development" ? "/" : process.env.REACT_APP_TRACK_API,
-    headers: { "X-Custom-Header": "foobar" },
-    timeout: 3000,
+    timeout: 5000,
   }),
 );
 
 export const LOCAL_API = axios.create({
   baseURL: process.env.REACT_APP_API,
-  headers: { "X-Custom-Header": "foobar" },
-  timeout: 3000,
+  timeout: 5000,
 });
 
 export const TEST_API = axios.create({
   baseURL: "http://ec2-13-124-123-6.ap-northeast-2.compute.amazonaws.com:8080/",
-  headers: {
-    "X-Custom-Header": "foobar",
-  },
 });
