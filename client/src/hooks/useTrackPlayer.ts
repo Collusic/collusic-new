@@ -11,15 +11,17 @@ const useTrackPlayer = ({ bpm, isRecording }: { bpm: number; isRecording?: boole
   const { trackTime, setTrackTime, startTrackTimer, stopTrackTimer, resetTrackTimer } = useTrackTimer();
 
   // bpm에 따른 전체 마디 계산
-  const totalMeasure = Math.floor(bpm / 2) + 1;
+  const totalMeasure = Math.floor(bpm / 2) + 2;
   const measure = trackTime / (30 / totalMeasure);
 
   // 현재 재생 중인 마디 값이 바뀌면 TrackPlayer, 오디오의 재생 시간도 변경
   const setMeasure = useCallback(
     (nextMeasure: number) => {
-      const currentTime = Number((nextMeasure * (30 / totalMeasure)).toFixed(3));
-      setTrackTime(currentTime);
-      changeAudioTime(currentTime);
+      const currentTime = nextMeasure * (30 / totalMeasure);
+      // TrackPlayer 재생 시간 정수 단위로 설정
+      setTrackTime(Math.floor(currentTime));
+      // 오디오 재생 시간 설정
+      changeAudioTime(Number(currentTime.toFixed(3)));
     },
     [changeAudioTime],
   );

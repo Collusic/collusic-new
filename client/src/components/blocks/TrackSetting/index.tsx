@@ -86,7 +86,7 @@ function TrackSetting({ projectTitle, bpmState, trackTags, tracks }: ProjectInfo
         />
       </div>
       <div id="bottom-section">
-        <UnderPlayBarViewModel />
+        <UnderPlayBarViewModel isRecording={isRecording} />
       </div>
     </div>
   );

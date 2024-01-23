@@ -38,8 +38,14 @@ function TrackPlayer({
       onChange={handlePlayerChange}
       min={0}
       max={totalMeasure}
+      step={0.5}
       focusThumbOnChange={false}
+      isReadOnly={isRecording}
+      cursor="pointer"
     >
+      <SliderThumb top="-6px" w="fit-content" h="100%" cursor="pointer" _focus={{ outline: "none" }}>
+        <PlayStick />
+      </SliderThumb>
       <SliderTrack w="100%" height="calc(100% - 3rem)" maxH="inherit" minH="inherit" paddingY="5%">
         <VStack
           w="100%"
@@ -73,9 +79,6 @@ function TrackPlayer({
           )}
         </VStack>
       </SliderTrack>
-      <SliderThumb top="-6px" w="fit-content" h="100%" cursor="pointer" _focus={{ outline: "none" }}>
-        <PlayStick />
-      </SliderThumb>
     </Slider>
   );
 }
