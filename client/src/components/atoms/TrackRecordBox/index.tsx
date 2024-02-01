@@ -21,10 +21,10 @@ export function TrackRecordBox({ onRecord }: { onRecord: () => void }) {
   };
 
   useEffect(() => {
-    if (isExpired) {
+    if (count === 0) {
       startRecord();
     }
-  }, [isExpired]);
+  }, [count]);
 
   useEffect(() => {
     const $recordBox = document.querySelector("#record-box");

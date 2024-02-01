@@ -24,7 +24,7 @@ const useAuth = () => {
     setAuth,
     signOut: () => {
       resetAccessToken();
-      API.get("/logout");
+      API.get("/auth/logout");
     },
   };
 };

@@ -7,19 +7,21 @@ import useTrackTimer from "./useTrackTimer";
  *  TrackPlayer의 재생 시간과 오디오를 함께 조작(동기화)하기 위한 hook
  */
 const useTrackPlayer = ({ bpm, isRecording }: { bpm: number; isRecording?: boolean }) => {
-  const { isAudioPlaying, changeAudioTime, playAudio, stopAudio, resetAudio } = useAudios();
+  const { isAudioPlaying, changeAudioTime, playAudio, stopAudio, resetAudio, audioList } = useAudios();
   const { trackTime, setTrackTime, startTrackTimer, stopTrackTimer, resetTrackTimer } = useTrackTimer();
 
   // bpm에 따른 전체 마디 계산
-  const totalMeasure = Math.floor(bpm / 2) + 1;
+  const totalMeasure = Math.floor(bpm / 2) + 2;
   const measure = trackTime / (30 / totalMeasure);
 
   // 현재 재생 중인 마디 값이 바뀌면 TrackPlayer, 오디오의 재생 시간도 변경
   const setMeasure = useCallback(
     (nextMeasure: number) => {
-      const currentTime = Number((nextMeasure * (30 / totalMeasure)).toFixed(3));
-      setTrackTime(currentTime);
-      changeAudioTime(currentTime);
+      const currentTime = nextMeasure * (30 / totalMeasure);
+      // TrackPlayer 재생 시간 정수 단위로 설정
+      setTrackTime(Math.floor(currentTime));
+      // 오디오 재생 시간 설정
+      changeAudioTime(Number(currentTime.toFixed(3)));
     },
     [changeAudioTime],
   );
@@ -39,6 +41,11 @@ const useTrackPlayer = ({ bpm, isRecording }: { bpm: number; isRecording?: boole
 
   // 오디오와 TrackPlayer 재생 시간 동기화
   useEffect(() => {
+    if (audioList.length === 0 && !isRecording) {
+      return;
+    }
+
+    // 녹음 중이거나 트랙이 있는 경우에만 TrackPlayer 재생
     if (isAudioPlaying) {
       startTrackTimer();
     } else {
@@ -57,6 +64,11 @@ const useTrackPlayer = ({ bpm, isRecording }: { bpm: number; isRecording?: boole
       stopAudio();
     }
   }, [isRecording]);
+
+  // 트랙이 변경되면 TrackPlayer 초기화
+  useEffect(() => {
+    resetTrackPlayer();
+  }, [audioList]);
 
   // 언마운트 시 TrackPlayer 초기화
   useEffect(() => {

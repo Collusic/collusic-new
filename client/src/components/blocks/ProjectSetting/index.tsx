@@ -11,11 +11,12 @@ import UnderPlayBarViewModel from "viewmodel/UnderPlayBarViewModel";
 import useAudios from "hooks/useAudios";
 import useProjectSetting from "hooks/useProjectSetting";
 import useCreateTrack from "hooks/useCreateTrack";
+import { NEW_TRACK_ID } from "constants/key";
 
 import "./style.scss";
 
 interface ProjectSettingProps {
-  onProjectSubmit: (title: string, trackTag: Track, bpm: number) => void;
+  onProjectSubmit: (title: string, trackTag: Track, bpm: number, audio: HTMLAudioElement) => void;
   trackTags: Track[];
 }
 
@@ -32,7 +33,7 @@ function ProjectSetting({ onProjectSubmit, trackTags }: ProjectSettingProps) {
     handleTrackTagSelect,
   } = useProjectSetting();
 
-  const { addAudio, removeAudio } = useAudios();
+  const { addAudio, removeAudio, audioList } = useAudios();
 
   const { isRecording, isRecordSuccess, handleRecordButtonClick, handleTrackRemove } = useCreateTrack({
     inputDeviceId,
@@ -47,11 +48,13 @@ function ProjectSetting({ onProjectSubmit, trackTags }: ProjectSettingProps) {
   });
 
   const handleCreateButtonClick = () => {
-    if (!title || !trackTag || !bpm) {
+    const recordedAudio = audioList.find(({ id }) => id === NEW_TRACK_ID);
+
+    if (!title || !trackTag || !bpm || !recordedAudio) {
       return;
     }
 
-    onProjectSubmit(title, trackTag, bpm);
+    onProjectSubmit(title, trackTag, bpm, recordedAudio.audio);
   };
 
   return (
@@ -77,7 +80,7 @@ function ProjectSetting({ onProjectSubmit, trackTags }: ProjectSettingProps) {
         />
       </div>
       <div id="bottom-section">
-        <UnderPlayBarViewModel />
+        <UnderPlayBarViewModel isRecording={isRecording} />
       </div>
     </div>
   );

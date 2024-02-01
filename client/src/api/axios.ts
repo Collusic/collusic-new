@@ -8,7 +8,7 @@ axios.defaults.withCredentials = true;
 const refreshAccessToken = async (axiosInstance: AxiosInstance, axiosConfig: InternalAxiosRequestConfig) => {
   const storage = tokenStorage(ACCESS_TOKEN_KEY);
   try {
-    const response = await API.post("/reissue");
+    const response = await API.post("/auth/reissue");
     if (response.status === 200) {
       storage.set(response.headers.Authorization);
       axiosInstance(axiosConfig);
@@ -44,7 +44,7 @@ const setInterceptors = (instance: AxiosInstance) => {
     },
     (error: AxiosError) => {
       if (error.response?.status === 401 && !!error.config) {
-        if (error.config.url !== "/reissue") {
+        if (error.config.url !== "/auth/reissue") {
           refreshAccessToken(API, error.config);
         } else {
           alert("로그인이 필요해요.");
@@ -61,28 +61,22 @@ const setInterceptors = (instance: AxiosInstance) => {
 export const API = setInterceptors(
   axios.create({
     baseURL: process.env.REACT_APP_API,
-    headers: { "X-Custom-Header": "foobar" },
-    timeout: 3000,
+    timeout: 5000,
   }),
 );
 
 export const TRACK_API = setInterceptors(
   axios.create({
     baseURL: process.env.NODE_ENV === "development" ? "/" : process.env.REACT_APP_TRACK_API,
-    headers: { "X-Custom-Header": "foobar" },
-    timeout: 3000,
+    timeout: 5000,
   }),
 );
 
 export const LOCAL_API = axios.create({
   baseURL: process.env.REACT_APP_API,
-  headers: { "X-Custom-Header": "foobar" },
-  timeout: 3000,
+  timeout: 5000,
 });
 
 export const TEST_API = axios.create({
   baseURL: "http://ec2-13-124-123-6.ap-northeast-2.compute.amazonaws.com:8080/",
-  headers: {
-    "X-Custom-Header": "foobar",
-  },
 });
