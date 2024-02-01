@@ -1,6 +1,7 @@
 import { Slider, SliderThumb, SliderTrack, VStack } from "@chakra-ui/react";
 
 import { AudioType } from "types/audioType";
+import { TrackResponseType } from "types/trackType";
 
 import PlayStick from "components/blocks/PlayStick";
 import TrackPlayBox from "components/atoms/TrackPlayBox";
@@ -12,12 +13,14 @@ import { NEW_TRACK_ID } from "constants/key";
 
 function TrackPlayer({
   bpm,
+  tracks,
   isRecording,
   isRecordSuccess,
   onRecord,
   onTrackRemove,
 }: {
   bpm: number;
+  tracks?: TrackResponseType[];
   isRecording?: boolean;
   isRecordSuccess?: boolean;
   onRecord?: () => void;
@@ -58,16 +61,30 @@ function TrackPlayer({
           align="stretch"
           spacing="1rem"
         >
-          {audioTracks.map(({ id, audio }) => (
-            <TrackPlayBox
-              key={audio.accessKey}
-              id={id}
-              measure={currentMeasure}
-              maxMeasure={totalMeasure}
-              onRemoveButtonClick={onTrackRemove}
-              isPlaying
-            />
-          ))}
+          {audioTracks.map(({ id, audio }) => {
+            let trackInfo;
+
+            if (tracks) {
+              const track = tracks.find(({ trackId }) => trackId === id);
+
+              if (track) {
+                const { nickname, profileImageUrl, trackTag } = track;
+                trackInfo = { nickname, profileImageUrl, trackTag };
+              }
+            }
+
+            return (
+              <TrackPlayBox
+                key={audio.accessKey}
+                id={id}
+                trackInfo={trackInfo}
+                measure={currentMeasure}
+                maxMeasure={totalMeasure}
+                onRemoveButtonClick={onTrackRemove}
+                isPlaying
+              />
+            );
+          })}
           {!isRecordSuccess && !isRecording && onRecord && <TrackRecordBox onRecord={onRecord} />}
           {isRecording && (
             <TrackPlayBox
@@ -85,6 +102,7 @@ function TrackPlayer({
 }
 
 TrackPlayer.defaultProps = {
+  tracks: undefined,
   isRecording: false,
   isRecordSuccess: false,
   onRecord: undefined,
