@@ -6,7 +6,7 @@ interface MediaRecorderBaseResult {
   data: Blob | undefined;
   streamId: string | undefined;
   startRecord: () => void;
-  stopRecord: () => void;
+  stopRecord: (props?: { interrupted: boolean }) => void;
   initRecord: () => void;
 }
 
@@ -65,12 +65,14 @@ const getMediaRecorder = async ({
 const useRecord = (deviceId: ConstrainDOMString) => {
   const [isRecording, setIsRecording] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isInterrupted, setIsInterrupted] = useState(true);
   const dataRef = useRef<Blob>();
   const mediaRecorderRef = useRef<MediaRecorder>();
 
   const handleRecordStart = () => {
     setIsRecording(true);
     setIsSuccess(false);
+    setIsInterrupted(true);
   };
 
   const handleRecordStop = (data: Blob) => {
@@ -82,6 +84,7 @@ const useRecord = (deviceId: ConstrainDOMString) => {
   const initRecord = () => {
     dataRef.current = undefined;
     setIsSuccess(false);
+    setIsInterrupted(true);
   };
 
   const startRecord = async () => {
@@ -102,9 +105,16 @@ const useRecord = (deviceId: ConstrainDOMString) => {
 
   useEffect(() => {}, [isSuccess]);
 
-  const stopRecord = () => {
+  const stopRecord = (props?: { interrupted: boolean }) => {
+    // stopRecord({interrupted: true})인 경우에만 interrupted = true
+    const interrupted = props?.interrupted || false;
+
     if (mediaRecorderRef.current && mediaRecorderRef.current.state === "recording") {
       mediaRecorderRef.current.stop();
+
+      if (!interrupted) {
+        setIsInterrupted(false);
+      }
     }
   };
 
@@ -116,7 +126,7 @@ const useRecord = (deviceId: ConstrainDOMString) => {
 
   return {
     isRecording,
-    isSuccess,
+    isSuccess: isSuccess && !isInterrupted,
     data: dataRef.current,
     streamId: mediaRecorderRef.current?.stream.id,
     startRecord,

@@ -7,7 +7,7 @@ import useTrackTimer from "./useTrackTimer";
  *  TrackPlayer의 재생 시간과 오디오를 함께 조작(동기화)하기 위한 hook
  */
 const useTrackPlayer = ({ bpm, isRecording }: { bpm: number; isRecording?: boolean }) => {
-  const { isAudioPlaying, changeAudioTime, playAudio, stopAudio, resetAudio } = useAudios();
+  const { isAudioPlaying, changeAudioTime, playAudio, stopAudio, resetAudio, audioList } = useAudios();
   const { trackTime, setTrackTime, startTrackTimer, stopTrackTimer, resetTrackTimer } = useTrackTimer();
 
   // bpm에 따른 전체 마디 계산
@@ -41,6 +41,11 @@ const useTrackPlayer = ({ bpm, isRecording }: { bpm: number; isRecording?: boole
 
   // 오디오와 TrackPlayer 재생 시간 동기화
   useEffect(() => {
+    if (audioList.length === 0 && !isRecording) {
+      return;
+    }
+
+    // 녹음 중이거나 트랙이 있는 경우에만 TrackPlayer 재생
     if (isAudioPlaying) {
       startTrackTimer();
     } else {
@@ -59,6 +64,11 @@ const useTrackPlayer = ({ bpm, isRecording }: { bpm: number; isRecording?: boole
       stopAudio();
     }
   }, [isRecording]);
+
+  // 트랙이 변경되면 TrackPlayer 초기화
+  useEffect(() => {
+    resetTrackPlayer();
+  }, [audioList]);
 
   // 언마운트 시 TrackPlayer 초기화
   useEffect(() => {

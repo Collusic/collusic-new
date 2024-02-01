@@ -34,7 +34,7 @@ const useCreateTrack = ({
   };
 
   const handleTrackRemove = (audioId: AudioType["id"]) => {
-    stopRecord();
+    stopRecord({ interrupted: true });
 
     if (window.confirm("녹음된 트랙이 있어요. 정말 삭제할까요?")) {
       initRecord();
