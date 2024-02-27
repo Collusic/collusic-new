@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:testdb;MODE=MYSQL
-    username: sa
-    password:
+    url: ENC(gnyYY2my5ZaFbvuc1ShsFN8N/6HyTS1sQ5UD+qe72zTg/xZCwIDJsttUCG56/ZZfmIRoFEy6c0gJgFE1FhmB9lYNO9nGF2bf8F75TJqccuicBum0mkyqp30RmK7tC4VoKmHw97c6MRAyx3Iv7LagNw==)
+    username: ENC(mf26xrSdlsDGLOp2uRVtYQ==)
+    password: ENC(B9/bakG1kuaw3NeCNI4dq6K/zkFiyO7uSWx6IR7jUQA=)
 
   jpa:
     show-sql: true
