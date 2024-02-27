@@ -9,6 +9,7 @@ services:
 
   app:
     restart: always
+    image: kjkun7631/collusic-api
     build:
       context: .
       dockerfile: Dockerfile-dev
@@ -20,4 +21,22 @@ services:
       JASYPT_PASSWORD: ${JASYPT_PASSWORD}
     depends_on:
       - redis
+      - mysql
     command: gradle clean verify spring-boot:run -Dspring-boot.run.profiles=dev
+
+  mysql:
+    restart: always
+    image: mysql:8.0
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: collusic-new
+      MYSQL_USER: collusic-new
+      MYSQL_PASSWORD: collusic-db-secret
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
