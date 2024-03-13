@@ -39,7 +39,6 @@ class JasyptTest {
     public void decryptTest() {
 
         String decryptedText = jasyptStringEncryptor.decrypt(defaultEncryptedText);
-
         assertThat(decryptedText).isEqualTo(defaultRawText);
     }
 

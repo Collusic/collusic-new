@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ENC(gnyYY2my5ZaFbvuc1ShsFN8N/6HyTS1sQ5UD+qe72zTg/xZCwIDJsttUCG56/ZZfmIRoFEy6c0gJgFE1FhmB9lYNO9nGF2bf8F75TJqccuicBum0mkyqp30RmK7tC4VoKmHw97c6MRAyx3Iv7LagNw==)
+    url: ENC(0UN3QoywTt1aetAUuH2wBmNQ81GfewuEflb08Q7KfEv+AZ82o3C65RruLLWFtOemgsLQ/+xmqmv/O45y/NrUTDv/hOYG+9lC6/4w/TQ6H778gFuUKVxYyh9/k6egITMTRkfcW/VDeJJfWh+KVMBSyAlmrFZRo7nFnsZCjuXRG9W1d2SkNqJJ9Ik044jnVPv2)
     username: ENC(mf26xrSdlsDGLOp2uRVtYQ==)
     password: ENC(B9/bakG1kuaw3NeCNI4dq6K/zkFiyO7uSWx6IR7jUQA=)
 
@@ -14,5 +14,5 @@ spring:
         jdbc:
           batch_size: 10
     hibernate:
-      ddl-auto: create
-    generate-ddl: true
+      ddl-auto: validate
+    generate-ddl: false
