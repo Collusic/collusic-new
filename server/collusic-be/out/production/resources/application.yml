@@ -1,0 +1,28 @@
+spring:
+  profiles:
+    group:
+      local: aws, local_oauth, local_redis, local_db
+      dev: aws, dev_oauth, dev_redis, dev_db
+      prod: aws, prod_oauth, prod_redis, prod_db
+    active: prod
+
+  servlet:
+    multipart:
+      max-file-size: 15MB
+      max-request-size: 15MB
+
+  data:
+    web:
+      pageable:
+        default-page-size: 8
+
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+jasypt:
+  encryptor:
+    password: ${JASYPT_PASSWORD}
