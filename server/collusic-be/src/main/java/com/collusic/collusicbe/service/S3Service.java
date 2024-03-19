@@ -110,7 +110,7 @@ public class S3Service {
         s3Client.putObject(new PutObjectRequest(bucket, path.toString(), audioFile.getInputStream(), objectMetadata)
                                    .withCannedAcl(CannedAccessControlList.PublicRead));
 
-        return cloudFrontDomain + path;
+        return cloudFrontDomain + "/" + path;
     }
 
 }
