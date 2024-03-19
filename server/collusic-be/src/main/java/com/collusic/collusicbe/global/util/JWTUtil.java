@@ -3,13 +3,18 @@ package com.collusic.collusicbe.global.util;
 import com.collusic.collusicbe.global.exception.jwt.ExpiredTokenException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.jsonwebtoken.*;
-import lombok.extern.slf4j.Slf4j;
-
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import java.time.Instant;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class JWTUtil {
@@ -90,4 +95,5 @@ public class JWTUtil {
         headers.put("alg", SignatureAlgorithm.HS256);
         return headers;
     }
+
 }

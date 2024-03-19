@@ -4,18 +4,17 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -45,7 +44,7 @@ public class S3Service {
         objectMetadata.setContentLength(multipartFile.getSize());
 
         s3Client.putObject(new PutObjectRequest(bucket, path.toString(), multipartFile.getInputStream(), objectMetadata)
-                .withCannedAcl(CannedAccessControlList.PublicRead));
+                                   .withCannedAcl(CannedAccessControlList.PublicRead));
 
         return cloudFrontDomain + path;
     }
@@ -109,8 +108,9 @@ public class S3Service {
         objectMetadata.setContentLength(audioFile.getSize());
 
         s3Client.putObject(new PutObjectRequest(bucket, path.toString(), audioFile.getInputStream(), objectMetadata)
-                .withCannedAcl(CannedAccessControlList.PublicRead));
+                                   .withCannedAcl(CannedAccessControlList.PublicRead));
 
-        return cloudFrontDomain + path;
+        return cloudFrontDomain + "/" + path;
     }
+
 }
