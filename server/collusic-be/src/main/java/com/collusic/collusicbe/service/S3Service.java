@@ -97,8 +97,7 @@ public class S3Service {
 
     public String uploadAudioFile(MultipartFile audioFile) throws IOException {
         StringBuilder path = new StringBuilder();
-        path.append("/")
-            .append(TRACK_DIR)
+        path.append(TRACK_DIR)
             .append("/")
             .append(LocalDateTime.now())
             .append("-")
