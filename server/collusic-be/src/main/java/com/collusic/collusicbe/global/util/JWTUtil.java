@@ -22,8 +22,8 @@ public class JWTUtil {
     //    public static final int REFRESH_TIME = 60 * 60 * 24 * 7;
     public static final int REFRESH_TIME = 15;
     public static final String KEY = "collusic-new";
-//    private static final int ACCESS_TIME = 60 * 60;
-private static final int ACCESS_TIME = 15;
+    //    private static final int ACCESS_TIME = 60 * 60;
+    private static final int ACCESS_TIME = 15;
 
     public static String createAccessToken(String email, String role) {
         return Jwts.builder()

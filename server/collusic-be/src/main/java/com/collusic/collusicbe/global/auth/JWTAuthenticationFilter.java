@@ -80,6 +80,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
             chain.doFilter(request, response);
         } catch (ExpiredTokenException | EntityNotFoundException | AbnormalAccessException e) {
             tokenService.deleteRefreshToken(refreshToken);
+            CookieUtils.expireCookie(response, "refreshToken");
             throw e;
         }
     }
