@@ -16,26 +16,21 @@ import useTrackSetting from "hooks/useTrackSetting";
 import useCreateTrack from "hooks/useCreateTrack";
 
 import "./style.scss";
+import { NEW_TRACK_ID } from "constants/key";
 
 interface ProjectInfoType {
   projectTitle: string;
   bpmState: number;
   trackTags: Track[];
   tracks: TrackResponseType[];
+  onTrackCreate: (title: string, trackTag: Track, audio: HTMLAudioElement) => void;
 }
 
-function TrackSetting({ projectTitle, bpmState, trackTags, tracks }: ProjectInfoType) {
-  const {
-    inputDeviceId,
-    inputTextDevice,
-    trackTag,
-    handleTitleInput,
-    handleTrackTagSelect,
-    handleDeviceClick,
-    handleSettingSubmit,
-  } = useTrackSetting();
+function TrackSetting({ projectTitle, bpmState, trackTags, tracks, onTrackCreate }: ProjectInfoType) {
+  const { title, inputDeviceId, inputTextDevice, trackTag, handleTitleInput, handleTrackTagSelect, handleDeviceClick } =
+    useTrackSetting();
 
-  const { setAudios, addAudio, removeAudio } = useAudios();
+  const { audioList, setAudios, addAudio, removeAudio } = useAudios();
 
   const { isRecording, isRecordSuccess, handleRecordButtonClick, handleTrackRemove } = useCreateTrack({
     inputDeviceId,
@@ -48,6 +43,16 @@ function TrackSetting({ projectTitle, bpmState, trackTags, tracks }: ProjectInfo
       removeAudio(audioId);
     },
   });
+
+  const handleTrackSubmit = () => {
+    const recordedAudio = audioList.find(({ id }) => id === NEW_TRACK_ID);
+
+    if (!title || !trackTag || !recordedAudio) {
+      return;
+    }
+
+    onTrackCreate(title, trackTag, recordedAudio.audio);
+  };
 
   useEffect(() => {
     if (tracks.length === 0) {
@@ -72,7 +77,7 @@ function TrackSetting({ projectTitle, bpmState, trackTags, tracks }: ProjectInfo
               <RecordDevice onDeviceClick={handleDeviceClick} inputTextDevice={inputTextDevice} />
               <TrackTag onTrackClick={handleTrackTagSelect} selectedTrack={trackTag} tracks={trackTags} />
             </div>
-            <Button type="green" onBtnClick={handleSettingSubmit} marginTop="4rem" width="100%">
+            <Button type="green" onBtnClick={handleTrackSubmit} marginTop="4rem" width="100%">
               트랙 추가하기
             </Button>
           </div>
