@@ -14,9 +14,9 @@ import UnderPlayBarViewModel from "viewmodel/UnderPlayBarViewModel";
 import useAudios from "hooks/useAudios";
 import useTrackSetting from "hooks/useTrackSetting";
 import useCreateTrack from "hooks/useCreateTrack";
+import { NEW_TRACK_ID } from "constants/key";
 
 import "./style.scss";
-import { NEW_TRACK_ID } from "constants/key";
 
 interface ProjectInfoType {
   projectTitle: string;
