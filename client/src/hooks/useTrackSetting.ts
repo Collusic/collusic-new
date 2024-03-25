@@ -22,9 +22,6 @@ const useTrackSetting = () => {
     setTrackTag(e.currentTarget.lastChild?.nodeValue as Track);
   };
 
-  // 프로젝트 생성하기 버튼 클릭
-  const handleSettingSubmit = () => {};
-
   return {
     title,
     inputDeviceId,
@@ -33,7 +30,6 @@ const useTrackSetting = () => {
     handleTitleInput,
     handleDeviceClick,
     handleTrackTagSelect,
-    handleSettingSubmit,
   };
 };
 
